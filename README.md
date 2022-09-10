@@ -6,4 +6,5 @@ See https://hwwiki.ddns.net/
 
 ## Standard Installation
 
-https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/rpi-setup.sh
+ bash <(curl -sL https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/rpi-setup.sh)
+
