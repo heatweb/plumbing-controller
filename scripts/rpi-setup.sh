@@ -78,6 +78,8 @@ sudo apt install -y --no-install-recommends \
     
 sudo systemctl enable --now docker
 
+sudo usermod -aG docker pi
+
 # Replace with the latest version from https://github.com/docker/compose/releases/latest
 DOCKER_COMPOSE_VERSION="2.10.2"
 # For 64-bit OS use:
