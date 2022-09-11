@@ -45,8 +45,12 @@ sudo chmod +x /usr/bin/docker-compose
 sudo docker volume create portainer_data
 sudo docker run -d -p 9000:9000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
 
-#cp -r /home/pi/plumbing-controller/mqtt/ /home/pi/
+cd ~
+git clone https://github.com/heatweb/plumbing-controller.git
+cd /home/pi/plumbing-controller
+git pull
+cp -r /home/pi/plumbing-controller/mqtt/ /home/pi/
 #cd /home/pi/mqtt
 
 sudo docker network create mqtt
-sudo docker run -it -p 1883:1883 --name=mqtt --restart=always -v /home/pi/plumbing-controller/mqtt/:/mosquitto/config/ --net mqtt eclipse-mosquitto:openssl
+sudo docker run -it -p 1883:1883 --name=mqtt --restart=always -v /home/pi/mqtt/:/mosquitto/config/ --net mqtt eclipse-mosquitto:openssl
