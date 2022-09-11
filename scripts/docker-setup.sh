@@ -53,6 +53,6 @@ cp -r /home/pi/plumbing-controller/mqtt/ /home/pi/
 #cd /home/pi/mqtt
 
 sudo docker network create mqtt
-sudo docker run -it -p 1883:1883 --name=mqtt --restart=always -v /home/pi/mqtt/:/mosquitto/config/ --net mqtt eclipse-mosquitto:openssl
+sudo docker run -d -it -p 1883:1883 --name=mqtt --restart=always -v /home/pi/mqtt/:/mosquitto/config/ --net mqtt eclipse-mosquitto:openssl
 
-sudo docker run -it -p 5001:1880 --net mqtt --restart=always -v node_red_data_1:/data -v /boot/heatweb/:/boot/heatweb/ --name mynodered1 heatweb/test-image
+sudo docker run -d -it -p 5001:1880 --net mqtt --restart=always -v node_red_data_1:/data -v /boot/heatweb/:/boot/heatweb/ --name mynodered1 heatweb/test-image
