@@ -26,7 +26,7 @@ sudo apt install -y --no-install-recommends \
     docker-ce \
     cgroupfs-mount
     
-sudo systemctl enable --now docker
+
 
 sudo usermod -aG docker pi
 
@@ -42,3 +42,5 @@ sudo chmod +x /usr/bin/docker-compose
 
 docker volume create portainer_data
 docker run -d -p 9000:9000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+
+sudo systemctl enable --now docker
