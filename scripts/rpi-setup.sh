@@ -30,10 +30,15 @@ cd ~
 git clone https://github.com/SequentMicrosystems/ti-rpi.git
 cd ti-rpi/
 sudo make install
+
 cd ~
 git clone https://github.com/SequentMicrosystems/megabas-rpi.git
 cd /home/pi/megabas-rpi
 sudo make install
+
+cd ~
+git clone https://github.com/heatweb/plumbing-controller.git
+cd /home/pi/plumbing-controller
 
 cd /home/pi/.node-red
 node-red-stop
