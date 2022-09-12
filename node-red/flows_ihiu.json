@@ -1,0 +1,563 @@
+[
+    {
+        "id": "a41153505b6d5097",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d1f3d002.63ee48",
+        "type": "subflow",
+        "name": "rbe 1m",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "dd19c0de.9bebd"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 420,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "29eae4ad.d68f2c",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "6c0629962ffb1c73",
+        "type": "mqtt-broker",
+        "name": "docker",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": "59",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "4e7e88b068d5278e",
+        "type": "mqtt-broker",
+        "name": "mqtt2",
+        "broker": "localhost",
+        "port": "10031",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "dd19c0de.9bebd",
+        "type": "rbe",
+        "z": "d1f3d002.63ee48",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "29eae4ad.d68f2c"
+            ]
+        ]
+    },
+    {
+        "id": "8b22fc2a.83d07",
+        "type": "inject",
+        "z": "d1f3d002.63ee48",
+        "name": "",
+        "props": [
+            {
+                "p": "reset",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "dd19c0de.9bebd"
+            ]
+        ]
+    },
+    {
+        "id": "29eae4ad.d68f2c",
+        "type": "switch",
+        "z": "d1f3d002.63ee48",
+        "name": "",
+        "property": "reset",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a270e07cd8944589",
+        "type": "mqtt in",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "topic": "#",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "6c0629962ffb1c73",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 140,
+        "wires": [
+            [
+                "a6cedcf7582829b2"
+            ]
+        ]
+    },
+    {
+        "id": "881629b4b402addb",
+        "type": "mqtt out",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "topic": "test",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6c0629962ffb1c73",
+        "x": 410,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "aaa773d83dec5212",
+        "type": "inject",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 220,
+        "wires": [
+            [
+                "881629b4b402addb"
+            ]
+        ]
+    },
+    {
+        "id": "a6cedcf7582829b2",
+        "type": "debug",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "e915fc70ccfe829c",
+        "type": "inject",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 360,
+        "wires": [
+            [
+                "0b646989d878857b"
+            ]
+        ]
+    },
+    {
+        "id": "0b646989d878857b",
+        "type": "exec",
+        "z": "a41153505b6d5097",
+        "command": "sudo reboot",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 410,
+        "y": 360,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "af931b78f4c542f4",
+        "type": "exec",
+        "z": "a41153505b6d5097",
+        "command": "bash /home/pi/node-hiu/sq2.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "sq2.sh",
+        "x": 370,
+        "y": 640,
+        "wires": [
+            [
+                "2a9fd6943280c4a6"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1b5e86a12751b53b",
+        "type": "debug",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "2a9fd6943280c4a6",
+        "type": "function",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "func": "\nvar msg1 = {};\nmsg1.topic = \"system/firmwareHat\",\nmsg1.payload = msg.payload.split(\",\")[0].trim().split(\" \")[2];\nmsg1.title = \"IO Hat Firmware Version\";\n\nvar msg2 = {};\nmsg2.topic = \"system/tCpuHat\",\nmsg2.payload = msg.payload.split(\",\")[1].trim().split(\" \")[2];\nmsg2.units=\"°C\";\nmsg2.title = \"IO Hat CPU Temperature\";\n\nvar msg3 = {};\nmsg3.topic = \"system/vPowerHat\",\nmsg3.payload = msg.payload.split(\",\")[2].trim().split(\" \")[2];\nmsg3.units=\"volts\";\nmsg3.title = \"IO Hat Power Supply Voltage\";\n\n\nvar msg4 = {};\nmsg4.topic = \"system/vBatteryHat\",\nmsg4.payload = msg.payload.split(\",\")[3].trim().split(\" \")[1];\nmsg4.units=\"volts\";\nmsg4.title = \"IO Hat Battery Voltage\";\n\nreturn [msg1, msg2,msg3,msg4];",
+        "outputs": 4,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 660,
+        "wires": [
+            [
+                "924d721552417b09"
+            ],
+            [
+                "924d721552417b09"
+            ],
+            [
+                "924d721552417b09"
+            ],
+            [
+                "924d721552417b09"
+            ]
+        ]
+    },
+    {
+        "id": "924d721552417b09",
+        "type": "subflow:d1f3d002.63ee48",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "x": 780,
+        "y": 660,
+        "wires": [
+            [
+                "c52dea4958c2f7ea",
+                "1b5e86a12751b53b"
+            ]
+        ]
+    },
+    {
+        "id": "c52dea4958c2f7ea",
+        "type": "link out",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8",
+            "8fa4fe935443d751"
+        ],
+        "x": 895,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "8e2bd7c12930c97f",
+        "type": "inject",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "15",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 640,
+        "wires": [
+            [
+                "af931b78f4c542f4"
+            ]
+        ]
+    },
+    {
+        "id": "2909c795ba8de21c",
+        "type": "mqtt in",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "topic": "#",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "4e7e88b068d5278e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 710,
+        "y": 140,
+        "wires": [
+            [
+                "b9b392c3c695bcac"
+            ]
+        ]
+    },
+    {
+        "id": "b9b392c3c695bcac",
+        "type": "debug",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "e0fa2b3ea948c3b1",
+        "type": "template",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "ti board\nti wdtr",
+        "output": "str",
+        "x": 460,
+        "y": 520,
+        "wires": [
+            [
+                "20e34a519f842d30"
+            ]
+        ]
+    },
+    {
+        "id": "219da053d1038c17",
+        "type": "inject",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 520,
+        "wires": [
+            [
+                "e0fa2b3ea948c3b1"
+            ]
+        ]
+    },
+    {
+        "id": "20e34a519f842d30",
+        "type": "file",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "filename": "/home/pi/node-hiu/sq2.sh",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 720,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "188431314bc78843",
+        "type": "mqtt out",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "topic": "test",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4e7e88b068d5278e",
+        "x": 910,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "9e07796733cae171",
+        "type": "inject",
+        "z": "a41153505b6d5097",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 720,
+        "y": 220,
+        "wires": [
+            [
+                "188431314bc78843"
+            ]
+        ]
+    }
+]
