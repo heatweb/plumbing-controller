@@ -59,6 +59,7 @@ sudo npm install --unsafe-perm --build-from-source node-red-node-email
 sudo npm install --unsafe-perm --build-from-source node-red-node-ui-table
 sudo npm install --unsafe-perm --build-from-source node-red-contrib-pid
 sudo npm install --unsafe-perm --build-from-source node-red-contrib-ip
+sudo npm install --unsafe-perm --build-from-source node-red-contrib-uibuilder
 node-red-restart
 
 
