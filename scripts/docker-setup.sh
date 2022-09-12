@@ -49,10 +49,12 @@ cd ~
 git clone https://github.com/heatweb/plumbing-controller.git
 cd /home/pi/plumbing-controller
 git pull
-cp -r /home/pi/plumbing-controller/mqtt/ /home/pi/
+cp -r /home/pi/plumbing-controller/mqtt /home/pi/mqtt
+cp -r /home/pi/plumbing-controller/mqtt /home/pi/mqtt2
 #cd /home/pi/mqtt
 
 sudo docker network create mqtt
 sudo docker run -d -it -p 1883:1883 --name=mqtt --restart=always -v /home/pi/mqtt/:/mosquitto/config/ --net mqtt eclipse-mosquitto:openssl
+sudo docker run -d -it -p 1883:1883 --name=mqtt-external --restart=always -v /home/pi/mqtt/:/mosquitto/config/ --net mqtt eclipse-mosquitto:openssl
 
 sudo docker run -d -it -p 5001:1880 -p 8001:8000 --net mqtt --restart=always -v node_red_data_1:/data -v /boot/heatweb/:/boot/heatweb/ --name mynodered1 heatweb/controller-setup
