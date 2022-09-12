@@ -43,8 +43,8 @@ cd /home/pi/plumbing-controller
 cd /home/pi/.node-red
 node-red-stop
 
-cp /home/pi/plumbing-controller/node-red/settings.js /home/pi/.node-red/settings.js
-cp /home/pi/plumbing-controller/node-red/flows_ihiu.json /home/pi/.node-red/settings.js /home/pi/.node-red/flows_ihiu.json
+cp /home/pi/plumbing-controller/node-red/settings.js /home/pi/.node-red/
+cp /home/pi/plumbing-controller/node-red/flows_ihiu.json /home/pi/.node-red/settings.js /home/pi/.node-red/
 
 sudo npm install --unsafe-perm --build-from-source node-red-dashboard
 sudo npm install --unsafe-perm --build-from-source node-red-contrib-arp
