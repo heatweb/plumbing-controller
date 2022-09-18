@@ -64,3 +64,5 @@ sudo docker run \
     -p 8080:80 \
     --name filebrowser \
     filebrowser/filebrowser
+
+docker run -d -p 3000:3000 --name=mygrafana --restart=always -v grafana-storage:/var/lib/grafana grafana/grafana-oss
