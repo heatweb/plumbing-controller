@@ -65,4 +65,4 @@ sudo docker run \
     --name filebrowser \
     filebrowser/filebrowser
 
-docker run -d -p 3000:3000 --name=mygrafana --restart=always --net mqtt -v grafana-storage:/var/lib/grafana grafana/grafana-oss
+sudo docker run -d -p 3000:3000 --name=mygrafana --restart=always --net mqtt -v grafana-storage:/var/lib/grafana grafana/grafana-oss
