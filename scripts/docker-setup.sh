@@ -70,3 +70,18 @@ sudo docker run -d -p 3000:3000 --name=mygrafana --restart=always --net mqtt -v 
 #docker run -d --name mysql --net mqtt -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=mysql-password -d mysql:latest
 #docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 phpmyadmin:latest
 #docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 arm64v8/phpmyadmin
+
+docker run -d -p 8086:8086 --name influxdb \
+      -v influx_data:/var/lib/influxdb2 \
+      -v influx_config:/etc/influxdb2 \
+      -e DOCKER_INFLUXDB_INIT_MODE=setup \
+      -e DOCKER_INFLUXDB_INIT_USERNAME=admin \
+      -e DOCKER_INFLUXDB_INIT_PASSWORD=Your_Password \
+      -e DOCKER_INFLUXDB_INIT_ORG=heatweb \
+      -e DOCKER_INFLUXDB_INIT_BUCKET=heatweb \
+      -e DOCKER_INFLUXDB_INIT_RETENTION=1w \
+      influxdb:2.0
+
+docker exec influxdb influx auth list \
+      --user admin \
+      --hide-headers | cut -f 3
