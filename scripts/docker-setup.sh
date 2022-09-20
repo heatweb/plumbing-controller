@@ -71,7 +71,7 @@ sudo docker run -d -p 3000:3000 --name=mygrafana --restart=always --net mqtt -v 
 #docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 phpmyadmin:latest
 #docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 arm64v8/phpmyadmin
 
-docker run -d -p 8086:8086 --name influxdb \
+docker run -d -p 8086:8086 --name influxdb --net mqtt \
       -v influx_data:/var/lib/influxdb2 \
       -v influx_config:/etc/influxdb2 \
       -e DOCKER_INFLUXDB_INIT_MODE=setup \
