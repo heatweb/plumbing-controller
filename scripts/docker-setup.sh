@@ -61,7 +61,7 @@ sudo docker run -d -it -p 10031:1883 --name=mqtt2 --restart=always -v /home/pi/m
 
 sudo docker run \
     -v /home/pi:/srv \
-    -p 8080:80 \
+    -p 8090:80 \
     --name filebrowser \
     filebrowser/filebrowser
 
