@@ -1,0 +1,14 @@
+{
+    "name": "zerocarboncontrol1",
+    "description": "testing",
+    "version": "0.0.1",
+    "dependencies": {
+	"node-red": "latest",
+    "node-red-dashboard": "3.1.7",
+    "node-red-node-serialport": "latest"
+
+    },
+    "scripts": {
+		"start": "node /usr/src/node-red/node_modules/node-red/red.js"
+    }
+}
