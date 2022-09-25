@@ -103,3 +103,6 @@ sudo docker run -d -p 8086:8086 --name influxdb --net mqtt \
 sudo docker exec influxdb influx auth list \
       --user admin \
       --hide-headers | cut -f 3
+
+
+sudo docker exec -ti grafana grafana-cli admin reset-admin-password $password
