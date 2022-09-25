@@ -1,4 +1,21 @@
+#!/bin/bash
+# Read Password
+echo -n Password:
+read -s password
+echo
+echo -n Repeat password:
+read -s password2
+echo
+if [[ "$password" == "$password2" ]]; then
+ echo "ok"
+else
+ echo "Passwords do not match."
+ exit 1
+fi
+
+
 # For 64-bit OS (can be changed via comments)
+
 
 sudo apt-get -y update
 
@@ -68,7 +85,7 @@ sudo docker run \
 
 sudo docker run -d -p 3000:3000 --name=mygrafana --restart=always --net mqtt -v grafana-storage:/var/lib/grafana grafana/grafana-oss
 
-#sudo docker run -d --name mysql --net mqtt -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=mysql-password -d mysql:latest
+#sudo docker run -d --name mysql --net mqtt -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=$password -d mysql:latest
 #sudo docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 phpmyadmin:latest
 #sudo docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 arm64v8/phpmyadmin
 
@@ -77,7 +94,7 @@ sudo docker run -d -p 8086:8086 --name influxdb --net mqtt \
       -v influx_config:/etc/influxdb2 \
       -e DOCKER_INFLUXDB_INIT_MODE=setup \
       -e DOCKER_INFLUXDB_INIT_USERNAME=admin \
-      -e DOCKER_INFLUXDB_INIT_PASSWORD=Your_Password \
+      -e DOCKER_INFLUXDB_INIT_PASSWORD=$password \
       -e DOCKER_INFLUXDB_INIT_ORG=heatweb \
       -e DOCKER_INFLUXDB_INIT_BUCKET=heatweb \
       -e DOCKER_INFLUXDB_INIT_RETENTION=1w \
