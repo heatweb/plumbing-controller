@@ -21,8 +21,9 @@ sudo make install
 sudo ln -s /usr/local/lib/libmbus.so.0 /usr/lib/libmbus.so.0
 mkdir /home/pi/node-hiu
 mkdir /home/pi/node-hiu/logs
-mkdir /home/pi/node-hiu/iHIU
+#mkdir /home/pi/node-hiu/iHIU
 mkdir /home/pi/node-hiu/flows
+mkdir /home/pi/node-hiu/vpn
 sudo chmod -R 775 /home/pi/node-hiu
 sudo mkdir /boot/heatweb
 
