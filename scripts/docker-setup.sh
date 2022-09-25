@@ -100,9 +100,11 @@ sudo docker run -d -p 8086:8086 --name influxdb --net mqtt \
       -e DOCKER_INFLUXDB_INIT_RETENTION=1w \
       influxdb:2.0
 
+echo "Please wait 1 minute to complete..."
+sleep 1m
+
 sudo docker exec influxdb influx auth list \
       --user admin \
       --hide-headers | cut -f 3
-
 
 sudo docker exec -ti grafana grafana-cli admin reset-admin-password $password
