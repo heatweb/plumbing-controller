@@ -83,7 +83,7 @@ sudo docker run -d \
     --name filebrowser \
     filebrowser/filebrowser
 
-sudo docker run -d -p 3000:3000 --name=mygrafana --restart=always --net mqtt -v grafana-storage:/var/lib/grafana grafana/grafana-oss
+sudo docker run -d -p 3000:3000 --name=grafana --restart=always --net mqtt -v grafana-storage:/var/lib/grafana grafana/grafana-oss
 
 #sudo docker run -d --name mysql --net mqtt -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=$password -d mysql:latest
 #sudo docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 phpmyadmin:latest
