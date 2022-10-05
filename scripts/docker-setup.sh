@@ -1,9 +1,9 @@
 #!/bin/bash
 # Read Password
-echo -n Password:
+echo -n "Password for admin:"
 read -s password
 echo
-echo -n Repeat password:
+echo -n "Repeat password:"
 read -s password2
 echo
 if [[ "$password" == "$password2" ]]; then
@@ -13,6 +13,7 @@ else
  exit 1
 fi
 
+read -p "Do you want to install InfluxDB database? (y/n) " goinflux
 
 # For 64-bit OS (can be changed via comments)
 
@@ -67,12 +68,11 @@ git clone https://github.com/heatweb/plumbing-controller.git
 cd /home/pi/plumbing-controller
 git pull
 cp -r /home/pi/plumbing-controller/mqtt /home/pi/mqtt
-cp -r /home/pi/plumbing-controller/mqtt /home/pi/mqtt2
-#cd /home/pi/mqtt
+#cp -r /home/pi/plumbing-controller/mqtt /home/pi/mqtt2
 
 sudo docker network create mqtt
-#sudo docker run -d -it -p 1883:1883 --name=mqtt --restart=always -v /home/pi/mqtt/:/mosquitto/config/ --net mqtt eclipse-mosquitto:openssl
-sudo docker run -d -it -p 10031:1883 --name=mqtt2 --restart=always -v /home/pi/mqtt2/:/mosquitto/config/ --net mqtt eclipse-mosquitto:openssl
+sudo docker run -d -it -p 1883:1883 --name=mqtt --restart=always -v /home/pi/mqtt/:/mosquitto/config/ --net mqtt eclipse-mosquitto:openssl
+#sudo docker run -d -it -p 10031:1883 --name=mqtt2 --restart=always -v /home/pi/mqtt2/:/mosquitto/config/ --net mqtt eclipse-mosquitto:openssl
 
 #sudo docker run -d -it -p 5001:1880 -p 8001:8000 --net mqtt --restart=always -v node_red_data_1:/data -v /boot/heatweb/:/boot/heatweb/ --name mynodered1 heatweb/controller-setup
 sudo docker run -d -it -p 5001:1880 -p 8001:8000 --net mqtt --restart=always -v node_red_data_1:/data -v /boot/heatweb/:/boot/heatweb/ --device /dev/ttyUSB0 --device /dev/ttyUSB1 --device /dev/ttyUSB2 --device /dev/ttyUSB3 --device /dev/ttyUSB4 --device /dev/ttyAMA1 --device /dev/ttyAMA2 --device /dev/ttyAMA3 --device /dev/ttyAMA4 --name mynodered1 heatweb/plumbing-controller:latest
@@ -89,7 +89,10 @@ sudo docker run -d -p 3000:3000 --name=grafana --restart=always --net mqtt -v gr
 #sudo docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 phpmyadmin:latest
 #sudo docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 arm64v8/phpmyadmin
 
-sudo docker run -d -p 8086:8086 --name influxdb --net mqtt \
+case $goinflux in
+  [Yy]* ) 
+
+    sudo docker run -d -p 8086:8086 --name influxdb --net mqtt \
       -v influx_data:/var/lib/influxdb2 \
       -v influx_config:/etc/influxdb2 \
       -e DOCKER_INFLUXDB_INIT_MODE=setup \
@@ -99,12 +102,28 @@ sudo docker run -d -p 8086:8086 --name influxdb --net mqtt \
       -e DOCKER_INFLUXDB_INIT_BUCKET=heatweb \
       -e DOCKER_INFLUXDB_INIT_RETENTION=1w \
       influxdb:2.0
+  ;;
+
+esac
+
 
 echo "Please wait 1 minute to complete..."
 sleep 1m
 
-sudo docker exec influxdb influx auth list \
-      --user admin \
-      --hide-headers | cut -f 3
+case $goinflux in
+  [Yy]* ) 
+  
+    sudo docker exec influxdb influx auth list \
+          --user admin \
+          --hide-headers | cut -f 3
+
+ ;;
+esac
 
 sudo docker exec -ti grafana grafana-cli admin reset-admin-password $password
+
+## The following lines add the admin user to the MQTT service and restarts it.
+sudo docker exec -ti mqtt mosquitto_passwd -b /mosquitto/config/passwordfile admin $password
+sudo docker restart mqtt
+
+echo "Finished."
