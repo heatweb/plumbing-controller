@@ -108,7 +108,7 @@ case $goinflux in
       -e DOCKER_INFLUXDB_INIT_PASSWORD=$password \
       -e DOCKER_INFLUXDB_INIT_ORG=heatweb \
       -e DOCKER_INFLUXDB_INIT_BUCKET=heatweb \
-      -e DOCKER_INFLUXDB_INIT_RETENTION=1w \
+      -e DOCKER_INFLUXDB_INIT_RETENTION=1y \
       influxdb:2.0
   ;;
 
