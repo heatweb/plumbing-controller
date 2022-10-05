@@ -1,6 +1,6 @@
 #!/bin/bash
 # Read Password
-echo -n "Password for admin:"
+echo -n "Admin password:"
 read -s password
 echo
 echo -n "Repeat password:"
@@ -14,6 +14,7 @@ else
 fi
 
 read -p "Do you want to install InfluxDB database? (y/n) " goinflux
+read -p "Do you want to install MySQL database? (y/n) " gomysql
 
 # For 64-bit OS (can be changed via comments)
 
@@ -85,9 +86,16 @@ sudo docker run -d \
 
 sudo docker run -d -p 3000:3000 --name=grafana --restart=always --net mqtt -v grafana-storage:/var/lib/grafana grafana/grafana-oss
 
-#sudo docker run -d --name mysql --net mqtt -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=$password -d mysql:latest
-#sudo docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 phpmyadmin:latest
-#sudo docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 arm64v8/phpmyadmin
+
+case $gomysql in
+  [Yy]* ) 
+
+     sudo docker run -d --name mysql --net mqtt -p 3306:3306 -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=$password -d mysql:latest
+     #sudo docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 phpmyadmin:latest
+     sudo docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 arm64v8/phpmyadmin
+  ;;
+
+esac
 
 case $goinflux in
   [Yy]* ) 
