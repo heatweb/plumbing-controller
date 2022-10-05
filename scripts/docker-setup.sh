@@ -120,11 +120,14 @@ sleep 1m
 
 case $goinflux in
   [Yy]* ) 
-  
+     
     sudo docker exec influxdb influx auth list \
           --user admin \
-          --hide-headers | cut -f 3
-
+          --hide-headers | cut -f 3 > /home/pi/influxdbtoken.txt
+          
+    echo -n "Your InfluxDB access token is: "
+    cat /home/pi/influxdbtoken.txt
+    echo "This is saved to /home/pi/influxdbtoken.txt"
  ;;
 esac
 
