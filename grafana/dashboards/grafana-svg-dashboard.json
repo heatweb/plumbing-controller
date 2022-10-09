@@ -1,0 +1,3286 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_MYSQL",
+      "label": "MySQL",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "mysql",
+      "pluginName": "MySQL"
+    },
+    {
+      "name": "DS_STATIC_DATA",
+      "label": "Static Data",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "marcusolsson-static-datasource",
+      "pluginName": "Static"
+    },
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.1.5"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "marcuscalidus-svg-panel",
+      "name": "SVG",
+      "version": "0.3.4"
+    },
+    {
+      "type": "datasource",
+      "id": "marcusolsson-static-datasource",
+      "name": "Static",
+      "version": "1.4.4"
+    },
+    {
+      "type": "datasource",
+      "id": "mysql",
+      "name": "MySQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vargroup"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 96
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "device"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 132
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "varkey"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 160
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 22,
+        "w": 9,
+        "x": 0,
+        "y": 0
+      },
+      "id": 9,
+      "options": {
+        "footer": {
+          "enablePagination": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.1.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  now() AS \"time\",\n  device,\n  vargroup,\n  varkey,\n  value\nFROM readings\nWHERE\n  device = \"$device\"\nORDER BY timestamp\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Data",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "device": false
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Time": "",
+              "device": "",
+              "vargroup": ""
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "doInit": {},
+      "draw": {},
+      "format": "short",
+      "gridPos": {
+        "h": 10,
+        "w": 3,
+        "x": 9,
+        "y": 0
+      },
+      "handleMetric": {},
+      "id": 11,
+      "js_code": "\r\n  \r\n  //console.log(\"ctrl...\",ctrl);\r\n  //console.log(\"rows...\",ctrl.data[0].rows);\r\n  \r\n  for (var row in ctrl.data[0].rows) {\r\n     \r\n      \r\n        var dev = ctrl.data[0].rows[row].device;\r\n        var val = ctrl.data[0].rows[row].value;\r\n        var varkey = ctrl.data[0].rows[row].varkey;\r\n        var vargroup = ctrl.data[0].rows[row].vargroup;\r\n         \r\n        \r\n        //$(svgnode).find(\"[device='\"+dev+\"']\").filter(\"[varkey='\"+varkey+\"']\").filter(\"text\").html(val);\r\n        \r\n     \r\n        $(svgnode).find(\"[varkey='\"+varkey+\"']\")\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"device\" ) || $( this ).attr( \"device\" ) == dev;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"vargroup\" ) || $( this ).attr( \"vargroup\" ) == vargroup;\r\n        })\r\n        .filter(\"text\").html(val);\r\n  }\r\n  \r\n \r\n  ",
+      "js_init_code": "",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "repositories": {
+        "rtmaster": {
+          "description": "simple examples",
+          "items": [
+            {
+              "category": "arrows",
+              "description": "Arrow facing up",
+              "name": "arrow-up",
+              "path": "rtmaster/arrows/arrow-up.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down",
+              "name": "arrow-down",
+              "path": "rtmaster/arrows/arrow-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing right",
+              "name": "arrow-right",
+              "path": "rtmaster/arrows/arrow-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left",
+              "name": "arrow-left",
+              "path": "rtmaster/arrows/arrow-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up right",
+              "name": "arrow-up-right",
+              "path": "rtmaster/arrows/arrow-up-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up left",
+              "name": "arrow-up-left",
+              "path": "rtmaster/arrows/arrow-up-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down left",
+              "name": "arrow-down-left",
+              "path": "rtmaster/arrows/arrow-down-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down right",
+              "name": "arrow-down-right",
+              "path": "rtmaster/arrows/arrow-down-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left right",
+              "name": "arrow-left-right",
+              "path": "rtmaster/arrows/arrow-left-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down",
+              "name": "arrow-up-down",
+              "path": "rtmaster/arrows/arrow-up-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down left right",
+              "name": "arrow-up-down-left-right",
+              "path": "rtmaster/arrows/arrow-up-down-left-right.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Factory",
+              "name": "factory",
+              "path": "rtmaster/facilities/factory.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Jackup",
+              "name": "jackup",
+              "path": "rtmaster/facilities/jackup.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Plant",
+              "name": "plant",
+              "path": "rtmaster/facilities/plant.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Semisub",
+              "name": "semisub",
+              "path": "rtmaster/facilities/semisub.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Ship",
+              "name": "ship",
+              "path": "rtmaster/facilities/ship.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Truck",
+              "name": "truck",
+              "path": "rtmaster/facilities/truck.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Light Bulb",
+              "name": "light-bulb",
+              "path": "rtmaster/indicators/light-bulb.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Green Light Indicator",
+              "name": "light-green",
+              "path": "rtmaster/indicators/light-green.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Orange Light Indicator",
+              "name": "light-orange",
+              "path": "rtmaster/indicators/light-orange.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Red Light Indicator",
+              "name": "light-red",
+              "path": "rtmaster/indicators/light-red.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Compressor",
+              "name": "compressor",
+              "path": "rtmaster/industrial/compressor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Derrick",
+              "name": "derrick",
+              "path": "rtmaster/industrial/derrick.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Heat Exchanger",
+              "name": "heatexchanger",
+              "path": "rtmaster/industrial/heatexchanger.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Motor",
+              "name": "motor",
+              "path": "rtmaster/industrial/motor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Pump",
+              "name": "pump",
+              "path": "rtmaster/industrial/pump.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Tank",
+              "name": "tank-horizontal",
+              "path": "rtmaster/industrial/tank-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Tank",
+              "name": "tank-vertical",
+              "path": "rtmaster/industrial/tank-vertical.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Turbine",
+              "name": "turbine",
+              "path": "rtmaster/industrial/turbine.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Vessel",
+              "name": "vessel-horizontal",
+              "path": "rtmaster/industrial/vessel-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Vessel",
+              "name": "vessel-vertical",
+              "path": "rtmaster/industrial/vessel-vertical.svg"
+            },
+            {
+              "category": "letters",
+              "description": "A",
+              "name": "A",
+              "path": "rtmaster/letters/letter-a.svg"
+            },
+            {
+              "category": "letters",
+              "description": "B",
+              "name": "B",
+              "path": "rtmaster/letters/letter-b.svg"
+            },
+            {
+              "category": "letters",
+              "description": "C",
+              "name": "C",
+              "path": "rtmaster/letters/letter-c.svg"
+            },
+            {
+              "category": "letters",
+              "description": "D",
+              "name": "D",
+              "path": "rtmaster/letters/letter-d.svg"
+            },
+            {
+              "category": "letters",
+              "description": "E",
+              "name": "E",
+              "path": "rtmaster/letters/letter-e.svg"
+            },
+            {
+              "category": "letters",
+              "description": "F",
+              "name": "F",
+              "path": "rtmaster/letters/letter-f.svg"
+            },
+            {
+              "category": "letters",
+              "description": "G",
+              "name": "G",
+              "path": "rtmaster/letters/letter-g.svg"
+            },
+            {
+              "category": "letters",
+              "description": "H",
+              "name": "H",
+              "path": "rtmaster/letters/letter-h.svg"
+            },
+            {
+              "category": "letters",
+              "description": "I",
+              "name": "I",
+              "path": "rtmaster/letters/letter-i.svg"
+            },
+            {
+              "category": "letters",
+              "description": "J",
+              "name": "J",
+              "path": "rtmaster/letters/letter-j.svg"
+            },
+            {
+              "category": "letters",
+              "description": "K",
+              "name": "K",
+              "path": "rtmaster/letters/letter-k.svg"
+            },
+            {
+              "category": "letters",
+              "description": "L",
+              "name": "L",
+              "path": "rtmaster/letters/letter-l.svg"
+            },
+            {
+              "category": "letters",
+              "description": "M",
+              "name": "M",
+              "path": "rtmaster/letters/letter-m.svg"
+            },
+            {
+              "category": "letters",
+              "description": "N",
+              "name": "N",
+              "path": "rtmaster/letters/letter-n.svg"
+            },
+            {
+              "category": "letters",
+              "description": "O",
+              "name": "O",
+              "path": "rtmaster/letters/letter-o.svg"
+            },
+            {
+              "category": "letters",
+              "description": "P",
+              "name": "P",
+              "path": "rtmaster/letters/letter-p.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Q",
+              "name": "Q",
+              "path": "rtmaster/letters/letter-q.svg"
+            },
+            {
+              "category": "letters",
+              "description": "R",
+              "name": "R",
+              "path": "rtmaster/letters-letter-r.svg"
+            },
+            {
+              "category": "letters",
+              "description": "S",
+              "name": "S",
+              "path": "rtmaster/letters/letter-s.svg"
+            },
+            {
+              "category": "letters",
+              "description": "T",
+              "name": "T",
+              "path": "rtmaster/letters/letter-t.svg"
+            },
+            {
+              "category": "letters",
+              "description": "U",
+              "name": "U",
+              "path": "rtmaster/letters/letter-u.svg"
+            },
+            {
+              "category": "letters",
+              "description": "V",
+              "name": "V",
+              "path": "rtmaster/letters/letter-v.svg"
+            },
+            {
+              "category": "letters",
+              "description": "W",
+              "name": "W",
+              "path": "rtmaster/letters/letter-w.svg"
+            },
+            {
+              "category": "letters",
+              "description": "X",
+              "name": "X",
+              "path": "rtmaster/letters/letter-x.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Y",
+              "name": "Y",
+              "path": "rtmaster/letters/letter-y.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Z",
+              "name": "Z",
+              "path": "rtmaster/letters/letter-z.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Laboratory Flask",
+              "name": "flask",
+              "path": "rtmaster/meters/flask.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Flowmeter",
+              "name": "flowmeter",
+              "path": "rtmaster/meters/flowmeter.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Gauge",
+              "name": "gauge",
+              "path": "rtmaster/meters/gauge.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "0",
+              "name": "0",
+              "path": "rtmaster/numbers/number-0.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "1",
+              "name": "1",
+              "path": "rtmaster/numbers/number-1.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "2",
+              "name": "2",
+              "path": "rtmaster/numbers/number-2.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "3",
+              "name": "3",
+              "path": "rtmaster/numbers/number-3.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "4",
+              "name": "4",
+              "path": "rtmaster/numbers/number-4.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "5",
+              "name": "5",
+              "path": "rtmaster/numbers/number-5.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "6",
+              "name": "6",
+              "path": "rtmaster/numbers/number-6.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "7",
+              "name": "7",
+              "path": "rtmaster/numbers/number-7.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "8",
+              "name": "8",
+              "path": "rtmaster/numbers/number-8.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "9",
+              "name": "9",
+              "path": "rtmaster/numbers/number-9.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down",
+              "name": "pipe-curve-down",
+              "path": "rtmaster/pipes/pipe-curve-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down left",
+              "name": "pipe-curve-down-left",
+              "path": "rtmaster/pipes/pipe-curve-down-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down right",
+              "name": "pipe-curve-down-right",
+              "path": "rtmaster/pipes/pipe-curve-down-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve left",
+              "name": "pipe-curve-left",
+              "path": "rtmaster/pipes/pipe-curve-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve right",
+              "name": "pipe-curve-right",
+              "path": "rtmaster/pipes/pipe-curve-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up",
+              "name": "pipe-curve-up",
+              "path": "rtmaster/pipes/pipe-curve-up.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up left",
+              "name": "pipe-curve-up-left",
+              "path": "rtmaster/pipes/pipe-curve-up-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up right",
+              "name": "pipe-curve-up-right",
+              "path": "rtmaster/pipes/pipe-curve-up-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal left",
+              "name": "pipe-diagonal-left",
+              "path": "rtmaster/pipes/pipe-diagonal-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal right",
+              "name": "pipe-diagonal-right",
+              "path": "rtmaster/pipes/pipe-diagonal-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange horizontal",
+              "name": "pipe-flange-horizontal",
+              "path": "rtmaster/pipes/pipe-flange-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange intersection",
+              "name": "pipe-flange-intersection",
+              "path": "rtmaster/pipes/pipe-flange-intersection.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange vertical",
+              "name": "pipe-flange-vertical",
+              "path": "rtmaster/pipes/pipe-flange-vertical.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe horizontal",
+              "name": "pipe-horizontal",
+              "path": "rtmaster/pipes/pipe-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee down",
+              "name": "pipe-tee-down",
+              "path": "rtmaster/pipes/pipe-tee-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee left",
+              "name": "pipe-tee-left",
+              "path": "rtmaster/pipes/pipe-tee-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee right",
+              "name": "pipe-tee-right",
+              "path": "rtmaster/pipes/pipe-tee-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee up",
+              "name": "pipe-tee-up",
+              "path": "rtmaster/pipes/pipe-tee-up"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe vertical",
+              "name": "pipe-vertical",
+              "path": "rtmaster/pipes/pipe-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Circle",
+              "name": "circle",
+              "path": "rtmaster/shapes/circle.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Gear",
+              "name": "gear",
+              "path": "rtmaster/shapes/gear.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal",
+              "name": "line-horizontal",
+              "path": "rtmaster/shapes/line-horizontal.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow left",
+              "name": "line-horizontal-arrow-left",
+              "path": "rtmaster/shapes/line-horizontal-arrow-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow right",
+              "name": "line-horizontal-arrow-right",
+              "path": "rtmaster/shapes/line-horizontal-arrow-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical",
+              "name": "line-vertical",
+              "path": "rtmaster/shapes/line-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow down",
+              "name": "line-vertical-arrow-down",
+              "path": "rtmaster/shapes/line-vertical-arrow-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow up",
+              "name": "line-vertical-arrow-up",
+              "path": "rtmaster/shapes/line-vertical-arrow-up.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Square",
+              "name": "square",
+              "path": "rtmaster/shapes/square.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle down",
+              "name": "triangle-down",
+              "path": "rtmaster/shapes/triangle-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle left",
+              "name": "triangle-left",
+              "path": "rtmaster/shapes/triangle-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle right",
+              "name": "triangle-right",
+              "path": "rtmaster/shapes/triangle-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle-up",
+              "name": "triangle-up",
+              "path": "rtmaster/shapes/triangle-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve Horizontal",
+              "name": "valve-horizontal",
+              "path": "rtmaster/valves/valve-horizontal.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve left right",
+              "name": "valve-left-right",
+              "path": "rtmaster/valves/valve-left-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round down",
+              "name": "valve-round-down",
+              "path": "rtmaster/valves/valve-round-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round left",
+              "name": "valve-round-left",
+              "path": "rtmaster/valves/valve-round-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round right",
+              "name": "valve-round-right",
+              "path": "rtmaster/valves/valve-round-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round up",
+              "name": "valve-round-up",
+              "path": "rtmaster/valves/valve-round-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square down",
+              "name": "valve-square-down",
+              "path": "rtmaster/valves/valve-square-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square left",
+              "name": "valve-square-left",
+              "path": "rtmaster/valves/valve-square-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square right",
+              "name": "valve-square-right",
+              "path": "rtmaster/valves/valve-square-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square up",
+              "name": "valve-square-up",
+              "path": "rtmaster/valves/valve-square-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve vertical",
+              "name": "valve-vertical",
+              "path": "rtmaster/valves/valve-vertical"
+            }
+          ],
+          "license": "Apache 2.0",
+          "url": "https://github.com/rtmaster"
+        }
+      },
+      "svgBuilderData": {
+        "elements": [],
+        "height": "100%",
+        "viewport": {
+          "height": 1000,
+          "width": 1000,
+          "x": 0,
+          "y": 0
+        },
+        "width": "100%"
+      },
+      "svg_data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\n\n<svg\n   xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n   xmlns:cc=\"http://creativecommons.org/ns#\"\n   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n   xmlns:svg=\"http://www.w3.org/2000/svg\"\n   xmlns=\"http://www.w3.org/2000/svg\"\n   xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n   xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n   width=\"100%\"\n   height=\"100%\"\n   viewBox=\"0 0 210 297\"\n   version=\"1.1\"\n   id=\"svg931\"\n   inkscape:version=\"0.92.4 (5da689c313, 2019-01-14)\"\n   sodipodi:docname=\"testing.svg\">\n  <defs\n     id=\"defs925\" />\n  <sodipodi:namedview\n     id=\"base\"\n     pagecolor=\"#ffffff\"\n     bordercolor=\"#666666\"\n     borderopacity=\"1.0\"\n     inkscape:pageopacity=\"0.0\"\n     inkscape:pageshadow=\"2\"\n     inkscape:zoom=\"1.4\"\n     inkscape:cx=\"97.316406\"\n     inkscape:cy=\"147.76607\"\n     inkscape:document-units=\"mm\"\n     inkscape:current-layer=\"layer1\"\n     showgrid=\"false\"\n     inkscape:window-width=\"934\"\n     inkscape:window-height=\"744\"\n     inkscape:window-x=\"208\"\n     inkscape:window-y=\"208\"\n     inkscape:window-maximized=\"0\" />\n  <metadata\n     id=\"metadata928\">\n    <rdf:RDF>\n      <cc:Work\n         rdf:about=\"\">\n        <dc:format>image/svg+xml</dc:format>\n        <dc:type\n           rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\" />\n        <dc:title />\n      </cc:Work>\n    </rdf:RDF>\n  </metadata>\n  <g\n     inkscape:label=\"Layer 1\"\n     inkscape:groupmode=\"layer\"\n     id=\"layer1\">\n    <rect\n       style=\"opacity:1;fill:#b3b3b3;fill-opacity:0.98787878;stroke:#000000;stroke-width:0.10000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.30000002, 0.10000001;stroke-dashoffset:0\"\n       id=\"rect1\"\n       width=\"49.136902\"\n       height=\"37.797619\"\n       x=\"135.34871\"\n       y=\"20.241652\"\n       class=\"rect\" />\n    <g\n       id=\"g1484\"\n       transform=\"translate(-53.033009,-1.0101525)\">\n      <rect\n         y=\"92.592628\"\n         x=\"76.394913\"\n         height=\"102.81516\"\n         width=\"167.16751\"\n         id=\"rect2\"\n         style=\"opacity:1;fill:#b3b3b3;fill-opacity:0.98787878;stroke:#000000;stroke-width:0.18744472;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.56233413, 0.18744472;stroke-dashoffset:0\" />\n      <rect\n         y=\"194.94644\"\n         x=\"107.34524\"\n         height=\"37.797619\"\n         width=\"49.892857\"\n         id=\"rect3\"\n         style=\"opacity:1;fill:#b3b3b3;fill-opacity:0.98787878;stroke:#000000;stroke-width:0.10000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.30000002, 0.10000001;stroke-dashoffset:0\"\n         class=\"rect\" />\n    </g>\n    <text\n       xml:space=\"preserve\"\n       style=\"font-style:normal;font-weight:normal;font-size:13.33333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none\"\n       x=\"38.901249\"\n       y=\"115.00253\"\n       id=\"text821-3-9\"\n       device=\"solar\"\n       vargroup=\"dat\"\n       varkey=\"tF\"\n       decimals=\"1\"><tspan\n         sodipodi:role=\"line\"\n         id=\"tspan819-9-6\"\n         x=\"38.901249\"\n         y=\"115.00253\">Test</tspan></text>\n    <text\n       xml:space=\"preserve\"\n       style=\"font-style:normal;font-weight:normal;font-size:13.33333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none\"\n       x=\"37.75856\"\n       y=\"131.76562\"\n       id=\"text821-3-9-9\"\n       device=\"solar\"\n       vargroup=\"dat\"\n       varkey=\"tR\"\n       decimals=\"1\"><tspan\n         sodipodi:role=\"line\"\n         id=\"tspan819-9-6-9\"\n         x=\"37.75856\"\n         y=\"131.76562\">Test</tspan></text>\n    <text\n       xml:space=\"preserve\"\n       style=\"font-style:normal;font-weight:normal;font-size:13.33333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none\"\n       x=\"39.901413\"\n       y=\"162.4799\"\n       id=\"text821-3-9-0\"\n       device=\"heatpump\"\n       vargroup=\"dat\"\n       varkey=\"tF\"\n       decimals=\"1\"><tspan\n         sodipodi:role=\"line\"\n         id=\"tspan819-9-6-4\"\n         x=\"39.901413\"\n         y=\"162.4799\">Test</tspan></text>\n    <text\n       xml:space=\"preserve\"\n       style=\"font-style:normal;font-weight:normal;font-size:13.33333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none\"\n       x=\"40.6157\"\n       y=\"180.33705\"\n       id=\"text821-3-9-8\"\n       device=\"heatpump\"\n       vargroup=\"dat\"\n       varkey=\"tR\"\n       decimals=\"1\"><tspan\n         sodipodi:role=\"line\"\n         id=\"tspan819-9-6-45\"\n         x=\"40.6157\"\n         y=\"180.33705\">Test</tspan></text>\n    <text\n       xml:space=\"preserve\"\n       style=\"font-style:normal;font-weight:normal;font-size:13.33333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#00ff00;fill-opacity:1;stroke:none\"\n       x=\"33.472843\"\n       y=\"80.337051\"\n       id=\"text821-3-9-9-7\"\n       vargroup=\"dat\"\n       varkey=\"tR\"\n       decimals=\"1\"><tspan\n         sodipodi:role=\"line\"\n         id=\"tspan819-9-6-9-0\"\n         x=\"33.472843\"\n         y=\"80.337051\">Test</tspan></text>\n  </g>\n</svg>\n",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  now() AS \"time\",\n  device,\n  vargroup,\n  varkey,\n  value\nFROM readings\nWHERE\n  network = \"$network\"\nORDER BY timestamp\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Panel Title",
+      "type": "marcuscalidus-svg-panel",
+      "useSVGBuilder": false
+    },
+    {
+      "aliasColors": {},
+      "datasource": {
+        "type": "marcusolsson-static-datasource",
+        "uid": "${DS_STATIC_DATA}"
+      },
+      "doInit": {},
+      "format": "short",
+      "gridPos": {
+        "h": 6,
+        "w": 3,
+        "x": 15,
+        "y": 0
+      },
+      "handleMetric": {},
+      "id": 3,
+      "js_code": "var now = new Date();\nvar angle = 360 * now.getHours()   / 12;\n$(svgnode).find(\"#hourhand\").attr(\"transform\", \"rotate(\"+angle.toString()+ \" 100 100)\"  );\nvar angle = 360 * now.getMinutes() / 60;\n$(svgnode).find(\"#minutehand\").attr(\"transform\", \"rotate(\"+angle.toString()+ \" 100 100)\"  );\nvar angle = 360 * now.getSeconds() / 60;\n$(svgnode).find(\"#secondhand\").attr(\"transform\", \"rotate(\"+angle.toString()+ \" 100 100)\"  );",
+      "js_init_code": "",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "repositories": {
+        "rtmaster": {
+          "description": "simple examples",
+          "items": [
+            {
+              "category": "arrows",
+              "description": "Arrow facing up",
+              "name": "arrow-up",
+              "path": "rtmaster/arrows/arrow-up.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down",
+              "name": "arrow-down",
+              "path": "rtmaster/arrows/arrow-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing right",
+              "name": "arrow-right",
+              "path": "rtmaster/arrows/arrow-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left",
+              "name": "arrow-left",
+              "path": "rtmaster/arrows/arrow-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up right",
+              "name": "arrow-up-right",
+              "path": "rtmaster/arrows/arrow-up-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up left",
+              "name": "arrow-up-left",
+              "path": "rtmaster/arrows/arrow-up-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down left",
+              "name": "arrow-down-left",
+              "path": "rtmaster/arrows/arrow-down-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down right",
+              "name": "arrow-down-right",
+              "path": "rtmaster/arrows/arrow-down-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left right",
+              "name": "arrow-left-right",
+              "path": "rtmaster/arrows/arrow-left-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down",
+              "name": "arrow-up-down",
+              "path": "rtmaster/arrows/arrow-up-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down left right",
+              "name": "arrow-up-down-left-right",
+              "path": "rtmaster/arrows/arrow-up-down-left-right.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Factory",
+              "name": "factory",
+              "path": "rtmaster/facilities/factory.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Jackup",
+              "name": "jackup",
+              "path": "rtmaster/facilities/jackup.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Plant",
+              "name": "plant",
+              "path": "rtmaster/facilities/plant.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Semisub",
+              "name": "semisub",
+              "path": "rtmaster/facilities/semisub.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Ship",
+              "name": "ship",
+              "path": "rtmaster/facilities/ship.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Truck",
+              "name": "truck",
+              "path": "rtmaster/facilities/truck.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Light Bulb",
+              "name": "light-bulb",
+              "path": "rtmaster/indicators/light-bulb.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Green Light Indicator",
+              "name": "light-green",
+              "path": "rtmaster/indicators/light-green.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Orange Light Indicator",
+              "name": "light-orange",
+              "path": "rtmaster/indicators/light-orange.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Red Light Indicator",
+              "name": "light-red",
+              "path": "rtmaster/indicators/light-red.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Compressor",
+              "name": "compressor",
+              "path": "rtmaster/industrial/compressor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Derrick",
+              "name": "derrick",
+              "path": "rtmaster/industrial/derrick.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Heat Exchanger",
+              "name": "heatexchanger",
+              "path": "rtmaster/industrial/heatexchanger.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Motor",
+              "name": "motor",
+              "path": "rtmaster/industrial/motor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Pump",
+              "name": "pump",
+              "path": "rtmaster/industrial/pump.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Tank",
+              "name": "tank-horizontal",
+              "path": "rtmaster/industrial/tank-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Tank",
+              "name": "tank-vertical",
+              "path": "rtmaster/industrial/tank-vertical.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Turbine",
+              "name": "turbine",
+              "path": "rtmaster/industrial/turbine.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Vessel",
+              "name": "vessel-horizontal",
+              "path": "rtmaster/industrial/vessel-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Vessel",
+              "name": "vessel-vertical",
+              "path": "rtmaster/industrial/vessel-vertical.svg"
+            },
+            {
+              "category": "letters",
+              "description": "A",
+              "name": "A",
+              "path": "rtmaster/letters/letter-a.svg"
+            },
+            {
+              "category": "letters",
+              "description": "B",
+              "name": "B",
+              "path": "rtmaster/letters/letter-b.svg"
+            },
+            {
+              "category": "letters",
+              "description": "C",
+              "name": "C",
+              "path": "rtmaster/letters/letter-c.svg"
+            },
+            {
+              "category": "letters",
+              "description": "D",
+              "name": "D",
+              "path": "rtmaster/letters/letter-d.svg"
+            },
+            {
+              "category": "letters",
+              "description": "E",
+              "name": "E",
+              "path": "rtmaster/letters/letter-e.svg"
+            },
+            {
+              "category": "letters",
+              "description": "F",
+              "name": "F",
+              "path": "rtmaster/letters/letter-f.svg"
+            },
+            {
+              "category": "letters",
+              "description": "G",
+              "name": "G",
+              "path": "rtmaster/letters/letter-g.svg"
+            },
+            {
+              "category": "letters",
+              "description": "H",
+              "name": "H",
+              "path": "rtmaster/letters/letter-h.svg"
+            },
+            {
+              "category": "letters",
+              "description": "I",
+              "name": "I",
+              "path": "rtmaster/letters/letter-i.svg"
+            },
+            {
+              "category": "letters",
+              "description": "J",
+              "name": "J",
+              "path": "rtmaster/letters/letter-j.svg"
+            },
+            {
+              "category": "letters",
+              "description": "K",
+              "name": "K",
+              "path": "rtmaster/letters/letter-k.svg"
+            },
+            {
+              "category": "letters",
+              "description": "L",
+              "name": "L",
+              "path": "rtmaster/letters/letter-l.svg"
+            },
+            {
+              "category": "letters",
+              "description": "M",
+              "name": "M",
+              "path": "rtmaster/letters/letter-m.svg"
+            },
+            {
+              "category": "letters",
+              "description": "N",
+              "name": "N",
+              "path": "rtmaster/letters/letter-n.svg"
+            },
+            {
+              "category": "letters",
+              "description": "O",
+              "name": "O",
+              "path": "rtmaster/letters/letter-o.svg"
+            },
+            {
+              "category": "letters",
+              "description": "P",
+              "name": "P",
+              "path": "rtmaster/letters/letter-p.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Q",
+              "name": "Q",
+              "path": "rtmaster/letters/letter-q.svg"
+            },
+            {
+              "category": "letters",
+              "description": "R",
+              "name": "R",
+              "path": "rtmaster/letters-letter-r.svg"
+            },
+            {
+              "category": "letters",
+              "description": "S",
+              "name": "S",
+              "path": "rtmaster/letters/letter-s.svg"
+            },
+            {
+              "category": "letters",
+              "description": "T",
+              "name": "T",
+              "path": "rtmaster/letters/letter-t.svg"
+            },
+            {
+              "category": "letters",
+              "description": "U",
+              "name": "U",
+              "path": "rtmaster/letters/letter-u.svg"
+            },
+            {
+              "category": "letters",
+              "description": "V",
+              "name": "V",
+              "path": "rtmaster/letters/letter-v.svg"
+            },
+            {
+              "category": "letters",
+              "description": "W",
+              "name": "W",
+              "path": "rtmaster/letters/letter-w.svg"
+            },
+            {
+              "category": "letters",
+              "description": "X",
+              "name": "X",
+              "path": "rtmaster/letters/letter-x.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Y",
+              "name": "Y",
+              "path": "rtmaster/letters/letter-y.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Z",
+              "name": "Z",
+              "path": "rtmaster/letters/letter-z.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Laboratory Flask",
+              "name": "flask",
+              "path": "rtmaster/meters/flask.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Flowmeter",
+              "name": "flowmeter",
+              "path": "rtmaster/meters/flowmeter.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Gauge",
+              "name": "gauge",
+              "path": "rtmaster/meters/gauge.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "0",
+              "name": "0",
+              "path": "rtmaster/numbers/number-0.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "1",
+              "name": "1",
+              "path": "rtmaster/numbers/number-1.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "2",
+              "name": "2",
+              "path": "rtmaster/numbers/number-2.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "3",
+              "name": "3",
+              "path": "rtmaster/numbers/number-3.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "4",
+              "name": "4",
+              "path": "rtmaster/numbers/number-4.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "5",
+              "name": "5",
+              "path": "rtmaster/numbers/number-5.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "6",
+              "name": "6",
+              "path": "rtmaster/numbers/number-6.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "7",
+              "name": "7",
+              "path": "rtmaster/numbers/number-7.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "8",
+              "name": "8",
+              "path": "rtmaster/numbers/number-8.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "9",
+              "name": "9",
+              "path": "rtmaster/numbers/number-9.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down",
+              "name": "pipe-curve-down",
+              "path": "rtmaster/pipes/pipe-curve-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down left",
+              "name": "pipe-curve-down-left",
+              "path": "rtmaster/pipes/pipe-curve-down-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down right",
+              "name": "pipe-curve-down-right",
+              "path": "rtmaster/pipes/pipe-curve-down-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve left",
+              "name": "pipe-curve-left",
+              "path": "rtmaster/pipes/pipe-curve-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve right",
+              "name": "pipe-curve-right",
+              "path": "rtmaster/pipes/pipe-curve-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up",
+              "name": "pipe-curve-up",
+              "path": "rtmaster/pipes/pipe-curve-up.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up left",
+              "name": "pipe-curve-up-left",
+              "path": "rtmaster/pipes/pipe-curve-up-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up right",
+              "name": "pipe-curve-up-right",
+              "path": "rtmaster/pipes/pipe-curve-up-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal left",
+              "name": "pipe-diagonal-left",
+              "path": "rtmaster/pipes/pipe-diagonal-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal right",
+              "name": "pipe-diagonal-right",
+              "path": "rtmaster/pipes/pipe-diagonal-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange horizontal",
+              "name": "pipe-flange-horizontal",
+              "path": "rtmaster/pipes/pipe-flange-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange intersection",
+              "name": "pipe-flange-intersection",
+              "path": "rtmaster/pipes/pipe-flange-intersection.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange vertical",
+              "name": "pipe-flange-vertical",
+              "path": "rtmaster/pipes/pipe-flange-vertical.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe horizontal",
+              "name": "pipe-horizontal",
+              "path": "rtmaster/pipes/pipe-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee down",
+              "name": "pipe-tee-down",
+              "path": "rtmaster/pipes/pipe-tee-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee left",
+              "name": "pipe-tee-left",
+              "path": "rtmaster/pipes/pipe-tee-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee right",
+              "name": "pipe-tee-right",
+              "path": "rtmaster/pipes/pipe-tee-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee up",
+              "name": "pipe-tee-up",
+              "path": "rtmaster/pipes/pipe-tee-up"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe vertical",
+              "name": "pipe-vertical",
+              "path": "rtmaster/pipes/pipe-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Circle",
+              "name": "circle",
+              "path": "rtmaster/shapes/circle.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Gear",
+              "name": "gear",
+              "path": "rtmaster/shapes/gear.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal",
+              "name": "line-horizontal",
+              "path": "rtmaster/shapes/line-horizontal.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow left",
+              "name": "line-horizontal-arrow-left",
+              "path": "rtmaster/shapes/line-horizontal-arrow-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow right",
+              "name": "line-horizontal-arrow-right",
+              "path": "rtmaster/shapes/line-horizontal-arrow-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical",
+              "name": "line-vertical",
+              "path": "rtmaster/shapes/line-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow down",
+              "name": "line-vertical-arrow-down",
+              "path": "rtmaster/shapes/line-vertical-arrow-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow up",
+              "name": "line-vertical-arrow-up",
+              "path": "rtmaster/shapes/line-vertical-arrow-up.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Square",
+              "name": "square",
+              "path": "rtmaster/shapes/square.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle down",
+              "name": "triangle-down",
+              "path": "rtmaster/shapes/triangle-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle left",
+              "name": "triangle-left",
+              "path": "rtmaster/shapes/triangle-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle right",
+              "name": "triangle-right",
+              "path": "rtmaster/shapes/triangle-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle-up",
+              "name": "triangle-up",
+              "path": "rtmaster/shapes/triangle-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve Horizontal",
+              "name": "valve-horizontal",
+              "path": "rtmaster/valves/valve-horizontal.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve left right",
+              "name": "valve-left-right",
+              "path": "rtmaster/valves/valve-left-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round down",
+              "name": "valve-round-down",
+              "path": "rtmaster/valves/valve-round-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round left",
+              "name": "valve-round-left",
+              "path": "rtmaster/valves/valve-round-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round right",
+              "name": "valve-round-right",
+              "path": "rtmaster/valves/valve-round-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round up",
+              "name": "valve-round-up",
+              "path": "rtmaster/valves/valve-round-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square down",
+              "name": "valve-square-down",
+              "path": "rtmaster/valves/valve-square-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square left",
+              "name": "valve-square-left",
+              "path": "rtmaster/valves/valve-square-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square right",
+              "name": "valve-square-right",
+              "path": "rtmaster/valves/valve-square-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square up",
+              "name": "valve-square-up",
+              "path": "rtmaster/valves/valve-square-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve vertical",
+              "name": "valve-vertical",
+              "path": "rtmaster/valves/valve-vertical"
+            }
+          ],
+          "license": "Apache 2.0",
+          "url": "https://github.com/rtmaster"
+        }
+      },
+      "svgBuilderData": {
+        "elements": [],
+        "height": "100%",
+        "viewport": {
+          "height": 1000,
+          "width": 1000,
+          "x": 0,
+          "y": 0
+        },
+        "width": "100%"
+      },
+      "svg_data": "<svg xmlns=\"http://www.w3.org/2000/svg\"  viewBox=\"0 0 200 200\" >\n  <circle id=\"circle\" style=\"stroke: black; fill: #f8f8f8;\" cx=\"100\" cy=\"100\" r=\"100\"/>\n  <line id=\"hour0\" x1=\"100\" y1=\"10\"  x2=\"100\" y2=\"0\" style=\"stroke: green;\"/>\n  <line id=\"hour1\" x1=\"150\" y1=\"13\"  x2=\"145\" y2=\"22\" style=\"stroke: green;\"/>\n  <line id=\"hour2\" x1=\"187\" y1=\"50\"  x2=\"178\" y2=\"55\" style=\"stroke: green;\"/>\n  <line id=\"hour3\" x1=\"190\" y1=\"100\" x2=\"200\" y2=\"100\" style=\"stroke: green;\"/>\n  <line id=\"hour4\" x1=\"187\" y1=\"150\" x2=\"178\" y2=\"145\" style=\"stroke: green;\"/>\n  <line id=\"hour5\" x1=\"150\" y1=\"187\" x2=\"145\" y2=\"178\" style=\"stroke: green;\"/>\n  <line id=\"hour6\" x1=\"100\" y1=\"190\" x2=\"100\" y2=\"200\" style=\"stroke: green;\"/>\n  <line id=\"hour7\" x1=\"50\"  y1=\"187\" x2=\"55\"  y2=\"178\" style=\"stroke: green;\"/>\n  <line id=\"hour8\" x1=\"13\"  y1=\"150\" x2=\"22\"  y2=\"145\" style=\"stroke: green;\"/>\n  <line id=\"hour9\" x1=\"0\"   y1=\"100\" x2=\"10\"  y2=\"100\" style=\"stroke: green;\"/>\n  <line id=\"hour10\" x1=\"13\"  y1=\"50\"  x2=\"22\"  y2=\"55\" style=\"stroke: green;\"/>\n  <line id=\"hour11\" x1=\"50\"  y1=\"13\"  x2=\"55\"  y2=\"22\" style=\"stroke: green;\"/>\n    <g>\n      <line x1=\"100\" y1=\"100\" x2=\"100\" y2=\"45\" style=\"stroke-width: 6px; stroke: green;\" id=\"hourhand\" />\n      <line x1=\"100\" y1=\"100\" x2=\"100\" y2=\"15\" style=\"stroke-width: 4px; stroke: blue;\"  id=\"minutehand\"/>\n      <line x1=\"100\" y1=\"100\" x2=\"100\" y2=\"5\"  style=\"stroke-width: 2px; stroke: red;\"   id=\"secondhand\"/>\n    </g>\n</svg>",
+      "targets": [
+        {
+          "datasource": {
+            "type": "marcusolsson-static-datasource",
+            "uid": "${DS_STATIC_DATA}"
+          },
+          "frame": {
+            "fields": [
+              {
+                "config": {},
+                "name": "field1",
+                "type": "number",
+                "values": [
+                  10,
+                  20
+                ]
+              }
+            ],
+            "meta": {},
+            "name": "frame1"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Panel Title",
+      "type": "marcuscalidus-svg-panel",
+      "useSVGBuilder": false
+    },
+    {
+      "aliasColors": {},
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "doInit": {},
+      "draw": {},
+      "format": "short",
+      "gridPos": {
+        "h": 10,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "handleMetric": {},
+      "id": 10,
+      "js_code": "\r\n  //this.angle--;\r\n  //var s = Snap(svgnode);\r\n  //var t1 = s.selectAll(\"text\"); \r\n  //t1[0].node.innerHTML = \"hhjdjhgsdhgfhjsdgfj\"l\r\n  //w.attr({ transform: \"rotate(\"+this.angle+\" 23.592 19.5)\"});\r\n  \r\n  for (var ser in ctrl.series) {\r\n      \r\n      var dkey = ctrl.series[ser].id.split(\" \")[0].replace(\"/\",\"_\");\r\n      var ddata = ctrl.series[ser].id.substr(ctrl.series[ser].id.indexOf(\" \")).trim();\r\n      //console.log(\"ddata\",ddata);\r\n      var dev = ddata.substr(ddata.indexOf(\"device\")+8);\r\n      dev = dev.substr(0,dev.indexOf('\"'));\r\n      //var dev = \"solar\";\r\n      $(svgnode).find(\".\"+dkey+\"[device='\"+dev+\"']\").filter(\"text\").html(ctrl.series[ser].datapoints[ctrl.series[ser].datapoints.length - 1][0]);\r\n        \r\n      \r\n  }\r\n  \r\n  //$(svgnode).find(\"g\").find(\"text\").html(ctrl.series[0].datapoints[ctrl.series[0].datapoints.length - 1][0]);\r\n  \r\n  //console.log(\"ctrl...\",ctrl);\r\n  \r\n  //var now = new Date();\r\n  //var angle = 360 * now.getSeconds()   / 12;\r\n  //$(svgnode).find(\"#rect1\").attr(\"transform\", \"rotate(\"+angle.toString()+ \" 100 100)\"  );\r\n  \r\n  //$(svgnode).find(\".rect\").attr(\"transform\", \"rotate(\"+angle.toString()+ \" 100 100)\"  );\r\n\r\n  ",
+      "js_init_code": "",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "repositories": {
+        "rtmaster": {
+          "description": "simple examples",
+          "items": [
+            {
+              "category": "arrows",
+              "description": "Arrow facing up",
+              "name": "arrow-up",
+              "path": "rtmaster/arrows/arrow-up.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down",
+              "name": "arrow-down",
+              "path": "rtmaster/arrows/arrow-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing right",
+              "name": "arrow-right",
+              "path": "rtmaster/arrows/arrow-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left",
+              "name": "arrow-left",
+              "path": "rtmaster/arrows/arrow-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up right",
+              "name": "arrow-up-right",
+              "path": "rtmaster/arrows/arrow-up-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up left",
+              "name": "arrow-up-left",
+              "path": "rtmaster/arrows/arrow-up-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down left",
+              "name": "arrow-down-left",
+              "path": "rtmaster/arrows/arrow-down-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down right",
+              "name": "arrow-down-right",
+              "path": "rtmaster/arrows/arrow-down-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left right",
+              "name": "arrow-left-right",
+              "path": "rtmaster/arrows/arrow-left-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down",
+              "name": "arrow-up-down",
+              "path": "rtmaster/arrows/arrow-up-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down left right",
+              "name": "arrow-up-down-left-right",
+              "path": "rtmaster/arrows/arrow-up-down-left-right.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Factory",
+              "name": "factory",
+              "path": "rtmaster/facilities/factory.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Jackup",
+              "name": "jackup",
+              "path": "rtmaster/facilities/jackup.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Plant",
+              "name": "plant",
+              "path": "rtmaster/facilities/plant.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Semisub",
+              "name": "semisub",
+              "path": "rtmaster/facilities/semisub.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Ship",
+              "name": "ship",
+              "path": "rtmaster/facilities/ship.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Truck",
+              "name": "truck",
+              "path": "rtmaster/facilities/truck.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Light Bulb",
+              "name": "light-bulb",
+              "path": "rtmaster/indicators/light-bulb.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Green Light Indicator",
+              "name": "light-green",
+              "path": "rtmaster/indicators/light-green.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Orange Light Indicator",
+              "name": "light-orange",
+              "path": "rtmaster/indicators/light-orange.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Red Light Indicator",
+              "name": "light-red",
+              "path": "rtmaster/indicators/light-red.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Compressor",
+              "name": "compressor",
+              "path": "rtmaster/industrial/compressor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Derrick",
+              "name": "derrick",
+              "path": "rtmaster/industrial/derrick.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Heat Exchanger",
+              "name": "heatexchanger",
+              "path": "rtmaster/industrial/heatexchanger.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Motor",
+              "name": "motor",
+              "path": "rtmaster/industrial/motor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Pump",
+              "name": "pump",
+              "path": "rtmaster/industrial/pump.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Tank",
+              "name": "tank-horizontal",
+              "path": "rtmaster/industrial/tank-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Tank",
+              "name": "tank-vertical",
+              "path": "rtmaster/industrial/tank-vertical.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Turbine",
+              "name": "turbine",
+              "path": "rtmaster/industrial/turbine.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Vessel",
+              "name": "vessel-horizontal",
+              "path": "rtmaster/industrial/vessel-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Vessel",
+              "name": "vessel-vertical",
+              "path": "rtmaster/industrial/vessel-vertical.svg"
+            },
+            {
+              "category": "letters",
+              "description": "A",
+              "name": "A",
+              "path": "rtmaster/letters/letter-a.svg"
+            },
+            {
+              "category": "letters",
+              "description": "B",
+              "name": "B",
+              "path": "rtmaster/letters/letter-b.svg"
+            },
+            {
+              "category": "letters",
+              "description": "C",
+              "name": "C",
+              "path": "rtmaster/letters/letter-c.svg"
+            },
+            {
+              "category": "letters",
+              "description": "D",
+              "name": "D",
+              "path": "rtmaster/letters/letter-d.svg"
+            },
+            {
+              "category": "letters",
+              "description": "E",
+              "name": "E",
+              "path": "rtmaster/letters/letter-e.svg"
+            },
+            {
+              "category": "letters",
+              "description": "F",
+              "name": "F",
+              "path": "rtmaster/letters/letter-f.svg"
+            },
+            {
+              "category": "letters",
+              "description": "G",
+              "name": "G",
+              "path": "rtmaster/letters/letter-g.svg"
+            },
+            {
+              "category": "letters",
+              "description": "H",
+              "name": "H",
+              "path": "rtmaster/letters/letter-h.svg"
+            },
+            {
+              "category": "letters",
+              "description": "I",
+              "name": "I",
+              "path": "rtmaster/letters/letter-i.svg"
+            },
+            {
+              "category": "letters",
+              "description": "J",
+              "name": "J",
+              "path": "rtmaster/letters/letter-j.svg"
+            },
+            {
+              "category": "letters",
+              "description": "K",
+              "name": "K",
+              "path": "rtmaster/letters/letter-k.svg"
+            },
+            {
+              "category": "letters",
+              "description": "L",
+              "name": "L",
+              "path": "rtmaster/letters/letter-l.svg"
+            },
+            {
+              "category": "letters",
+              "description": "M",
+              "name": "M",
+              "path": "rtmaster/letters/letter-m.svg"
+            },
+            {
+              "category": "letters",
+              "description": "N",
+              "name": "N",
+              "path": "rtmaster/letters/letter-n.svg"
+            },
+            {
+              "category": "letters",
+              "description": "O",
+              "name": "O",
+              "path": "rtmaster/letters/letter-o.svg"
+            },
+            {
+              "category": "letters",
+              "description": "P",
+              "name": "P",
+              "path": "rtmaster/letters/letter-p.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Q",
+              "name": "Q",
+              "path": "rtmaster/letters/letter-q.svg"
+            },
+            {
+              "category": "letters",
+              "description": "R",
+              "name": "R",
+              "path": "rtmaster/letters-letter-r.svg"
+            },
+            {
+              "category": "letters",
+              "description": "S",
+              "name": "S",
+              "path": "rtmaster/letters/letter-s.svg"
+            },
+            {
+              "category": "letters",
+              "description": "T",
+              "name": "T",
+              "path": "rtmaster/letters/letter-t.svg"
+            },
+            {
+              "category": "letters",
+              "description": "U",
+              "name": "U",
+              "path": "rtmaster/letters/letter-u.svg"
+            },
+            {
+              "category": "letters",
+              "description": "V",
+              "name": "V",
+              "path": "rtmaster/letters/letter-v.svg"
+            },
+            {
+              "category": "letters",
+              "description": "W",
+              "name": "W",
+              "path": "rtmaster/letters/letter-w.svg"
+            },
+            {
+              "category": "letters",
+              "description": "X",
+              "name": "X",
+              "path": "rtmaster/letters/letter-x.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Y",
+              "name": "Y",
+              "path": "rtmaster/letters/letter-y.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Z",
+              "name": "Z",
+              "path": "rtmaster/letters/letter-z.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Laboratory Flask",
+              "name": "flask",
+              "path": "rtmaster/meters/flask.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Flowmeter",
+              "name": "flowmeter",
+              "path": "rtmaster/meters/flowmeter.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Gauge",
+              "name": "gauge",
+              "path": "rtmaster/meters/gauge.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "0",
+              "name": "0",
+              "path": "rtmaster/numbers/number-0.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "1",
+              "name": "1",
+              "path": "rtmaster/numbers/number-1.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "2",
+              "name": "2",
+              "path": "rtmaster/numbers/number-2.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "3",
+              "name": "3",
+              "path": "rtmaster/numbers/number-3.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "4",
+              "name": "4",
+              "path": "rtmaster/numbers/number-4.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "5",
+              "name": "5",
+              "path": "rtmaster/numbers/number-5.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "6",
+              "name": "6",
+              "path": "rtmaster/numbers/number-6.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "7",
+              "name": "7",
+              "path": "rtmaster/numbers/number-7.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "8",
+              "name": "8",
+              "path": "rtmaster/numbers/number-8.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "9",
+              "name": "9",
+              "path": "rtmaster/numbers/number-9.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down",
+              "name": "pipe-curve-down",
+              "path": "rtmaster/pipes/pipe-curve-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down left",
+              "name": "pipe-curve-down-left",
+              "path": "rtmaster/pipes/pipe-curve-down-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down right",
+              "name": "pipe-curve-down-right",
+              "path": "rtmaster/pipes/pipe-curve-down-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve left",
+              "name": "pipe-curve-left",
+              "path": "rtmaster/pipes/pipe-curve-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve right",
+              "name": "pipe-curve-right",
+              "path": "rtmaster/pipes/pipe-curve-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up",
+              "name": "pipe-curve-up",
+              "path": "rtmaster/pipes/pipe-curve-up.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up left",
+              "name": "pipe-curve-up-left",
+              "path": "rtmaster/pipes/pipe-curve-up-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up right",
+              "name": "pipe-curve-up-right",
+              "path": "rtmaster/pipes/pipe-curve-up-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal left",
+              "name": "pipe-diagonal-left",
+              "path": "rtmaster/pipes/pipe-diagonal-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal right",
+              "name": "pipe-diagonal-right",
+              "path": "rtmaster/pipes/pipe-diagonal-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange horizontal",
+              "name": "pipe-flange-horizontal",
+              "path": "rtmaster/pipes/pipe-flange-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange intersection",
+              "name": "pipe-flange-intersection",
+              "path": "rtmaster/pipes/pipe-flange-intersection.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange vertical",
+              "name": "pipe-flange-vertical",
+              "path": "rtmaster/pipes/pipe-flange-vertical.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe horizontal",
+              "name": "pipe-horizontal",
+              "path": "rtmaster/pipes/pipe-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee down",
+              "name": "pipe-tee-down",
+              "path": "rtmaster/pipes/pipe-tee-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee left",
+              "name": "pipe-tee-left",
+              "path": "rtmaster/pipes/pipe-tee-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee right",
+              "name": "pipe-tee-right",
+              "path": "rtmaster/pipes/pipe-tee-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee up",
+              "name": "pipe-tee-up",
+              "path": "rtmaster/pipes/pipe-tee-up"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe vertical",
+              "name": "pipe-vertical",
+              "path": "rtmaster/pipes/pipe-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Circle",
+              "name": "circle",
+              "path": "rtmaster/shapes/circle.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Gear",
+              "name": "gear",
+              "path": "rtmaster/shapes/gear.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal",
+              "name": "line-horizontal",
+              "path": "rtmaster/shapes/line-horizontal.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow left",
+              "name": "line-horizontal-arrow-left",
+              "path": "rtmaster/shapes/line-horizontal-arrow-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow right",
+              "name": "line-horizontal-arrow-right",
+              "path": "rtmaster/shapes/line-horizontal-arrow-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical",
+              "name": "line-vertical",
+              "path": "rtmaster/shapes/line-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow down",
+              "name": "line-vertical-arrow-down",
+              "path": "rtmaster/shapes/line-vertical-arrow-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow up",
+              "name": "line-vertical-arrow-up",
+              "path": "rtmaster/shapes/line-vertical-arrow-up.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Square",
+              "name": "square",
+              "path": "rtmaster/shapes/square.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle down",
+              "name": "triangle-down",
+              "path": "rtmaster/shapes/triangle-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle left",
+              "name": "triangle-left",
+              "path": "rtmaster/shapes/triangle-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle right",
+              "name": "triangle-right",
+              "path": "rtmaster/shapes/triangle-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle-up",
+              "name": "triangle-up",
+              "path": "rtmaster/shapes/triangle-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve Horizontal",
+              "name": "valve-horizontal",
+              "path": "rtmaster/valves/valve-horizontal.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve left right",
+              "name": "valve-left-right",
+              "path": "rtmaster/valves/valve-left-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round down",
+              "name": "valve-round-down",
+              "path": "rtmaster/valves/valve-round-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round left",
+              "name": "valve-round-left",
+              "path": "rtmaster/valves/valve-round-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round right",
+              "name": "valve-round-right",
+              "path": "rtmaster/valves/valve-round-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round up",
+              "name": "valve-round-up",
+              "path": "rtmaster/valves/valve-round-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square down",
+              "name": "valve-square-down",
+              "path": "rtmaster/valves/valve-square-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square left",
+              "name": "valve-square-left",
+              "path": "rtmaster/valves/valve-square-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square right",
+              "name": "valve-square-right",
+              "path": "rtmaster/valves/valve-square-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square up",
+              "name": "valve-square-up",
+              "path": "rtmaster/valves/valve-square-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve vertical",
+              "name": "valve-vertical",
+              "path": "rtmaster/valves/valve-vertical"
+            }
+          ],
+          "license": "Apache 2.0",
+          "url": "https://github.com/rtmaster"
+        }
+      },
+      "svgBuilderData": {
+        "elements": [],
+        "height": "100%",
+        "viewport": {
+          "height": 1000,
+          "width": 1000,
+          "x": 0,
+          "y": 0
+        },
+        "width": "100%"
+      },
+      "svg_data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\n\n<svg\n   xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n   xmlns:cc=\"http://creativecommons.org/ns#\"\n   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n   xmlns:svg=\"http://www.w3.org/2000/svg\"\n   xmlns=\"http://www.w3.org/2000/svg\"\n   xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n   xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n   width=\"100%\"\n   height=\"100%\"\n   viewBox=\"0 0 210 297\"\n   version=\"1.1\"\n   id=\"svg931\"\n   inkscape:version=\"0.92.4 (5da689c313, 2019-01-14)\"\n   sodipodi:docname=\"testing.svg\">\n  <defs\n     id=\"defs925\" />\n  <sodipodi:namedview\n     id=\"base\"\n     pagecolor=\"#ffffff\"\n     bordercolor=\"#666666\"\n     borderopacity=\"1.0\"\n     inkscape:pageopacity=\"0.0\"\n     inkscape:pageshadow=\"2\"\n     inkscape:zoom=\"1.979899\"\n     inkscape:cx=\"-34.736314\"\n     inkscape:cy=\"199.62469\"\n     inkscape:document-units=\"mm\"\n     inkscape:current-layer=\"layer1\"\n     showgrid=\"false\"\n     inkscape:window-width=\"1920\"\n     inkscape:window-height=\"1017\"\n     inkscape:window-x=\"-8\"\n     inkscape:window-y=\"-8\"\n     inkscape:window-maximized=\"1\" />\n  <metadata\n     id=\"metadata928\">\n    <rdf:RDF>\n      <cc:Work\n         rdf:about=\"\">\n        <dc:format>image/svg+xml</dc:format>\n        <dc:type\n           rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\" />\n        <dc:title />\n      </cc:Work>\n    </rdf:RDF>\n  </metadata>\n  <g\n     inkscape:label=\"Layer 1\"\n     inkscape:groupmode=\"layer\"\n     id=\"layer1\">\n    <rect\n       style=\"opacity:1;fill:#b3b3b3;fill-opacity:0.98787878;stroke:#000000;stroke-width:0.10000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.30000002, 0.10000001;stroke-dashoffset:0\"\n       id=\"rect1\"\n       width=\"49.136902\"\n       height=\"37.797619\"\n       x=\"135.34871\"\n       y=\"20.241652\"\n       class=\"rect\" />\n    <g\n       id=\"g1484\"\n       transform=\"translate(-53.033009,-1.0101525)\">\n      <rect\n         y=\"92.592628\"\n         x=\"76.394913\"\n         height=\"102.81516\"\n         width=\"167.16751\"\n         id=\"rect2\"\n         style=\"opacity:1;fill:#b3b3b3;fill-opacity:0.98787878;stroke:#000000;stroke-width:0.18744472;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.56233413, 0.18744472;stroke-dashoffset:0\" />\n      <rect\n         y=\"194.94644\"\n         x=\"107.34524\"\n         height=\"37.797619\"\n         width=\"49.892857\"\n         id=\"rect3\"\n         style=\"opacity:1;fill:#b3b3b3;fill-opacity:0.98787878;stroke:#000000;stroke-width:0.10000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.30000002, 0.10000001;stroke-dashoffset:0\"\n         class=\"rect\" />\n    </g>\n    <text\n       xml:space=\"preserve\"\n       style=\"font-style:normal;font-weight:normal;font-size:13.33333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none\"\n       x=\"30.809652\"\n       y=\"36.885719\"\n       id=\"text821\"\n       class=\"key text_mordenhall_heatpump_dat_tF mordenhall heatpump dat_tF\"><tspan\n         sodipodi:role=\"line\"\n         id=\"tspan819\"\n         x=\"30.809652\"\n         y=\"36.885719\">Test</tspan></text>\n    <text\n       xml:space=\"preserve\"\n       style=\"font-style:normal;font-weight:normal;font-size:13.33333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none\"\n       x=\"43.107735\"\n       y=\"160.84935\"\n       id=\"text821-3\"\n       class=\"key text text_mordenhall_heatpump_dat_tF mordenhall heatpump dat_tF\"\n       device=\"heatpump\"><tspan\n         sodipodi:role=\"line\"\n         id=\"tspan819-9\"\n         x=\"43.107735\"\n         y=\"160.84935\">Test</tspan></text>\n    <text\n       xml:space=\"preserve\"\n       style=\"font-style:normal;font-weight:normal;font-size:13.33333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none\"\n       x=\"43.612808\"\n       y=\"181.55746\"\n       id=\"text821-3-0\"\n       class=\"key text text_mordenhall_heatpump_dat_tF mordenhall heatpump dat_tR\"\n       device=\"heatpump\"><tspan\n         sodipodi:role=\"line\"\n         id=\"tspan819-9-2\"\n         x=\"43.612808\"\n         y=\"181.55746\">Test</tspan></text>\n    <text\n       xml:space=\"preserve\"\n       style=\"font-style:normal;font-weight:normal;font-size:13.33333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none\"\n       x=\"40.329819\"\n       y=\"108.57395\"\n       id=\"text821-3-9\"\n       class=\"key text dat_tF\"\n       device=\"solar\"><tspan\n         sodipodi:role=\"line\"\n         id=\"tspan819-9-6\"\n         x=\"40.329819\"\n         y=\"108.57395\">Test</tspan></text>\n    <text\n       xml:space=\"preserve\"\n       style=\"font-style:normal;font-weight:normal;font-size:13.33333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none\"\n       x=\"39.572205\"\n       y=\"125.494\"\n       id=\"text821-3-9-0\"\n       class=\"key text dat_tR\"\n       device=\"solar\"><tspan\n         sodipodi:role=\"line\"\n         id=\"tspan819-9-6-7\"\n         x=\"39.572205\"\n         y=\"125.494\">Test</tspan></text>\n  </g>\n</svg>\n",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"nationaltrust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"network\"] == \"mordenhall\")\r\n  |> filter(fn: (r) => r[\"vargroup\"] == \"dat\") \r\n  |> filter(fn: (r) => r[\"node\"] == \"zccaj9xu4ah\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Panel Title",
+      "type": "marcuscalidus-svg-panel",
+      "useSVGBuilder": false
+    },
+    {
+      "aliasColors": {},
+      "datasource": {
+        "type": "marcusolsson-static-datasource",
+        "uid": "${DS_STATIC_DATA}"
+      },
+      "doInit": {},
+      "draw": {},
+      "format": "short",
+      "gridPos": {
+        "h": 11,
+        "w": 5,
+        "x": 18,
+        "y": 10
+      },
+      "handleMetric": {},
+      "id": 4,
+      "js_code": "\r\n  //this.angle--;\r\n  //var s = Snap(svgnode);\r\n  //var w = s.select(\"#rect1\"); \r\n  //w.attr({ transform: \"rotate(\"+this.angle+\" 23.592 19.5)\"});\r\n  \r\n  \r\n  var now = new Date();\r\n  var angle = 360 * now.getSeconds()   / 12;\r\n  $(svgnode).find(\"#rect1\").attr(\"transform\", \"rotate(\"+angle.toString()+ \" 100 100)\"  );\r\n",
+      "js_init_code": "",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "repositories": {
+        "rtmaster": {
+          "description": "simple examples",
+          "items": [
+            {
+              "category": "arrows",
+              "description": "Arrow facing up",
+              "name": "arrow-up",
+              "path": "rtmaster/arrows/arrow-up.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down",
+              "name": "arrow-down",
+              "path": "rtmaster/arrows/arrow-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing right",
+              "name": "arrow-right",
+              "path": "rtmaster/arrows/arrow-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left",
+              "name": "arrow-left",
+              "path": "rtmaster/arrows/arrow-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up right",
+              "name": "arrow-up-right",
+              "path": "rtmaster/arrows/arrow-up-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up left",
+              "name": "arrow-up-left",
+              "path": "rtmaster/arrows/arrow-up-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down left",
+              "name": "arrow-down-left",
+              "path": "rtmaster/arrows/arrow-down-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down right",
+              "name": "arrow-down-right",
+              "path": "rtmaster/arrows/arrow-down-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left right",
+              "name": "arrow-left-right",
+              "path": "rtmaster/arrows/arrow-left-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down",
+              "name": "arrow-up-down",
+              "path": "rtmaster/arrows/arrow-up-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down left right",
+              "name": "arrow-up-down-left-right",
+              "path": "rtmaster/arrows/arrow-up-down-left-right.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Factory",
+              "name": "factory",
+              "path": "rtmaster/facilities/factory.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Jackup",
+              "name": "jackup",
+              "path": "rtmaster/facilities/jackup.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Plant",
+              "name": "plant",
+              "path": "rtmaster/facilities/plant.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Semisub",
+              "name": "semisub",
+              "path": "rtmaster/facilities/semisub.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Ship",
+              "name": "ship",
+              "path": "rtmaster/facilities/ship.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Truck",
+              "name": "truck",
+              "path": "rtmaster/facilities/truck.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Light Bulb",
+              "name": "light-bulb",
+              "path": "rtmaster/indicators/light-bulb.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Green Light Indicator",
+              "name": "light-green",
+              "path": "rtmaster/indicators/light-green.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Orange Light Indicator",
+              "name": "light-orange",
+              "path": "rtmaster/indicators/light-orange.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Red Light Indicator",
+              "name": "light-red",
+              "path": "rtmaster/indicators/light-red.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Compressor",
+              "name": "compressor",
+              "path": "rtmaster/industrial/compressor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Derrick",
+              "name": "derrick",
+              "path": "rtmaster/industrial/derrick.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Heat Exchanger",
+              "name": "heatexchanger",
+              "path": "rtmaster/industrial/heatexchanger.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Motor",
+              "name": "motor",
+              "path": "rtmaster/industrial/motor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Pump",
+              "name": "pump",
+              "path": "rtmaster/industrial/pump.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Tank",
+              "name": "tank-horizontal",
+              "path": "rtmaster/industrial/tank-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Tank",
+              "name": "tank-vertical",
+              "path": "rtmaster/industrial/tank-vertical.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Turbine",
+              "name": "turbine",
+              "path": "rtmaster/industrial/turbine.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Vessel",
+              "name": "vessel-horizontal",
+              "path": "rtmaster/industrial/vessel-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Vessel",
+              "name": "vessel-vertical",
+              "path": "rtmaster/industrial/vessel-vertical.svg"
+            },
+            {
+              "category": "letters",
+              "description": "A",
+              "name": "A",
+              "path": "rtmaster/letters/letter-a.svg"
+            },
+            {
+              "category": "letters",
+              "description": "B",
+              "name": "B",
+              "path": "rtmaster/letters/letter-b.svg"
+            },
+            {
+              "category": "letters",
+              "description": "C",
+              "name": "C",
+              "path": "rtmaster/letters/letter-c.svg"
+            },
+            {
+              "category": "letters",
+              "description": "D",
+              "name": "D",
+              "path": "rtmaster/letters/letter-d.svg"
+            },
+            {
+              "category": "letters",
+              "description": "E",
+              "name": "E",
+              "path": "rtmaster/letters/letter-e.svg"
+            },
+            {
+              "category": "letters",
+              "description": "F",
+              "name": "F",
+              "path": "rtmaster/letters/letter-f.svg"
+            },
+            {
+              "category": "letters",
+              "description": "G",
+              "name": "G",
+              "path": "rtmaster/letters/letter-g.svg"
+            },
+            {
+              "category": "letters",
+              "description": "H",
+              "name": "H",
+              "path": "rtmaster/letters/letter-h.svg"
+            },
+            {
+              "category": "letters",
+              "description": "I",
+              "name": "I",
+              "path": "rtmaster/letters/letter-i.svg"
+            },
+            {
+              "category": "letters",
+              "description": "J",
+              "name": "J",
+              "path": "rtmaster/letters/letter-j.svg"
+            },
+            {
+              "category": "letters",
+              "description": "K",
+              "name": "K",
+              "path": "rtmaster/letters/letter-k.svg"
+            },
+            {
+              "category": "letters",
+              "description": "L",
+              "name": "L",
+              "path": "rtmaster/letters/letter-l.svg"
+            },
+            {
+              "category": "letters",
+              "description": "M",
+              "name": "M",
+              "path": "rtmaster/letters/letter-m.svg"
+            },
+            {
+              "category": "letters",
+              "description": "N",
+              "name": "N",
+              "path": "rtmaster/letters/letter-n.svg"
+            },
+            {
+              "category": "letters",
+              "description": "O",
+              "name": "O",
+              "path": "rtmaster/letters/letter-o.svg"
+            },
+            {
+              "category": "letters",
+              "description": "P",
+              "name": "P",
+              "path": "rtmaster/letters/letter-p.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Q",
+              "name": "Q",
+              "path": "rtmaster/letters/letter-q.svg"
+            },
+            {
+              "category": "letters",
+              "description": "R",
+              "name": "R",
+              "path": "rtmaster/letters-letter-r.svg"
+            },
+            {
+              "category": "letters",
+              "description": "S",
+              "name": "S",
+              "path": "rtmaster/letters/letter-s.svg"
+            },
+            {
+              "category": "letters",
+              "description": "T",
+              "name": "T",
+              "path": "rtmaster/letters/letter-t.svg"
+            },
+            {
+              "category": "letters",
+              "description": "U",
+              "name": "U",
+              "path": "rtmaster/letters/letter-u.svg"
+            },
+            {
+              "category": "letters",
+              "description": "V",
+              "name": "V",
+              "path": "rtmaster/letters/letter-v.svg"
+            },
+            {
+              "category": "letters",
+              "description": "W",
+              "name": "W",
+              "path": "rtmaster/letters/letter-w.svg"
+            },
+            {
+              "category": "letters",
+              "description": "X",
+              "name": "X",
+              "path": "rtmaster/letters/letter-x.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Y",
+              "name": "Y",
+              "path": "rtmaster/letters/letter-y.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Z",
+              "name": "Z",
+              "path": "rtmaster/letters/letter-z.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Laboratory Flask",
+              "name": "flask",
+              "path": "rtmaster/meters/flask.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Flowmeter",
+              "name": "flowmeter",
+              "path": "rtmaster/meters/flowmeter.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Gauge",
+              "name": "gauge",
+              "path": "rtmaster/meters/gauge.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "0",
+              "name": "0",
+              "path": "rtmaster/numbers/number-0.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "1",
+              "name": "1",
+              "path": "rtmaster/numbers/number-1.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "2",
+              "name": "2",
+              "path": "rtmaster/numbers/number-2.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "3",
+              "name": "3",
+              "path": "rtmaster/numbers/number-3.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "4",
+              "name": "4",
+              "path": "rtmaster/numbers/number-4.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "5",
+              "name": "5",
+              "path": "rtmaster/numbers/number-5.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "6",
+              "name": "6",
+              "path": "rtmaster/numbers/number-6.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "7",
+              "name": "7",
+              "path": "rtmaster/numbers/number-7.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "8",
+              "name": "8",
+              "path": "rtmaster/numbers/number-8.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "9",
+              "name": "9",
+              "path": "rtmaster/numbers/number-9.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down",
+              "name": "pipe-curve-down",
+              "path": "rtmaster/pipes/pipe-curve-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down left",
+              "name": "pipe-curve-down-left",
+              "path": "rtmaster/pipes/pipe-curve-down-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down right",
+              "name": "pipe-curve-down-right",
+              "path": "rtmaster/pipes/pipe-curve-down-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve left",
+              "name": "pipe-curve-left",
+              "path": "rtmaster/pipes/pipe-curve-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve right",
+              "name": "pipe-curve-right",
+              "path": "rtmaster/pipes/pipe-curve-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up",
+              "name": "pipe-curve-up",
+              "path": "rtmaster/pipes/pipe-curve-up.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up left",
+              "name": "pipe-curve-up-left",
+              "path": "rtmaster/pipes/pipe-curve-up-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up right",
+              "name": "pipe-curve-up-right",
+              "path": "rtmaster/pipes/pipe-curve-up-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal left",
+              "name": "pipe-diagonal-left",
+              "path": "rtmaster/pipes/pipe-diagonal-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal right",
+              "name": "pipe-diagonal-right",
+              "path": "rtmaster/pipes/pipe-diagonal-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange horizontal",
+              "name": "pipe-flange-horizontal",
+              "path": "rtmaster/pipes/pipe-flange-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange intersection",
+              "name": "pipe-flange-intersection",
+              "path": "rtmaster/pipes/pipe-flange-intersection.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange vertical",
+              "name": "pipe-flange-vertical",
+              "path": "rtmaster/pipes/pipe-flange-vertical.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe horizontal",
+              "name": "pipe-horizontal",
+              "path": "rtmaster/pipes/pipe-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee down",
+              "name": "pipe-tee-down",
+              "path": "rtmaster/pipes/pipe-tee-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee left",
+              "name": "pipe-tee-left",
+              "path": "rtmaster/pipes/pipe-tee-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee right",
+              "name": "pipe-tee-right",
+              "path": "rtmaster/pipes/pipe-tee-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee up",
+              "name": "pipe-tee-up",
+              "path": "rtmaster/pipes/pipe-tee-up"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe vertical",
+              "name": "pipe-vertical",
+              "path": "rtmaster/pipes/pipe-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Circle",
+              "name": "circle",
+              "path": "rtmaster/shapes/circle.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Gear",
+              "name": "gear",
+              "path": "rtmaster/shapes/gear.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal",
+              "name": "line-horizontal",
+              "path": "rtmaster/shapes/line-horizontal.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow left",
+              "name": "line-horizontal-arrow-left",
+              "path": "rtmaster/shapes/line-horizontal-arrow-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow right",
+              "name": "line-horizontal-arrow-right",
+              "path": "rtmaster/shapes/line-horizontal-arrow-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical",
+              "name": "line-vertical",
+              "path": "rtmaster/shapes/line-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow down",
+              "name": "line-vertical-arrow-down",
+              "path": "rtmaster/shapes/line-vertical-arrow-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow up",
+              "name": "line-vertical-arrow-up",
+              "path": "rtmaster/shapes/line-vertical-arrow-up.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Square",
+              "name": "square",
+              "path": "rtmaster/shapes/square.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle down",
+              "name": "triangle-down",
+              "path": "rtmaster/shapes/triangle-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle left",
+              "name": "triangle-left",
+              "path": "rtmaster/shapes/triangle-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle right",
+              "name": "triangle-right",
+              "path": "rtmaster/shapes/triangle-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle-up",
+              "name": "triangle-up",
+              "path": "rtmaster/shapes/triangle-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve Horizontal",
+              "name": "valve-horizontal",
+              "path": "rtmaster/valves/valve-horizontal.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve left right",
+              "name": "valve-left-right",
+              "path": "rtmaster/valves/valve-left-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round down",
+              "name": "valve-round-down",
+              "path": "rtmaster/valves/valve-round-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round left",
+              "name": "valve-round-left",
+              "path": "rtmaster/valves/valve-round-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round right",
+              "name": "valve-round-right",
+              "path": "rtmaster/valves/valve-round-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round up",
+              "name": "valve-round-up",
+              "path": "rtmaster/valves/valve-round-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square down",
+              "name": "valve-square-down",
+              "path": "rtmaster/valves/valve-square-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square left",
+              "name": "valve-square-left",
+              "path": "rtmaster/valves/valve-square-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square right",
+              "name": "valve-square-right",
+              "path": "rtmaster/valves/valve-square-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square up",
+              "name": "valve-square-up",
+              "path": "rtmaster/valves/valve-square-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve vertical",
+              "name": "valve-vertical",
+              "path": "rtmaster/valves/valve-vertical"
+            }
+          ],
+          "license": "Apache 2.0",
+          "url": "https://github.com/rtmaster"
+        }
+      },
+      "svgBuilderData": {
+        "elements": [],
+        "height": "100%",
+        "viewport": {
+          "height": 1000,
+          "width": 1000,
+          "x": 0,
+          "y": 0
+        },
+        "width": "100%"
+      },
+      "svg_data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\n\n<svg\n   xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n   xmlns:cc=\"http://creativecommons.org/ns#\"\n   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n   xmlns:svg=\"http://www.w3.org/2000/svg\"\n   xmlns=\"http://www.w3.org/2000/svg\"\n   xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n   xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n   width=\"100%\"\n   height=\"100%\"\n   viewBox=\"0 0 210 297\"\n   version=\"1.1\"\n   id=\"svg931\"\n   inkscape:version=\"0.92.4 (5da689c313, 2019-01-14)\"\n   sodipodi:docname=\"testing.svg\">\n  <defs\n     id=\"defs925\" />\n  <sodipodi:namedview\n     id=\"base\"\n     pagecolor=\"#ffffff\"\n     bordercolor=\"#666666\"\n     borderopacity=\"1.0\"\n     inkscape:pageopacity=\"0.0\"\n     inkscape:pageshadow=\"2\"\n     inkscape:zoom=\"0.35\"\n     inkscape:cx=\"-505.71429\"\n     inkscape:cy=\"560\"\n     inkscape:document-units=\"mm\"\n     inkscape:current-layer=\"layer1\"\n     showgrid=\"false\"\n     inkscape:window-width=\"1920\"\n     inkscape:window-height=\"1017\"\n     inkscape:window-x=\"-8\"\n     inkscape:window-y=\"-8\"\n     inkscape:window-maximized=\"1\" />\n  <metadata\n     id=\"metadata928\">\n    <rdf:RDF>\n      <cc:Work\n         rdf:about=\"\">\n        <dc:format>image/svg+xml</dc:format>\n        <dc:type\n           rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\" />\n        <dc:title></dc:title>\n      </cc:Work>\n    </rdf:RDF>\n  </metadata>\n  <g\n     inkscape:label=\"Layer 1\"\n     inkscape:groupmode=\"layer\"\n     id=\"layer1\">\n    <rect\n       style=\"opacity:1;fill:#b3b3b3;fill-opacity:0.98787878;stroke:#000000;stroke-width:0.10000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.30000002, 0.10000001;stroke-dashoffset:0\"\n       id=\"rect1\"\n       width=\"49.136902\"\n       height=\"37.797619\"\n       x=\"120.19643\"\n       y=\"56.607143\" />\n    <g\n       id=\"g1484\">\n      <rect\n         y=\"134.47025\"\n         x=\"76.351196\"\n         height=\"60.476189\"\n         width=\"80.886909\"\n         id=\"rect2\"\n         style=\"opacity:1;fill:#b3b3b3;fill-opacity:0.98787878;stroke:#000000;stroke-width:0.10000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.30000002, 0.10000001;stroke-dashoffset:0\" />\n      <rect\n         y=\"194.94644\"\n         x=\"107.34524\"\n         height=\"37.797619\"\n         width=\"49.892857\"\n         id=\"rect3\"\n         style=\"opacity:1;fill:#b3b3b3;fill-opacity:0.98787878;stroke:#000000;stroke-width:0.10000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.30000002, 0.10000001;stroke-dashoffset:0\" />\n    </g>\n  </g>\n</svg>\n",
+      "targets": [
+        {
+          "datasource": {
+            "type": "marcusolsson-static-datasource",
+            "uid": "${DS_STATIC_DATA}"
+          },
+          "frame": {
+            "fields": [
+              {
+                "config": {},
+                "name": "field1",
+                "type": "number",
+                "values": [
+                  10,
+                  20
+                ]
+              }
+            ],
+            "meta": {},
+            "name": "frame1"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Panel Title",
+      "type": "marcuscalidus-svg-panel",
+      "useSVGBuilder": false
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "mysql",
+          "uid": "${DS_MYSQL}"
+        },
+        "definition": "SELECT DISTINCT network FROM `readings` WHERE 1",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Network",
+        "multi": false,
+        "name": "network",
+        "options": [],
+        "query": "SELECT DISTINCT network FROM `readings` WHERE 1",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "mysql",
+          "uid": "${DS_MYSQL}"
+        },
+        "definition": "SELECT DISTINCT device FROM readings WHERE network= \"$network\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Device",
+        "multi": false,
+        "name": "device",
+        "options": [],
+        "query": "SELECT DISTINCT device FROM readings WHERE network= \"$network\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "SVG1",
+  "uid": "yLOdU3V4z",
+  "version": 15,
+  "weekStart": ""
+}
