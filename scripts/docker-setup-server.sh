@@ -1,6 +1,6 @@
 #!/bin/bash
 # Read Password
-echo -n "Admin password:"
+echo -n "Admin password (minimum 12 characters):"
 read -s password
 echo
 echo -n "Repeat password:"
