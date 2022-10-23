@@ -90,9 +90,9 @@ sudo docker run -d -p 3000:3000 --name=grafana --restart=always --net mqtt -v gr
 case $gomysql in
   [Yy]* ) 
 
-     sudo docker run -d --name mysql --net mqtt -p 3306:3306 -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=$password -d mysql:latest
-     #sudo docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 phpmyadmin:latest
-     sudo docker run --name phpmyadmin -d --net mqtt --link mysql:db -p 8081:80 arm64v8/phpmyadmin
+     sudo docker run -d --name mysql --restart=always --net mqtt -p 3306:3306 -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=$password -d mysql:latest
+     #sudo docker run --name phpmyadmin -d --restart=always --net mqtt --link mysql:db -p 8081:80 phpmyadmin:latest
+     sudo docker run --name phpmyadmin -d --restart=always --net mqtt --link mysql:db -p 8081:80 arm64v8/phpmyadmin
   ;;
 
 esac
@@ -100,7 +100,7 @@ esac
 case $goinflux in
   [Yy]* ) 
 
-    sudo docker run -d -p 8086:8086 --name influxdb --net mqtt \
+    sudo docker run -d -p 8086:8086 --name influxdb --restart=always --net mqtt \
       -v influx_data:/var/lib/influxdb2 \
       -v influx_config:/etc/influxdb2 \
       -e DOCKER_INFLUXDB_INIT_MODE=setup \
