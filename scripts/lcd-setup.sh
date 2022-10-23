@@ -8,7 +8,7 @@ sudo chmod 777 -R CM4_dt_blob_Source
 cd CM4_dt_blob_Source/
 sudo  dtc -I dts -O dtb -o /boot/dt-blob.bin dt-blob-disp0-double_cam.dts
 
-
+mkdir -p /etc/xdg/openbox/
 sudo cat <<EOF > /etc/xdg/openbox/autostart
 #!/bin/bash
 # Disable any form of screen saver / screen blanking / power management
