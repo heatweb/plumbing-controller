@@ -27,3 +27,7 @@ EOF
 sudo cat <<EOF > .bash_profile
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor
 EOF
+
+sudo sed -i 's/dtoverlay=vc4-kms-v3d/#dtoverlay=vc4-kms-v3d/' /boot/config.txt
+sudo sed -i 's/max_framebuffers=/#max_framebuffers=/' /boot/config.txt
+
