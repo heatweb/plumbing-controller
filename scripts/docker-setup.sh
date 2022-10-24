@@ -18,6 +18,7 @@ read -p "Do you want to install MySQL database? (y/n) " gomysql
 
 # For 64-bit OS (can be changed via comments)
 
+sudo apt-get remove mosquitto
 
 sudo apt-get -y update
 
