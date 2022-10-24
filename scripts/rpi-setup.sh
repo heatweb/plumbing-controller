@@ -1,5 +1,7 @@
 # For 64-bit OS (can be changed via comments)
 
+read -p "Network Identity: " netname
+
 sudo apt-get -y update
 sudo apt-get -y upgrade
 bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
@@ -19,6 +21,8 @@ sudo sh build.sh
 make
 sudo make install
 sudo ln -s /usr/local/lib/libmbus.so.0 /usr/lib/libmbus.so.0
+
+cd ~
 mkdir /home/pi/node-hiu
 mkdir /home/pi/node-hiu/logs
 #mkdir /home/pi/node-hiu/iHIU
@@ -26,6 +30,17 @@ mkdir /home/pi/node-hiu/flows
 mkdir /home/pi/node-hiu/vpn
 sudo chmod -R 775 /home/pi/node-hiu
 sudo mkdir /boot/heatweb
+
+sudo cat <<EOF > config.json
+{
+ "nodeId":"newnode",
+ "networkId":"$netname",
+ "name": "Zero Carbon Controller newnode",
+ "description": "Heatweb Zero Carbon Controller Controller"
+}
+EOF
+
+sudo mv config.json /boot/heatweb/config.json
 
 cd ~
 git clone https://github.com/SequentMicrosystems/ti-rpi.git
