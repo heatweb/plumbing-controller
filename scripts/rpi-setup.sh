@@ -76,9 +76,11 @@ sudo npm install --unsafe-perm --build-from-source node-red-node-ui-table
 sudo npm install --unsafe-perm --build-from-source node-red-contrib-pid
 sudo npm install --unsafe-perm --build-from-source node-red-contrib-ip
 sudo npm install --unsafe-perm --build-from-source node-red-contrib-uibuilder
-node-red-restart
 
 
 # INSTALL DOCKER (https://withblue.ink/2020/06/24/docker-and-docker-compose-on-raspberry-pi-os.html)
 echo "Installing Docker and Deploying Containers..."
 bash <(curl -sL https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/docker-setup.sh)
+
+echo "Node-RED will restart, and the system will be given a new identity. During this process the system will reboot twice. Please wait at least 3 minutes before removing power."
+node-red-restart
