@@ -141,4 +141,4 @@ sudo docker exec -ti mqtt mosquitto_passwd -b /mosquitto/config/passwordfile adm
 sudo docker restart mqtt
 
 echo "Finished."
-echo "IMPORTANT: You should go to Portainer on port 9000, set the admin password, and click on Get Started.
+echo "IMPORTANT: You should go to Portainer on port 9000, set the admin password, and click on Get Started."
