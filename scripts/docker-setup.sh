@@ -18,7 +18,7 @@ read -p "Do you want to install MySQL database? (y/n) " gomysql
 
 # For 64-bit OS (can be changed via comments)
 
-sudo apt-get remove mosquitto
+
 
 sudo apt-get -y update
 
@@ -72,6 +72,7 @@ git pull
 cp -r /home/pi/plumbing-controller/mqtt /home/pi/mqtt
 #cp -r /home/pi/plumbing-controller/mqtt /home/pi/mqtt2
 
+sudo apt-get remove -y mosquitto
 sudo docker network create mqtt
 sudo docker run -d -it -p 1883:1883 --name=mqtt --restart=always -v /home/pi/mqtt/:/mosquitto/config/ --net mqtt eclipse-mosquitto:openssl
 #sudo docker run -d -it -p 10031:1883 --name=mqtt2 --restart=always -v /home/pi/mqtt2/:/mosquitto/config/ --net mqtt eclipse-mosquitto:openssl
