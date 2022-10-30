@@ -40,6 +40,13 @@
                 "multiplier": "10",
                 "datatype": "int16",
                 "units": "%"
+            },
+            {
+                "register": "34",
+                "reading": "settings.pirOffDelay",
+                "multiplier": "1",
+                "datatype": "int16",                
+                "units": "seconds"
             }
         ]
     }
