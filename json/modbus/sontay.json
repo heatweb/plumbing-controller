@@ -1,6 +1,7 @@
 [
     {
         "id": "sontay1",
+        "offset": 0;
         "registers": [
             {
                 "register": "8",
