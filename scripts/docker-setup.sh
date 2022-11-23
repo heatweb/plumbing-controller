@@ -105,13 +105,14 @@ esac
 case $goprom in
   [Yy]* ) 
 
-    mkdir /home/pi/prometheus
+    cp -r /home/pi/plumbing-controller/prometheus /home/pi/prometheus
 
     docker run -d --restart=always --net mqtt \
-       --name=prometheus \
-       -p 9099:9090 \
-       -v /home/pi/prometheus:/etc/prometheus \
-       prom/prometheus
+    --name=prometheus \
+    -p 9099:9090 \
+    --add-host=host.docker.internal:host-gateway \
+    -v ~/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml \
+    prom/prometheus
 
   ;;
 
