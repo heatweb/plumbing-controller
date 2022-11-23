@@ -91,3 +91,14 @@ scrape_configs:
   static_configs:
   - targets:
     - mynodered1:1880
+- job_name: linux
+  honor_timestamps: true
+  scrape_interval: 60s
+  scrape_timeout: 5s
+  metrics_path: /metrics
+  scheme: http
+  follow_redirects: true
+  enable_http2: true
+  static_configs:
+  - targets:
+    - host.docker.internal:9100
