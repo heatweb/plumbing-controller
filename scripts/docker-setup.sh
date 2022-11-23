@@ -15,6 +15,7 @@ fi
 
 read -p "Do you want to install InfluxDB database? (y/n) " goinflux
 read -p "Do you want to install MySQL database? (y/n) " gomysql
+read -p "Do you want to install MySQL database? (y/n) " goprom
 
 # For 64-bit OS (can be changed via comments)
 
@@ -96,6 +97,22 @@ case $gomysql in
      sudo docker run -d --name mysql --restart=always --net mqtt -p 3306:3306 -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=$password -d mysql:latest
      #sudo docker run --name phpmyadmin -d --restart=always --net mqtt --link mysql:db -p 8081:80 phpmyadmin:latest
      sudo docker run --name phpmyadmin -d --restart=always --net mqtt --link mysql:db -p 8081:80 arm64v8/phpmyadmin
+  ;;
+
+esac
+
+
+case $goprom in
+  [Yy]* ) 
+
+    mkdir /home/pi/prometheus
+
+    docker run -d --restart=always --net mqtt \
+       --name=prometheus \
+       -p 9099:9090 \
+       -v /home/pi/prometheus:/etc/prometheus \
+       prom/prometheus
+
   ;;
 
 esac
