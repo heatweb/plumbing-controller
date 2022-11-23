@@ -15,6 +15,7 @@ fi
 
 read -p "Do you want to install InfluxDB database? (y/n) " goinflux
 read -p "Do you want to install MySQL database? (y/n) " gomysql
+read -p "Do you want to install Prometheus database? (y/n) " goprom
 read -p "System username? " username
 
 # For 64-bit OS (can be changed via comments)
@@ -96,6 +97,22 @@ case $gomysql in
   ;;
 
 esac
+
+case $goprom in
+  [Yy]* ) 
+
+    mkdir /home/$username/prometheus
+
+    docker run -d --restart=always --net mqtt \
+       --name=prometheus \
+       -p 9099:9090 \
+       -v /home/$username/prometheus:/etc/prometheus \
+       prom/prometheus
+
+  ;;
+
+esac
+
 
 case $goinflux in
   [Yy]* ) 
