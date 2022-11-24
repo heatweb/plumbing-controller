@@ -88,7 +88,7 @@ sudo docker run -d \
     --name filebrowser \
     filebrowser/filebrowser
 
-sudo docker run -d -p 3000:3000 --name=grafana --restart=always --net mqtt -v grafana-storage:/var/lib/grafana grafana/grafana-oss
+sudo docker run -d -p 3000:3000 --name=grafana --restart=always --net mqtt --add-host=host.docker.internal:host-gateway -v grafana-storage:/var/lib/grafana grafana/grafana-oss
 
 
 case $gomysql in
