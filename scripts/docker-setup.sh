@@ -106,13 +106,18 @@ case $goprom in
   [Yy]* ) 
 
     cp -r /home/pi/plumbing-controller/prometheus /home/pi/prometheus
-
+    
     docker run -d --restart=always --net mqtt \
     --name=prometheus \
     -p 9099:9090 \
     --add-host=host.docker.internal:host-gateway \
     -v ~/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml \
-    prom/prometheus
+    prom/prometheus \
+    --storage.tsdb.retention.time=365d \
+    --config.file=/etc/prometheus/prometheus.yml \
+    --storage.tsdb.path=/prometheus \
+    --web.console.libraries=/usr/share/prometheus/console_libraries \
+    --web.console.templates=/usr/share/prometheus/consoles
 
   ;;
 
