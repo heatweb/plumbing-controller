@@ -144,6 +144,14 @@ esac
 echo "Please wait 1 minute to complete..."
 sleep 1m
 
+
+sudo docker exec -ti grafana grafana-cli admin reset-admin-password $password
+
+## The following lines add the admin user to the MQTT service and restarts it.
+sudo docker exec -ti mqtt mosquitto_passwd -b /mosquitto/config/passwordfile admin $password
+sudo docker restart mqtt
+
+
 case $goinflux in
   [Yy]* ) 
      
@@ -156,12 +164,6 @@ case $goinflux in
     echo "This is saved to /home/pi/influxdbtoken.txt"
  ;;
 esac
-
-sudo docker exec -ti grafana grafana-cli admin reset-admin-password $password
-
-## The following lines add the admin user to the MQTT service and restarts it.
-sudo docker exec -ti mqtt mosquitto_passwd -b /mosquitto/config/passwordfile admin $password
-sudo docker restart mqtt
 
 echo "Finished."
 echo "IMPORTANT: You should go to Portainer on port 9000, set the admin password, and click on Get Started."
