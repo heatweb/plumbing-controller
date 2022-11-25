@@ -1,0 +1,268 @@
+[
+    {
+        "id": "b2bca411e4cdd603",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "63209b3d832ab1c5",
+        "type": "http in",
+        "z": "b2bca411e4cdd603",
+        "name": "",
+        "url": "/settingsapi",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 200,
+        "wires": [
+            [
+                "aa0e54d823be4b74",
+                "0463ae15a1aa7563",
+                "9da1affa83043392"
+            ]
+        ]
+    },
+    {
+        "id": "0bc413acc4e44582",
+        "type": "http response",
+        "z": "b2bca411e4cdd603",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 770,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "aa0e54d823be4b74",
+        "type": "debug",
+        "z": "b2bca411e4cdd603",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "9da1affa83043392",
+        "type": "template",
+        "z": "b2bca411e4cdd603",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "ok",
+        "output": "str",
+        "x": 580,
+        "y": 200,
+        "wires": [
+            [
+                "0bc413acc4e44582"
+            ]
+        ]
+    },
+    {
+        "id": "7d4d106f64feea48",
+        "type": "http in",
+        "z": "b2bca411e4cdd603",
+        "name": "",
+        "url": "/settingsapi",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "07039b7cfc9ff55d"
+            ]
+        ]
+    },
+    {
+        "id": "b46b090bc6759d6b",
+        "type": "http response",
+        "z": "b2bca411e4cdd603",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 910,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "db9e8e37622b437c",
+        "type": "template",
+        "z": "b2bca411e4cdd603",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{ \"tSet\": \"15\", \"tSet2\": 10.5 }",
+        "output": "str",
+        "x": 520,
+        "y": 60,
+        "wires": [
+            [
+                "e69556b50bdf776e"
+            ]
+        ]
+    },
+    {
+        "id": "e69556b50bdf776e",
+        "type": "debug",
+        "z": "b2bca411e4cdd603",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "07039b7cfc9ff55d",
+        "type": "function",
+        "z": "b2bca411e4cdd603",
+        "name": "fetch settings",
+        "func": "\nvar settings = global.get(\"settings\");\nvar oot = {};\n\noot.title = \"\";\noot.email = \"\";\noot.postCode = \"\";\n\nfor (var sett in settings) {\n\n    oot[sett] = settings[sett].value;\n}\n\nmsg.payload = JSON.stringify(oot);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 140,
+        "wires": [
+            [
+                "b46b090bc6759d6b",
+                "e69556b50bdf776e"
+            ]
+        ]
+    },
+    {
+        "id": "0463ae15a1aa7563",
+        "type": "function",
+        "z": "b2bca411e4cdd603",
+        "name": "function 2",
+        "func": "\nvar settings = global.get(\"settings\");\nvar oot = {};\n\nfor (var sett in msg.payload) {\n\n    oot.topic = \"set/\" + sett;\n    oot.payload = msg.payload[sett];\n    node.send(oot);\n}\n\n\n\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 280,
+        "wires": [
+            [
+                "6da8fb130fa1df87",
+                "1dab6e911927df71"
+            ]
+        ]
+    },
+    {
+        "id": "1dab6e911927df71",
+        "type": "link out",
+        "z": "b2bca411e4cdd603",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 885,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "6da8fb130fa1df87",
+        "type": "debug",
+        "z": "b2bca411e4cdd603",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "bbcda2730195f64e",
+        "type": "inject",
+        "z": "b2bca411e4cdd603",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "set/title",
+        "payload": "Test",
+        "payloadType": "str",
+        "x": 730,
+        "y": 360,
+        "wires": [
+            [
+                "1dab6e911927df71"
+            ]
+        ]
+    },
+    {
+        "id": "8884059720507654",
+        "type": "inject",
+        "z": "b2bca411e4cdd603",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "set/tSet",
+        "payload": "51",
+        "payloadType": "num",
+        "x": 760,
+        "y": 420,
+        "wires": [
+            [
+                "1dab6e911927df71"
+            ]
+        ]
+    }
+]
