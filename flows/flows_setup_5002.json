@@ -1,0 +1,1590 @@
+[
+    {
+        "id": "ada9b0905f04f969",
+        "type": "tab",
+        "label": "Software 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d1f3d002.63ee48",
+        "type": "subflow",
+        "name": "rbe 5m",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "dd19c0de.9bebd"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 420,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "29eae4ad.d68f2c",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "536010b714fb4c2f",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "5020304693266723",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "mysql",
+        "port": "3306",
+        "db": "heatweb",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "61c70212c61507f5",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "dd19c0de.9bebd",
+        "type": "rbe",
+        "z": "d1f3d002.63ee48",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "29eae4ad.d68f2c"
+            ]
+        ]
+    },
+    {
+        "id": "8b22fc2a.83d07",
+        "type": "inject",
+        "z": "d1f3d002.63ee48",
+        "name": "",
+        "props": [
+            {
+                "p": "reset",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "dd19c0de.9bebd"
+            ]
+        ]
+    },
+    {
+        "id": "29eae4ad.d68f2c",
+        "type": "switch",
+        "z": "d1f3d002.63ee48",
+        "name": "",
+        "property": "reset",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c3e5d8a4996b7593",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1270,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "a6a3b2c325421989",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "flows",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/flows\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n\nif (msg.mqttpass) {\n\n   var cfrom = '\"broker\": \"mqtt\"';\n   var cto = '\"broker\": \"mqtt\", \"credentials\":{\"user\":\"admin\", \"password\":\"' + msg.mqttpass + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\nif (msg.mysqlpass) {\n\n   var cfrom = '\"type\": \"MySQLdatabase\"';\n   var cto = '\"type\": \"MySQLdatabase\", \"credentials\":{\"user\":\"root\", \"password\":\"' + msg.mysqlpass + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\nif (msg.influxdbpass) {\n\n   var cfrom = '\"type\": \"influxdb\"';\n   var cto = '\"type\": \"influxdb\", \"credentials\":{\"token\":\"' + msg.influxdbpass + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\n\n// if (global.get(\"settings.flow\")==\"flows_ihiu_setup\") {\n    \n//    var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n//    var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"setup\",\"password\":\"setup\"}';\n//    msg.payload = msg.payload.replace(cfrom, cto);\n\n// } else {\n\n//    var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n//    var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n//    msg.payload = msg.payload.replace(cfrom, cto);\n\n// }\n\n\n// var cfrom = '\"broker\":\"192.168.0.3\"';\n// var cto = '\"broker\":\"192.168.0.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n// msg.payload = msg.payload.replace(cfrom, cto);\n\n// var cfrom = '\"broker\":\"192.168.1.3\"';\n// var cto = '\"broker\":\"192.168.1.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n// msg.payload = msg.payload.replace(cfrom, cto);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 1420,
+        "wires": [
+            [
+                "7f1e543383c2855c"
+            ]
+        ]
+    },
+    {
+        "id": "7f1e543383c2855c",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1090,
+        "y": 1420,
+        "wires": [
+            [
+                "c3e5d8a4996b7593"
+            ]
+        ]
+    },
+    {
+        "id": "4a0aac0be317696c",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "func": "//var cmd = \"curl http://localhost:5002/auth/token --data 'client_id=node-red-admin&grant_type=password&scope=*&username=admin&password=Duu1cahe'\";\n\nmsg.payload={};\nmsg.payload['client_id']=\"node-red-admin\";\nmsg.payload['grant_type']=\"password\";\nmsg.payload['scope']=\"*\";\nmsg.payload['username']=\"admin\";\nmsg.payload['password']=\"admin\";\n\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/auth/token\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 320,
+        "wires": [
+            [
+                "9c801a77b9e4a9cc"
+            ]
+        ]
+    },
+    {
+        "id": "9c801a77b9e4a9cc",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 540,
+        "y": 320,
+        "wires": [
+            [
+                "55433855560208bd",
+                "f9688af46a44345f"
+            ]
+        ]
+    },
+    {
+        "id": "ff25a01770cf7476",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1260,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "ea6ce91adca2108e",
+        "type": "change",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "auth",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 320,
+        "wires": [
+            [
+                "ff25a01770cf7476"
+            ]
+        ]
+    },
+    {
+        "id": "8e5c58a72922043a",
+        "type": "json",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "pretty": false,
+        "x": 880,
+        "y": 320,
+        "wires": [
+            [
+                "ea6ce91adca2108e"
+            ]
+        ]
+    },
+    {
+        "id": "7c2b4093804137ba",
+        "type": "file in",
+        "z": "ada9b0905f04f969",
+        "name": "flow_mysql_influxdb.json",
+        "filename": "/home/pi/plumbing-controller/flows/flow_mysql_influxdb.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 410,
+        "y": 1420,
+        "wires": [
+            [
+                "4288c9906c3198b7"
+            ]
+        ]
+    },
+    {
+        "id": "55433855560208bd",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "2a62155797e36ab5",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "fa9122113ff1052b",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 440,
+        "wires": [
+            [
+                "2a62155797e36ab5",
+                "0b78b4156d2aec37"
+            ]
+        ]
+    },
+    {
+        "id": "38481ca65c88513a",
+        "type": "inject",
+        "z": "ada9b0905f04f969",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "targetport",
+                "vt": "global"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 200,
+        "y": 440,
+        "wires": [
+            [
+                "8c6aa974bf85becd"
+            ]
+        ]
+    },
+    {
+        "id": "7cf0581385e7a969",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 920,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "0b78b4156d2aec37",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-node-mysql ",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-node-mysql\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 500,
+        "wires": [
+            [
+                "c3eca6a7049f1cd3"
+            ]
+        ]
+    },
+    {
+        "id": "c3eca6a7049f1cd3",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 500,
+        "wires": [
+            [
+                "7cf0581385e7a969",
+                "d53aef22c1ed2f74"
+            ]
+        ]
+    },
+    {
+        "id": "8c6aa974bf85becd",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-contrib-influxdb",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-influxdb\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 440,
+        "wires": [
+            [
+                "fa9122113ff1052b"
+            ]
+        ]
+    },
+    {
+        "id": "ccbc48864ea13aed",
+        "type": "change",
+        "z": "ada9b0905f04f969",
+        "name": "email",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\"type\":\"e-mail\"",
+                "fromt": "str",
+                "to": "\"type\":\"e-mail\", \"credentials\":{\"userid\":\"nodered@heatweb.com\", \"password\":\"nodered@heatweb.com\"}",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 1900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f9688af46a44345f",
+        "type": "switch",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "access_token",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 720,
+        "y": 320,
+        "wires": [
+            [
+                "8e5c58a72922043a"
+            ]
+        ]
+    },
+    {
+        "id": "184c8752cb1b8a44",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1130,
+        "y": 1800,
+        "wires": []
+    },
+    {
+        "id": "3ed12938f2e549cf",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "flow",
+        "func": "\nmsg.payload = JSON.stringify({\n   \"id\": \"91ad452.0000111\",\n   \"label\": \"Public MQTT\",\n   \"nodes\": JSON.parse(msg.payload),\n   \"configs\": []\n});\n\n\n\n\nmsg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/flow\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n\nif (global.get(\"noderedmqttpass\")) {\n\n   var cfrom = '\"broker\":\"localhost\"';\n   var cto = '\"broker\":\"localhost\", \"credentials\":{\"user\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n\n}\n\nif (global.get(\"settings.flow\")==\"flows_ihiu_setup\") {\n    \n   var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n   var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"setup\",\"password\":\"setup\"}';\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n} else {\n\n   var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n   var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\nvar cfrom = '\"broker\":\"192.168.0.3\"';\nvar cto = '\"broker\":\"192.168.0.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\nmsg.payload = msg.payload.replace(cfrom, cto);\n\nvar cfrom = '\"broker\":\"192.168.1.3\"';\nvar cto = '\"broker\":\"192.168.1.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\nmsg.payload = msg.payload.replace(cfrom, cto);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 1800,
+        "wires": [
+            [
+                "591eb69dfb403d64"
+            ]
+        ]
+    },
+    {
+        "id": "1fd91a19a87015e6",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 950,
+        "y": 1800,
+        "wires": [
+            [
+                "184c8752cb1b8a44"
+            ]
+        ]
+    },
+    {
+        "id": "58dcbdcfbeec5a76",
+        "type": "file in",
+        "z": "ada9b0905f04f969",
+        "name": "nodes_public_mqtt.json",
+        "filename": "/home/pi/plumbing-controller/flows/nodes_public_mqtt.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 430,
+        "y": 1800,
+        "wires": [
+            [
+                "3ed12938f2e549cf"
+            ]
+        ]
+    },
+    {
+        "id": "591eb69dfb403d64",
+        "type": "change",
+        "z": "ada9b0905f04f969",
+        "name": "Credentials",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\"type\": \"MySQLdatabase\"",
+                "fromt": "str",
+                "to": "\"type\": \"MySQLdatabase\", \"credentials\":{\"user\":\"root\", \"password\":\"zccamei4ies@\"}",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\"type\": \"influxdb\"",
+                "fromt": "str",
+                "to": "\"type\": \"influxdb\", \"credentials\":{\"token\":\"oHyHPxoTEHQysurXl_4Kxbmj5EnpWtsg3RnSXoMnLeO01ICmIBUXIo3yXNEsLxMtPzTb9lwgzHDX5tL4ipOzjw==\"}",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 1800,
+        "wires": [
+            [
+                "1fd91a19a87015e6"
+            ]
+        ]
+    },
+    {
+        "id": "451b43fdee736f27",
+        "type": "inject",
+        "z": "ada9b0905f04f969",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "targetport",
+                "vt": "global"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 1420,
+        "wires": [
+            [
+                "7c2b4093804137ba"
+            ]
+        ]
+    },
+    {
+        "id": "423470d8445e73ef",
+        "type": "inject",
+        "z": "ada9b0905f04f969",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "targetport",
+                "vt": "global"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 1800,
+        "wires": [
+            [
+                "58dcbdcfbeec5a76"
+            ]
+        ]
+    },
+    {
+        "id": "77fe588545c27dc1",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 920,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "d53aef22c1ed2f74",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-contrib-crypto-js",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-crypto-js\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 560,
+        "wires": [
+            [
+                "c808571140d2ed62"
+            ]
+        ]
+    },
+    {
+        "id": "c808571140d2ed62",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 560,
+        "wires": [
+            [
+                "77fe588545c27dc1",
+                "ea6b27dfd134f0e5"
+            ]
+        ]
+    },
+    {
+        "id": "168cb87c150a3689",
+        "type": "comment",
+        "z": "ada9b0905f04f969",
+        "name": "Request for Authorisation where password is set",
+        "info": "",
+        "x": 230,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "8c9c49675ce7c1ee",
+        "type": "comment",
+        "z": "ada9b0905f04f969",
+        "name": "Install Nodes required for Flows",
+        "info": "",
+        "x": 180,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "166df86fa811a345",
+        "type": "comment",
+        "z": "ada9b0905f04f969",
+        "name": "Deploy Complete Flows",
+        "info": "",
+        "x": 160,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "0b8e8c3096d7e1ba",
+        "type": "comment",
+        "z": "ada9b0905f04f969",
+        "name": "Deploy Individual Tab",
+        "info": "",
+        "x": 160,
+        "y": 1740,
+        "wires": []
+    },
+    {
+        "id": "e89e52ee88cf4399",
+        "type": "inject",
+        "z": "ada9b0905f04f969",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "targetport",
+                "vt": "global"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 200,
+        "y": 320,
+        "wires": [
+            [
+                "4a0aac0be317696c"
+            ]
+        ]
+    },
+    {
+        "id": "0859ab8373738ab9",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1210,
+        "y": 1600,
+        "wires": []
+    },
+    {
+        "id": "e29c974f86aa8f1e",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "flow",
+        "func": "\n\nmsg.headers = {};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/flow\";\n\n\n// {\n//    \"id\": \"e090c99b.574098\",\n//       \"type\": \"tab\",\n//          \"label\": \"HIU\",\n//             \"disabled\": false,\n//                \"info\": \"\"\n// },\n\n\nfunction checkTab(nodeitem) {\n   return nodeitem.type == \"tab\";\n}\n\nfunction filterTab(nodeitem) {\n   return nodeitem.type != \"tab\";\n}\n\nmsg.payload = JSON.parse(msg.payload);\n\nvar tabf = msg.payload.filter(checkTab)[0];\n\ntabf.nodes = msg.payload.filter(filterTab);\n\n// msg.payload = JSON.stringify({\n//    \"id\": \"91ad452.0000112\",\n//    \"label\": \"HIU\",\n//    \"nodes\": JSON.parse(msg.payload),\n//    \"configs\": []\n// });\n\nmsg.payload = tabf;\nreturn msg;\n\n\n\n\n\n\nmsg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://localhost:\" + msg.port + \"/flow\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n\nif (global.get(\"noderedmqttpass\")) {\n\n   var cfrom = '\"broker\":\"localhost\"';\n   var cto = '\"broker\":\"localhost\", \"credentials\":{\"user\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n\n}\n\nif (global.get(\"settings.flow\")==\"flows_ihiu_setup\") {\n    \n   var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n   var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"setup\",\"password\":\"setup\"}';\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n} else {\n\n   var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n   var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\nvar cfrom = '\"broker\":\"192.168.0.3\"';\nvar cto = '\"broker\":\"192.168.0.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\nmsg.payload = msg.payload.replace(cfrom, cto);\n\nvar cfrom = '\"broker\":\"192.168.1.3\"';\nvar cto = '\"broker\":\"192.168.1.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\nmsg.payload = msg.payload.replace(cfrom, cto);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 1600,
+        "wires": [
+            [
+                "8abb7e347abb9c0e",
+                "807d1df7ca190326"
+            ]
+        ]
+    },
+    {
+        "id": "4154e2c72ef46545",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1030,
+        "y": 1600,
+        "wires": [
+            [
+                "0859ab8373738ab9"
+            ]
+        ]
+    },
+    {
+        "id": "807d1df7ca190326",
+        "type": "change",
+        "z": "ada9b0905f04f969",
+        "name": "Credentials",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\"type\": \"MySQLdatabase\"",
+                "fromt": "str",
+                "to": "\"type\": \"MySQLdatabase\", \"credentials\":{\"user\":\"root\", \"password\":\"zccamei4ies@\"}",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\"type\": \"influxdb\"",
+                "fromt": "str",
+                "to": "\"type\": \"influxdb\", \"credentials\":{\"token\":\"oHyHPxoTEHQysurXl_4Kxbmj5EnpWtsg3RnSXoMnLeO01ICmIBUXIo3yXNEsLxMtPzTb9lwgzHDX5tL4ipOzjw==\"}",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 850,
+        "y": 1600,
+        "wires": [
+            [
+                "4154e2c72ef46545"
+            ]
+        ]
+    },
+    {
+        "id": "46a55c818fae6302",
+        "type": "inject",
+        "z": "ada9b0905f04f969",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "targetport",
+                "vt": "global"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 1600,
+        "wires": [
+            [
+                "ca9c7c83b1280e3f"
+            ]
+        ]
+    },
+    {
+        "id": "c56bd7932e1206a9",
+        "type": "comment",
+        "z": "ada9b0905f04f969",
+        "name": "Deploy Individual Tab",
+        "info": "",
+        "x": 160,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "8abb7e347abb9c0e",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "debug 19",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 1660,
+        "wires": []
+    },
+    {
+        "id": "ca9c7c83b1280e3f",
+        "type": "file in",
+        "z": "ada9b0905f04f969",
+        "name": "flow_public_mqtt.json",
+        "filename": "/home/pi/plumbing-controller/flows/flow_public_mqtt.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 420,
+        "y": 1600,
+        "wires": [
+            [
+                "e29c974f86aa8f1e"
+            ]
+        ]
+    },
+    {
+        "id": "4288c9906c3198b7",
+        "type": "credentials",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "props": [
+            {
+                "value": "mqttpass",
+                "type": "msg"
+            },
+            {
+                "value": "mysqlpass",
+                "type": "msg"
+            },
+            {
+                "value": "influxdbpass",
+                "type": "msg"
+            }
+        ],
+        "x": 710,
+        "y": 1420,
+        "wires": [
+            [
+                "a6a3b2c325421989"
+            ]
+        ]
+    },
+    {
+        "id": "7845f4c3b9fe0c15",
+        "type": "file in",
+        "z": "ada9b0905f04f969",
+        "name": "flow_hiu.json",
+        "filename": "/home/pi/plumbing-controller/flows/flow_hiu.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 410,
+        "y": 1660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0c2fe6ee5665607c",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 920,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "ea6b27dfd134f0e5",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-contrib-heatweb",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-heatweb\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 620,
+        "wires": [
+            [
+                "0ece526815605643"
+            ]
+        ]
+    },
+    {
+        "id": "0ece526815605643",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 620,
+        "wires": [
+            [
+                "0c2fe6ee5665607c",
+                "3e68b4104d5e2743"
+            ]
+        ]
+    },
+    {
+        "id": "dbec858e52bd2423",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 920,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "3e68b4104d5e2743",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-node-email",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-node-email\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 680,
+        "wires": [
+            [
+                "f84ebac9fe9e5a68"
+            ]
+        ]
+    },
+    {
+        "id": "f84ebac9fe9e5a68",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 680,
+        "wires": [
+            [
+                "dbec858e52bd2423",
+                "cc8dff33020360bd"
+            ]
+        ]
+    },
+    {
+        "id": "508fdc3fdc3e6bd1",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 920,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "cc8dff33020360bd",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-contrib-credentials",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-credentials\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 740,
+        "wires": [
+            [
+                "ec37932b8d6da507"
+            ]
+        ]
+    },
+    {
+        "id": "ec37932b8d6da507",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 740,
+        "wires": [
+            [
+                "508fdc3fdc3e6bd1",
+                "8ac71ddf0b267ba8"
+            ]
+        ]
+    },
+    {
+        "id": "6b1b652ca71d5aaa",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 920,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "8ac71ddf0b267ba8",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-contrib-m-bus",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-m-bus\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 800,
+        "wires": [
+            [
+                "4275eb192e660de0"
+            ]
+        ]
+    },
+    {
+        "id": "4275eb192e660de0",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 800,
+        "wires": [
+            [
+                "6b1b652ca71d5aaa",
+                "a8229ab08373c28f"
+            ]
+        ]
+    },
+    {
+        "id": "b482c1cc7dd08193",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 920,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "a8229ab08373c28f",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-node-ui-table",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-node-ui-table\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 860,
+        "wires": [
+            [
+                "66c4c2aa0c8ef2c8"
+            ]
+        ]
+    },
+    {
+        "id": "66c4c2aa0c8ef2c8",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 860,
+        "wires": [
+            [
+                "b482c1cc7dd08193",
+                "1bc60c1a37c317d0"
+            ]
+        ]
+    },
+    {
+        "id": "255f2defcdbe0861",
+        "type": "file in",
+        "z": "ada9b0905f04f969",
+        "name": "flows_original.json",
+        "filename": "/home/pi/plumbing-controller/flows/flows_original.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 430,
+        "y": 1360,
+        "wires": [
+            [
+                "4288c9906c3198b7"
+            ]
+        ]
+    },
+    {
+        "id": "77b247c893c49ad9",
+        "type": "inject",
+        "z": "ada9b0905f04f969",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "targetport",
+                "vt": "global"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 1360,
+        "wires": [
+            [
+                "255f2defcdbe0861"
+            ]
+        ]
+    },
+    {
+        "id": "b7509b86aec9b572",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 920,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "1bc60c1a37c317d0",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-contrib-ui-heatmap",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-ui-heatmap\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 920,
+        "wires": [
+            [
+                "d64be858c6cb3d7f"
+            ]
+        ]
+    },
+    {
+        "id": "d64be858c6cb3d7f",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 920,
+        "wires": [
+            [
+                "b7509b86aec9b572",
+                "8068c53645263ba4"
+            ]
+        ]
+    },
+    {
+        "id": "a23de75463ee5605",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 920,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "8068c53645263ba4",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-contrib-arp",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-arp\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 980,
+        "wires": [
+            [
+                "76b05bb184f1ce6d"
+            ]
+        ]
+    },
+    {
+        "id": "76b05bb184f1ce6d",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 980,
+        "wires": [
+            [
+                "a23de75463ee5605",
+                "87aa0ea323c5d023"
+            ]
+        ]
+    },
+    {
+        "id": "42e94c7aad69b79b",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 920,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "87aa0ea323c5d023",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-node-daemon",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-node-daemon\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 1040,
+        "wires": [
+            [
+                "4cb1ce54bdd11c40"
+            ]
+        ]
+    },
+    {
+        "id": "4cb1ce54bdd11c40",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 1040,
+        "wires": [
+            [
+                "42e94c7aad69b79b",
+                "aad98372c4d52c88"
+            ]
+        ]
+    },
+    {
+        "id": "0a386175a7937d9e",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 920,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "aad98372c4d52c88",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-node-smooth",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-node-smooth\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 1100,
+        "wires": [
+            [
+                "d7f40a2ecf58727c"
+            ]
+        ]
+    },
+    {
+        "id": "d7f40a2ecf58727c",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 1100,
+        "wires": [
+            [
+                "0a386175a7937d9e",
+                "b5d9f17d3ba2a8b1"
+            ]
+        ]
+    },
+    {
+        "id": "a560f8df7b3179b3",
+        "type": "debug",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 920,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "b5d9f17d3ba2a8b1",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "node-red-contrib-ip",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-ip\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 1160,
+        "wires": [
+            [
+                "6deed4a83544adaa"
+            ]
+        ]
+    },
+    {
+        "id": "6deed4a83544adaa",
+        "type": "http request",
+        "z": "ada9b0905f04f969",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 720,
+        "y": 1160,
+        "wires": [
+            [
+                "a560f8df7b3179b3"
+            ]
+        ]
+    },
+    {
+        "id": "d3d1faad6eb9aa5e",
+        "type": "inject",
+        "z": "ada9b0905f04f969",
+        "name": "Start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 80,
+        "wires": [
+            [
+                "800381e20b825b80"
+            ]
+        ]
+    },
+    {
+        "id": "800381e20b825b80",
+        "type": "function",
+        "z": "ada9b0905f04f969",
+        "name": "Initialise host.docker.internal:5002",
+        "func": "global.set(\"localhost\",\"host.docker.internal\");\nglobal.set(\"targetport\", \"5002\");\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    }
+]
