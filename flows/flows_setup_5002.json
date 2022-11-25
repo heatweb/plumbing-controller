@@ -2,158 +2,10 @@
     {
         "id": "ada9b0905f04f969",
         "type": "tab",
-        "label": "Software 2",
+        "label": "Setup 2",
         "disabled": false,
         "info": "",
         "env": []
-    },
-    {
-        "id": "d1f3d002.63ee48",
-        "type": "subflow",
-        "name": "rbe 5m",
-        "info": "",
-        "category": "",
-        "in": [
-            {
-                "x": 60,
-                "y": 120,
-                "wires": [
-                    {
-                        "id": "dd19c0de.9bebd"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 420,
-                "y": 160,
-                "wires": [
-                    {
-                        "id": "29eae4ad.d68f2c",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [],
-        "meta": {},
-        "color": "#DDAA99"
-    },
-    {
-        "id": "536010b714fb4c2f",
-        "type": "influxdb",
-        "hostname": "127.0.0.1",
-        "port": "8086",
-        "protocol": "http",
-        "database": "database",
-        "name": "",
-        "usetls": false,
-        "tls": "",
-        "influxdbVersion": "2.0",
-        "url": "http://influxdb:8086",
-        "rejectUnauthorized": true
-    },
-    {
-        "id": "5020304693266723",
-        "type": "MySQLdatabase",
-        "name": "",
-        "host": "mysql",
-        "port": "3306",
-        "db": "heatweb",
-        "tz": "",
-        "charset": "UTF8"
-    },
-    {
-        "id": "61c70212c61507f5",
-        "type": "mqtt-broker",
-        "name": "",
-        "broker": "mqtt",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
-    },
-    {
-        "id": "dd19c0de.9bebd",
-        "type": "rbe",
-        "z": "d1f3d002.63ee48",
-        "name": "",
-        "func": "rbe",
-        "gap": "",
-        "start": "",
-        "inout": "out",
-        "property": "payload",
-        "x": 190,
-        "y": 120,
-        "wires": [
-            [
-                "29eae4ad.d68f2c"
-            ]
-        ]
-    },
-    {
-        "id": "8b22fc2a.83d07",
-        "type": "inject",
-        "z": "d1f3d002.63ee48",
-        "name": "",
-        "props": [
-            {
-                "p": "reset",
-                "v": "1",
-                "vt": "str"
-            }
-        ],
-        "repeat": "300",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 200,
-        "y": 80,
-        "wires": [
-            [
-                "dd19c0de.9bebd"
-            ]
-        ]
-    },
-    {
-        "id": "29eae4ad.d68f2c",
-        "type": "switch",
-        "z": "d1f3d002.63ee48",
-        "name": "",
-        "property": "reset",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "null"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 280,
-        "y": 160,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "c3e5d8a4996b7593",
@@ -172,7 +24,7 @@
         "type": "function",
         "z": "ada9b0905f04f969",
         "name": "flows",
-        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + global.get(\"localhost\") + \":\" + msg.port + \"/flows\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n\nif (msg.mqttpass) {\n\n   var cfrom = '\"broker\": \"mqtt\"';\n   var cto = '\"broker\": \"mqtt\", \"credentials\":{\"user\":\"admin\", \"password\":\"' + msg.mqttpass + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\nif (msg.mysqlpass) {\n\n   var cfrom = '\"type\": \"MySQLdatabase\"';\n   var cto = '\"type\": \"MySQLdatabase\", \"credentials\":{\"user\":\"root\", \"password\":\"' + msg.mysqlpass + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\nif (msg.influxdbpass) {\n\n   var cfrom = '\"type\": \"influxdb\"';\n   var cto = '\"type\": \"influxdb\", \"credentials\":{\"token\":\"' + msg.influxdbpass + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\n\n// if (global.get(\"settings.flow\")==\"flows_ihiu_setup\") {\n    \n//    var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n//    var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"setup\",\"password\":\"setup\"}';\n//    msg.payload = msg.payload.replace(cfrom, cto);\n\n// } else {\n\n//    var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n//    var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n//    msg.payload = msg.payload.replace(cfrom, cto);\n\n// }\n\n\n// var cfrom = '\"broker\":\"192.168.0.3\"';\n// var cto = '\"broker\":\"192.168.0.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n// msg.payload = msg.payload.replace(cfrom, cto);\n\n// var cfrom = '\"broker\":\"192.168.1.3\"';\n// var cto = '\"broker\":\"192.168.1.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n// msg.payload = msg.payload.replace(cfrom, cto);\n\n\nreturn msg;",
+        "func": "msg.headers = {};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://localhost:\" + msg.port + \"/flows\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n// //testing\n// var str1 = '\"type\": \"credentials\"'\n// var creds = [{ \"value\": \"xxx\", \"type\": \"str\" }, { \"value\": \"ddddd\", \"type\": \"str\" }, { \"value\": \"fffff\", \"type\": \"str\" }];\n// var creds2 = JSON.stringify({ \"type\": \"credentials\", \"credentials\": JSON.stringify(creds) });\n// creds2 = creds2.substr(1);\n// creds2 = creds2.substr(0, creds2.length - 1);\n// msg.payload = msg.payload.replace(str1, creds2);\n// // not working !!!\n\n//var ff = msg.payload;\nvar ff = JSON.parse(msg.payload);\n\nfor (var part in ff) {\n\n\n   if (msg.mqttpass) {\n\n      if (ff[part].type == \"mqtt-broker\" && ff[part].broker == \"mqtt\") { ff[part].credentials = { \"user\": \"admin\", \"password\": msg.mqttpass }; }\n\n   }\n\n   if (msg.mysqlpass) {\n\n      if (ff[part].type == \"MySQLdatabase\" && ff[part].host == \"mysql\") { ff[part].credentials = { \"user\": \"root\", \"password\": msg.mysqlpass }; }\n\n   }\n\n   if (msg.influxdbpass) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].hostname == \"27.0.0.1\") { ff[part].credentials = { \"token\": msg.influxdbpass }; }\n\n   }\n\n\n}\n\nmsg.payload = JSON.stringify(ff);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
