@@ -1,27 +1,649 @@
 [
     {
-        "id": "b2bca411e4cdd603",
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "564812e6529f65a5",
         "type": "tab",
         "label": "Flow 2",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1e04f1ea7fdd5aa1",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5715139153db24f7",
+        "type": "tab",
+        "label": "Flow 4",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
+        "id": "d1f3d002.63ee48",
+        "type": "subflow",
+        "name": "rbe 5m",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "dd19c0de.9bebd"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 420,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "29eae4ad.d68f2c",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "536010b714fb4c2f",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "5020304693266723",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "mysql",
+        "port": "3306",
+        "db": "heatweb",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "61c70212c61507f5",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "209b6731446a7c26",
+        "type": "mqtt-broker",
+        "name": "mqtt1",
+        "broker": "none",
+        "port": "1883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": false,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "dcd4fcb0c3ba9634",
+        "type": "mqtt-broker",
+        "name": "mqtt2",
+        "broker": "none",
+        "port": "1883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": false,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "6d5572ba50504c52",
+        "type": "influxdb",
+        "hostname": "https://influx-prod-10-prod-us-central-0.grafana.net/api/influx/write",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "dd19c0de.9bebd",
+        "type": "rbe",
+        "z": "d1f3d002.63ee48",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "29eae4ad.d68f2c"
+            ]
+        ]
+    },
+    {
+        "id": "8b22fc2a.83d07",
+        "type": "inject",
+        "z": "d1f3d002.63ee48",
+        "name": "",
+        "props": [
+            {
+                "p": "reset",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "dd19c0de.9bebd"
+            ]
+        ]
+    },
+    {
+        "id": "29eae4ad.d68f2c",
+        "type": "switch",
+        "z": "d1f3d002.63ee48",
+        "name": "",
+        "property": "reset",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "27ba92fdd543e7c1",
+        "type": "influxdb out",
+        "z": "f6f2187d.f17ca8",
+        "influxdb": "536010b714fb4c2f",
+        "name": "",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "heatweb",
+        "bucket": "heatweb",
+        "x": 850,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "1fc0f22e5611efa8",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "fa2630848688178b",
+        "type": "mysql",
+        "z": "f6f2187d.f17ca8",
+        "mydb": "5020304693266723",
+        "name": "",
+        "x": 900,
+        "y": 360,
+        "wires": [
+            [
+                "e52eeebaa2dfd8af"
+            ]
+        ]
+    },
+    {
+        "id": "a27b23988abd0a33",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "SELECT * FROM readings",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SELECT * FROM readings",
+        "payload": "",
+        "payloadType": "date",
+        "x": 670,
+        "y": 420,
+        "wires": [
+            [
+                "fa2630848688178b"
+            ]
+        ]
+    },
+    {
+        "id": "e52eeebaa2dfd8af",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "cedc9de4dd964642",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "SQL",
+        "func": "\nvar t = msg.topic.split(\"/\");\nmsg.topic = \"INSERT INTO `readings` (`topic`, `network`, `node`, `device`, `vargroup`, `varkey`, `value` ) VALUES ( '\" + msg.topic +\"', '\" + t[0] + \"', '\" + t[1] + \"', '\" + t[2] + \"', '\" + t[3] + \"', '\" + t[4] + \"', '\" + msg.payload +\"') \";\n\nmsg.topic += ' ON DUPLICATE KEY UPDATE value = \"' + msg.payload + '\", timestamp = CURRENT_TIMESTAMP;';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 360,
+        "wires": [
+            [
+                "fa2630848688178b",
+                "cc314aa6cdf128b0"
+            ]
+        ]
+    },
+    {
+        "id": "cc314aa6cdf128b0",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "56f925dd66127bbb",
+        "type": "link in",
+        "z": "f6f2187d.f17ca8",
+        "name": "link in 3",
+        "links": [
+            "82572bd7fa2754e2",
+            "962b30a1333f36d6"
+        ],
+        "x": 875,
+        "y": 440,
+        "wires": [
+            [
+                "c9f49c81a1917c83"
+            ]
+        ]
+    },
+    {
+        "id": "c9f49c81a1917c83",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "settings/title",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 980,
+        "y": 440,
+        "wires": [
+            [
+                "f2bf02533363b1b0"
+            ]
+        ]
+    },
+    {
+        "id": "f2bf02533363b1b0",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "store titles",
+        "func": "flow.set(\"title.\"+msg.topic.split(\"/\")[2], msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1140,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b8cdb329577a495b",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "SELECT titles",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "SELECT * FROM readings WHERE varkey=\"title\" AND value!=\"RHGs SLIM\"",
+        "payload": "",
+        "payloadType": "date",
+        "x": 660,
+        "y": 500,
+        "wires": [
+            [
+                "11856a2cd1c3b214"
+            ]
+        ]
+    },
+    {
+        "id": "11856a2cd1c3b214",
+        "type": "mysql",
+        "z": "f6f2187d.f17ca8",
+        "mydb": "5020304693266723",
+        "name": "",
+        "x": 820,
+        "y": 500,
+        "wires": [
+            [
+                "309aa7172d98764d",
+                "9d161dfe804e860d"
+            ]
+        ]
+    },
+    {
+        "id": "309aa7172d98764d",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "9d161dfe804e860d",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "load titles",
+        "func": "\nfor (var mynode in msg.payload) {\n\n    flow.set(\"title.\" + msg.payload[mynode].topic.split(\"/\")[2], msg.payload[mynode].value);\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "82572bd7fa2754e2",
+        "type": "link out",
+        "z": "f6f2187d.f17ca8",
+        "name": "link out 9",
+        "mode": "link",
+        "links": [
+            "058f796bc37b7250",
+            "56f925dd66127bbb"
+        ],
+        "x": 265,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "7fddbf716a47caa3",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "#",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "61c70212c61507f5",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 130,
+        "y": 140,
+        "wires": [
+            [
+                "82572bd7fa2754e2",
+                "f04495f04028c894"
+            ]
+        ]
+    },
+    {
+        "id": "5b24a3ea71452cd8",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "time series ?",
+        "func": "\nvar oot = {};\nvar tags = {};\nvar tops = msg.topic.split(\"/\");\n\n// if (tops[3] == \"settings\") { return [null,msg]; }\n// if (tops[3] == \"system\") { return [null, msg]; }\n// //if (tops[4] == \"state\") { return [null, msg]; }\n// if (tops[3] == \"iot\") { return [null, msg]; }\n// if (tops[3] == \"cpu\") { return [null, msg]; }\n\n\nif (!tops[4]) { return null; }\n\nif (tops[3] == \"dat\") {  }\nelse if (tops[3] == \"stat\") { }\nelse if (tops[3] == \"cpu\") { }\n//else if (tops[3] !== \"dat\") { return null; }\nelse { return [null, msg]; }\n\nvar net = global.get(\"config.networkId\") || \"local\";\nnet = (tops[0] == \"local\" ? net : tops[0])\n\ntags.node = tops[1];\ntags.device = tops[2];\ntags.network = net;\ntags.vargroup = tops[3];\ntags.varkey = tops[4];\n\ntags.title = flow.get(\"title.\" + tops[2]) || tops[2];\n\n//if (!isNaN(msg.payload)) { msg.payload = parseFloat(msg.payload); }\n\nvar msg1={};\nmsg1.topic = \"\"+msg.topic;\n\ntry {\n\n    //if (tops[4]==\"state\") {\n    if (msg1.topic == \"dcscsc\") {\n\n        if (msg.payload==\"ok\") { msg1.payload = 1;}\n        else if (msg.payload == \"on\") { msg1.payload = 1; }\n        else if (msg.payload == \"off\") { msg1.payload = 0; }\n        else if (msg.payload.indexOf(\"warning\") > -1) { msg1.payload = 2; }\n        else { msg1.payload = 3; }    \n    \n    } else {\n\n        //if (isNaN(msg.payload)) { return [null, msg]; }\n        //if (isNaN(msg.payload)) { msg1.payload = '\"' + msg.payload + '\"' }\n        if (isNaN(msg.payload)) { msg1.payload = '' + msg.payload  }\n        //if (isNaN(msg.payload)) {  }\n        else { msg1.payload = parseFloat(msg.payload); }\n    }\n\n\n\n    oot[tops[3] + '_' + tops[4]] = msg1.payload;\n\n    msg1.measurement = net + '_' + tops[1] + '_' + tops[2];\n    msg1.payload = [oot, tags];\n\n    return [msg1, msg];\n\n\n\n\n} catch { return [null, msg]; }\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 260,
+        "wires": [
+            [
+                "27ba92fdd543e7c1",
+                "1fc0f22e5611efa8"
+            ],
+            [
+                "cedc9de4dd964642"
+            ]
+        ]
+    },
+    {
+        "id": "873f73b8bd187f78",
+        "type": "subflow:d1f3d002.63ee48",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "x": 420,
+        "y": 220,
+        "wires": [
+            [
+                "5b24a3ea71452cd8",
+                "a2a978223a03ad4b"
+            ]
+        ]
+    },
+    {
+        "id": "058f796bc37b7250",
+        "type": "link in",
+        "z": "f6f2187d.f17ca8",
+        "name": "link in 1",
+        "links": [
+            "190658415505c339",
+            "82572bd7fa2754e2"
+        ],
+        "x": 145,
+        "y": 260,
+        "wires": [
+            [
+                "aba7ab3daed2aa2a",
+                "f656e5b024503c03"
+            ]
+        ]
+    },
+    {
+        "id": "ca84dd2f975ecb0d",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "disabled numeric state",
+        "info": "",
+        "x": 1000,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "f04495f04028c894",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 8",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 290,
+        "y": 80,
+        "wires": []
+    },
+    {
         "id": "63209b3d832ab1c5",
         "type": "http in",
-        "z": "b2bca411e4cdd603",
+        "z": "f6f2187d.f17ca8",
         "name": "",
-        "url": "/settingsapi",
+        "url": "/grafanapost",
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 160,
-        "y": 200,
+        "x": 210,
+        "y": 1080,
         "wires": [
             [
                 "aa0e54d823be4b74",
-                "0463ae15a1aa7563",
                 "9da1affa83043392"
             ]
         ]
@@ -29,18 +651,18 @@
     {
         "id": "0bc413acc4e44582",
         "type": "http response",
-        "z": "b2bca411e4cdd603",
+        "z": "f6f2187d.f17ca8",
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 770,
-        "y": 200,
+        "x": 570,
+        "y": 1080,
         "wires": []
     },
     {
         "id": "aa0e54d823be4b74",
         "type": "debug",
-        "z": "b2bca411e4cdd603",
+        "z": "f6f2187d.f17ca8",
         "name": "debug 9",
         "active": true,
         "tosidebar": true,
@@ -51,13 +673,13 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 360,
-        "y": 360,
+        "y": 1160,
         "wires": []
     },
     {
         "id": "9da1affa83043392",
         "type": "template",
-        "z": "b2bca411e4cdd603",
+        "z": "f6f2187d.f17ca8",
         "name": "",
         "field": "payload",
         "fieldType": "msg",
@@ -65,8 +687,8 @@
         "syntax": "mustache",
         "template": "ok",
         "output": "str",
-        "x": 580,
-        "y": 200,
+        "x": 400,
+        "y": 1080,
         "wires": [
             [
                 "0bc413acc4e44582"
@@ -76,37 +698,37 @@
     {
         "id": "7d4d106f64feea48",
         "type": "http in",
-        "z": "b2bca411e4cdd603",
+        "z": "f6f2187d.f17ca8",
         "name": "",
-        "url": "/settingsapi",
+        "url": "/grafanapost",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 160,
-        "y": 140,
+        "x": 200,
+        "y": 1020,
         "wires": [
             [
-                "07039b7cfc9ff55d"
+                "db9e8e37622b437c"
             ]
         ]
     },
     {
         "id": "b46b090bc6759d6b",
         "type": "http response",
-        "z": "b2bca411e4cdd603",
+        "z": "f6f2187d.f17ca8",
         "name": "",
         "statusCode": "",
         "headers": {
             "Content-Type": "application/json"
         },
-        "x": 910,
-        "y": 140,
+        "x": 710,
+        "y": 1020,
         "wires": []
     },
     {
         "id": "db9e8e37622b437c",
         "type": "template",
-        "z": "b2bca411e4cdd603",
+        "z": "f6f2187d.f17ca8",
         "name": "",
         "field": "payload",
         "fieldType": "msg",
@@ -114,43 +736,8 @@
         "syntax": "mustache",
         "template": "{ \"tSet\": \"15\", \"tSet2\": 10.5 }",
         "output": "str",
-        "x": 520,
-        "y": 60,
-        "wires": [
-            [
-                "e69556b50bdf776e"
-            ]
-        ]
-    },
-    {
-        "id": "e69556b50bdf776e",
-        "type": "debug",
-        "z": "b2bca411e4cdd603",
-        "name": "debug 10",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 680,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "07039b7cfc9ff55d",
-        "type": "function",
-        "z": "b2bca411e4cdd603",
-        "name": "fetch settings",
-        "func": "\nvar settings = global.get(\"settings\");\nvar oot = {};\n\noot.title = \"\";\noot.email = \"\";\noot.postCode = \"\";\n\nfor (var sett in settings) {\n\n    oot[sett] = settings[sett].value;\n}\n\nmsg.payload = JSON.stringify(oot);\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 430,
-        "y": 140,
+        "x": 400,
+        "y": 1020,
         "wires": [
             [
                 "b46b090bc6759d6b",
@@ -159,58 +746,1210 @@
         ]
     },
     {
-        "id": "0463ae15a1aa7563",
+        "id": "e69556b50bdf776e",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "2f0116ae0d7d44a3",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "heatweb Grafana influx/write",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://influx-prod-10-prod-us-central-0.grafana.net/api/v1/push/influx/write",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "Authorization",
+                "valueType": "other",
+                "valueValue": "Bearer 568069:eyJrIjoiNzhmNTZmMjM4OGI3NzEyZWVhMTJlN2E4NWU2NTIyYWVjNTdlMjlkNyIsIm4iOiJpbmZsdXhwdXNoIiwiaWQiOjcwNzcxNH0="
+            }
+        ],
+        "x": 840,
+        "y": 100,
+        "wires": [
+            [
+                "905ac6b0db44b007"
+            ]
+        ]
+    },
+    {
+        "id": "86dd9c83b18a989c",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "info": "eyJrIjoiNzhmNTZmMjM4OGI3NzEyZWVhMTJlN2E4NWU2NTIyYWVjNTdlMjlkNyIsIm4iOiJpbmZsdXhwdXNoIiwiaWQiOjcwNzcxNH0=",
+        "x": 1000,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "905ac6b0db44b007",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 12",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "a2a978223a03ad4b",
         "type": "function",
-        "z": "b2bca411e4cdd603",
-        "name": "function 2",
-        "func": "\nvar settings = global.get(\"settings\");\nvar oot = {};\n\nfor (var sett in msg.payload) {\n\n    oot.topic = \"set/\" + sett;\n    oot.payload = msg.payload[sett];\n    node.send(oot);\n}\n\n\n\n\nreturn null;",
+        "z": "f6f2187d.f17ca8",
+        "name": "format",
+        "func": "if (isNaN(msg.payload)) { return null; }\n\nvar tops = msg.topic.split(\"/\");\n\n//const body = 'test,bar_label=abc,source=grafana_cloud_docs metric=35.2';\n\nvar body = tops[3] + '_' + tops[4] + \",network=\" + tops[0] + \",node=\" + tops[1] + \",device=\" + tops[2] + \",vargroup=\" + tops[3] + \",varkey=\" + tops[4] + \" metric=\" + msg.payload ;\n\nmsg.payload = body; \n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 280,
+        "x": 570,
+        "y": 100,
         "wires": [
             [
-                "6da8fb130fa1df87",
-                "1dab6e911927df71"
+                "19d66ba292edad98",
+                "2f0116ae0d7d44a3"
             ]
         ]
     },
     {
-        "id": "1dab6e911927df71",
-        "type": "link out",
-        "z": "b2bca411e4cdd603",
-        "name": "",
-        "links": [
-            "72fc070f.39dd8"
-        ],
-        "x": 885,
-        "y": 280,
+        "id": "19d66ba292edad98",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 13",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 40,
         "wires": []
     },
     {
-        "id": "6da8fb130fa1df87",
+        "id": "49e2cbdd604a0573",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 380,
+        "y": 1320,
+        "wires": [
+            [
+                "dce9a1278d952753"
+            ]
+        ]
+    },
+    {
+        "id": "dce9a1278d952753",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://prometheus:9090/api/v1/targets",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 550,
+        "y": 1320,
+        "wires": [
+            [
+                "3d4527bf3ce58710"
+            ]
+        ]
+    },
+    {
+        "id": "3d4527bf3ce58710",
         "type": "debug",
-        "z": "b2bca411e4cdd603",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "1fdeb63853f6378a",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "url": "/metrics",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 580,
+        "wires": [
+            [
+                "0df212d8de0af553"
+            ]
+        ]
+    },
+    {
+        "id": "2bf9db2387e3c2c3",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 730,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "0df212d8de0af553",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Metrics",
+        "func": "\n//temperature{ node = \"mynode\", topic = \"zigbee2mqtt_0x00157d00032b1234\" } { { payload } }\n\nvar metrics = flow.get(\"metrics\")||{};\n//flow.set(\"metrics\",{});\n\nvar net = global.get(\"config.networkId\") || \"local\";\n\nvar oot = \"\";\n//oot = 'stat_state {network=\"local\", node=\"mynodered1\", device=\"prometheus\", vargroup=\"stat\", varkey=\"state\"} 1\\n';\n\nfor (var m in metrics) {\n\n    if (isNaN(metrics[m].payload)) { continue; }\n    \n    var tops = metrics[m].topic.split(\"/\");\n\n    //if (tops[3] != \"dat\") { continue; }    \n\n    oot += tops[3] + '_' + tops[4] + '{network=\"' + net + '\",node=\"' + tops[1] + '\",device=\"' + tops[2] + '\",vargroup=\"' + tops[3] + '\",varkey=\"' + tops[4] + '\"} ' + metrics[m].payload + \"\\n\";\n\n}\n\n\nmsg.payload = oot;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 580,
+        "wires": [
+            [
+                "2bf9db2387e3c2c3",
+                "011f1ef5757fc34b"
+            ]
+        ]
+    },
+    {
+        "id": "f656e5b024503c03",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Metrics List",
+        "func": "\n\n\nvar metrics = {};\n\nmetrics.timestamp = new Date().getTime();\nmetrics.topic = msg.topic;\nmetrics.payload = msg.payload;\n\nvar mname = msg.topic.replace(/\\//g,\"_\")\n\n\nflow.set(\"metrics.\" + mname, metrics);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "011f1ef5757fc34b",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 16",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "78bcb731b3070bde",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "url": "/metrics/:vargroup",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 640,
+        "wires": [
+            [
+                "a9bfbf0b470f5412"
+            ]
+        ]
+    },
+    {
+        "id": "a9bfbf0b470f5412",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Metrics",
+        "func": "\nvar metrics = flow.get(\"metrics\")||{};\n\n\nvar net = global.get(\"config.networkId\") || \"local\";\n\nvar oot = \"\";\n//oot = 'stat_state {network=\"local\", node=\"mynodered1\", device=\"prometheus\", vargroup=\"stat\", varkey=\"state\"} 1\\n';\n\nfor (var m in metrics) {\n\n    var tops = metrics[m].topic.split(\"/\");\n    \n    if (isNaN(metrics[m].payload)) { continue; }\n    if (tops[3] != msg.req.params.vargroup) { continue; }    \n\n    \n    oot += tops[3] + '_' + tops[4] + '{network=\"' + net + '\",node=\"' + tops[1] + '\",device=\"' + tops[2] + '\",vargroup=\"' + tops[3] + '\",varkey=\"' + tops[4] + '\"} ' + metrics[m].payload + \"\\n\";\n\n}\n\n\nmsg.payload = oot;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 640,
+        "wires": [
+            [
+                "2bf9db2387e3c2c3",
+                "011f1ef5757fc34b"
+            ]
+        ]
+    },
+    {
+        "id": "518305dd1d973895",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "url": "/readings/:vargroup",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 760,
+        "wires": [
+            [
+                "1c09662af1958f62"
+            ]
+        ]
+    },
+    {
+        "id": "1c09662af1958f62",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Metrics",
+        "func": "\nvar metrics = flow.get(\"metrics\")||{};\n\n\nvar net = global.get(\"config.networkId\") || \"local\";\n\nvar oot = {readings:[]};\n//oot = 'stat_state {network=\"local\", node=\"mynodered1\", device=\"prometheus\", vargroup=\"stat\", varkey=\"state\"} 1\\n';\n\nfor (var m in metrics) {\n\n    var tops = metrics[m].topic.split(\"/\");\n    \n    if (!isNaN(metrics[m].payload)) { metrics[m].payload = parseFloat(metrics[m].payload); }\n    if (msg.req.params.vargroup && tops[3] != msg.req.params.vargroup) { continue; }    \n\n    var tline = {};\n    tline.value = metrics[m].payload;\n    tline.timestamp = metrics[m].timestamp;\n    tline.network = net;\n    tline.node = tops[1];\n    tline.device = tops[2];\n    tline.vargroup = tops[3];\n    tline.varkey = tops[4];\n\n    oot.readings.push(tline);\n    \n    //oot += tops[3] + '_' + tops[4] + '{network=\"' + net + '\",node=\"' + tops[1] + '\",device=\"' + tops[2] + '\",vargroup=\"' + tops[3] + '\",varkey=\"' + tops[4] + '\"} ' + metrics[m].payload + \"\\n\";\n\n}\n\n\nmsg.payload = oot;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 720,
+        "wires": [
+            [
+                "de79189b967c2492"
+            ]
+        ]
+    },
+    {
+        "id": "f4cec4c48cb94a38",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "url": "/readings",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 700,
+        "wires": [
+            [
+                "1c09662af1958f62"
+            ]
+        ]
+    },
+    {
+        "id": "de79189b967c2492",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 710,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "aba7ab3daed2aa2a",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "/dat/",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "/stat/",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 270,
+        "y": 260,
+        "wires": [
+            [
+                "873f73b8bd187f78"
+            ],
+            [
+                "873f73b8bd187f78"
+            ],
+            [
+                "a39e51ae757a4181"
+            ]
+        ]
+    },
+    {
+        "id": "a39e51ae757a4181",
+        "type": "rbe",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 430,
+        "y": 280,
+        "wires": [
+            [
+                "5b24a3ea71452cd8"
+            ]
+        ]
+    },
+    {
+        "id": "7622ca4aa75d6b27",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "url": "/cmd",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 900,
+        "wires": [
+            [
+                "37ee9ad397338449",
+                "5fd1baeb1c818156"
+            ]
+        ]
+    },
+    {
+        "id": "37ee9ad397338449",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Metrics",
+        "func": "\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 900,
+        "wires": [
+            [
+                "859484ecdc7e8eff"
+            ]
+        ]
+    },
+    {
+        "id": "859484ecdc7e8eff",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "statusCode": "204",
+        "headers": {},
+        "x": 720,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "5fd1baeb1c818156",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "247724fd2c92998a",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "url": "/cmd",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 960,
+        "wires": [
+            [
+                "37ee9ad397338449",
+                "5fd1baeb1c818156"
+            ]
+        ]
+    },
+    {
+        "id": "a33ecb08689a7eb7",
+        "type": "mqtt in",
+        "z": "564812e6529f65a5",
+        "name": "mqtt1",
+        "topic": "",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "209b6731446a7c26",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 1,
+        "x": 810,
+        "y": 220,
+        "wires": [
+            [
+                "6c88cfc3c6f35ded"
+            ]
+        ]
+    },
+    {
+        "id": "bc150d0459b9610b",
+        "type": "mqtt out",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "209b6731446a7c26",
+        "x": 810,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "97920119052172d3",
+        "type": "inject",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[{\"broker\":\"broker.emqx.io\",\"port\":8883,\"portTSL\":8883}]",
+        "payloadType": "json",
+        "x": 190,
+        "y": 260,
+        "wires": [
+            [
+                "55272ae6e147c672"
+            ]
+        ]
+    },
+    {
+        "id": "c8790f20c7b81ee6",
+        "type": "function",
+        "z": "564812e6529f65a5",
+        "name": "connect",
+        "func": "var brokers = flow.get(\"brokers\") || [];\n\nvar msg1 = {};\n\nmsg1.action = \"connect\";\nmsg1.broker = brokers[0];\nmsg1.broker.force=true;\n\nvar msg2 = {};\n\nmsg2.action = \"connect\";\nmsg2.broker = brokers[1];\nmsg2.broker.force=true;\n\n\nreturn [msg1,msg2];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 260,
+        "wires": [
+            [
+                "a33ecb08689a7eb7"
+            ],
+            [
+                "84911e40ee113652"
+            ]
+        ]
+    },
+    {
+        "id": "55272ae6e147c672",
+        "type": "change",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "brokers",
+                "pt": "flow",
+                "to": "[{\"broker\":\"broker.emqx.io\",\"port\":8883,\"portTSL\":8883},{\"broker\":\"mqtt.fluux.io\",\"port\":8883,\"portTSL\":8883}]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 260,
+        "wires": [
+            [
+                "c8790f20c7b81ee6",
+                "735e31d28738772f"
+            ]
+        ]
+    },
+    {
+        "id": "7a4bc93a4ad7fca6",
+        "type": "link in",
+        "z": "564812e6529f65a5",
+        "name": "connect",
+        "links": [],
+        "x": 225,
+        "y": 180,
+        "wires": [
+            [
+                "55272ae6e147c672"
+            ]
+        ]
+    },
+    {
+        "id": "84911e40ee113652",
+        "type": "mqtt in",
+        "z": "564812e6529f65a5",
+        "name": "mqtt2",
+        "topic": "",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "dcd4fcb0c3ba9634",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 1,
+        "x": 810,
+        "y": 300,
+        "wires": [
+            [
+                "6c88cfc3c6f35ded"
+            ]
+        ]
+    },
+    {
+        "id": "37622328e8ce31d5",
+        "type": "mqtt out",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "dcd4fcb0c3ba9634",
+        "x": 930,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "ae188866b99e9304",
+        "type": "function",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "func": "\n\nflow.set(msg.status.source.name + \"status\",\"\"+msg.status.text);\n\nmsg.topic = msg.status.source.name + \"status\";\nmsg.payload = msg.status.text;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 400,
+        "wires": [
+            [
+                "c95f8190f6df0cc0"
+            ]
+        ]
+    },
+    {
+        "id": "b46bf8618475f23d",
+        "type": "status",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "scope": [
+            "a33ecb08689a7eb7",
+            "84911e40ee113652"
+        ],
+        "x": 820,
+        "y": 400,
+        "wires": [
+            [
+                "ae188866b99e9304"
+            ]
+        ]
+    },
+    {
+        "id": "c95f8190f6df0cc0",
+        "type": "debug",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "4bf70e392eca5550",
+        "type": "switch",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "property": "mqtt1status",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "cont",
+                "v": ".connected",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 630,
+        "y": 540,
+        "wires": [
+            [
+                "bc150d0459b9610b",
+                "02eaf674b24f20df"
+            ],
+            [
+                "db9c6cba958073d0"
+            ]
+        ]
+    },
+    {
+        "id": "db9c6cba958073d0",
+        "type": "switch",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "property": "mqtt2status",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "cont",
+                "v": ".connected",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 750,
+        "y": 620,
+        "wires": [
+            [
+                "37622328e8ce31d5"
+            ],
+            [
+                "2876d1fe18c7557a"
+            ]
+        ]
+    },
+    {
+        "id": "83eec79b9b452b33",
+        "type": "link in",
+        "z": "564812e6529f65a5",
+        "name": "publish",
+        "links": [
+            "f7be6a97d63cad07"
+        ],
+        "x": 185,
+        "y": 540,
+        "wires": [
+            [
+                "1b04abaf18045792"
+            ]
+        ]
+    },
+    {
+        "id": "2876d1fe18c7557a",
+        "type": "function",
+        "z": "564812e6529f65a5",
+        "name": "not sent",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6c88cfc3c6f35ded",
+        "type": "link out",
+        "z": "564812e6529f65a5",
+        "name": "incoming",
+        "mode": "link",
+        "links": [
+            "63c5ee9dd5dd59aa"
+        ],
+        "x": 985,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "63c5ee9dd5dd59aa",
+        "type": "link in",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "links": [
+            "6c88cfc3c6f35ded"
+        ],
+        "x": 215,
+        "y": 720,
+        "wires": [
+            [
+                "37274bfdb40f80c8",
+                "c87ed47ca0b33e61"
+            ]
+        ]
+    },
+    {
+        "id": "37274bfdb40f80c8",
+        "type": "debug",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 390,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "1b04abaf18045792",
+        "type": "function",
+        "z": "564812e6529f65a5",
+        "name": "prefix",
+        "func": "\nmsg.payload = JSON.stringify({ \"topic\": msg.topic, \"payload\": msg.payload });\n\nmsg.topic = flow.get(\"publicTopic\") + \"/\" + msg.topic;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 540,
+        "wires": [
+            [
+                "e388a8917e1a8a1f"
+            ]
+        ]
+    },
+    {
+        "id": "735e31d28738772f",
+        "type": "delay",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 420,
+        "y": 320,
+        "wires": [
+            [
+                "da72769bf2270a2e",
+                "7a497090087e6f05"
+            ]
+        ]
+    },
+    {
+        "id": "da72769bf2270a2e",
+        "type": "function",
+        "z": "564812e6529f65a5",
+        "name": "subscribe",
+        "func": "\nvar publicTopic  = flow.get(\"publicTopic\") || \"unknown\";\n\npublicTopic = \"+/\" + global.get(\"config.networkId\") + \"/+/\" + global.get(\"config.nodeId\");\n\nvar msg1 = {};\n\nmsg1.action = \"subscribe\";\nmsg1.topic = [{\"topic\":publicTopic + \"/cmd/#\", \"qos\":0},{\"topic\":publicTopic + \"/set/#\", \"qos\":0}];\n\nvar msg2 = {};\n\nmsg2.action = \"subscribe\";\nmsg2.topic = [{\"topic\":publicTopic + \"/cmd/#\", \"qos\":0},{\"topic\":publicTopic + \"/set/#\", \"qos\":0}];\n\nif (flow.get(\"mqtt1status\").indexOf(\".connected\")<0) { msg1 = null; }\nif (flow.get(\"mqtt2status\").indexOf(\".connected\")<0) { msg2 = null; }\n\nreturn [msg1,msg2];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 320,
+        "wires": [
+            [
+                "a33ecb08689a7eb7",
+                "6852033e8a39db71"
+            ],
+            [
+                "84911e40ee113652"
+            ]
+        ]
+    },
+    {
+        "id": "02eaf674b24f20df",
+        "type": "debug",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "c8383d21cfd1c1bb",
+        "type": "debug",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "7a497090087e6f05",
+        "type": "function",
+        "z": "564812e6529f65a5",
+        "d": true,
+        "name": "subscribe",
+        "func": "\nvar publicTopic  = flow.get(\"publicTopic\") || \"unknown\";\n\n\n\nvar msg1 = {};\n\nmsg1.action = \"subscribe\";\nmsg1.topic = [{\"topic\":publicTopic + \"/#\", \"qos\":0}];\n\nvar msg2 = {};\n\nmsg2.action = \"subscribe\";\nmsg2.topic = [{\"topic\":publicTopic + \"/#\", \"qos\":0}];\n\nif (flow.get(\"mqtt1status\").indexOf(\".connected\")<0) { msg1 = null; }\nif (flow.get(\"mqtt2status\").indexOf(\".connected\")<0) { msg2 = null; }\n\nreturn [msg1,msg2];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 380,
+        "wires": [
+            [
+                "a33ecb08689a7eb7"
+            ],
+            [
+                "84911e40ee113652"
+            ]
+        ]
+    },
+    {
+        "id": "cbf3d192113bc4ac",
+        "type": "function",
+        "z": "564812e6529f65a5",
+        "name": "prefix",
+        "func": "\nvar data = JSON.parse( msg.payload );\n\nmsg.payload = data.payload;\nmsg.topic = data.topic;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 720,
+        "wires": [
+            [
+                "c8383d21cfd1c1bb"
+            ]
+        ]
+    },
+    {
+        "id": "e388a8917e1a8a1f",
+        "type": "encrypt",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "algorithm": "AES",
+        "key": "aaabbbccc",
+        "x": 460,
+        "y": 540,
+        "wires": [
+            [
+                "4bf70e392eca5550"
+            ]
+        ]
+    },
+    {
+        "id": "c87ed47ca0b33e61",
+        "type": "decrypt",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "algorithm": "AES",
+        "key": "aaabbbccc",
+        "x": 360,
+        "y": 720,
+        "wires": [
+            [
+                "cbf3d192113bc4ac"
+            ]
+        ]
+    },
+    {
+        "id": "1bccd7d71b9108f3",
+        "type": "inject",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 840,
+        "wires": [
+            [
+                "938ccf5e8ffdf42c"
+            ]
+        ]
+    },
+    {
+        "id": "938ccf5e8ffdf42c",
+        "type": "file in",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "filename": "/boot/heatweb/config.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 450,
+        "y": 840,
+        "wires": [
+            [
+                "c0c56d723cd42110"
+            ]
+        ]
+    },
+    {
+        "id": "e508b8a22942a4bd",
+        "type": "change",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "config",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 840,
+        "wires": [
+            [
+                "c130df41344a2f15"
+            ]
+        ]
+    },
+    {
+        "id": "c0c56d723cd42110",
+        "type": "json",
+        "z": "564812e6529f65a5",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 650,
+        "y": 840,
+        "wires": [
+            [
+                "e508b8a22942a4bd"
+            ]
+        ]
+    },
+    {
+        "id": "c130df41344a2f15",
+        "type": "function",
+        "z": "564812e6529f65a5",
+        "name": "function 2",
+        "func": "var thetime = new Date().getTime();\nflow.set(\"publicTopic\", \"install\" + thetime );\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b525559ede59d547",
+        "type": "inject",
+        "z": "564812e6529f65a5",
+        "name": "test",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "rAndD/zccamei4ies/zccamei4ies/cmd/test",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 460,
+        "wires": [
+            [
+                "1b04abaf18045792"
+            ]
+        ]
+    },
+    {
+        "id": "6852033e8a39db71",
+        "type": "debug",
+        "z": "564812e6529f65a5",
         "name": "debug 11",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 540,
-        "y": 400,
+        "x": 820,
+        "y": 140,
         "wires": []
     },
     {
-        "id": "bbcda2730195f64e",
+        "id": "655bf29e6b83d415",
         "type": "inject",
-        "z": "b2bca411e4cdd603",
+        "z": "1e04f1ea7fdd5aa1",
         "name": "",
         "props": [
             {
@@ -225,21 +1964,56 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "set/title",
-        "payload": "Test",
-        "payloadType": "str",
-        "x": 730,
-        "y": 360,
+        "topic": "",
+        "payload": "{\"default\":{\"system\":{\"serialTIL\":{\"title\":\"Contract serial number\"},\"serialHIU\":{\"title\":\"HIU serial number\"},\"serialController\":{\"title\":\"HIU controller serial number\"},\"serialHeatMeter\":{\"title\":\"Heat meter serial number\"},\"plot\":{\"title\":\"Plot identity\"},\"timestamp\":{\"title\":\"Time of last data received\"},\"node\":{\"title\":\"Communications node serial number\"},\"nodeId\":{\"title\":\"Communications node identity\",\"topicId\":2},\"networkId\":{\"title\":\"Communications network identity\",\"topicId\":1},\"deviceType\":{\"title\":\"Type of device, space seperated\",\"topicId\":3,\"examples\":[\"node\",\"hiu\",\"hiu-group\",\"substation\",\"dp temp sensor\",\"pump-group\"]},\"Firmware\":{\"title\":\"HIU firmware version\"},\"network\":{\"title\":\"Network identity\"},\"Serial\":{\"title\":\"HIU controller serial number\"},\"lastcontact\":{\"title\":\"Time of last data from device\"},\"time\":{\"title\":\"Timestamp of last data from device\"},\"Nodeware\":{\"title\":\"Node firmware firsion\"},\"usb\":{\"title\":\"USB port for HIU\"},\"property\":{\"title\":\"Property identity\"},\"tempid\":{\"title\":\"Temporary identity\"}},\"stat\":{\"state\":{\"title\":\"Device state\",\"default\":\"ok\",\"examples\":[\"on\",\"off\",\"ok\",\"warning\",\"alarm\"],\"topicId\":5},\"alarms\":{\"title\":\"Number of current alarms\",\"default\":0},\"beacon\":{\"title\":\"Communications heart-beat\"},\"warnings\":{\"title\":\"Number of warnings\"},\"vHDHW24\":{\"title\":\"Volume drawn today from network for hot water\",\"units\":\"litres\"},\"vHStanby24\":{\"title\":\"Volume drawn today from network for keep-warm\",\"units\":\"litres\"},\"vHCH24\":{\"title\":\"Volume drawn today from network for central heating\",\"units\":\"litres\"},\"vH24\":{\"title\":\"Total volume drawn today from network\",\"units\":\"litres\"},\"vwatH24\":{\"title\":\"Volume weighted network flow temperature for today\",\"units\":\"°C\"},\"vwatHoDHW24\":{\"title\":\"Volume weighted network return temperature for hot water today\",\"units\":\"°C\"},\"vwatHoStanby24\":{\"title\":\"Volume weighted network return temperature for keep-warm today\",\"units\":\"°C\"},\"vwatHoCH24\":{\"title\":\"Volume weighted network return temperature for central heating today\",\"units\":\"°C\"},\"vwatHo24\":{\"title\":\"Volume weighted network return temperature for today\",\"units\":\"°C\"},\"vC\":{\"title\":\"Total volume of hot water drawn through HIU\",\"units\":\"litres\"},\"DHWCount\":{\"title\":\"Number of hot water deliveries\"},\"e_TEMPERATURESENSORS\":{\"title\":\"Error on tempweature sensor\"},\"e_FLOWSENSOR\":{\"title\":\"Error on flow temperature\"},\"e_PRIMARYCONTROL\":{\"title\":\"Error with primary control\"},\"e_DISTRICTHEATING\":{\"title\":\"Error on heat network\"},\"e_CHRETURNTEMP\":{\"title\":\"Error on heating return\"},\"e_DHWTEMP\":{\"title\":\"Error on hot water temperature\"},\"e_DISTRICTHEATINGTEMP\":{\"title\":\"Error on network supply temperature\"},\"e_DHRETURNTEMP\":{\"title\":\"Error on network return temperature\"},\"e_CENTRALHEATING\":{\"title\":\"Error on central heating\"},\"e_WARMUPTIMER\":{\"title\":\"Error on heat-up\"},\"e_CHTEMPWARNING\":{\"title\":\"Warning on central heating temperature\"},\"e_CHTEMPERROR\":{\"title\":\"Error on central heating temperature\"},\"lastvCrun\":{\"title\":\"Volume drawn during last hot water delivery\",\"units\":\"litres\"},\"lastvClen\":{\"title\":\"Duration of last hot water delivery\",\"units\":\"seconds\"},\"lasttCo\":{\"title\":\"Temperature of last hot water delivery\",\"units\":\"°C\"},\"lasttH\":{\"title\":\"Primary temperature for last hot water delivery\",\"units\":\"°C\"},\"lasttHoDHW\":{\"title\":\"Primary return temperature for last hot water delivery\",\"units\":\"°C\"},\"lastvCavr\":{\"title\":\"Average flow rate of last hot water delivery\",\"units\":\"ltr/min\"},\"lastchBal\":{\"title\":\"Balancing of last central heating delivery\"},\"last_vCrun\":{\"title\":\"Volume drawn during last hot water delivery\",\"units\":\"litres\"},\"last_vClen\":{\"title\":\"Duration of last hot water delivery\",\"units\":\"seconds\"},\"last_vCavr\":{\"title\":\"Average flow rate of last hot water delivery\",\"units\":\"ltr/min\"},\"last_chBal\":{\"title\":\"Balancing of last central heating delivery\"},\"tis\":{\"title\":\"Time in current HIU state\",\"units\":\"seconds\"}},\"dat\":{\"tH\":{\"title\":\"Primary hot supply temperature\",\"units\":\"°C\"},\"tHo\":{\"title\":\"Primary return temperature\",\"units\":\"°C\"},\"tC\":{\"title\":\"DHW cold in temperature\",\"units\":\"°C\"},\"tCo\":{\"title\":\"DHW hot out temperature\",\"units\":\"°C\"},\"tIn\":{\"title\":\"Input temperature\",\"units\":\"°C\"},\"tOut\":{\"title\":\"Output temperature\",\"units\":\"°C\"},\"tF\":{\"title\":\"Flow temperature\",\"units\":\"°C\"},\"tR\":{\"title\":\"Return temperature\",\"units\":\"°C\"},\"tRC\":{\"title\":\"Common return temperature\",\"units\":\"°C\"},\"tHeader\":{\"title\":\"Header output temperature\",\"units\":\"°C\"},\"tCylT\":{\"title\":\"Cylinder temperature (top)\",\"units\":\"°C\"},\"fC\":{\"title\":\"Flow rate to hot water\",\"units\":\"ltr/min\"},\"dpH\":{\"title\":\"Differential pressure on network\",\"units\":\"bar\"},\"runtimeDHW\":{\"title\":\"Current hot water duration\",\"units\":\"seconds\"},\"pCH\":{\"title\":\"Central heating pressure\",\"units\":\"bar\"},\"stat\":{\"title\":\"Room thermostat demand\"},\"st\":{\"title\":\"HIU state\"},\"tHoCH\":{\"title\":\"Network return temperature from central heating\",\"units\":\"°C\"},\"xDHW\":{\"title\":\"Hot water valve steps\",\"units\":\"/270\"},\"fHDHW\":{\"title\":\"Network flow rate for hot water\"},\"eT\":{\"title\":\"Error temperature\",\"units\":\"°C\"},\"TTdhw\":{\"title\":\"Hot water target temperature\",\"units\":\"°C\"},\"eS\":{\"title\":\"Error state\"},\"tHoDHW\":{\"title\":\"Network return temperature from hot water\",\"units\":\"°C\"},\"tCHo\":{\"title\":\"Central heating supply temperature\",\"units\":\"°C\"},\"pump\":{\"title\":\"Central heating pump on\"},\"xCH\":{\"title\":\"Central heating valve steps\",\"units\":\"/270\"},\"fHCH\":{\"title\":\"Network flow rate for central heating\",\"units\":\"ltr/min\"},\"vH\":{\"title\":\"Network volume drawn in total\"}},\"settings\":{\"magic\":{\"title\":\"Magic spell\"},\"title\":{\"title\":\"Device name\",\"topicId\":4},\"setpoint\":{\"title\":\"Hot water setpoint temperature\",\"units\":\"°C\"},\"WarmupBoost\":{\"title\":\"Warm-up boost flow rate\",\"units\":\"ltr/min\"},\"EcoMode\":{\"title\":\"Keep-warm mode\"},\"PressureMode\":{\"title\":\"Differential pressure calculation mode\"},\"PowerUpCounter\":{\"title\":\"Power-up counter\"},\"ErrorCounter\":{\"title\":\"Error counter\"},\"DHReturnLimit\":{\"title\":\"Network return limit temperature\",\"units\":\"°C\"},\"HESupply\":{\"title\":\"Central heating setpoint temperature\",\"units\":\"°C\"},\"PumpTimeout\":{\"title\":\"Central heating pump time-out\",\"units\":\"seconds\"},\"PumpProtection\":{\"title\":\"Pump protection enabled\"},\"HEProtectionMode\":{\"title\":\"Network return limit enabled\"},\"DHWExchangerAntiLegionella\":{\"title\":\"Legionella cycle enabled\"},\"DHWExchangerEcoHeatTemperature\":{\"title\":\"Keep-warm temperature\",\"units\":\"°C\"},\"DHWExchangerEcoHeatTime\":{\"title\":\"Keep-warm time-out\",\"units\":\"minutes\"},\"CHHeaterCurveSlope\":{\"title\":\"Weather compensation curve\"},\"CHHeaterCurveDisplacement\":{\"title\":\"Weather compensation displacement\"},\"CentralHeatingControl\":{\"title\":\"Central heating enabled\"},\"PrePayShutOff\":{\"title\":\"Services enabled\"},\"pFill\":{\"title\":\"System fill pressure\",\"units\":\"bar\",\"min\":1.5,\"max\":6,\"default\":2.2}},\"property\":{\"plot\":{\"title\":\"Plot identity\"},\"class\":{\"title\":\"Plot classes\"},\"plotCount\":{\"title\":\"Plot index\"},\"block\":{\"title\":\"Block identity\"},\"core\":{\"title\":\"Core identity\"},\"floor\":{\"title\":\"Floor\"},\"floorArea\":{\"title\":\"Floor area\",\"units\":\"m2\"},\"postCode\":{\"title\":\"Post code\"},\"occupancy\":{\"title\":\"Occupancy, bedrooms and peaople\"},\"kwCH\":{\"title\":\"Peak central heating power\",\"units\":\"kW\"},\"kwDHW\":{\"title\":\"Peak hot water power\",\"units\":\"kW\"},\"transferTypeCH\":{\"title\":\"Central heating connection type\"},\"emitterTypeCH\":{\"title\":\"Central heating emitter type\"},\"transferTypeDHW\":{\"title\":\"Hot water connection type\"},\"vStoreDHW\":{\"title\":\"Volume of hot water cylinder\",\"units\":\"litres\"}},\"meter\":{\"tF\":{\"title\":\"Flow temperature\",\"units\":\"°C\"},\"tR\":{\"title\":\"Return temperature\",\"units\":\"°C\"},\"fR\":{\"title\":\"Flow rate\",\"units\":\"litres/minute\"},\"m3\":{\"title\":\"Volume\",\"units\":\"m3\"},\"m3h\":{\"title\":\"Flow rate\",\"units\":\"m3/h\"},\"kw\":{\"title\":\"Power\",\"units\":\"kW\"},\"kwh\":{\"title\":\"Energy\",\"units\":\"kWh\"},\"tDiff\":{\"title\":\"Temperature difference\",\"units\":\"°C\"},\"tErrorHM\":{\"title\":\"Tempreature sensor error\",\"units\":\"°C\"}},\"alarm\":{\"relay\":{\"title\":\"Fault relay alarm\"},\"mcb\":{\"title\":\"Circuit breaker trip alarm\"}}}}",
+        "payloadType": "json",
+        "x": 130,
+        "y": 160,
         "wires": [
             [
-                "1dab6e911927df71"
+                "8ac637bee82a417e"
             ]
         ]
     },
     {
-        "id": "8884059720507654",
+        "id": "8ac637bee82a417e",
+        "type": "function",
+        "z": "1e04f1ea7fdd5aa1",
+        "name": "function 3",
+        "func": "\nvar oot = [];\n\nfor (var grp in msg.payload[\"default\"]) {\n\n    for (var k in msg.payload[\"default\"][grp]) {\n\n        var kline = { \"vargroup\": grp, \"varkey\": k, \"title\": msg.payload[\"default\"][grp][k][\"title\"], \"units\": msg.payload[\"default\"][grp][k][\"units\"] || \"\" };\n        \n        oot.push(kline);\n\n    }\n}\n\nmsg.payload = {\"default\":oot};\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 160,
+        "wires": [
+            [
+                "65f57a05e018974e"
+            ]
+        ]
+    },
+    {
+        "id": "65f57a05e018974e",
+        "type": "debug",
+        "z": "1e04f1ea7fdd5aa1",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "01e6f04422e315bb",
         "type": "inject",
-        "z": "b2bca411e4cdd603",
+        "z": "5715139153db24f7",
         "name": "",
         "props": [
             {
@@ -252,16 +2026,77 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
-        "topic": "set/tSet",
-        "payload": "51",
-        "payloadType": "num",
-        "x": 760,
-        "y": 420,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 100,
         "wires": [
             [
-                "1dab6e911927df71"
+                "5da31f3d874fcd4c"
+            ]
+        ]
+    },
+    {
+        "id": "5da31f3d874fcd4c",
+        "type": "file in",
+        "z": "5715139153db24f7",
+        "name": "",
+        "filename": "/boot/heatweb/config.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 370,
+        "y": 100,
+        "wires": [
+            [
+                "03689db0a1229d7d"
+            ]
+        ]
+    },
+    {
+        "id": "60014b30ddf0f588",
+        "type": "change",
+        "z": "5715139153db24f7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "config",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "03689db0a1229d7d",
+        "type": "json",
+        "z": "5715139153db24f7",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 570,
+        "y": 100,
+        "wires": [
+            [
+                "60014b30ddf0f588"
             ]
         ]
     }
