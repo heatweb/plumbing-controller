@@ -1,0 +1,607 @@
+[
+    {
+        "id": "2f4ac1a1c27d6cd6",
+        "type": "tab",
+        "label": "Setup 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d1f3d002.63ee48",
+        "type": "subflow",
+        "name": "rbe 1m",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "dd19c0de.9bebd"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 420,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "29eae4ad.d68f2c",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "a8d56bd2.c3c6f",
+        "type": "subflow",
+        "name": "runScript",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 139,
+                "y": 96,
+                "wires": [
+                    {
+                        "id": "469bad72.0a7394"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 830,
+                "y": 460,
+                "wires": [
+                    {
+                        "id": "6b7c3cb6.c9c104",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99",
+        "inputLabels": [
+            "Script"
+        ],
+        "outputLabels": [
+            "Completed",
+            ""
+        ]
+    },
+    {
+        "id": "43c946ed1a014402",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "7aa8283c410b5409",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "43c946ed1a014402",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dd19c0de.9bebd",
+        "type": "rbe",
+        "z": "d1f3d002.63ee48",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "29eae4ad.d68f2c"
+            ]
+        ]
+    },
+    {
+        "id": "8b22fc2a.83d07",
+        "type": "inject",
+        "z": "d1f3d002.63ee48",
+        "name": "",
+        "props": [
+            {
+                "p": "reset",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "dd19c0de.9bebd"
+            ]
+        ]
+    },
+    {
+        "id": "29eae4ad.d68f2c",
+        "type": "switch",
+        "z": "d1f3d002.63ee48",
+        "name": "",
+        "property": "reset",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eb92fac.cb1f108",
+        "type": "exec",
+        "z": "a8d56bd2.c3c6f",
+        "command": "sudo bash /home/pi/node-hiu/addmqttacl.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 246.2857208251953,
+        "y": 418.28569984436035,
+        "wires": [
+            [
+                "6b7c3cb6.c9c104"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ef9bf9d9.e12f28",
+        "type": "exec",
+        "z": "a8d56bd2.c3c6f",
+        "command": "sudo chown root:node-red /home/pi/node-hiu/addmqttacl.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 296.2857208251953,
+        "y": 298.28569984436035,
+        "wires": [
+            [
+                "47ddca7f.78036c"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "47ddca7f.78036c",
+        "type": "exec",
+        "z": "a8d56bd2.c3c6f",
+        "command": "sudo chmod 755 /home/pi/node-hiu/addmqttacl.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 266.2857208251953,
+        "y": 358.28569984436035,
+        "wires": [
+            [
+                "eb92fac.cb1f108"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6b7c3cb6.c9c104",
+        "type": "exec",
+        "z": "a8d56bd2.c3c6f",
+        "command": "sudo mv /home/pi/node-hiu/addmqttacl.sh /home/pi/node-hiu/_lastrun.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 336.2857208251953,
+        "y": 478.28569984436035,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5ee23677.67d8e",
+        "type": "file",
+        "z": "a8d56bd2.c3c6f",
+        "name": "",
+        "filename": "/home/pi/node-hiu/addmqttacl.sh",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "x": 540,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "59609ed4.bee04",
+        "type": "delay",
+        "z": "a8d56bd2.c3c6f",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 126.28572082519531,
+        "y": 238.28569984436035,
+        "wires": [
+            [
+                "ef9bf9d9.e12f28"
+            ]
+        ]
+    },
+    {
+        "id": "469bad72.0a7394",
+        "type": "trigger",
+        "z": "a8d56bd2.c3c6f",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "nul",
+        "duration": "5",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "outputs": 1,
+        "x": 279,
+        "y": 96,
+        "wires": [
+            [
+                "5ee23677.67d8e",
+                "59609ed4.bee04"
+            ]
+        ]
+    },
+    {
+        "id": "a81c91208ef5cb68",
+        "type": "debug",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 970,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "264333ee20fc67c7",
+        "type": "http request",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 790,
+        "y": 400,
+        "wires": [
+            [
+                "a81c91208ef5cb68"
+            ]
+        ]
+    },
+    {
+        "id": "7e3e3794bc5adb58",
+        "type": "file in",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "flows_noderedsetup_0_0_2.json",
+        "filename": "/home/pi/plumbing-controller/flows/flows_noderedsetup_0_0_2.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 410,
+        "y": 400,
+        "wires": [
+            [
+                "4b6d09f07e1981b1"
+            ]
+        ]
+    },
+    {
+        "id": "4b6d09f07e1981b1",
+        "type": "function",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "flows",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\")  + \"/flows\";\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 400,
+        "wires": [
+            [
+                "264333ee20fc67c7"
+            ]
+        ]
+    },
+    {
+        "id": "02be8a50a5a7f648",
+        "type": "ui_button",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "group": "7aa8283c410b5409",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Install",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "Shutdown now",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 170,
+        "y": 220,
+        "wires": [
+            [
+                "093852322c16a317"
+            ]
+        ]
+    },
+    {
+        "id": "093852322c16a317",
+        "type": "ui_toast",
+        "z": "2f4ac1a1c27d6cd6",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "Continue",
+        "cancel": "Cancel",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 350,
+        "y": 220,
+        "wires": [
+            [
+                "a8117427acc3f2b7"
+            ]
+        ]
+    },
+    {
+        "id": "a8117427acc3f2b7",
+        "type": "switch",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Continue",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 510,
+        "y": 220,
+        "wires": [
+            [
+                "1368d7934cc8f8ed"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e2dc0fc8f347481b",
+        "type": "inject",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "Start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 510,
+        "y": 280,
+        "wires": [
+            [
+                "1368d7934cc8f8ed"
+            ]
+        ]
+    },
+    {
+        "id": "1368d7934cc8f8ed",
+        "type": "function",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "localhost:5099",
+        "func": "flow.set(\"targethost\",\"localhost\");\nflow.set(\"targetport\", \"5099\");\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 220,
+        "wires": [
+            [
+                "713abda79bf2ba4a"
+            ]
+        ]
+    },
+    {
+        "id": "425052b976640110",
+        "type": "link in",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "link in 1",
+        "links": [
+            "ebcfd82561e69df4"
+        ],
+        "x": 205,
+        "y": 400,
+        "wires": [
+            [
+                "7e3e3794bc5adb58"
+            ]
+        ]
+    },
+    {
+        "id": "ebcfd82561e69df4",
+        "type": "link out",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "425052b976640110"
+        ],
+        "x": 1055,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f44650e41e57d09a",
+        "type": "inject",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "a443b6a5a4884c59"
+            ]
+        ]
+    },
+    {
+        "id": "a443b6a5a4884c59",
+        "type": "exec",
+        "z": "2f4ac1a1c27d6cd6",
+        "command": "sudo docker run -d -it -p 5099:1880 --net mqtt --restart=always -v node_red_setup:/data -v /boot/heatweb/:/boot/heatweb/ -v /home/pi/plumbing-controller/:/home/pi/plumbing-controller/ --add-host=host.docker.internal:host-gateway --privileged --device /dev/ttyAMA1 --device /dev/ttyAMA2 --device /dev/ttyAMA3 --device /dev/ttyAMA4 --name noderedsetup heatweb/plumbing-controller:latest",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "sudo docker run -d -it -p 5099:1880 ",
+        "x": 420,
+        "y": 120,
+        "wires": [
+            [],
+            [],
+            [
+                "1368d7934cc8f8ed"
+            ]
+        ]
+    },
+    {
+        "id": "713abda79bf2ba4a",
+        "type": "delay",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 940,
+        "y": 220,
+        "wires": [
+            [
+                "ebcfd82561e69df4"
+            ]
+        ]
+    }
+]
