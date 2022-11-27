@@ -416,8 +416,8 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 890,
-        "y": 460,
+        "x": 910,
+        "y": 600,
         "wires": []
     },
     {
@@ -429,8 +429,8 @@
         "ret": "txt",
         "url": "",
         "tls": "",
-        "x": 710,
-        "y": 460,
+        "x": 730,
+        "y": 600,
         "wires": [
             [
                 "a81c91208ef5cb68"
@@ -441,15 +441,15 @@
         "id": "7e3e3794bc5adb58",
         "type": "file in",
         "z": "2f4ac1a1c27d6cd6",
-        "name": "flows_noderedsetup_0_0_2.json",
-        "filename": "/home/pi/plumbing-controller/flows/flows_noderedsetup_0_0_2.json",
+        "name": "flows_noderedsetup.json",
+        "filename": "/home/pi/plumbing-controller/flows/flows_noderedsetup.json",
         "filenameType": "str",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
         "allProps": false,
         "x": 330,
-        "y": 460,
+        "y": 600,
         "wires": [
             [
                 "4b6d09f07e1981b1"
@@ -461,14 +461,14 @@
         "type": "function",
         "z": "2f4ac1a1c27d6cd6",
         "name": "flows",
-        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\")  + \"/flows\";\n\n\n\nreturn msg;",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\")  + \"/flows\";\n\n\nvar credentials = global.get(\"credentials\") || {};\n\n//var ff = msg.payload;\nvar ff = JSON.parse(msg.payload);\n\nfor (var part in ff) {\n\n\n    if (credentials.localMqttPassword) {\n\n        if (ff[part].type == \"mqtt-broker\" && (ff[part].broker == \"mqtt\" || ff[part].broker == \"localhost\")) { ff[part].credentials = { \"user\": \"admin\", \"password\": credentials.localMqttPassword }; }\n\n    }\n\n    if (credentials.adminPassword) {\n\n        if (ff[part].type == \"MySQLdatabase\" && ff[part].host == \"mysql\") { ff[part].credentials = { \"user\": \"root\", \"password\": credentials.adminPassword }; }\n\n    }\n\n    if (credentials.localInfluxToken) {\n\n        if (ff[part].type == \"influxdb\" && ff[part].name == \"local\") { ff[part].credentials = { \"token\": credentials.localInfluxToken }; }\n\n    }\n    if (credentials.remoteInfluxToken) {\n\n        if (ff[part].type == \"influxdb\" && ff[part].name == \"heatweb\") { ff[part].credentials = { \"token\": credentials.remoteInfluxToken }; }\n\n    }\n\n    if (credentials.emailPassword && credentials.emailUser) {\n\n        if (ff[part].type == \"e-mail\") { ff[part].credentials = { \"userid\": credentials.emailUser, \"password\": credentials.emailPassword }; }\n\n    }\n\n\n\n}\n\nmsg.payload = JSON.stringify(ff);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 550,
-        "y": 460,
+        "x": 570,
+        "y": 600,
         "wires": [
             [
                 "264333ee20fc67c7"
@@ -495,8 +495,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 130,
-        "y": 180,
+        "x": 150,
+        "y": 320,
         "wires": [
             [
                 "093852322c16a317"
@@ -517,8 +517,8 @@
         "raw": false,
         "topic": "",
         "name": "",
-        "x": 310,
-        "y": 180,
+        "x": 330,
+        "y": 320,
         "wires": [
             [
                 "a8117427acc3f2b7"
@@ -545,8 +545,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 470,
-        "y": 180,
+        "x": 490,
+        "y": 320,
         "wires": [
             [
                 "a443b6a5a4884c59"
@@ -575,8 +575,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 310,
-        "y": 320,
+        "x": 330,
+        "y": 460,
         "wires": [
             [
                 "1368d7934cc8f8ed"
@@ -594,8 +594,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 540,
-        "y": 320,
+        "x": 560,
+        "y": 460,
         "wires": [
             [
                 "713abda79bf2ba4a"
@@ -623,8 +623,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 160,
-        "y": 120,
+        "x": 180,
+        "y": 260,
         "wires": [
             [
                 "a443b6a5a4884c59"
@@ -643,8 +643,8 @@
         "winHide": false,
         "oldrc": false,
         "name": "sudo docker run -d -it -p 5099:1880 ",
-        "x": 780,
-        "y": 120,
+        "x": 800,
+        "y": 260,
         "wires": [
             [],
             [],
@@ -670,11 +670,191 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 720,
-        "y": 320,
+        "x": 740,
+        "y": 460,
         "wires": [
             [
                 "7e3e3794bc5adb58"
+            ]
+        ]
+    },
+    {
+        "id": "01e6f04422e315bb",
+        "type": "inject",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "5da31f3d874fcd4c"
+            ]
+        ]
+    },
+    {
+        "id": "5da31f3d874fcd4c",
+        "type": "file in",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "filename": "/boot/heatweb/config.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 410,
+        "y": 80,
+        "wires": [
+            [
+                "03689db0a1229d7d"
+            ]
+        ]
+    },
+    {
+        "id": "60014b30ddf0f588",
+        "type": "change",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "config",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "03689db0a1229d7d",
+        "type": "json",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 610,
+        "y": 80,
+        "wires": [
+            [
+                "60014b30ddf0f588"
+            ]
+        ]
+    },
+    {
+        "id": "307de46a7f2b649a",
+        "type": "inject",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "c38ffe5bfd0dd27d"
+            ]
+        ]
+    },
+    {
+        "id": "c38ffe5bfd0dd27d",
+        "type": "file in",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "filename": "/boot/heatweb/credentials.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 430,
+        "y": 160,
+        "wires": [
+            [
+                "ad93699b4f67b45e"
+            ]
+        ]
+    },
+    {
+        "id": "fe3ce37e31818309",
+        "type": "change",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "credentials",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ad93699b4f67b45e",
+        "type": "json",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 670,
+        "y": 160,
+        "wires": [
+            [
+                "fe3ce37e31818309"
             ]
         ]
     },
