@@ -416,7 +416,7 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 930,
+        "x": 1230,
         "y": 680,
         "wires": []
     },
@@ -429,7 +429,7 @@
         "ret": "txt",
         "url": "",
         "tls": "",
-        "x": 750,
+        "x": 1070,
         "y": 680,
         "wires": [
             [
@@ -448,7 +448,7 @@
         "chunk": false,
         "sendError": false,
         "allProps": false,
-        "x": 350,
+        "x": 750,
         "y": 680,
         "wires": [
             [
@@ -467,7 +467,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 590,
+        "x": 930,
         "y": 680,
         "wires": [
             [
@@ -495,8 +495,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 170,
-        "y": 420,
+        "x": 150,
+        "y": 480,
         "wires": [
             [
                 "093852322c16a317"
@@ -517,8 +517,8 @@
         "raw": false,
         "topic": "",
         "name": "",
-        "x": 350,
-        "y": 420,
+        "x": 330,
+        "y": 480,
         "wires": [
             [
                 "a8117427acc3f2b7"
@@ -545,11 +545,11 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 510,
-        "y": 420,
+        "x": 490,
+        "y": 480,
         "wires": [
             [
-                "a443b6a5a4884c59"
+                "db97e64f472a8b0c"
             ],
             []
         ]
@@ -558,7 +558,7 @@
         "id": "e2dc0fc8f347481b",
         "type": "inject",
         "z": "2f4ac1a1c27d6cd6",
-        "name": "Start",
+        "name": "Program",
         "props": [
             {
                 "p": "payload"
@@ -575,8 +575,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 350,
-        "y": 540,
+        "x": 180,
+        "y": 680,
         "wires": [
             [
                 "1368d7934cc8f8ed"
@@ -594,8 +594,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 580,
-        "y": 540,
+        "x": 400,
+        "y": 680,
         "wires": [
             [
                 "713abda79bf2ba4a"
@@ -624,7 +624,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 190,
-        "y": 260,
+        "y": 340,
         "wires": [
             [
                 "2d054a5d9d57352d"
@@ -635,7 +635,7 @@
         "id": "a443b6a5a4884c59",
         "type": "exec",
         "z": "2f4ac1a1c27d6cd6",
-        "command": "sudo docker run -d -it -p 5099:1880 --net mqtt --restart=always -v node_red_setup:/data -v /boot/heatweb/:/boot/heatweb/ -v /home/pi/plumbing-controller/:/home/pi/plumbing-controller/ --add-host=host.docker.internal:host-gateway --privileged --device /dev/ttyAMA1 --device /dev/ttyAMA2 --device /dev/ttyAMA3 --device /dev/ttyAMA4 --name noderedsetup heatweb/plumbing-controller:latest",
+        "command": "sudo docker run -d -it -p 5099:1880 --net mqtt -v node_red_setup:/data -v /boot/heatweb/:/boot/heatweb/ -v /home/pi/plumbing-controller/:/home/pi/plumbing-controller/ --add-host=host.docker.internal:host-gateway --privileged --device /dev/ttyAMA1 --device /dev/ttyAMA2 --device /dev/ttyAMA3 --device /dev/ttyAMA4 --name noderedsetup heatweb/plumbing-controller:latest",
         "addpay": "",
         "append": "",
         "useSpawn": "false",
@@ -643,8 +643,8 @@
         "winHide": false,
         "oldrc": false,
         "name": "sudo docker run -d -it -p 5099:1880 ",
-        "x": 800,
-        "y": 420,
+        "x": 1040,
+        "y": 560,
         "wires": [
             [],
             [],
@@ -659,7 +659,7 @@
         "z": "2f4ac1a1c27d6cd6",
         "name": "",
         "pauseType": "delay",
-        "timeout": "5",
+        "timeout": "10",
         "timeoutUnits": "seconds",
         "rate": "1",
         "nbRateUnits": "1",
@@ -670,8 +670,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 760,
-        "y": 540,
+        "x": 560,
+        "y": 680,
         "wires": [
             [
                 "7e3e3794bc5adb58"
@@ -700,7 +700,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 190,
-        "y": 80,
+        "y": 180,
         "wires": [
             [
                 "5da31f3d874fcd4c"
@@ -720,7 +720,7 @@
         "encoding": "none",
         "allProps": false,
         "x": 410,
-        "y": 80,
+        "y": 180,
         "wires": [
             [
                 "03689db0a1229d7d"
@@ -746,8 +746,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 800,
-        "y": 80,
+        "x": 860,
+        "y": 180,
         "wires": [
             []
         ]
@@ -760,8 +760,8 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 610,
-        "y": 80,
+        "x": 670,
+        "y": 180,
         "wires": [
             [
                 "60014b30ddf0f588"
@@ -790,7 +790,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 190,
-        "y": 160,
+        "y": 220,
         "wires": [
             [
                 "c38ffe5bfd0dd27d"
@@ -810,7 +810,7 @@
         "encoding": "none",
         "allProps": false,
         "x": 430,
-        "y": 160,
+        "y": 220,
         "wires": [
             [
                 "ad93699b4f67b45e"
@@ -837,7 +837,7 @@
         "to": "",
         "reg": false,
         "x": 880,
-        "y": 160,
+        "y": 220,
         "wires": [
             []
         ]
@@ -851,7 +851,7 @@
         "action": "obj",
         "pretty": false,
         "x": 670,
-        "y": 160,
+        "y": 220,
         "wires": [
             [
                 "fe3ce37e31818309"
@@ -870,13 +870,171 @@
         "winHide": false,
         "oldrc": false,
         "name": "",
-        "x": 500,
-        "y": 260,
+        "x": 460,
+        "y": 340,
         "wires": [
-            [],
+            [
+                "99266efe680b3e8f"
+            ],
             [],
             []
         ]
+    },
+    {
+        "id": "99266efe680b3e8f",
+        "type": "debug",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "db97e64f472a8b0c",
+        "type": "exec",
+        "z": "2f4ac1a1c27d6cd6",
+        "command": "sudo docker restart noderedsetup",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "sudo docker restart noderedsetup",
+        "x": 480,
+        "y": 560,
+        "wires": [
+            [],
+            [],
+            [
+                "51c87cdbf64a85e3",
+                "1ecb40967341af9b"
+            ]
+        ]
+    },
+    {
+        "id": "a71e17f7bf4b57d2",
+        "type": "inject",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 560,
+        "wires": [
+            [
+                "db97e64f472a8b0c"
+            ]
+        ]
+    },
+    {
+        "id": "51c87cdbf64a85e3",
+        "type": "debug",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "1ecb40967341af9b",
+        "type": "switch",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "property": "payload.code",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 750,
+        "y": 580,
+        "wires": [
+            [
+                "a443b6a5a4884c59"
+            ],
+            [
+                "1368d7934cc8f8ed"
+            ]
+        ]
+    },
+    {
+        "id": "f996b2c9386f057f",
+        "type": "comment",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "Pulls latest files from GitHub, start Docker containers, and start Installer Node-RED flow on noderedsetup:5099",
+        "info": "",
+        "x": 450,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "ccf9a036beb09104",
+        "type": "comment",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "Update files from GitHub ",
+        "info": "",
+        "x": 190,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "dc5499df0be2a531",
+        "type": "comment",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "Credentials and System Variables",
+        "info": "",
+        "x": 210,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "2d7db5a412f2f7fd",
+        "type": "comment",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "Start noderedsetup container on 5099 and load in Node-RED installer.",
+        "info": "",
+        "x": 330,
+        "y": 420,
+        "wires": []
     },
     {
         "id": "111ced82138086e3",
