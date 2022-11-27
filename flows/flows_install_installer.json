@@ -8,6 +8,13 @@
         "env": []
     },
     {
+        "id": "9e56c35b9ba883ec",
+        "type": "tab",
+        "label": "Sequent TI",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "d1f3d002.63ee48",
         "type": "subflow",
         "name": "rbe 1m",
@@ -96,6 +103,102 @@
         "width": "6",
         "collapse": false,
         "className": ""
+    },
+    {
+        "id": "d049dce9ea0f7eb4",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
     },
     {
         "id": "dd19c0de.9bebd",
@@ -379,8 +482,8 @@
         "name": "",
         "group": "7aa8283c410b5409",
         "order": 2,
-        "width": "3",
-        "height": "1",
+        "width": "0",
+        "height": "0",
         "passthru": false,
         "label": "Install",
         "tooltip": "",
@@ -603,5 +706,713 @@
                 "ebcfd82561e69df4"
             ]
         ]
+    },
+    {
+        "id": "111ced82138086e3",
+        "type": "inject",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 520,
+        "wires": [
+            [
+                "4ead7c0fec22f5be"
+            ]
+        ]
+    },
+    {
+        "id": "95542eb497fa74d8",
+        "type": "comment",
+        "z": "9e56c35b9ba883ec",
+        "name": "TI COMMANDS",
+        "info": "        -v              Display the ti command version number\n        -h              Display the list of command options or one command option details\n        -warranty       Display the warranty\n        -list:          List all ti boards connected\n                        return the # of boards and stack level for every board\n        board           Display the board status and firmware version number\n        rtcbrd          Display the RTC backup battery voltage\n        relwr:          Set relays (AC switch) On/Off\n        relrd:          Read relays  status\n        reltest:                Turn ON and OFF the relays until press a key\n        contactrd:      Read dry contact status\n                        Warning: For this measurements to be valid place the jumper in position \"1K\"\n        countrd:        Read dry contact transitions count\n                        Warning: For this measurements to be valid place the jumper in position \"1K\"\n        countrst:       Reset dry contact transitions count\n        edgerd:         Read dry contact transitions type, ret 0 - disable, 1 - rising, 2 - falling, 3 - both\n        edgewr:         Write dry contact transitions type: 0 - disable, 1 - rising, 2 - falling, 3 - both\n        dacrd:          Read DAC voltage value (0 - 10V)\n        dacwr:          Write DAC output voltage value (0..10V)\n        odrd:           Read open drain pwm value (0 - 100%)\n        odwr:           Write the open drain output pwm value (0..100%)\n        adcrd:          Read ADC input voltage value (0 - 10V)\n                        Warning: For this measurements to be valid place the jumper in position \"0-10V\"\n        r1krd:          Read resistor input  value (1k) in kiloOhms, Warning: You must palce the jumper in position \"1K\".\n                        Return 30kOhm for resistor out of range\n        r10krd:         Read resistor input  value (10k) in kiloOhms, Warning: You must palce the jumper in position \"10K                                                                                                                    \".\n                        Return 30kOhm for resistor out of range\n        rthrd:          Read thermistor input  resistance value in kiloOhms, Return 60kOhm for resistor out of range\n        pwmrd:          Read PWM input\n        adccal:         Calibrate one ADC channel, the calibration must be done in 2 points at min 5V apart\n        adccalrst:      Reset the calibration for one ADC channel\n        daccal:         Calibrate one DAC channel, the calibration must be done in 2 points at min 5V apart\n        daccalrst:      Reset calibration for one DAC channel\n        wdtr:           Reload the watchdog timer and enable the watchdog if is disabled\n        wdtpwr:         Set the watchdog period in seconds,\n                        reload command must be issue in this interval to prevent Raspberry Pi power off\n        wdtprd:         Get the watchdog period in seconds,\n                        reload command must be issue in this interval to prevent Raspberry Pi power off\n        wdtipwr:        Set the watchdog initial period in seconds,\n                        This period is loaded after power cycle, giving Raspberry time to boot\n        wdtiprd:        Get the watchdog initial period in seconds.\n                        This period is loaded after power cycle, giving Raspberry time to boot\n        wdtopwr:        Set the watchdog off period in seconds (max 48 days).\n                        This is the time that watchdog mantain Raspberry turned off\n        wdtoprd:        Get the watchdog off period in seconds (max 48 days)\n                        This is the time that watchdog mantain Raspberry turned off\n        rtcrd:          Get the internal RTC  date and time(mm/dd/yy hh:mm:ss)\ntcbrd:          Get the internal RTC backup battery voltage\n        rtcwr:          Set the internal RTC  date and time(mm/dd/yy hh:mm:ss)\n        bckbrd:         Get the backup battery voltage\n        pwrsrd:         Get the power supply status\n",
+        "x": 160,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e90df952e0e97174",
+        "type": "trigger",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "nul",
+        "duration": "10",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 210,
+        "y": 700,
+        "wires": [
+            [
+                "a2376afdeded8bd1"
+            ]
+        ]
+    },
+    {
+        "id": "f084339874ff0b61",
+        "type": "function",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "func": "\nvar msg1 = {};\nmsg1.topic = \"system/firmwareHat\",\nmsg1.payload = msg.payload.split(\",\")[0].trim().split(\" \")[2];\nmsg1.title = \"IO Hat Firmware Version\";\n\nvar msg2 = {};\nmsg2.topic = \"system/tCpuHat\",\nmsg2.payload = msg.payload.split(\",\")[1].trim().split(\" \")[2];\nmsg2.units=\"°C\";\nmsg2.title = \"IO Hat CPU Temperature\";\n\nvar msg3 = {};\nmsg3.topic = \"system/vPowerHat\",\nmsg3.payload = msg.payload.split(\",\")[2].trim().split(\" \")[2];\nmsg3.units=\"volts\";\nmsg3.title = \"IO Hat Power Supply Voltage\";\n\n\nvar msg4 = {};\nmsg4.topic = \"system/vBatteryHat\",\nmsg4.payload = msg.payload.split(\",\")[3].trim().split(\" \")[1];\nmsg4.units=\"volts\";\nmsg4.title = \"IO Hat Battery Voltage\";\n\nreturn [msg1, msg2,msg3,msg4];",
+        "outputs": 4,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 720,
+        "wires": [
+            [
+                "3dece74ea84b7211"
+            ],
+            [
+                "3dece74ea84b7211"
+            ],
+            [
+                "3dece74ea84b7211"
+            ],
+            [
+                "3dece74ea84b7211"
+            ]
+        ]
+    },
+    {
+        "id": "de33989197cd8b96",
+        "type": "link out",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8",
+            "3d8dc9e52092a525"
+        ],
+        "x": 895,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "3d8dc9e52092a525",
+        "type": "link in",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "links": [
+            "de33989197cd8b96",
+            "4a68edb74c9bfbf5"
+        ],
+        "x": 335,
+        "y": 80,
+        "wires": [
+            [
+                "62fb8276d8dfde10"
+            ]
+        ]
+    },
+    {
+        "id": "a2376afdeded8bd1",
+        "type": "exec",
+        "z": "9e56c35b9ba883ec",
+        "command": "bash /home/pi/node-hiu/sq2.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "sq2.sh",
+        "x": 370,
+        "y": 700,
+        "wires": [
+            [
+                "39fd828df91b7cbd",
+                "f084339874ff0b61"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "39fd828df91b7cbd",
+        "type": "debug",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "56d03c8f97237df5",
+        "type": "template",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "ti board\nti wdtr",
+        "output": "str",
+        "x": 580,
+        "y": 280,
+        "wires": [
+            [
+                "ad45cad143968684"
+            ]
+        ]
+    },
+    {
+        "id": "392aebcc9d7b2c8f",
+        "type": "inject",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 280,
+        "wires": [
+            [
+                "56d03c8f97237df5"
+            ]
+        ]
+    },
+    {
+        "id": "ad45cad143968684",
+        "type": "file",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "filename": "/home/pi/node-hiu/sq2.sh",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 840,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ead7c0fec22f5be",
+        "type": "exec",
+        "z": "9e56c35b9ba883ec",
+        "command": "bash /home/pi/node-hiu/sq.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "sq.sh",
+        "x": 370,
+        "y": 520,
+        "wires": [
+            [
+                "6f695872cfb47c40",
+                "ac2384db4f2b03e8"
+            ],
+            [],
+            [
+                "89b9488efc17c85b",
+                "2187a1844c0e04f2"
+            ]
+        ]
+    },
+    {
+        "id": "6f695872cfb47c40",
+        "type": "debug",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "62fb8276d8dfde10",
+        "type": "debug",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 450,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "3dece74ea84b7211",
+        "type": "subflow:d1f3d002.63ee48",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "x": 780,
+        "y": 720,
+        "wires": [
+            [
+                "de33989197cd8b96"
+            ]
+        ]
+    },
+    {
+        "id": "95c3143f060abf59",
+        "type": "inject",
+        "z": "9e56c35b9ba883ec",
+        "name": "PORT SETUP",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "[{\"portId\":\"TH1\",\"block\":\"TH1\",\"channel\":\"1\",\"name\":\"TH1 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr23\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"DHW\",\"topicKey\":\"tCo\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},{\"portId\":\"D1\",\"block\":\"\",\"channel\":\"1\",\"name\":\"Digital Input D1\",\"figure\":\"Input\",\"portColor\":\"#00ffff\",\"wiredTo\":\"FS\",\"wiredToPort\":\"pulse\",\"signalType\":\"PULSE\",\"topicDevice\":\"FS\",\"topicKey\":\"pulse\",\"mapUnits\":\"pulse/s to ltr/min\",\"map\":\"[[0,0],[265,30]]\"},{\"portId\":\"D2\",\"block\":\"\",\"channel\":\"2\",\"name\":\"Digital Input D2\",\"figure\":\"Input\",\"portColor\":\"#00ffff\",\"wiredTo\":\"switch\",\"wiredToPort\":\"switch1\",\"signalType\":\"DRY\",\"topicDevice\":\"switch\",\"topicKey\":\"closed\"},{\"portId\":\"P1\",\"block\":\"\",\"channel\":\"1\",\"name\":\"PWM Input P1\",\"figure\":\"Input\",\"portColor\":\"#40aceb\",\"wiredTo\":\"pump\",\"wiredToPort\":\"speed\",\"signalType\":\"PWM\",\"topicDevice\":\"pump\",\"topicKey\":\"speed\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"P2\",\"block\":\"\",\"channel\":\"2\",\"name\":\"PWM Input P2\",\"figure\":\"Input\",\"portColor\":\"#40aceb\",\"wiredTo\":\"valve4\",\"wiredToPort\":\"position\",\"signalType\":\"PWM\",\"topicDevice\":\"valve4\",\"topicKey\":\"position\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"OD2\",\"block\":\"OD2\",\"channel\":\"2\",\"name\":\"PWM Output OD2\",\"figure\":\"Output\",\"portColor\":\"#40aceb\",\"wiredTo\":\"valve4\",\"wiredToPort\":\"setpoint\",\"signalType\":\"PWM\",\"topicDevice\":\"valve4\",\"topicKey\":\"setpoint\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"OD1\",\"block\":\"OD1\",\"channel\":\"1\",\"name\":\"PWM Output OD1\",\"figure\":\"Output\",\"portColor\":\"#40aceb\",\"wiredTo\":\"pump\",\"wiredToPort\":\"setpoint\",\"signalType\":\"PWM\",\"topicDevice\":\"pump\",\"topicKey\":\"setpoint\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"}]",
+        "payloadType": "json",
+        "x": 180,
+        "y": 220,
+        "wires": [
+            [
+                "4fa172e0c4ab8b07"
+            ]
+        ]
+    },
+    {
+        "id": "4fa172e0c4ab8b07",
+        "type": "change",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "portSetup",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 220,
+        "wires": [
+            [
+                "152952d212baadae"
+            ]
+        ]
+    },
+    {
+        "id": "152952d212baadae",
+        "type": "function",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "func": "//[{\"portId\":\"TH8\",\"block\":\"TH8\",\"channel\":\"8\",\"name\":\"TH8 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr23\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"DHW\",\"topicKey\":\"tCo\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},\n//{\"portId\":\"D1\",\"block\":\"\",\"channel\":\"1\",\"name\":\"Digital Input D1\",\"figure\":\"Input\",\"portColor\":\"#00ffff\",\"wiredTo\":\"FS\",\"wiredToPort\":\"pulse\",\"signalType\":\"PULSE\",\"topicDevice\":\"FS\",\"topicKey\":\"pulse\",\"mapUnits\":\"pulse/s to ltr/min\",\"map\":\"[[0,0],[265,30]]\"},{\"portId\":\"P1\",\"block\":\"\",\"channel\":\"1\",\"name\":\"PWM Input P1\",\"figure\":\"Input\",\"portColor\":\"#40aceb\",\"wiredTo\":\"pump\",\"wiredToPort\":\"speed\",\"signalType\":\"PWM\",\"topicDevice\":\"pump\",\"topicKey\":\"speed\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"P2\",\"block\":\"\",\"channel\":\"2\",\"name\":\"PWM Input P2\",\"figure\":\"Input\",\"portColor\":\"#40aceb\",\"wiredTo\":\"valve4\",\"wiredToPort\":\"position\",\"signalType\":\"PWM\",\"topicDevice\":\"valve4\",\"topicKey\":\"position\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"OD2\",\"block\":\"OD2\",\"channel\":\"2\",\"name\":\"PWM Output OD2\",\"figure\":\"Output\",\"portColor\":\"#40aceb\",\"wiredTo\":\"valve4\",\"wiredToPort\":\"setpoint\",\"signalType\":\"PWM\",\"topicDevice\":\"valve4\",\"topicKey\":\"setpoint\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"OD1\",\"block\":\"OD1\",\"channel\":\"1\",\"name\":\"PWM Output OD1\",\"figure\":\"Output\",\"portColor\":\"#40aceb\",\"wiredTo\":\"pump\",\"wiredToPort\":\"setpoint\",\"signalType\":\"PWM\",\"topicDevice\":\"pump\",\"topicKey\":\"setpoint\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"}]\n\n\n// echo \"rthrd1\",$(ti rthrd 1)\n// echo \"countrd1\",$(ti countrd 1)\n// echo \"pwmrd1\",$(ti pwmrd 1)\n// echo \"pwmrd2\",$(ti pwmrd 2)\n\n\nvar oot=\"\";\nvar pL = msg.payload;\n\nfor (var p in pL) {\n    \n    \n    if (pL[p].portId.substr(0,2)==\"TH\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',rthrd' + pL[p].channel + '\",$(ti rthrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"D\" && pL[p].signalType.substr(0,5)==\"PULSE\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',countrd' + pL[p].channel + '\",$(ti countrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"D\" && pL[p].signalType.substr(0,3)==\"DRY\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',contactrd' + pL[p].channel + '\",$(ti contactrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"P\" && pL[p].signalType.substr(0,3)==\"PWM\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',pwmrd' + pL[p].channel + '\",$(ti pwmrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,5)==\"NTC1K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',r1krd' + pL[p].channel + '\",$(ti r1krd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,6)==\"NTC10K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',r10krd' + pL[p].channel + '\",$(ti r10krd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,5)==\"0-10V\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',adcrd' + pL[p].channel + '\",$(ti adcrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,3)==\"DRY\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',contactrd' + pL[p].channel + '\",$(ti contactrd ' + pL[p].channel + ')\\n';\n        \n    }\n    \n    \n    \n}\n\n\nmsg.payload=oot;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 220,
+        "wires": [
+            [
+                "ae5c3f97fb9d763d",
+                "1dc8487bf6653680"
+            ]
+        ]
+    },
+    {
+        "id": "ae5c3f97fb9d763d",
+        "type": "file",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "filename": "/home/pi/node-hiu/sq.sh",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 840,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6955459437385eea",
+        "type": "function",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "func": "\n\nfunction uniq(a) {\n    var seen = {};\n    return a.filter(function(item) {\n        return seen.hasOwnProperty(item) ? false : (seen[item] = true);\n    });\n}\n\n\nvar invar = msg.payload.split(\",\");\n\nvar presult = global.get(\"portSetup\").filter(port => port.portId == invar[0]);\nif (presult.length>0) { \n    \n    var msg1 = {};\n    \n    var readin = parseFloat(invar[2].split(\" \")[0]);\n    \n    \n    \n    msg1.topic = (presult[0].topicDevice?presult[0].topicDevice + \"/\":\"\") + \"dat/\" + (presult[0].topicKey || \"value\"),\n    msg1.payload = readin;\n    msg1.points = 1000;\n    msg1.units = presult[0].mapUnits;\n    msg1.title = (presult[0].topicDevice?presult[0].topicDevice + \" \":\"\") + presult[0].wiredToPort;\n    \n    var msg2 = {};\n    msg2.topic = \"raw/\" + invar[0],\n    msg2.payload = readin;\n    msg2.title = presult[0].name || (\"Raw \" + invar[0]);\n    if (presult[0].mapUnits) { msg2.units = presult[0].mapUnits.split(\" to \")[0];  }\n    \n    var msg3 = { \"payload\":\"ok\"};  // alarm\n    msg3.topic=\"alarm/terminal\" + presult[0].portId;\n    \n    \n    if(presult[0][\"map\"]) {\n     \n        if (presult[0].mapUnits) { msg1.units = presult[0].mapUnits.split(\" to \")[1];  }\n        msg1.payload = \"\";\n        \n        var ntc = JSON.parse(presult[0][\"map\"]);\n        \n        var temp = -999;\n        for (var i = 1; i < ntc.length; i++) { \n            \n            if  (ntc[i][0]==readin) { \n                \n                temp = ntc[i][1];\n                \n                break;\n            }\n            else if  (ntc[i-1][0]==readin) { \n                \n                temp = ntc[i-1][1];\n                \n                break;\n            }\n            else if  ((ntc[i-1][0]<=readin) && (ntc[i][0]>readin)) { \n                \n                temp = ntc[i-1][1] - ((ntc[i][1] - ntc[i-1][1]) * ((readin - ntc[i-1][0]) / (ntc[i-1][0] - ntc[i][0])));\n                \n                break;\n            }\n            else if  ((ntc[i-1][0]>=readin) && (ntc[i][0]<readin)) { \n                \n                temp = ntc[i-1][1] - ((ntc[i][1] - ntc[i-1][1]) * ((readin - ntc[i-1][0]) / (ntc[i-1][0] - ntc[i][0])));\n                \n                break;\n            }\n            \n        }\n        \n        if (temp != -999) {\n            \n            msg1.payload =  temp; //parseInt(temp*100)/100; \n            \n            // if (temp <10) { msg1.payload =  parseInt(temp*100)/100; }\n            // else { msg1.payload =  parseInt(temp*10)/10; }\n            \n            if (presult[0].signalType && (presult[0].signalType.indexOf(\"NTC\")==0) && readin==60) {\n                \n                msg3.payload = \"Out of range\"\n                \n            }\n            \n            \n        } else {\n            \n            msg1 = null;\n            msg3.payload = \"Out of range\"\n        }\n    }\n    \n    \n    var readout = parseInt(parseFloat(msg1.payload)*100)/100; \n    \n    var history = context.get(invar[0]) || [];\n    \n    // if (history.length>5 && history.indexOf(msg1.payload)<0) {  history = [];  }\n    // else if (history.length>1) {\n    //     var uniqh = uniq(history);\n    //     if ((uniqh.length<4) && (history.length<10)) {  \n    //         // slow mode\n    //         msg1=null; \n            \n    //     } else {\n    //     // else if (uniqh.length>0) {   readin = history.reduce((a, b) => a + b, 0) / history.length;  }\n    //         msg1.payload = history.reduce((a, b) => a + b, 0) / history.length; \n    //         msg1.payload =  parseInt(msg1.payload*100)/100; \n    //     }\n    //     if (history.length>9) { history=[msg1.payload]; }\n         \n    // }\n    \n    if (history.indexOf(readout)>-1) {  \n        \n        msg1.payload =  parseInt((history.reduce((a, b) => a + b, 0) / history.length)*100)/100; \n        \n    } //msg1=null;\n    \n    history.push(readout);\n    if (history.length>20) { history.shift(); }\n    context.set(invar[0],history);\n    \n    \n    \n    \n    return [msg1, msg2, msg3];\n      \n}\n\nreturn null;",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 540,
+        "wires": [
+            [
+                "9d9f3f2cebae585c",
+                "7c4bc323008066ae"
+            ],
+            [
+                "9d9f3f2cebae585c"
+            ],
+            [
+                "9d9f3f2cebae585c"
+            ]
+        ]
+    },
+    {
+        "id": "ac2384db4f2b03e8",
+        "type": "split",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 570,
+        "y": 540,
+        "wires": [
+            [
+                "6955459437385eea"
+            ]
+        ]
+    },
+    {
+        "id": "4a68edb74c9bfbf5",
+        "type": "link out",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8",
+            "3d8dc9e52092a525"
+        ],
+        "x": 1015,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "9d9f3f2cebae585c",
+        "type": "subflow:d1f3d002.63ee48",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "x": 900,
+        "y": 540,
+        "wires": [
+            [
+                "4a68edb74c9bfbf5"
+            ]
+        ]
+    },
+    {
+        "id": "f03b06e57f8284f3",
+        "type": "template",
+        "z": "9e56c35b9ba883ec",
+        "name": "BOARD SETUP",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "ti wdtpwr 30\nti edgewr 1 1\nti edgewr 2 1",
+        "output": "str",
+        "x": 380,
+        "y": 360,
+        "wires": [
+            [
+                "b1766393c930381e"
+            ]
+        ]
+    },
+    {
+        "id": "b1766393c930381e",
+        "type": "file",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "filename": "/home/pi/node-hiu/sqsetup.sh",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 610,
+        "y": 360,
+        "wires": [
+            [
+                "a7fd352df4e0f524"
+            ]
+        ]
+    },
+    {
+        "id": "79add2b60bdc9f4c",
+        "type": "inject",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 360,
+        "wires": [
+            [
+                "f03b06e57f8284f3"
+            ]
+        ]
+    },
+    {
+        "id": "31627b16278e23e9",
+        "type": "exec",
+        "z": "9e56c35b9ba883ec",
+        "command": "bash /home/pi/node-hiu/sqsetup.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1040,
+        "y": 360,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a7fd352df4e0f524",
+        "type": "trigger",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "op1": "",
+        "op2": "1",
+        "op1type": "nul",
+        "op2type": "num",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 820,
+        "y": 360,
+        "wires": [
+            [
+                "31627b16278e23e9"
+            ]
+        ]
+    },
+    {
+        "id": "cb2a3a304c51e513",
+        "type": "inject",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 330,
+        "y": 940,
+        "wires": [
+            [
+                "7166b07d39fbd21c"
+            ]
+        ]
+    },
+    {
+        "id": "7166b07d39fbd21c",
+        "type": "function",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "func": "\nvar ana = global.get(\"ntcANA\");\n\nana.ana.reverse();\nana.temp.reverse();\n\nvar oot = [];\n\nfor (var r in ana.ana) {\n    \n    oot.push([ana.ana[r]/1000 , ana.temp[r]]);\n}\n\nmsg.payload = JSON.stringify(oot);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 940,
+        "wires": [
+            [
+                "9c0f347bbab44860"
+            ]
+        ]
+    },
+    {
+        "id": "9c0f347bbab44860",
+        "type": "debug",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "89b9488efc17c85b",
+        "type": "link out",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "0632f1bc7ce231b2",
+            "38851676a0d913c9"
+        ],
+        "x": 535,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "2187a1844c0e04f2",
+        "type": "delay",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 190,
+        "y": 640,
+        "wires": [
+            [
+                "e90df952e0e97174"
+            ]
+        ]
+    },
+    {
+        "id": "7c4bc323008066ae",
+        "type": "debug",
+        "z": "9e56c35b9ba883ec",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "1dc8487bf6653680",
+        "type": "debug",
+        "z": "9e56c35b9ba883ec",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 180,
+        "wires": []
     }
 ]
