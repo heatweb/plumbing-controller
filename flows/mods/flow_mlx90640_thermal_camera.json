@@ -1,0 +1,270 @@
+[
+    {
+        "id": "d74fbbb92887d522",
+        "type": "tab",
+        "label": "MLX90640 Thermal Camera",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "61664d917559a982",
+        "type": "inject",
+        "z": "d74fbbb92887d522",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "30",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "37a0646d73ccea39"
+            ]
+        ]
+    },
+    {
+        "id": "37a0646d73ccea39",
+        "type": "exec",
+        "z": "d74fbbb92887d522",
+        "command": " sudo /home/pi/mlx90640-library/examples/rawrgb",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 490,
+        "y": 280,
+        "wires": [
+            [
+                "27990d10a35332bd",
+                "383d8165ed79a858"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "27990d10a35332bd",
+        "type": "debug",
+        "z": "d74fbbb92887d522",
+        "name": "debug 12",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "30224b5ab3d2f704",
+        "type": "ui_heat_map",
+        "z": "d74fbbb92887d522",
+        "group": "a1ac88f20d07cec2",
+        "order": 0,
+        "width": "6",
+        "height": "7",
+        "name": "",
+        "rows": "32",
+        "columns": "24",
+        "minMax": true,
+        "minimumValue": 0,
+        "maximumValue": "100",
+        "backgroundType": "color",
+        "backgroundColor": "#ffffff",
+        "image": "never",
+        "radius": "25",
+        "opacity": "0.6",
+        "blur": "0.8",
+        "showValues": false,
+        "gridType": "none",
+        "valuesDecimals": 0,
+        "showLegend": false,
+        "legendType": "none",
+        "legendDecimals": 0,
+        "legendCount": 2,
+        "x": 900,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a0cbad37a2519760",
+        "type": "debug",
+        "z": "d74fbbb92887d522",
+        "name": "debug 15",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "383d8165ed79a858",
+        "type": "function",
+        "z": "d74fbbb92887d522",
+        "name": "function 3",
+        "func": "var buff = msg.payload;\n\nvar oot = [];\nvar cnt = 0;\n\nfor (let rown = 0; rown < 24; rown++) {\n    for (let coln = 0; coln < 32; coln++) {\n\n        var i = ((23-rown) * 32) + coln;\n        //var hexToDecimal = hex => parseInt(hex, 16);\n\n        var cv = (255 * 255 * msg.payload[3 * i]) + (255 * msg.payload[(3 * i) + 1]) + (1 * msg.payload[(3 * i) + 2])\n        \n        cv = parseInt(cv / 165813.75);\n        // oot.push(255 * 255 * msg.payload);\n        // oot.push(255 * msg.payload[i+1]);\n        // oot.push(msg.payload[i+2]);\n        oot.push(cv);\n\n    }\n}\n   \n\nmsg.payload = oot;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 360,
+        "wires": [
+            [
+                "a0cbad37a2519760",
+                "30224b5ab3d2f704"
+            ]
+        ]
+    },
+    {
+        "id": "821523b0373c0e76",
+        "type": "inject",
+        "z": "d74fbbb92887d522",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 660,
+        "wires": [
+            [
+                "970404cf152128fd"
+            ]
+        ]
+    },
+    {
+        "id": "970404cf152128fd",
+        "type": "exec",
+        "z": "d74fbbb92887d522",
+        "d": true,
+        "command": " sudo /home/pi/mlx90640-library1/examples/rawrgb",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 510,
+        "y": 660,
+        "wires": [
+            [
+                "17eb51422544d33e",
+                "c8cbf6769fc6ef46"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "17eb51422544d33e",
+        "type": "debug",
+        "z": "d74fbbb92887d522",
+        "name": "debug 16",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "5cc828d21e4bc533",
+        "type": "debug",
+        "z": "d74fbbb92887d522",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "c8cbf6769fc6ef46",
+        "type": "function",
+        "z": "d74fbbb92887d522",
+        "name": "function 4",
+        "func": "// for(int y = 0; y < 24; y++){\n//     for(int x = 0; x < 32; x++){\n//         float val = mlx90640To[32 * (23-y) + x];\n//         put_pixel_false_colour(image, x, y, val);\n//     }\n// }\n\nvar oot = [];\nvar cnt = 0;\n\nfor (let rown = 0; rown < 24; rown++) {\n    for (let coln = 0; coln < 32; coln++) {\n\n        var val = msg.payload[32 * (23 - rown) + coln];\n\n        // var i = ((23-rown) * 32) + coln;\n        // //var hexToDecimal = hex => parseInt(hex, 16);\n\n        // var cv = (255 * 255 * msg.payload[3 * i]) + (255 * msg.payload[(3 * i) + 1]) + (1 * msg.payload[(3 * i) + 2])\n        \n        // cv = parseInt(cv / 165813.75);\n        // // oot.push(255 * 255 * msg.payload);\n        // // oot.push(255 * msg.payload[i+1]);\n        // // oot.push(msg.payload[i+2]);\n        // oot.push(cv);\n        oot.push(val);\n\n    }\n}\n   \n\nmsg.payload = oot;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 580,
+        "wires": [
+            [
+                "5cc828d21e4bc533"
+            ]
+        ]
+    },
+    {
+        "id": "a1ac88f20d07cec2",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "3e483ad9b8798814",
+        "order": 1,
+        "disp": false,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3e483ad9b8798814",
+        "type": "ui_tab",
+        "name": "Heatmap",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

@@ -1,0 +1,1185 @@
+[
+    {
+        "id": "c1c0e71a.90aae",
+        "type": "tab",
+        "label": "Mesh",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d815f77b.54d1e8",
+        "type": "tcp in",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "server": "client",
+        "host": "localhost",
+        "port": "2000",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "\\n",
+        "topic": "",
+        "base64": false,
+        "x": 290,
+        "y": 1020,
+        "wires": [
+            [
+                "19d3b036.e8f208"
+            ]
+        ]
+    },
+    {
+        "id": "f983ff67.0a0ba",
+        "type": "debug",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "19d3b036.e8f208",
+        "type": "json",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 460,
+        "y": 1020,
+        "wires": [
+            [
+                "f983ff67.0a0ba",
+                "86f8428.e233ac"
+            ]
+        ]
+    },
+    {
+        "id": "6a42bd96.7a6c3c",
+        "type": "inject",
+        "z": "c1c0e71a.90aae",
+        "name": "neighboutListRequest",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"objectType\":\"neighboutListRequest\"}",
+        "payloadType": "json",
+        "x": 260,
+        "y": 760,
+        "wires": [
+            [
+                "9445e61b.ef4fa8"
+            ]
+        ]
+    },
+    {
+        "id": "9445e61b.ef4fa8",
+        "type": "json",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 570,
+        "y": 800,
+        "wires": [
+            [
+                "c210b1b4.e38bb",
+                "a78ca723.e6da78"
+            ]
+        ]
+    },
+    {
+        "id": "c210b1b4.e38bb",
+        "type": "debug",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "a78ca723.e6da78",
+        "type": "tcp request",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "server": "localhost",
+        "port": "2001",
+        "out": "char",
+        "splitc": "\\n",
+        "x": 770,
+        "y": 800,
+        "wires": [
+            [
+                "7794d4a8.c5f39c",
+                "a09ed8cf.9c60d"
+            ]
+        ]
+    },
+    {
+        "id": "7794d4a8.c5f39c",
+        "type": "debug",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "a09ed8cf.9c60d",
+        "type": "function",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "func": "msg.payload = msg.payload.toString();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 980,
+        "y": 800,
+        "wires": [
+            [
+                "843ad1b5.9ec458"
+            ]
+        ]
+    },
+    {
+        "id": "eeddd83d.9b6748",
+        "type": "debug",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "3c2f6c6c.cab96c",
+        "type": "inject",
+        "z": "c1c0e71a.90aae",
+        "name": "nodeInfoRequest",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "15",
+        "topic": "",
+        "payload": "{\"objectType\":\"nodeInfoRequest\"}",
+        "payloadType": "json",
+        "x": 270,
+        "y": 720,
+        "wires": [
+            [
+                "9445e61b.ef4fa8"
+            ]
+        ]
+    },
+    {
+        "id": "796a432.d23963c",
+        "type": "inject",
+        "z": "c1c0e71a.90aae",
+        "name": "networkCommand",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"objectType\":\"networkCommand\",\"nodeId\":16,\"cmd\":0,\"payload\":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]}",
+        "payloadType": "json",
+        "x": 270,
+        "y": 800,
+        "wires": [
+            [
+                "9445e61b.ef4fa8"
+            ]
+        ]
+    },
+    {
+        "id": "8404ea51.ca2608",
+        "type": "inject",
+        "z": "c1c0e71a.90aae",
+        "name": "sendPayload",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"objectType\":\"sendPayload\",\"payloadType\":\"acknowledged\",\"nodeId\":16,\"port\":0,\"payload\":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]}",
+        "payloadType": "json",
+        "x": 290,
+        "y": 840,
+        "wires": [
+            [
+                "9445e61b.ef4fa8"
+            ]
+        ]
+    },
+    {
+        "id": "f784dbaf.3def38",
+        "type": "change",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.nodeId",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "system/meshNodeId",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "title",
+                "pt": "msg",
+                "to": "Mesh Node Id",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 910,
+        "y": 960,
+        "wires": [
+            [
+                "dca8e026.029a48"
+            ]
+        ]
+    },
+    {
+        "id": "86f8428.e233ac",
+        "type": "switch",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "property": "payload.objectType",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "nodeInfoReply",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "receivedPayload",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 620,
+        "y": 1020,
+        "wires": [
+            [
+                "f784dbaf.3def38",
+                "791575f2.45935c"
+            ],
+            [
+                "64097a15.3f7b14"
+            ]
+        ]
+    },
+    {
+        "id": "791575f2.45935c",
+        "type": "change",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.nodeType",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "system/meshNodeType",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "title",
+                "pt": "msg",
+                "to": "Mesh Node Type",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 910,
+        "y": 1000,
+        "wires": [
+            [
+                "dca8e026.029a48"
+            ]
+        ]
+    },
+    {
+        "id": "dca8e026.029a48",
+        "type": "link out",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "links": [
+            "22b79bdf.56f684"
+        ],
+        "x": 1085,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "843ad1b5.9ec458",
+        "type": "json",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 1110,
+        "y": 800,
+        "wires": [
+            [
+                "eeddd83d.9b6748"
+            ]
+        ]
+    },
+    {
+        "id": "f8dd942d.a64d48",
+        "type": "function",
+        "z": "c1c0e71a.90aae",
+        "name": "plain text 0",
+        "func": "//var buff = Buffer.from(msg.payload);\n\nvar buff=[];\n\nfor (i = 0; i < msg.payload.length; i++) { \n    buff.push(msg.payload.charCodeAt(i));\n}\n\n\nvar cmd ={\n    \"objectType\": \"sendPayload\",\n    \"payloadType\": \"acknowledged\",\n    \"nodeId\": msg.targetNode || 16,\n    \"port\": msg.port|| 0, \n    \"payload\": buff\n}\n\n\nmsg.payload = cmd;\n//msg.payload.payload = buff;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 290,
+        "y": 560,
+        "wires": [
+            [
+                "d3b21334.f320f8"
+            ]
+        ]
+    },
+    {
+        "id": "9db4ac04.f9c28",
+        "type": "inject",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Does it work?",
+        "payloadType": "str",
+        "x": 290,
+        "y": 420,
+        "wires": [
+            [
+                "8008c307.479458"
+            ]
+        ]
+    },
+    {
+        "id": "5531f501.55d8a4",
+        "type": "function",
+        "z": "c1c0e71a.90aae",
+        "name": "plain text",
+        "func": "\nvar stdata = \"\";\n\nfor (var c in msg.payload.payload) {\n\n    \n    stdata +=String.fromCharCode(msg.payload.payload[c]); \n    //\n}\n\nmsg.payload = msg.nodeId + \"/\" + stdata;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 950,
+        "y": 1080,
+        "wires": [
+            [
+                "46ffbe35.1da9a"
+            ]
+        ]
+    },
+    {
+        "id": "46ffbe35.1da9a",
+        "type": "debug",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "aba976e9.c5f518",
+        "type": "switch",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "property": "payload.port",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 780,
+        "y": 1100,
+        "wires": [
+            [
+                "5531f501.55d8a4"
+            ],
+            [
+                "759c67ed.bdf32"
+            ],
+            [
+                "d86a18c.035ab68"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "ca7584d2.bc2d1",
+        "type": "link in",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "links": [
+            "b1974c10.ad4e68",
+            "44c8809a.69ba3"
+        ],
+        "x": 175,
+        "y": 560,
+        "wires": [
+            [
+                "f8dd942d.a64d48"
+            ]
+        ]
+    },
+    {
+        "id": "b1974c10.ad4e68",
+        "type": "link out",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "links": [
+            "ca7584d2.bc2d1"
+        ],
+        "x": 595,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "d3b21334.f320f8",
+        "type": "delay",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 510,
+        "y": 600,
+        "wires": [
+            [
+                "9445e61b.ef4fa8",
+                "f589504f.9573b"
+            ]
+        ]
+    },
+    {
+        "id": "64097a15.3f7b14",
+        "type": "change",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "nodeId",
+                "pt": "msg",
+                "to": "payload.nodeId",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 1100,
+        "wires": [
+            [
+                "aba976e9.c5f518"
+            ]
+        ]
+    },
+    {
+        "id": "9163f13c.0f317",
+        "type": "inject",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "phex1/dat/tH",
+        "payload": "34.55",
+        "payloadType": "num",
+        "x": 270,
+        "y": 240,
+        "wires": [
+            [
+                "c7d33c2d.fb1f"
+            ]
+        ]
+    },
+    {
+        "id": "450f3141.bdbcf8",
+        "type": "function",
+        "z": "c1c0e71a.90aae",
+        "name": "slice payload",
+        "func": "// bit 0: list/device type id\n// bits 1+2: topic id\n// bit 3: part number\n// bit 4: number of parts\n\nvar msg2=null;\nvar topics = msg.topic.split(\"/\");\n\nif (topics.length==1) { msg.topic =  \"dat/\" + msg.topic;  }\nif (topics.length==2) { msg.topic = global.get(\"node\") + \"/\" + msg.topic;  }\ntopics = msg.topic.split(\"/\");\n\nif (topics.length<3) { return null; }\n\nvar val = \"\"+msg.payload;\n\nvar myobj = topics[topics.length-3] + \".\" +  topics[topics.length-2] + \".\" +  topics[topics.length-1];\nvar mytopic = topics[topics.length-3] + \"/\" +  topics[topics.length-2] + \"/\" +  topics[topics.length-1];\n\n\nvar mydetails = {};\nvar topicId = 0;\n\n\n\nif (!global.get(\"mesh.topics.\"+myobj)) {\n    \n    if (msg.topic == global.get(\"node\") + \"/system/networkId\") { topicId = 1; }\n    else if (msg.topic == global.get(\"node\") + \"/system/nodeId\") {  topicId = 2;}\n    \n    else { // non-standard topics\n    \n    \n        topicId = (global.get(\"mesh.topicCount\")||100) +1;\n        global.set(\"mesh.topicCount\",topicId);\n    }    \n        \n    global.set(\"mesh.topics.\"+myobj,{\"topic\":mytopic,\"id\": topicId, \"value\":val});\n    \n    msg2={};\n    msg2.topic = \"\" + msg.topic;\n    msg2.payload = \"\" + msg.payload;\n    msg2.targetNode = msg.targetNode;\n            \n}\n    \n    \nmydetails = global.get(\"mesh.topics.\"+myobj) || {};\n\n\n\n\nmsgs = [];\n\nmsg.topic = mydetails[\"id\"] ;\n\n// topic index is represented by first 2 characters\nvar c1 = Math.floor(mydetails[\"id\"]/255)\nvar c2 = mydetails[\"id\"]%255;\n\nvar partCount = Math.ceil((\"\"+msg.payload).length/15);\n\nfor (i = 0; i < partCount; i++) { \n    \n   var pload = String.fromCharCode(0) + String.fromCharCode(c1) + String.fromCharCode(c2)  + String.fromCharCode(i+1) + String.fromCharCode(partCount) + val.substr((i*15),15);\n\n    msgs.push(pload) ;\n}\n\n// if (partCount==1) {\n\n//     msg.payload = String.fromCharCode(c1) + String.fromCharCode(c2)  + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + msg.payload;\n\n// }\n\nmsg.payload = msgs;\n\nreturn [msg,msg2];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 810,
+        "y": 340,
+        "wires": [
+            [
+                "d88e3cca.755948",
+                "85423b74.514178"
+            ],
+            [
+                "85eb65ad.908a1"
+            ]
+        ]
+    },
+    {
+        "id": "141e6890.afd26f",
+        "type": "link out",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "links": [
+            "8a034bf9.606bd"
+        ],
+        "x": 1275,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "f83546f8.bcd51",
+        "type": "function",
+        "z": "c1c0e71a.90aae",
+        "name": "indexed 1",
+        "func": "//var buff = Buffer.from(msg.payload);\n\nvar buff=[];\n\nfor (i = 0; i < msg.payload.length; i++) { \n    buff.push(msg.payload.charCodeAt(i));\n}\n\n\nvar cmd ={\n    \"objectType\": \"sendPayload\",\n    \"payloadType\": \"unacknowledged\",\n    \"nodeId\": msg.targetNode || 16,\n    \"port\": 1, \n    \"sequenceNo\":564,\n    \"payload\": buff\n}\n\n\nmsg.payload = cmd;\n//msg.payload.payload = buff;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 300,
+        "y": 600,
+        "wires": [
+            [
+                "d3b21334.f320f8"
+            ]
+        ]
+    },
+    {
+        "id": "8a034bf9.606bd",
+        "type": "link in",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "links": [
+            "141e6890.afd26f"
+        ],
+        "x": 175,
+        "y": 600,
+        "wires": [
+            [
+                "f83546f8.bcd51"
+            ]
+        ]
+    },
+    {
+        "id": "1eaebcad.c50343",
+        "type": "split",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1170,
+        "y": 340,
+        "wires": [
+            [
+                "141e6890.afd26f"
+            ]
+        ]
+    },
+    {
+        "id": "d88e3cca.755948",
+        "type": "debug",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "60c85af8.0a1b44",
+        "type": "inject",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "mynode/system/long",
+        "payload": "This is a very long string. I hope it gets through.",
+        "payloadType": "str",
+        "x": 310,
+        "y": 280,
+        "wires": [
+            [
+                "c7d33c2d.fb1f"
+            ]
+        ]
+    },
+    {
+        "id": "85eb65ad.908a1",
+        "type": "function",
+        "z": "c1c0e71a.90aae",
+        "name": "topic",
+        "func": "// bit 0: list/device type id\n// bits 1+2: topic id\n// bit 3: part number\n// bit 4: number of parts\n\nvar topics = msg.topic.split(\"/\");\n\nif (topics.length==1) { msg.topic =  \"dat/\" + msg.topic;  }\nif (topics.length==2) { msg.topic = global.get(\"node\") + \"/\" + msg.topic;  }\ntopics = msg.topic.split(\"/\");\n\nif (topics.length<3) { return null; }\n\nvar val = \"\" + msg.payload;\n\nvar myobj = topics[topics.length-3] + \".\" +  topics[topics.length-2] + \".\" +  topics[topics.length-1];\nvar mytopic = topics[topics.length-3] + \"/\" +  topics[topics.length-2] + \"/\" +  topics[topics.length-1];\n\n\n\nvar topCount = global.get(\"mesh.topicCount\")||0;\n\nvar topicId = 0;\nif (!global.get(\"mesh.topics.\"+myobj)) {\n    \n    \n    global.set(\"mesh.topics.\"+myobj,{\"topic\":mytopic,\"id\": (topCount+1), \"value\":val});\n    global.set(\"mesh.topicCount\",topCount+1);\n}\n\n\nvar mydetails = global.get(\"mesh.topics.\"+myobj) || {};\n\n\nmsgs = [];\n\nmsg.topic = mydetails[\"id\"] ;\n\n// topic index is represented by first 2 characters\nvar c1 = Math.floor(mydetails[\"id\"]/255)\nvar c2 = mydetails[\"id\"]%255;\n\nvar partCount = Math.ceil(mytopic.length/15);\n\nfor (i = 0; i < partCount; i++) { \n    \n   var pload = String.fromCharCode(0) + String.fromCharCode(c1) + String.fromCharCode(c2)  + String.fromCharCode(i+1) + String.fromCharCode(partCount) + mytopic.substr((i*15),15);\n\n    msgs.push(pload) ;\n}\n\n// if (partCount==1) {\n\n//     msg.payload = String.fromCharCode(c1) + String.fromCharCode(c2)  + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + msg.payload;\n\n// }\n\nmsg.payload = msgs;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 990,
+        "y": 400,
+        "wires": [
+            [
+                "8f60e38a.ce7f7"
+            ]
+        ]
+    },
+    {
+        "id": "8f60e38a.ce7f7",
+        "type": "split",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1170,
+        "y": 400,
+        "wires": [
+            [
+                "c7cc9807.a5ba08"
+            ]
+        ]
+    },
+    {
+        "id": "1f320cff.99430b",
+        "type": "function",
+        "z": "c1c0e71a.90aae",
+        "name": "topic setup 2",
+        "func": "//var buff = Buffer.from(msg.payload);\n\nvar buff=[];\n\nfor (i = 0; i < msg.payload.length; i++) { \n    buff.push(msg.payload.charCodeAt(i));\n}\n\n\nvar cmd ={\n    \"objectType\": \"sendPayload\",\n    \"payloadType\": \"acknowledged\",\n    \"nodeId\": msg.targetNode || 16,\n    \"port\": 2, \n    \"payload\": buff\n}\n\n\nmsg.payload = cmd;\n//msg.payload.payload = buff;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 290,
+        "y": 640,
+        "wires": [
+            [
+                "d3b21334.f320f8"
+            ]
+        ]
+    },
+    {
+        "id": "33991da9.c604e2",
+        "type": "link in",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "links": [
+            "c7cc9807.a5ba08"
+        ],
+        "x": 175,
+        "y": 640,
+        "wires": [
+            [
+                "1f320cff.99430b"
+            ]
+        ]
+    },
+    {
+        "id": "c7cc9807.a5ba08",
+        "type": "link out",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "links": [
+            "33991da9.c604e2"
+        ],
+        "x": 1275,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "85423b74.514178",
+        "type": "delay",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 1000,
+        "y": 340,
+        "wires": [
+            [
+                "1eaebcad.c50343"
+            ]
+        ]
+    },
+    {
+        "id": "759c67ed.bdf32",
+        "type": "function",
+        "z": "c1c0e71a.90aae",
+        "name": "compile payload",
+        "func": "\nvar stdata = \"\";\nvar topicId = 0;\nvar listId = 0;\nvar partNo = 0;\nvar partCount = 0;\n\nfor (var c in msg.payload.payload) {\n\n    if (c==1) { topicId = msg.payload.payload[c] * 255; }\n    else if (c==2) { topicId = topicId + (1*msg.payload.payload[c]); }\n    else if (c==0) { listId=(1*msg.payload.payload[c]);  }\n    else if (c==3) { partNo=(1*msg.payload.payload[c]); }\n    else if (c==4) { partCount=(1*msg.payload.payload[c]); }\n    else {\n        stdata +=String.fromCharCode(msg.payload.payload[c]); \n    }\n    //\n}\n\nmsg.topic = msg.nodeId + \"/\" + topicId\nmsg.payload = stdata;\nmsg.listId = listId;\nmsg.partNo = partNo;\nmsg.partCount = partCount;\n\n\nif (partCount>1) {\n    \n    var parts = flow.get(\"parts.N\"+ msg.nodeId + \".L\" + listId + \".T\" + topicId) || {};\n    \n    parts[partNo]=stdata;\n    \n    if (partNo == partCount) {\n        \n        msg.payload=\"\";\n        for (var p in parts) {  msg.payload += parts[p]; }\n        \n        flow.set(\"parts.N\"+ msg.nodeId + \".L\" + listId + \".T\" + topicId, {}) ;\n        \n    } else {\n        \n        flow.set(\"parts.N\"+ msg.nodeId + \".L\" + listId + \".T\" + topicId, parts) ;\n        return null;\n    }\n    \n    \n}\n\nif (topicId==2) { flow.set(\"devInfo.N\"+ msg.nodeId + \".nodeId\",msg.payload); }\nif (topicId==1) { flow.set(\"devInfo.N\"+ msg.nodeId + \".networkId\",msg.payload); }\n\nflow.set(\"devInfo.N\"+ msg.nodeId + \".L\" + listId + \".T\" +topicId, msg.payload); \n\n\nif (flow.get(\"devInfo.N\"+ msg.nodeId + \".L\" + listId + \".FT\" +topicId)) {\n    \n    var devt = flow.get(\"devInfo.N\"+ msg.nodeId + \".L\" + listId + \".FT\" +topicId);\n    \n} else { return null; }\n\nvar devInfo = flow.get(\"devInfo.N\"+ msg.nodeId) || {};\n\nif (!devInfo.nodeId) { return null; }\nif (!devInfo.networkId) { return null; }\n\nmsg.topic = devInfo.networkId + \"/\" + devInfo.nodeId + \"/\" + devt; \n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 970,
+        "y": 1120,
+        "wires": [
+            [
+                "8a990708.489c7",
+                "1c2a5844.77b0b8"
+            ]
+        ]
+    },
+    {
+        "id": "8a990708.489c7",
+        "type": "debug",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "d86a18c.035ab68",
+        "type": "function",
+        "z": "c1c0e71a.90aae",
+        "name": "save topic",
+        "func": "\nvar stdata = \"\";\nvar topicId = 0;\nvar listId = 0;\nvar partNo = 0;\nvar partCount = 0;\n\nfor (var c in msg.payload.payload) {\n\n    if (c==1) { topicId = msg.payload.payload[c] * 255; }\n    else if (c==2) { topicId = topicId + (1*msg.payload.payload[c]); }\n    else if (c==0) { listId=(1*msg.payload.payload[c]);  }\n    else if (c==3) { partNo=(1*msg.payload.payload[c]); }\n    else if (c==4) { partCount=(1*msg.payload.payload[c]); }\n    else {\n        stdata +=String.fromCharCode(msg.payload.payload[c]); \n    }\n    //\n}\n\nmsg.topic = msg.nodeId + \"/\" + topicId\nmsg.payload = stdata;\nmsg.listId = listId;\nmsg.partNo = partNo;\nmsg.partCount = partCount;\n\n\nif (partCount>1) {\n    \n    var parts = flow.get(\"parts.N\"+ msg.nodeId + \".L\" + listId + \".T\" + topicId) || {};\n    \n    parts[partNo]=stdata;\n    \n    if (partNo == partCount) {\n        \n        msg.payload=\"\";\n        for (var p in parts) {  msg.payload += parts[p]; }\n        \n        flow.set(\"parts.N\"+ msg.nodeId + \".L\" + listId + \".T\" + topicId, {}) ;\n        \n    } else {\n        \n        flow.set(\"parts.N\"+ msg.nodeId + \".L\" + listId + \".T\" + topicId, parts) ;\n        return null;\n    }\n    \n    \n}\n\n//if (topicId==2) { flow.set(\"devInfo.N\"+ msg.nodeId + \".nodeId\",msg.payload); }\n//if (topicId==1) { flow.set(\"devInfo.N\"+ msg.nodeId + \".networkId\",msg.payload); }\n\nflow.set(\"devInfo.N\"+ msg.nodeId + \".L\" + listId + \".FT\" +topicId, msg.payload); \n\n//var devInfo = flow.get(\"devInfo.N\"+ msg.nodeId) || {};\n//if (devInfo.nodeId) { msg.topic = devInfo.nodeId + msg.topic.substr(msg.topic.indexOf(\"/\")); }\n//if (devInfo.networkId) { msg.topic = devInfo.networkId + \"/\" + msg.topic; }\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 960,
+        "y": 1160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "33f304da.6a840c",
+        "type": "link in",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "links": [
+            "c7d33c2d.fb1f",
+            "7e6afa81.86dc94"
+        ],
+        "x": 495,
+        "y": 340,
+        "wires": [
+            [
+                "8e688a66.81cd88"
+            ]
+        ]
+    },
+    {
+        "id": "c7d33c2d.fb1f",
+        "type": "link out",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "links": [
+            "33f304da.6a840c"
+        ],
+        "x": 535,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "25106650.6c3d02",
+        "type": "inject",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "system/networkId",
+        "payload": "networkId",
+        "payloadType": "global",
+        "x": 270,
+        "y": 120,
+        "wires": [
+            [
+                "c7d33c2d.fb1f"
+            ]
+        ]
+    },
+    {
+        "id": "96f94ce9.f89fd",
+        "type": "inject",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "15",
+        "topic": "system/nodeId",
+        "payload": "node",
+        "payloadType": "global",
+        "x": 290,
+        "y": 160,
+        "wires": [
+            [
+                "c7d33c2d.fb1f"
+            ]
+        ]
+    },
+    {
+        "id": "1c2a5844.77b0b8",
+        "type": "link out",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "links": [
+            "22b79bdf.56f684"
+        ],
+        "x": 1155,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "f589504f.9573b",
+        "type": "debug",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "8e688a66.81cd88",
+        "type": "change",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "targetNode",
+                "pt": "msg",
+                "to": "16",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 630,
+        "y": 340,
+        "wires": [
+            [
+                "450f3141.bdbcf8"
+            ]
+        ]
+    },
+    {
+        "id": "8008c307.479458",
+        "type": "change",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "targetNode",
+                "pt": "msg",
+                "to": "16",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 420,
+        "wires": [
+            [
+                "b1974c10.ad4e68"
+            ]
+        ]
+    },
+    {
+        "id": "f72c7591.d5277",
+        "type": "inject",
+        "z": "c1c0e71a.90aae",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 740,
+        "y": 80,
+        "wires": [
+            [
+                "9f0835d1.61951"
+            ]
+        ]
+    },
+    {
+        "id": "9f0835d1.61951",
+        "type": "change",
+        "z": "c1c0e71a.90aae",
+        "name": "For demo",
+        "rules": [
+            {
+                "t": "set",
+                "p": "node",
+                "pt": "global",
+                "to": "RWfSGMN6",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "networkId",
+                "pt": "global",
+                "to": "rAndD-RWfSGMN6",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 910,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    }
+]

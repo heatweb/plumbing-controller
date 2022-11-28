@@ -1,0 +1,1560 @@
+[
+    {
+        "id": "16311b21.f27be5",
+        "type": "tab",
+        "label": "IO Select",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3db3437f.d41e0c",
+        "type": "ui_table",
+        "z": "16311b21.f27be5",
+        "group": "f5804b9b.035d58",
+        "name": "",
+        "order": 0,
+        "width": "12",
+        "height": "6",
+        "columns": [
+            {
+                "field": "channel",
+                "title": "Channel",
+                "width": "10%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "type",
+                "title": "Type",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "topicRaw",
+                "title": "Raw Topic",
+                "width": "10%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "unitsRaw",
+                "title": "Units",
+                "width": "8%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "topic",
+                "title": "Topic",
+                "width": "10%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "topicOut",
+                "title": "Topic Out",
+                "width": "10%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "titleOut",
+                "title": "Title Out",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "units",
+                "title": "Units",
+                "width": "8%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 1,
+        "cts": true,
+        "x": 730,
+        "y": 260,
+        "wires": [
+            [
+                "755b57c3.0000e8",
+                "35b028fe.d342d8",
+                "9a8cfb5a.21a8a8",
+                "fb86f732.a1f548",
+                "5af69e49.55683",
+                "29f1172c.7f1b28",
+                "e0ea96df.6380c8",
+                "de9994d9.5e9688",
+                "7e7e39f3.7fec98",
+                "79a015f0.e4662c",
+                "d9e36cf3.220be",
+                "eb647687.e6e488",
+                "240912ae.8fc10e",
+                "12fedd69d5e37342",
+                "f9ef656da5dd7c14",
+                "99fec482de94f45e",
+                "1469be4c4febd28e",
+                "79ac7fc7b82193a8"
+            ]
+        ]
+    },
+    {
+        "id": "e4109620.d8b148",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "settings",
+        "func": "\nmsg.payload = JSON.parse(global.get(\"settings.io.value\") || \"[]\");\n\nflow.set(\"inset\",msg.payload);\n\nflow.set(\"settingsout\",global.get(\"settings.io.value\")||\"[]\")\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 260,
+        "wires": [
+            [
+                "3db3437f.d41e0c"
+            ]
+        ]
+    },
+    {
+        "id": "b239d0b7.df10c",
+        "type": "inject",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "3",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 330,
+        "y": 260,
+        "wires": [
+            [
+                "e4109620.d8b148"
+            ]
+        ]
+    },
+    {
+        "id": "8c249f32.3031",
+        "type": "inject",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "4af9e143.1c48b"
+            ]
+        ]
+    },
+    {
+        "id": "4af9e143.1c48b",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "factory default",
+        "func": "// , \"type\":\"NTC10K-SHORT\", \"titleRaw\":\"Resistance r1\", \"topicRaw\": \"ana/r1\", \"unitsRaw\": \"ohms\", \"topic\": \"ntc/ntc1\", \"topicOut\": \"dat/tF\", \"titleOut\": \"Flow Temperature\", \"units\": \"°C\"\n\nvar io = [\n            {\"channel\":\"RS485\", \"type\":\"RS485-HIU-SLIM\", \"titleRaw\":\"HIU Protocol\", \"topic\": \"\", \"topicOut\": \"\", \"titleOut\": \"\", \"units\": \"\"},\n            {\"channel\":\"ntc1\", \"type\":\"none\"},\n            {\"channel\":\"ntc2\", \"type\":\"none\"},\n            {\"channel\":\"ntc3\", \"type\":\"none\"},\n            {\"channel\":\"ntc4\", \"type\":\"none\"},\n            {\"channel\":\"ntc5\", \"type\":\"none\"},\n            {\"channel\":\"ntc6\", \"type\":\"none\"},\n            {\"channel\":\"ntc7\", \"type\":\"none\"},\n            {\"channel\":\"ntc8\", \"type\":\"none\"},\n            {\"channel\":\"universal1\", \"type\":\"none\"},\n            {\"channel\":\"universal2\", \"type\":\"none\"},\n            {\"channel\":\"universal3\", \"type\":\"none\"},\n            {\"channel\":\"universal4\", \"type\":\"none\"},\n            {\"channel\":\"volt1\", \"type\":\"0-10V\"},\n            {\"channel\":\"volt2\", \"type\":\"0-10V\"},\n            {\"channel\":\"volt3\", \"type\":\"0-10V\"},\n            {\"channel\":\"volt4\", \"type\":\"0-10V\"},\n            {\"channel\":\"pwm1\", \"type\":\"PWM\"},\n            {\"channel\":\"pwm2\", \"type\":\"PWM\"},\n            {\"channel\":\"pwm3\", \"type\":\"PWM\"},\n            {\"channel\":\"pwm4\", \"type\":\"PWM\"}\n         ]\n\n\nglobal.set(\"settings.io.value\",JSON.stringify(io));\nglobal.set(\"settings.io.type\",\"json\");\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 80,
+        "wires": [
+            [
+                "e4109620.d8b148",
+                "b51312615571f249"
+            ]
+        ]
+    },
+    {
+        "id": "9fc9ebe4.b03058",
+        "type": "ui_ui_control",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "events": "all",
+        "x": 740,
+        "y": 460,
+        "wires": [
+            [
+                "975bf002.0134e"
+            ]
+        ]
+    },
+    {
+        "id": "b811c82.775ee38",
+        "type": "inject",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "8",
+        "topic": "",
+        "payload": "1",
+        "payloadType": "str",
+        "x": 330,
+        "y": 460,
+        "wires": [
+            [
+                "5f9538fb.33fea8"
+            ]
+        ]
+    },
+    {
+        "id": "bb359fdb.93492",
+        "type": "inject",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "2",
+        "payloadType": "str",
+        "x": 330,
+        "y": 420,
+        "wires": [
+            [
+                "35b028fe.d342d8"
+            ]
+        ]
+    },
+    {
+        "id": "5918ea1a.937f94",
+        "type": "ui_text_input",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "Reading Topic",
+        "tooltip": "",
+        "group": "b2547863.d066a8",
+        "order": 6,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 1280,
+        "y": 340,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "755b57c3.0000e8",
+        "type": "debug",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "2aa4ca11.c6b016",
+        "type": "ui_template",
+        "z": "16311b21.f27be5",
+        "d": true,
+        "group": "b2547863.d066a8",
+        "name": "Virtual Keyboard",
+        "order": 19,
+        "width": "1",
+        "height": "1",
+        "format": "<script> \n    \n// the semi-colon before function invocation is a safety net against concatenated\n// scripts and/or other plugins which may not be closed properly.\n; (function ($, window, document, undefined) {\n\n    // undefined is used here as the undefined global variable in ECMAScript 3 is\n    // mutable (ie. it can be changed by someone else). undefined isn't really being\n    // passed in so we can ensure the value of it is truly undefined. In ES5, undefined\n    // can no longer be modified.\n\n    // window and document are passed through as local variable rather than global\n    // as this (slightly) quickens the resolution process and can be more efficiently\n    // minified (especially when both are regularly referenced in your plugin).\n\n    // Create the defaults once\n    var pluginName = \"jkeyboard\",\n        defaults = {\n            layout: \"english\",\n            input: $('#input'),\n            customLayouts: {\n                selectable: []\n            },\n        };\n\n\n    var function_keys = {\n        backspace: {\n            text: 'DEL',\n        },\n        return: {\n            text: 'Enter'\n        },\n        shift: {\n            text: 'Shift'\n        },\n        space: {\n            text: 'Space'\n        },\n        numeric_switch: {\n            text: '123',\n            command: function () {\n                this.createKeyboard('numeric');\n                this.events();\n            }\n        },\n        layout_switch: {\n            text: '<i class=\"fa fa-keyboard-o\" aria-hidden=\"true\"></i>',\n            command: function () {\n                var l = this.toggleLayout();\n                this.createKeyboard(l);\n                this.events();\n            }\n        },\n        character_switch: {\n            text: 'ABC',\n            command: function () {\n                this.createKeyboard(layout);\n                this.events();\n            }\n        },\n        symbol_switch: {\n            text: '#+=',\n            command: function () {\n                this.createKeyboard('symbolic');\n                this.events();\n            }\n        }\n    };\n\n\n    var layouts = {\n        selectable: ['azeri', 'english', 'russian','french', 'emoji'],\n        azeri: [\n            ['q', 'ü', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'ö', 'ğ'],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ı', 'ə'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'ç', 'ş', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        english: [\n            ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        russian: [\n            ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х'],\n            ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],\n            ['shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        french: [\n            ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l','à','ç'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm','é','è', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        emoji: [\n            ['😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆', '😉', '😊',],\n            ['😋', '😎', '😍', '😘', 'g', 'h', 'j', 'k', 'l','à','ç'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm','é','è', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],            \n        numeric: [\n            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],\n            ['-', '/', ':', ';', '(', ')', '$', '&', '@', '\"'],\n            ['symbol_switch', '.', ',', '?', '!', \"'\", 'backspace'],\n            ['character_switch', 'layout_switch', 'space', 'return'],\n        ],\n        numbers_only: [\n            ['1', '2', '3',],\n            ['4', '5', '6',],\n            ['7', '8', '9',],\n            ['0', '.', 'backspace'],\n        ],\n        symbolic: [\n            ['[', ']', '{', '}', '#', '%', '^', '*', '+', '='],\n            ['_', '\\\\', '|', '~', '<', '>'],\n            ['numeric_switch', '.', ',', '?', '!', \"'\", 'backspace'],\n            ['character_switch', 'layout_switch', 'space', 'return'],\n\n        ]\n    }\n\n    var shift = false, capslock = false, layout = 'english', layout_id = 0;\n\n    // The actual plugin constructor\n    function Plugin(element, options) {\n        this.element = element;\n        // jQuery has an extend method which merges the contents of two or\n        // more objects, storing the result in the first object. The first object\n        // is generally empty as we don't want to alter the default options for\n        // future instances of the plugin\n        this.settings = $.extend({}, defaults, options);\n        // Extend & Merge the cusom layouts\n        layouts = $.extend(true, {}, this.settings.customLayouts, layouts);\n        if (Array.isArray(this.settings.customLayouts.selectable)) {\n            $.merge(layouts.selectable, this.settings.customLayouts.selectable);\n        }\n        this._defaults = defaults;\n        this._name = pluginName;\n        this.init();\n    }\n\n    Plugin.prototype = {\n        init: function () {\n            layout = this.settings.layout;\n            this.createKeyboard(layout);\n            this.events();\n        },\n\n        setInput: function (newInputField) {\n            this.settings.input = newInputField;\n        },\n\n        createKeyboard: function (layout) {\n            shift = false;\n            capslock = false;\n\n            var keyboard_container = $('<ul/>').addClass('jkeyboard'),\n                me = this;\n\n            layouts[layout].forEach(function (line, index) {\n                var line_container = $('<li/>').addClass('jline');\n                line_container.append(me.createLine(line));\n                keyboard_container.append(line_container);\n            });\n\n            $(this.element).html('').append(keyboard_container);\n        },\n\n        createLine: function (line) {\n            var line_container = $('<ul/>');\n\n            line.forEach(function (key, index) {\n                var key_container = $('<li/>').addClass('jkey').data('command', key);\n\n                if (function_keys[key]) {\n                    key_container.addClass(key).html(function_keys[key].text);\n                }\n                else {\n                    key_container.addClass('letter').html(key);\n                }\n\n                line_container.append(key_container);\n            })\n\n            return line_container;\n        },\n\n        events: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift'),\n                space_key = $(this.element).find('.space'),\n                backspace_key = $(this.element).find('.backspace'),\n                return_key = $(this.element).find('.return'),\n\n                me = this,\n                fkeys = Object.keys(function_keys).map(function (k) {\n                    return '.' + k;\n                }).join(',');\n\n            letters.on('click', function () {\n                me.type((shift || capslock) ? $(this).text().toUpperCase() : $(this).text());\n            });\n\n            space_key.on('click', function () {\n                me.type(' ');\n            });\n\n            return_key.on('click', function () {\n                me.type(\"\\n\");\n                me.settings.input.parents('form').submit();\n            });\n\n            backspace_key.on('click', function () {\n                me.backspace();\n            });\n\n            shift_key.on('click', function () {\n                if (capslock) {\n                    me.toggleShiftOff();\n                    capslock = false;\n                } else {\n                    me.toggleShiftOn();\n                }\n            }).on('dblclick', function () {\n                capslock = true;\n            });\n\n\n            $(fkeys).on('click', function () {\n                var command = function_keys[$(this).data('command')].command;\n                if (!command) return;\n\n                command.call(me);\n            });\n        },\n\n        type: function (key) {\n            var input = this.settings.input,\n                val = input.val(),\n                input_node = input.get(0),\n                start = input_node.selectionStart,\n                end = input_node.selectionEnd;\n\n            var max_length = $(input).attr(\"maxlength\");\n            if (start == end && end == val.length) {\n                if (!max_length || val.length < max_length) {\n                    input.val(val + key);\n                    input.change()\n                    $('#vkeyname').text(val + key)\n                }\n            } else {\n                if (input_node.type == \"text\"){\n                    var new_string = this.insertToString(start, end, val, key);\n                    input.val(new_string);\n                    start++;\n                    end = start;\n                    input_node.setSelectionRange(start, end);\n                }else{\n                    input.val(val + key);\n                }\n                input.change()\n                $('#vkeyname').text(val + key)\n                \n            }\n            input.trigger('focus');\n\n            if (shift && !capslock) {\n                this.toggleShiftOff();\n            }\n        },\n\n        backspace: function () {\n            var input = this.settings.input,\n                val = input.val();\n                input_node = input.get(0),\n                start = input_node.selectionStart,\n                end = input_node.selectionEnd;\n            if (input.type == \"text\"){\n                input.val(val.slice(0, start-1) + val.slice(start))\n                input_node.setSelectionRange(start-1, start-1);\n                console.log(val)\n                $('#vkeyname').text(val)\n            }else{\n                input.val(val.slice(0,-1))\n                $('#vkeyname').text(val.slice(0,-1))\n            }\n            input.change()\n            input.focus()\n        },\n\n        toggleShiftOn: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift');\n\n            letters.addClass('uppercase');\n            shift_key.addClass('active')\n            shift = true;\n        },\n\n        toggleShiftOff: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift');\n\n            letters.removeClass('uppercase');\n            shift_key.removeClass('active');\n            shift = false;\n        },\n\n        toggleLayout: function () {\n            layout_id = layout_id || 0;\n            var plain_layouts = layouts.selectable;\n            layout_id++;\n\n            var current_id = layout_id % plain_layouts.length;\n            var SelectedLayoutName = plain_layouts[current_id];\n            $('#vkeyname').text('V-Keyboard ' + SelectedLayoutName )\n            return plain_layouts[current_id];\n        },\n\n        insertToString: function (start, end, string, insert_string) {\n            return string.substring(0, start) + insert_string + string.substring(end, string.length);\n        }\n    };\n\n        /*\n\t\t// A really lightweight plugin wrapper around the constructor,\n\t\t// preventing against multiple instantiations\n\t\t$.fn[ pluginName ] = function ( options ) {\n\t\t\t\treturn this.each(function() {\n\t\t\t\t\t\tif ( !$.data( this, \"plugin_\" + pluginName ) ) {\n\t\t\t\t\t\t\t\t$.data( this, \"plugin_\" + pluginName, new Plugin( this, options ) );\n\t\t\t\t\t\t}\n\t\t\t\t});\n\t\t};\n        */\n        var methods = {\n            init: function(options) {\n                if (!this.data(\"plugin_\" + pluginName)) {\n                    this.data(\"plugin_\" + pluginName, new Plugin(this, options));\n                }\n            },\n\t\t\tsetInput: function(content) {\n\t\t\t\tthis.data(\"plugin_\" + pluginName).setInput($(content));\n            },\n            setLayout: function(layoutname) {\n                // change layout if it is not match current\n                object = this.data(\"plugin_\" + pluginName);\n                if (typeof(layouts[layoutname]) !== 'undefined' && object.settings.layout != layoutname) {\n                    object.settings.layout = layoutname;\n                    object.createKeyboard(layoutname);\n                    object.events();\n                };\n            },\n        };\n\n\t\t$.fn[pluginName] = function (methodOrOptions) {\n            if (methods[methodOrOptions]) {\n                return methods[methodOrOptions].apply(this.first(), Array.prototype.slice.call( arguments, 1));\n            } else if (typeof methodOrOptions === 'object' || ! methodOrOptions) {\n                // Default to \"init\"\n                return methods.init.apply(this.first(), arguments);\n            } else {\n                $.error('Method ' +  methodOrOptions + ' does not exist on jQuery.tooltip');\n            }\n        };\n\n})(jQuery, window, document);\n</script>\n<style>\n    .jkeyboard {\n  display: inline-block;\n}\n.jkeyboard, .jkeyboard .jline, .jkeyboard .jline ul {\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n.jkeyboard .jline {\n  text-align: center;\n  margin-left: -14px;\n}\n.jkeyboard .jline ul li {\n  font-family: arial, sans-serif;\n  font-size: 20px;\n  display: inline-block;\n  border: 1px solid #468db3;\n  -webkit-box-shadow: 0 0 3px #468db3;\n  -webkit-box-shadow: inset 0 0 3px #468db3;\n  margin: 5px 0 1px 6px;\n  color: #000000;\n  border-radius: 5px;\n  width: 52px;\n  height: 52px;\n  box-sizing: border-box;\n  text-align: center;\n  line-height: 52px;\n  overflow: hidden;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: -moz-none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.jkeyboard .jline ul li.uppercase {\n  text-transform: uppercase;\n}\n.jkeyboard .jline ul li:hover, .jkeyboard .jline ul li:active {\n  background-color: #185a82;\n}\n.jkeyboard .jline .return {\n  width: 80px;\n}\n.jkeyboard .jline .space {\n  width: 366px;\n}\n.jkeyboard .jline .numeric_switch {\n  width: 65px;\n}\n.jkeyboard .jline .layout_switch {\n}\n.jkeyboard .jline .shift {\n  width: 60px;\n}\n.jkeyboard .jline .backspace {\n  width: 69px;\n}\n</style>\n\n\n\n\n<style>\nbody {font-family: Arial, Helvetica, sans-serif;}\n\n.nr-dashboard-theme .nr-dashboard-template .md-button:not(:first-of-type) {\n    margin-top: 0px;\n}\n\n/* The Modal (background) */\n.modal {\n    display: none; /* Hidden by default */\n    position: fixed; /* Stay in place */\n    opacity:0.99;\n    z-index: 100; /* Sit on top */\n    left: 0;\n    top: 0;\n    width: 100%; /* Full width */\n    height: 100%; /* Full height */\n    overflow: auto; /* Enable scroll if needed */\n    background-color: rgb(0,0,0); /* Fallback color */\n    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n/* Modal Content */\n.modal-content {\n    position: fixed;\n    background-color: #fefefe;\n    margin: auto;\n    padding: 0;\n    bottom: 0%;\n    left: 50%;\n    transform: translate(-50%, 0%);\n    border: 1px solid #888;\n    width: fit-content;\n    max-width: 100%;\n    max-height: 100%;\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);\n    -webkit-animation-name: animate;\n    -webkit-animation-duration: 0.4s;\n    animation-name: animate;\n    animation-duration: 0.4s\n}\n\n/* Add Animation */\n@-webkit-keyframes animate {\n    from {bottom:100%; opacity:0} \n    to {bottom:0%; opacity:1}\n}\n\n@keyframes animate {\n    from {bottom:100%; opacity:0}\n    to {bottom:0%; opacity:1}\n}\n\n/* The Close Button */\n.close {\n    color: black;\n    float: right;\n    font-size: 28px;\n    font-weight: bold;\n}\n\n.close:hover,\n.close:focus {\n    color: #000;\n    text-decoration: none;\n    cursor: pointer;\n}\n\n.modal-header {\n    padding: 2px 16px;\n    background-color: aliceblue;\n    color: white;\n}\n\n.modal-body {padding: 2px 16px;}\n\n.modal-footer {\n    padding: 2px 16px;\n    background-color: #5cb85c;\n    color: white;\n}\n</style>\n\n<!-- The Modal -->\n<div id=\"myModal\" class=\"modal\">\n\n  <!-- Modal content -->\n  <div class=\"modal-content\">\n      <div class=\"modal-header\">\n      <span class=\"close\" onclick=\"closeModal()\">&times;</span>\n      <h2 id=\"vkeyname\" style=\"background-color: aliceblue !important; color: black !important; text-align: center; min-height: 30px;\">V-Keyboard</h2>\n    </div>\n    <div class=\"modal-body\">\n        <div id=\"keyboard\"></div>\n        <div>\n        </div>\n    </div>\n  </div>\n</div>\n\n\n<script>\n    // Get the modal\nvar modal = document.getElementById('myModal');\n\n/*\n$('input[type=text]').click(function () {\n    $('#keyboard').unbind().removeData();\n        $('#keyboard').jkeyboard({\n            layout: \"english\",\n            input: $('#'+$(this).attr('id'))\n    });\n});\n\n$('input[type=number]').click(function () {\n    $('#keyboard').unbind().removeData();\n        $('#keyboard').jkeyboard({\n            layout: \"numbers_only\",\n            input: $('#'+$(this).attr('id'))\n    });\n});\n*/\n\nvar inputTags;\nvar inputType;\n\nvar getinputs = function() {\n    inputTags = document.getElementsByTagName(\"input\");\n    console.log(inputTags)\n    for (var i = 0; i < inputTags.length; i++) {\n        inputTags[i].addEventListener('click', openModal, false)\n    }\n}\n\nsetTimeout(function(){ getinputs(); }, 1000);\n\nvar inputTarget;\n\nvar openModal = function() {\n    inputType = event.target.type\n    inputTarget = event.target\n    var layoutName;\n    if (inputType == \"number\"){\n        //inputTarget.type = \"number\" //hack because chrome doesn't allow setselection in number inputs\n        //inputTarget.value = \"\"\n        layoutName = \"numbers_only\"\n    }else{\n        layoutName = \"english\"\n    }\n    $('#vkeyname').text(event.target.value)\n    $('#keyboard').unbind().removeData();\n    modal.style.display = \"block\";\n    $('#keyboard').jkeyboard({\n        layout: layoutName,\n        input: $('#'+$(this).attr('id'))\n    });\n}\n\n\n// Get the <span> element that closes the modal\nvar span = document.getElementsByClassName(\"close\")[0];\n\n// When the user clicks on <span> (x), close the modal\n//span.onclick = function(event) {\n  //closeModal()\n//}\n\n// When the user clicks anywhere outside of the modal, close it\nwindow.onclick = function(event) {\n    var source = event.target;\n    if (source == modal || source == span) {\n        closeModal(source)\n    }\n};\n\nvar closeModal = function(source){\n    //console.log(\"closing\")\n    modal.style.display = \"none\";\n   \n    if (inputType == \"number\"){\n        inputTarget.type = \"number\" //hack because chrome doesn't allow selectionstart on number inputs\n    }\n}\n\n</script>\n<script>\n\nvar clickState = 1;\nvar btn = document.querySelector('.VK');\n\nbtn.addEventListener('click', function(){\n\n  if (clickState == 0) {\n    this.textContent = 'V-KeyBoard On';\n    modal = document.getElementById('myModal');\n    clickState = 1;\n  } else {\n    this.textContent = 'V-KeyBoard Off';\n    modal = document.getElementById('empty');\n    clickState = 0;\n  }\n\n});\n</script>\n\n<style>\n.VK{\n    position: fixed;\n    top: 60px;\n    right: 20px;\n    height: 30px;\n}\n</style>\n\n<div id=\"empty\"></div>\n<button style=\"display:none\" class=\"VK\">V-KeyBoard On</button> ",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 640,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e576f09.a9d8",
+        "type": "ui_text_input",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "Output Topic",
+        "tooltip": "",
+        "group": "b2547863.d066a8",
+        "order": 10,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topicOut",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 1270,
+        "y": 400,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "36a02f75.3e391",
+        "type": "ui_text_input",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "Raw Topic",
+        "tooltip": "",
+        "group": "b2547863.d066a8",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topicRaw",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 1270,
+        "y": 280,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "5f9538fb.33fea8",
+        "type": "change",
+        "z": "16311b21.f27be5",
+        "name": "GoTo List",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"show\":[\"IO_Setup_Table_of_Inputs_&_Outputs\"],\"hide\":[\"IO_Setup_IO_Settings\"]}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 540,
+        "wires": [
+            [
+                "9fc9ebe4.b03058",
+                "e4109620.d8b148"
+            ]
+        ]
+    },
+    {
+        "id": "35b028fe.d342d8",
+        "type": "change",
+        "z": "16311b21.f27be5",
+        "name": "GoTo Settings",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"hide\":[\"IO_Setup_Table_of_Inputs_&_Outputs\"],\"show\":[\"IO_Setup_IO_Settings\"]}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 420,
+        "wires": [
+            [
+                "9fc9ebe4.b03058"
+            ]
+        ]
+    },
+    {
+        "id": "4a95b394.269cec",
+        "type": "ui_dropdown",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "Type",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "b2547863.d066a8",
+        "order": 2,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "multiple": false,
+        "options": [
+            {
+                "label": "",
+                "value": "NTC10K-SHORT",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "NTC10K-REGIN",
+                "type": "str"
+            },
+            {
+                "label": "Volt-Free (Dry Contact)",
+                "value": "DRY",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "PULSE",
+                "type": "str"
+            },
+            {
+                "label": "SLIM HIU RS485",
+                "value": "RS485-HIU-SLIM",
+                "type": "str"
+            },
+            {
+                "label": "DATA HIU RS485",
+                "value": "RS485-HIU-DATA",
+                "type": "str"
+            },
+            {
+                "label": "0-10V",
+                "value": "0-10V",
+                "type": "str"
+            },
+            {
+                "label": "None",
+                "value": "none",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "type",
+        "topicType": "str",
+        "className": "",
+        "x": 1250,
+        "y": 220,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "fb86f732.a1f548",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload = msg.payload.units || \"\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 580,
+        "wires": [
+            [
+                "cdd40da6.bbb97"
+            ]
+        ]
+    },
+    {
+        "id": "cdd40da6.bbb97",
+        "type": "ui_dropdown",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "Units Out",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "b2547863.d066a8",
+        "order": 9,
+        "width": "4",
+        "height": "2",
+        "passthru": false,
+        "multiple": false,
+        "options": [
+            {
+                "label": "none",
+                "value": "",
+                "type": "str"
+            },
+            {
+                "label": "°C",
+                "value": "°C",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "bar",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "kPa",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "ohms",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "volts",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "ltr/min",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "m3/h",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "units",
+        "topicType": "str",
+        "className": "",
+        "x": 1260,
+        "y": 580,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "9a8cfb5a.21a8a8",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.unitsRaw || \"\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 460,
+        "wires": [
+            [
+                "ec194376.9722c"
+            ]
+        ]
+    },
+    {
+        "id": "ec194376.9722c",
+        "type": "ui_dropdown",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "Raw Units",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "b2547863.d066a8",
+        "order": 5,
+        "width": "4",
+        "height": "1",
+        "passthru": false,
+        "multiple": false,
+        "options": [
+            {
+                "label": "none",
+                "value": "",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "°C",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "bar",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "kPa",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "ohms",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "volts",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "pps",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "ppm",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "unitsRaw",
+        "topicType": "str",
+        "className": "",
+        "x": 1270,
+        "y": 460,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "640b823a.9ae1fc",
+        "type": "ui_text",
+        "z": "16311b21.f27be5",
+        "group": "b2547863.d066a8",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "name": "",
+        "label": "Channel",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1260,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "5af69e49.55683",
+        "type": "change",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.channel",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 160,
+        "wires": [
+            [
+                "640b823a.9ae1fc"
+            ]
+        ]
+    },
+    {
+        "id": "a510db0b.e26068",
+        "type": "ui_text_input",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "Reading Title",
+        "tooltip": "",
+        "group": "b2547863.d066a8",
+        "order": 7,
+        "width": "5",
+        "height": "1",
+        "passthru": false,
+        "mode": "text",
+        "delay": 300,
+        "topic": "title",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 1270,
+        "y": 700,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "9368a5e2.6694c8",
+        "type": "ui_text_input",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "Output Title",
+        "tooltip": "",
+        "group": "b2547863.d066a8",
+        "order": 11,
+        "width": "5",
+        "height": "1",
+        "passthru": false,
+        "mode": "text",
+        "delay": 300,
+        "topic": "titleOut",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 1270,
+        "y": 760,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "3e2de44c.b466bc",
+        "type": "ui_text_input",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "Raw Title",
+        "tooltip": "",
+        "group": "b2547863.d066a8",
+        "order": 4,
+        "width": "5",
+        "height": "1",
+        "passthru": false,
+        "mode": "text",
+        "delay": 300,
+        "topic": "titleRaw",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 1260,
+        "y": 640,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "cb35e7d.4960818",
+        "type": "ui_button",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "group": "b2547863.d066a8",
+        "order": 20,
+        "width": "7",
+        "height": "1",
+        "passthru": false,
+        "label": "OK",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 330,
+        "y": 580,
+        "wires": [
+            [
+                "5f9538fb.33fea8",
+                "74452080.263ed"
+            ]
+        ]
+    },
+    {
+        "id": "9fd23441.968b88",
+        "type": "ui_button",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "group": "b2547863.d066a8",
+        "order": 17,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Cancel",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 320,
+        "y": 520,
+        "wires": [
+            [
+                "5f9538fb.33fea8"
+            ]
+        ]
+    },
+    {
+        "id": "a62ba32.3a61b6",
+        "type": "ui_button",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "group": "b2547863.d066a8",
+        "order": 18,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Reset",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 330,
+        "y": 660,
+        "wires": [
+            [
+                "7f1c6414.0f170c"
+            ]
+        ]
+    },
+    {
+        "id": "29f1172c.7f1b28",
+        "type": "change",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "last",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "outset",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7f1c6414.0f170c",
+        "type": "change",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "last",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 660,
+        "wires": [
+            [
+                "fb86f732.a1f548",
+                "5af69e49.55683",
+                "e0ea96df.6380c8",
+                "de9994d9.5e9688",
+                "7e7e39f3.7fec98",
+                "d9e36cf3.220be",
+                "eb647687.e6e488",
+                "79a015f0.e4662c",
+                "240912ae.8fc10e",
+                "12fedd69d5e37342",
+                "f9ef656da5dd7c14",
+                "99fec482de94f45e",
+                "1469be4c4febd28e",
+                "79ac7fc7b82193a8"
+            ]
+        ]
+    },
+    {
+        "id": "e0ea96df.6380c8",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.topicRaw || \"\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 280,
+        "wires": [
+            [
+                "36a02f75.3e391"
+            ]
+        ]
+    },
+    {
+        "id": "de9994d9.5e9688",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.topic || \"\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 340,
+        "wires": [
+            [
+                "5918ea1a.937f94"
+            ]
+        ]
+    },
+    {
+        "id": "7e7e39f3.7fec98",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.topicOut || \"\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 400,
+        "wires": [
+            [
+                "8e576f09.a9d8"
+            ]
+        ]
+    },
+    {
+        "id": "79a015f0.e4662c",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.titleRaw || \"\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 640,
+        "wires": [
+            [
+                "3e2de44c.b466bc"
+            ]
+        ]
+    },
+    {
+        "id": "d9e36cf3.220be",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.title || \"\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 700,
+        "wires": [
+            [
+                "a510db0b.e26068"
+            ]
+        ]
+    },
+    {
+        "id": "eb647687.e6e488",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.titleOut || \"\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 760,
+        "wires": [
+            [
+                "9368a5e2.6694c8"
+            ]
+        ]
+    },
+    {
+        "id": "240912ae.8fc10e",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.type || \"\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 220,
+        "wires": [
+            [
+                "4a95b394.269cec"
+            ]
+        ]
+    },
+    {
+        "id": "bf6d7759.6b0fd8",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "\nflow.set(\"outset.\" + msg.topic,msg.payload);\n\n\nvar oot = [];\n\n//var r = JSON.parse(global.get(\"settings.io.value\") || \"[]\");\nvar r = flow.get(\"inset\");\n\nfor (var rr in r) {\n    \n    if(r[rr][\"channel\"]==flow.get(\"outset.channel\")) {\n        \n        oot.push(flow.get(\"outset\"));\n        \n    } else {  oot.push(r[rr]);  }\n}\n\nmsg.payload = JSON.stringify(oot);\nmsg.topic = \"set/io\";\n\nflow.set(\"settingsout\",msg.payload);\n\n//msg.payload = JSON.stringify(flow.get(\"outset\"));\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1600,
+        "y": 420,
+        "wires": [
+            [
+                "4449d0c6.edd3f"
+            ]
+        ]
+    },
+    {
+        "id": "4449d0c6.edd3f",
+        "type": "debug",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1710,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "4383d483.c5616c",
+        "type": "link out",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 635,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "74452080.263ed",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "SAVE",
+        "func": "\nglobal.set(\"settings.io.value\",flow.get(\"settingsout\"));\n\nmsg.topic = \"set/ioSetAt\";\nmsg.payload = new Date().getTime();\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 600,
+        "wires": [
+            [
+                "4383d483.c5616c"
+            ]
+        ]
+    },
+    {
+        "id": "975bf002.0134e",
+        "type": "switch",
+        "z": "16311b21.f27be5",
+        "name": "IO Setup",
+        "property": "name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "IO Setup",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 740,
+        "y": 500,
+        "wires": [
+            [
+                "5f9538fb.33fea8"
+            ]
+        ]
+    },
+    {
+        "id": "1b76657ccc4f50f8",
+        "type": "ui_text_input",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "in 1",
+        "tooltip": "",
+        "group": "b2547863.d066a8",
+        "order": 13,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "mode": "text",
+        "delay": "3000",
+        "topic": "a1",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 1250,
+        "y": 900,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "4df9db07ee3469e4",
+        "type": "ui_text_input",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "in 2",
+        "tooltip": "",
+        "group": "b2547863.d066a8",
+        "order": 14,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "mode": "text",
+        "delay": "3000",
+        "topic": "a2",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 1250,
+        "y": 960,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "8cfd27902fe0a226",
+        "type": "ui_text_input",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "out 1",
+        "tooltip": "",
+        "group": "b2547863.d066a8",
+        "order": 15,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "mode": "text",
+        "delay": 300,
+        "topic": "b1",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 1250,
+        "y": 1040,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "f603fede7f9ec05e",
+        "type": "ui_text_input",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "out 2",
+        "tooltip": "",
+        "group": "b2547863.d066a8",
+        "order": 16,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "mode": "text",
+        "delay": 300,
+        "topic": "b2",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 1250,
+        "y": 1100,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "12fedd69d5e37342",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.a1 || 0;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 900,
+        "wires": [
+            [
+                "1b76657ccc4f50f8"
+            ]
+        ]
+    },
+    {
+        "id": "f9ef656da5dd7c14",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.a2 || 10;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 960,
+        "wires": [
+            [
+                "4df9db07ee3469e4"
+            ]
+        ]
+    },
+    {
+        "id": "99fec482de94f45e",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.b1 || 0;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 1040,
+        "wires": [
+            [
+                "8cfd27902fe0a226"
+            ]
+        ]
+    },
+    {
+        "id": "1469be4c4febd28e",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.b2 || 100;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 1100,
+        "wires": [
+            [
+                "f603fede7f9ec05e"
+            ]
+        ]
+    },
+    {
+        "id": "79ac7fc7b82193a8",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "func": "msg.payload =  msg.payload.map || \"0\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 820,
+        "wires": [
+            [
+                "0c7d897632014f70"
+            ]
+        ]
+    },
+    {
+        "id": "0c7d897632014f70",
+        "type": "ui_dropdown",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "label": "Mapping",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "b2547863.d066a8",
+        "order": 12,
+        "width": "4",
+        "height": "1",
+        "passthru": false,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Map values",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "label": "No mapping",
+                "value": "0",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "map",
+        "topicType": "str",
+        "className": "",
+        "x": 1260,
+        "y": 820,
+        "wires": [
+            [
+                "bf6d7759.6b0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "7c4ea2d3ee2ce3ae",
+        "type": "inject",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "4ab513e561e6f7ac"
+            ]
+        ]
+    },
+    {
+        "id": "c7c3bbe3c8fd890c",
+        "type": "link out",
+        "z": "16311b21.f27be5",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 675,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "b51312615571f249",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "SAVE",
+        "func": "msg.topic = \"set/ioSetAt\";\nmsg.payload = new Date().getTime();\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 120,
+        "wires": [
+            [
+                "c7c3bbe3c8fd890c"
+            ]
+        ]
+    },
+    {
+        "id": "4ab513e561e6f7ac",
+        "type": "function",
+        "z": "16311b21.f27be5",
+        "name": "testing",
+        "func": "// , \"type\":\"NTC10K-SHORT\", \"titleRaw\":\"Resistance r1\", \"topicRaw\": \"ana/r1\", \"unitsRaw\": \"ohms\", \"topic\": \"ntc/ntc1\", \"topicOut\": \"dat/tF\", \"titleOut\": \"Flow Temperature\", \"units\": \"°C\"\n\nvar io = [\n            {\"channel\":\"RS485\", \"type\":\"RS485-HIU-SLIM\", \"titleRaw\":\"HIU Protocol\", \"topic\": \"\", \"topicOut\": \"\", \"titleOut\": \"\", \"units\": \"\"},\n            {\"channel\":\"ntc1\", \"type\":\"NTC10K-SHORT\", \"titleRaw\":\"Resistance r1\", \"topicRaw\": \"\", \"unitsRaw\": \"ohms\", \"topic\": \"\", \"topicOut\": \"dat/tF\", \"titleOut\": \"Flow Temperature\", \"units\": \"°C\"},\n            {\"channel\":\"ntc2\", \"type\":\"NTC10K-SHORT\", \"titleRaw\":\"Resistance r2\", \"topicRaw\": \"\", \"unitsRaw\": \"ohms\", \"topic\": \"\", \"topicOut\": \"dat/tR\", \"titleOut\": \"Return Temperature\", \"units\": \"°C\"},\n            {\"channel\":\"ntc3\", \"type\":\"none\"},\n            {\"channel\":\"ntc4\", \"type\":\"none\"},\n            {\"channel\":\"ntc5\", \"type\":\"none\"},\n            {\"channel\":\"ntc6\", \"type\":\"none\"},\n            {\"channel\":\"ntc7\", \"type\":\"none\"},\n            {\"channel\":\"ntc8\", \"type\":\"none\"},\n            {\"channel\":\"universal1\", \"type\":\"none\"},\n            {\"channel\":\"universal2\", \"type\":\"none\"},\n            {\"channel\":\"universal3\", \"type\":\"none\"},\n            {\"channel\":\"universal4\", \"type\":\"none\"},\n            {\"channel\":\"volt1\", \"type\":\"0-10V\"},\n            {\"channel\":\"volt2\", \"type\":\"0-10V\"},\n            {\"channel\":\"volt3\", \"type\":\"0-10V\"},\n            {\"channel\":\"volt4\", \"type\":\"0-10V\"},\n            {\"channel\":\"pwm1\", \"type\":\"PWM\"},\n            {\"channel\":\"pwm2\", \"type\":\"PWM\"},\n            {\"channel\":\"pwm3\", \"type\":\"PWM\"},\n            {\"channel\":\"pwm4\", \"type\":\"PWM\"}\n         ]\n\n\nglobal.set(\"settings.io.value\",JSON.stringify(io));\nglobal.set(\"settings.io.type\",\"json\");\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 140,
+        "wires": [
+            [
+                "b51312615571f249",
+                "e4109620.d8b148"
+            ]
+        ]
+    },
+    {
+        "id": "f5804b9b.035d58",
+        "type": "ui_group",
+        "name": "Table of Inputs & Outputs",
+        "tab": "f32de2e7.2e4bb",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b2547863.d066a8",
+        "type": "ui_group",
+        "name": "IO Settings",
+        "tab": "f32de2e7.2e4bb",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f32de2e7.2e4bb",
+        "type": "ui_tab",
+        "name": "IO Setup",
+        "icon": "fa-cog",
+        "order": 24,
+        "disabled": false,
+        "hidden": false
+    }
+]

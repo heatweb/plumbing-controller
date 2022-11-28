@@ -1,0 +1,443 @@
+[
+    {
+        "id": "315f0920.148fe6",
+        "type": "tab",
+        "label": "Weather",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "4743f19e.7ea99",
+        "type": "inject",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "0 0-23 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 260,
+        "wires": [
+            [
+                "5cd1868334baa89e"
+            ]
+        ]
+    },
+    {
+        "id": "825b5c40.cd4e7",
+        "type": "http request",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 690,
+        "y": 260,
+        "wires": [
+            [
+                "88b5f71b.5b44f8"
+            ]
+        ]
+    },
+    {
+        "id": "4878e15c.186e1",
+        "type": "debug",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "32d2b528.4b81aa",
+        "type": "change",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "weather",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 340,
+        "wires": [
+            [
+                "4878e15c.186e1",
+                "492fd41d.a85bac"
+            ]
+        ]
+    },
+    {
+        "id": "88b5f71b.5b44f8",
+        "type": "json",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 490,
+        "y": 340,
+        "wires": [
+            [
+                "32d2b528.4b81aa"
+            ]
+        ]
+    },
+    {
+        "id": "9b35836c.4a76b",
+        "type": "comment",
+        "z": "315f0920.148fe6",
+        "name": "https://www.weatherapi.com/api-explorer.aspx",
+        "info": "",
+        "x": 280,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "9ba78b73.1c0a18",
+        "type": "function",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "func": "if (msg.key==\"condition\") { msg.payload = msg.payload.text; }\n\nmsg.topic = msg.group + \"/\" + msg.key;\n\nmsg.topic = msg.topic.replace(\"current/\",\"weather/\");\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 500,
+        "wires": [
+            [
+                "e7ba0320.e7cfd",
+                "82b97d51.e500a"
+            ]
+        ]
+    },
+    {
+        "id": "492fd41d.a85bac",
+        "type": "split",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "group",
+        "x": 440,
+        "y": 500,
+        "wires": [
+            [
+                "faf41964.e94708"
+            ]
+        ]
+    },
+    {
+        "id": "faf41964.e94708",
+        "type": "split",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "key",
+        "x": 570,
+        "y": 500,
+        "wires": [
+            [
+                "9ba78b73.1c0a18"
+            ]
+        ]
+    },
+    {
+        "id": "e7ba0320.e7cfd",
+        "type": "debug",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 807,
+        "y": 579,
+        "wires": []
+    },
+    {
+        "id": "82b97d51.e500a",
+        "type": "link out",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 915,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "b6634d9f.cf671",
+        "type": "comment",
+        "z": "315f0920.148fe6",
+        "name": "Needs settings.postCode set",
+        "info": "",
+        "x": 500,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "5cd1868334baa89e",
+        "type": "function",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "func": "\nvar postcode = global.get(\"settings.postCode.value\");\n\nif (!postcode) { return null; }\n\nmsg.url = \"http://api.weatherapi.com/v1/current.json?key=2853c9a1a6664114a28160251211912&q=\" + postcode + \"&aqi=no\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 260,
+        "wires": [
+            [
+                "825b5c40.cd4e7"
+            ]
+        ]
+    },
+    {
+        "id": "cfacc0f6dd03c829",
+        "type": "inject",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 760,
+        "wires": [
+            [
+                "046cf324e42cf1ad"
+            ]
+        ]
+    },
+    {
+        "id": "046cf324e42cf1ad",
+        "type": "function",
+        "z": "315f0920.148fe6",
+        "name": "tAlarm",
+        "func": "msg.payload = parseFloat(global.get(\"settings.postCode.value\") || \"\");\nmsg.topic = \"set/postCode\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 760,
+        "wires": [
+            [
+                "39a09f6863de5477"
+            ]
+        ]
+    },
+    {
+        "id": "39a09f6863de5477",
+        "type": "ui_text_input",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "label": "Post Code",
+        "tooltip": "",
+        "group": "cb203bcb.f1ec68",
+        "order": 10,
+        "width": "8",
+        "height": "1",
+        "passthru": false,
+        "mode": "text",
+        "delay": "5000",
+        "topic": "set/postCode",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 530,
+        "y": 760,
+        "wires": [
+            [
+                "0f74b5403472ab59"
+            ]
+        ]
+    },
+    {
+        "id": "0f74b5403472ab59",
+        "type": "change",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "set/postCode",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "title",
+                "pt": "msg",
+                "to": "Post Code",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 760,
+        "wires": [
+            [
+                "3b8abba47b97affa",
+                "4768f72745c3e936"
+            ]
+        ]
+    },
+    {
+        "id": "3b8abba47b97affa",
+        "type": "link out",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 1055,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "4768f72745c3e936",
+        "type": "trigger",
+        "z": "315f0920.148fe6",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "30",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1010,
+        "y": 880,
+        "wires": [
+            [
+                "8413e0de1af3e39d"
+            ]
+        ]
+    },
+    {
+        "id": "8413e0de1af3e39d",
+        "type": "change",
+        "z": "315f0920.148fe6",
+        "name": "post changes",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "cmd/request",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "local/+/+/settings/#",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1010,
+        "y": 840,
+        "wires": [
+            [
+                "3b8abba47b97affa"
+            ]
+        ]
+    },
+    {
+        "id": "cb203bcb.f1ec68",
+        "type": "ui_group",
+        "name": "DefaultSetup",
+        "tab": "888f4ceb.4b158",
+        "order": 1,
+        "disp": false,
+        "width": "9",
+        "collapse": false
+    },
+    {
+        "id": "888f4ceb.4b158",
+        "type": "ui_tab",
+        "name": "Setup",
+        "icon": "fa-cog",
+        "order": 23,
+        "disabled": false,
+        "hidden": false
+    }
+]

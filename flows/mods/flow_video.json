@@ -1,0 +1,117 @@
+[
+    {
+        "id": "31a18cc4.31ff54",
+        "type": "tab",
+        "label": "Video",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e7fb0e95.0efeb",
+        "type": "ui_template",
+        "z": "31a18cc4.31ff54",
+        "group": "b389df50.19473",
+        "name": "Vid_screen",
+        "order": 28,
+        "width": "10",
+        "height": "6",
+        "format": "<div style=\"overflow:hidden\">\n     <video id=\"video\" width=\"100%\" heigth=\"100%\"></video>\n</div>\n\n<script> \n    (function(scope) {\n        // Watch for messages being send to this template node\n        scope.$watch('msg', function (msg) {      \n            if (msg) {\n\n                var video = document.getElementById('video');\n                video.src = msg.payload;\n                video.play();\n            }       \n         }); \n    })(scope); \n</script>\n\n\n\n",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 410,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7cfabbcb.703634",
+        "type": "ui_button",
+        "z": "31a18cc4.31ff54",
+        "name": "",
+        "group": "94ca1edb.cfcae",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "label": "1",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "https://storage.googleapis.com/coverr-main/mp4/The-Slow-Dock.mp4",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 170,
+        "y": 160,
+        "wires": [
+            [
+                "e7fb0e95.0efeb"
+            ]
+        ]
+    },
+    {
+        "id": "903b1ad6.d3b1e8",
+        "type": "ui_button",
+        "z": "31a18cc4.31ff54",
+        "name": "",
+        "group": "94ca1edb.cfcae",
+        "order": 2,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "2",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "https://storage.googleapis.com/coverr-main/mp4/Night-Traffic.mp4",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "e7fb0e95.0efeb"
+            ]
+        ]
+    },
+    {
+        "id": "b389df50.19473",
+        "type": "ui_group",
+        "name": "G_2",
+        "tab": "12ba52b2.c0ce3d",
+        "order": 1,
+        "disp": false,
+        "width": "10",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "94ca1edb.cfcae",
+        "type": "ui_group",
+        "name": "Control",
+        "tab": "12ba52b2.c0ce3d",
+        "order": 2,
+        "disp": false,
+        "width": "2",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "12ba52b2.c0ce3d",
+        "type": "ui_tab",
+        "name": "Video",
+        "icon": "fa-video-camera",
+        "order": 8,
+        "disabled": false,
+        "hidden": false
+    }
+]

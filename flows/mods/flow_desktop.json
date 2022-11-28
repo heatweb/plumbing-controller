@@ -1,0 +1,861 @@
+[
+    {
+        "id": "78c26ef1.61809",
+        "type": "tab",
+        "label": "Desktop",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "13fb193b.b62177",
+        "type": "template",
+        "z": "78c26ef1.61809",
+        "name": "desktop",
+        "field": "payload.body",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<script src=\"https://kit.fontawesome.com/c6b21b7a8f.js\" crossorigin=\"anonymous\"></script>\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Roboto\">\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Lato\">\n    <style>\n\n\n.scaledframe {\n    \n    width: 133.34%;\n    height: 133.34%;\n    overflow: hidden;\n    border: 0;\n    -ms-transform: scale(0.75);\n    -moz-transform: scale(0.75);\n    -o-transform: scale(0.75);\n    -webkit-transform: scale(0.75);\n    transform: scale(0.75);\n    \n    -ms-transform-origin: 0 0;\n    -moz-transform-origin: 0 0;\n    -o-transform-origin: 0 0;\n    -webkit-transform-origin: 0 0;\n    transform-origin: 0 0;\n}\n\n.wbutt {\n    padding: 3px;\n    font-size: 14px;\n}\n\nsection {\n    /* border-bottom: 1px solid rgb(255, 255, 255); */\n    padding: 20px 50px;\n    /* height: 100vh; */\n    scroll-snap-align: start;\n    /* text-align: center; */\n    position: relative;\n    /* background: #ffffff; */\n    font-size: 18px;\n    background:none;\n    border-bottom: none;\n}\n\nbody  {\n    margin: 0px;\n}\n\nbody , textarea , input , select {\n\tfont-family: 'Roboto', sans-serif;\n}\n\nh1 {\n    \n    font-family: 'Lato', sans-serif;\n    font-size: 38px;\n    font-weight: 650;\n    line-height: 1.2;\n}\n\nsmall {\n    \n    font-size: 80%;\n    font-weight: 400;\n}\n\nbody {\n        background-color: #cccfd3;\n        /*  background-image: url('{{{wallpaper}}}'); */\n        background-repeat: no-repeat;\n        background-attachment: fixed;\n        background-size: cover;\n        line-height: 25px;\n}\n.popup {\n  z-index: 9;\n  background-color: #f1f1f1;\n  border: 1px solid #d3d3d3;\n  text-align: center;\n  min-height: 150px;\n  min-width: 300px;\n  border-radius: 3px;\n  box-shadow: 2px 3px 3px -1px darkgrey\n}\n\n.help {\n  padding: 50px;\n  text-align: left;\n}\n\n/*Drgable */\n\n.popup {\n  position: absolute;\n  /*resize: both; !*enable this to css resize*! */\n  overflow: hidden;\n}\n\n.popup-header {\n  padding: 2px;\n  z-index: 10;\n  background-color: #303c43;\n  color: #fff;\n}\n\n\n.popup-drag {\n  cursor: move;\n}\n\ntable {\n  color: #fff;\n}\n\n/*Resizeable*/\n\n.popup .resizer-right {\n  width: 5px;\n  height: 100%;\n  background: transparent;\n  position: absolute;\n  right: 0;\n  bottom: 0;\n  cursor: e-resize;\n}\n\n.popup .resizer-bottom {\n  width: 100%;\n  height: 5px;\n  background: transparent;\n  position: absolute;\n  right: 0;\n  bottom: 0;\n  cursor: n-resize;\n}\n\n.popup .resizer-both {\n  width: 5px;\n  height: 5px;\n  background: transparent;\n  z-index: 10;\n  position: absolute;\n  right: 0;\n  bottom: 0;\n  cursor: nw-resize;\n}\n\n.ifr {\n  width: 100%;\n  height: calc(100% - 28px);\n}\n\n/*NOSELECT*/\n\n.popup * {\n  -webkit-touch-callout: none; /* iOS Safari */\n  -webkit-user-select: none; /* Safari */\n  -khtml-user-select: none; /* Konqueror HTML */\n  -moz-user-select: none; /* Firefox */\n  -ms-user-select: none; /* Internet Explorer/Edge */\n  user-select: none; /* Non-prefixed version, currently\n                                  supported by Chrome and Opera */\n}\n\n    \n</style>\n\n<script>\n    \n    \n\n    \n var dlayout = \"\"; \n var currentp;\n var currentpstyle;\n\n var desktopjson = {{{desktopjson}}};\n\n    \n  window.onload = function() {\n        \n      initDragElement();\n      initResizeElement();\n      initButtons();\n  \n      if (desktopjson.backgroundimage) {\n          \n          document.body.style.backgroundImage=\"url(\" + desktopjson.backgroundimage + \")\";\n          \n      } else {  changeBG(); }\n      \n      \n      if (desktopjson.expires) { checkTime(); var chktimer = setInterval(function () { checkTime(); }, 60000); }\n      //alert(document.cookie);\n};\n\nvar hasexpired = false;\nfunction checkTime() {\n    \n    if (!desktopjson.expires) { return null; }\n    if ( (new Date().getTime()) >  desktopjson.expires) {  \n        if (hasexpired!==true) {\n            alert(\"Access Expired !\"); \n            hasexpired = true;\n            //var hgjh=  \"<p><b>Access Expired !</b></p>\\n\"; \n        }\n        \n        \n    }\n      \n}\n\nfunction initDragElement() {\n  var pos1 = 0,\n    pos2 = 0,\n    pos3 = 0,\n    pos4 = 0;\n  var popups = document.getElementsByClassName(\"popup\");\n  var elmnt = null;\n  var currentZIndex = 100; //TODO reset z index when a threshold is passed\n\n  for (var i = 0; i < popups.length; i++) {\n    var popup = popups[i];\n    var header = getHeader(popup);\n\n    popup.onmousedown = function() {\n      this.style.zIndex = \"\" + ++currentZIndex;\n    };\n\n    if (header) {\n      header.parentPopup = popup;\n      header.onmousedown = dragMouseDown;\n    }\n  }\n\n  function dragMouseDown(e) {\n    elmnt = this.parentPopup;\n    elmnt.style.zIndex = \"\" + ++currentZIndex;\n\n    e = e || window.event;\n    // get the mouse cursor position at startup:\n    pos3 = e.clientX;\n    pos4 = e.clientY;\n    document.onmouseup = closeDragElement;\n    // call a function whenever the cursor moves:\n    document.onmousemove = elementDrag;\n  }\n\n  function elementDrag(e) {\n    if (!elmnt) {\n      return;\n    }\n\n    e = e || window.event;\n    // calculate the new cursor position:\n    pos1 = pos3 - e.clientX;\n    pos2 = pos4 - e.clientY;\n    pos3 = e.clientX;\n    pos4 = e.clientY;\n    // set the element's new position:\n    elmnt.style.top = elmnt.offsetTop - pos2 + \"px\";\n    elmnt.style.left = elmnt.offsetLeft - pos1 + \"px\";\n    \n    currentpstyle = elmnt.style.cssText;\n    currentp = elmnt.id;\n    \n  }\n\n  function closeDragElement() {\n    /* stop moving when mouse button is released:*/\n    document.onmouseup = null;\n    document.onmousemove = null;\n    \n    console.log(currentp);\n    console.log(currentpstyle);\n    \n    for (var w in desktopjson.windows) {\n        \n        if (desktopjson.windows[w].id == currentp) {\n            \n            if (desktopjson.windows[w][\"laststyle\"]) {  desktopjson.windows[w][desktopjson.windows[w][\"laststyle\"]] = currentpstyle; }\n            desktopjson.windows[w][\"style\"] = currentpstyle; \n            \n            \n            console.log(desktopjson);\n            console.log(JSON.stringify(desktopjson));\n            \n            \n            break;\n        }\n    }\n    \n  }\n\n  function getHeader(element) {\n    var headerItems = element.getElementsByClassName(\"popup-drag\");\n\n    if (headerItems.length === 1) {\n      return headerItems[0];\n    }\n\n    return null;\n  }\n}\n\nfunction initResizeElement() {\n  var popups = document.getElementsByClassName(\"popup\");\n  var element = null;\n  var startX, startY, startWidth, startHeight;\n\n  for (var i = 0; i < popups.length; i++) {\n    var p = popups[i];\n\n    var right = document.createElement(\"div\");\n    right.className = \"resizer-right\";\n    p.appendChild(right);\n    right.addEventListener(\"mousedown\", initDrag, false);\n    right.parentPopup = p;\n\n    var bottom = document.createElement(\"div\");\n    bottom.className = \"resizer-bottom\";\n    p.appendChild(bottom);\n    bottom.addEventListener(\"mousedown\", initDrag, false);\n    bottom.parentPopup = p;\n\n    var both = document.createElement(\"div\");\n    both.className = \"resizer-both\";\n    p.appendChild(both);\n    both.addEventListener(\"mousedown\", initDrag, false);\n    both.parentPopup = p;\n  }\n\n  function initDrag(e) {\n    element = this.parentPopup;\n\n    startX = e.clientX;\n    startY = e.clientY;\n    startWidth = parseInt(\n      document.defaultView.getComputedStyle(element).width,\n      10\n    );\n    startHeight = parseInt(\n      document.defaultView.getComputedStyle(element).height,\n      10\n    );\n    document.documentElement.addEventListener(\"mousemove\", doDrag, false);\n    document.documentElement.addEventListener(\"mouseup\", stopDrag, false);\n  }\n\n  function doDrag(e) {\n    element.style.width = startWidth + e.clientX - startX + \"px\";\n    element.style.height = startHeight + e.clientY - startY + \"px\";\n    \n    currentpstyle = element.style.cssText;\n    currentp = element.id;\n  }\n\n  function stopDrag() {\n    document.documentElement.removeEventListener(\"mousemove\", doDrag, false);\n    document.documentElement.removeEventListener(\"mouseup\", stopDrag, false);\n    \n    console.log(currentp);\n    console.log(currentpstyle);\n    \n    for (var w in desktopjson.windows) {\n        \n        if (desktopjson.windows[w].id == currentp) {\n            \n            if (desktopjson.windows[w][\"laststyle\"]) {  desktopjson.windows[w][desktopjson.windows[w][\"laststyle\"]] = currentpstyle; }\n            desktopjson.windows[w][\"style\"] = currentpstyle; \n            \n            \n            console.log(desktopjson);\n            console.log(JSON.stringify(desktopjson));\n            \n            \n            break;\n        }\n    }\n  }\n}\n\nfunction initButtons() {\n    \n  var butts = document.getElementsByClassName(\"closex\");\n  \n  for (var i = 0; i < butts.length; i++) {\n    var butt = butts[i];\n    butt.onmousedown = function() {\n      closePanel(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id);\n    };\n  }\n  \n  var butts = document.getElementsByClassName(\"minb\");\n  \n  for (var i = 0; i < butts.length; i++) {\n    var butt = butts[i];\n    butt.onmousedown = function() {\n      resizePanel(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id,\"m\");\n    };\n  }\n  \n  var butts = document.getElementsByClassName(\"maxb\");\n  \n  for (var i = 0; i < butts.length; i++) {\n    var butt = butts[i];\n    butt.onmousedown = function() {\n      resizePanel(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id,\"M\");\n    };\n  }\n  \n  var butts = document.getElementsByClassName(\"opennb\");\n  \n  for (var i = 0; i < butts.length; i++) {\n    var butt = butts[i];\n    butt.onmousedown = function() {\n      openPanel(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id);\n    };\n  }\n  \n  \n  \n  var butts = document.getElementsByClassName(\"changebgimage\");\n   for (var i = 0; i < butts.length; i++) {\n    var butt = butts[i];\n    butt.onmousedown = function() {\n      \n      changeBG();\n      \n    };\n  }\n  \n  \n  \n  var dlinks = document.getElementsByClassName(\"dlink\");\n  //alert(butts.length);\n  for (var i = 0; i < dlinks.length; i++) {\n    var dlink = dlinks[i];\n    //butt.addEventListener(\"mouseup\", closePanel(this), false);\n    \n    dlink.onmousedown = function() {\n      //this.style.zIndex = \"\" + ++currentZIndex;\n      //var url = this.id.replace(\"dlink-\",\"\");\n      //alert(url);\n      var p = document.getElementById(this.id.replace(\"dlink-\",\"\"));\n      p.style.display=\"inline\";\n      \n      \n        for (var w in desktopjson.windows) {\n            \n            if (desktopjson.windows[w].id == p.id) {\n                \n                \n                \n                var frcon = '<div class=\"popup-header\" title=\"' + (desktopjson.windows[w][\"description\"] || desktopjson.windows[w][\"title\"]) + '\"><table width=\"100%\"><tr><td width=\"20%\"align=\"left\">';\n                frcon += '<span class=\"wbutt refreshb\"><i class=\"fas fa-redo\"></i></span>';\n                frcon += '';\n                frcon += '</td><td width=\"60%\" align=\"center\" class=\"popup-drag\">' + desktopjson.windows[w][\"title\"] + '</td><td width=\"20%\" align=\"right\" valign=\"middle\">'\n                frcon += '<span class=\"wbutt minb\"><i class=\"fas fa-window-minimize\"></i></span><span class=\"wbutt maxb\"><i class=\"far fa-window-maximize\"></i></span><span class=\"wbutt opennb\"><i class=\"fas fa-external-link-alt\"></i></span><span class=\"wbutt closex\"><i class=\"fas fa-times\"></i></span>';\n                frcon += '</td></tr></table></div>';\n                \n                \n                if (desktopjson.windows[w][\"src\"]) {\n                    var src = desktopjson.windows[w][\"src\"];\n                    \n                    if (desktopjson.windows[w][\"root\"] && src.indexOf(\"http\")<0) {\n                        \n                        src = desktopjson[desktopjson.windows[w][\"root\"]] + src;\n                    }\n                    //src = src.replace('src=\"/','src=\"https://hw7.ddns.net/');\n                    //src = src.replace(\"src='/\",\"src='https://hw7.ddns.net/\");\n                    frcon += '<iframe class=\"' + desktopjson.windows[w][\"class\"] + '\" frameBorder=\"0\" src=\"' + src + '\"></iframe>\\n';\n                \n                    \n                }\n                \n                \n                if(desktopjson.windows[w][\"body\"]) { frcon += desktopjson.windows[w][\"body\"]; }\n                \n                \n                \n                p.innerHTML = frcon;\n                \n                initDragElement();\n                initResizeElement();\n                initButtons();\n      \n                console.log(desktopjson);\n                console.log(JSON.stringify(desktopjson));\n                \n                break;\n            }\n        }\n      \n      \n      \n    };\n  }\n    \n}   \n\nfunction closePanel(id) {\n    \n    var p = document.getElementById(id);\n    //alert(p.id);\n    p.style.display=\"none\";\n    p.innerHTML =\"\";\n    //var f = p.getElementsByTagName(\"IFRAME\")[0];\n    //f.innerHTML = \n    \n    \n}    \n\nfunction openPanel(id) {\n    \n    var p = document.getElementById(id);\n    //alert(p.id);\n    //p.style.display=\"none\";\n    //p.innerHTML =\"\";\n    var f = p.getElementsByTagName(\"IFRAME\")[0].src;\n    window.open(f);\n    \n    \n} \n\nfunction resizePanel(id,m) {\n    \n    //alert(id + \" \" + m);\n    \n    var p = document.getElementById(id);\n    \n    \n    for (var w in desktopjson.windows) {\n            \n            if (desktopjson.windows[w].id == p.id) {\n                \n                var nst = \"\";\n                \n                if (m==\"m\") { \n                    \n                    desktopjson.windows[w][\"laststyle\"] = \"stylesmall\"; \n                    nst = desktopjson.windows[w][\"stylesmall\"]||\"left: 50px; width: 500px; height: 400px; top: 50px;\";\n                    \n                }\n                else if (m==\"M\") { \n                    \n                    if(desktopjson.windows[w][\"laststyle\"] == \"stylebig\") { \n                        \n                        desktopjson.windows[w][\"laststyle\"] = \"fullscreen\"; \n                        nst = \"right: 0px; width: 100%; height: 100vh; top: 0px;\";\n                        \n                    }\n                    else { \n                        \n                        desktopjson.windows[w][\"laststyle\"] = \"stylebig\"; \n                        nst = desktopjson.windows[w][desktopjson.windows[w][\"laststyle\"]]||\"right: 30px; width: 1500px; height: 700px; top: 50px; right: 50px;\";\n                        \n                    }\n                    \n                }\n                \n                //var nst = m==\"m\" ? (desktopjson.windows[w][\"stylesmall\"]||desktopjson.windows[w][\"style\"]) : (desktopjson.windows[w][\"stylebig\"]||\"right: 30px; width: 1500px; height: 700px; top: 50px; right: 50px;\");\n                \n                if (nst!==\"\") { p.style=nst; }\n                else if (m==\"m\") { p.style.width=\"300px\"; p.style.height=\"150px\"; }\n                else  { p.style.width=\"1500px\"; p.style.height=\"700px\"; p.style.top=\"50px\"; p.style.right=\"50px\"; }\n                \n                \n                break;\n            }\n        }\n}    \n  \nfunction changeBG() {\n    \n    \n      \n      var url = \"https://picsum.photos/seed/\" + new Date().getTime() + \"/1800/1000\"\n      document.body.style = \"background-image: url(\" + url + \");\"\n      var tags = document.getElementsByClassName(\"bgimageurl\");\n        for (var j = 0; j < tags.length; j++) {\n            var tag = tags[j];\n            tag.innerHTML = url;\n        }\n        \n}    \n\n  \nfunction submitdesktop() {\n    \n\n      var dform = document.getElementById(\"dform\");\n      dform.setAttribute(\"action\", desktopjson.tunnel + \"/api/settings\");\n      document.getElementById(\"settings.desktopjson\").setAttribute(\"value\",JSON.stringify(desktopjson));\n      dform.submit();\n      \n        // var xhr = new XMLHttpRequest();\n        // xhr.open(\"POST\", desktopjson.tunnel + \"/api/settings\", true);\n        // xhr.setRequestHeader('Content-Type', 'application/json');\n        // xhr.send(JSON.stringify({\n        //     value: desktopjson\n        // }));\n        \n}    \n\nvar newdivc = 0; \nfunction newitem() {\n    \n    \n    var newurl = prompt(\"Please enter window URL\",\"https://\");\n    if (!newurl || newurl==\"https://\") { return null; }\n\n    var newtit = prompt(\"Please enter window TITLE\",newurl);\n    \n    var panels = document.getElementById(\"panels\");\n    var div = document.createElement(\"DIV\");  \n    newdivc++;\n    \n    var nn = \"w\" + new Date().getTime();\n    \n    div.setAttribute(\"id\", nn);            \n    div.setAttribute(\"name\", nn);          \n    div.setAttribute(\"class\", \"popup\");  \n    div.setAttribute(\"style\", \"width: 1160px; height: 826px; top: 44px; right: 50px;\"); \n    div.style.display=\"none\";\n    panels.appendChild(div);    \n \n    var links = document.getElementById(\"links\");\n    var span = document.createElement(\"SPAN\");  \n    var br = document.createElement(\"BR\"); \n    span.setAttribute(\"id\", \"dlink-\" + nn);            \n    span.setAttribute(\"class\", \"dlink\");  \n    span.innerHTML = '<small>' + (newtit || newurl) + '</small>';\n    \n    links.appendChild(br); \n    links.appendChild(span); \n    \n    var nw = {\n            \"title\": newtit || newurl,\n            \"root\": \"tunnel\",\n            \"src\": newurl,\n            \"laststyle\": \"stylebig\",\n            \"style\": \"width: 1160px; height: 826px; top: 44px; right: 50px;\",\n            \"stylebig\": \"width: 1160px; height: 826px; top: 44px; right: 50px;\",\n            \"stylesmall\": \"left: 535px; width: 466px; height: 276px; top: 287px;\",\n            \"class\": \"ifr\",\n            \"name\": nn,\n            \"id\": nn\n        }\n        \n    desktopjson.windows.push(nw);\n    initDragElement();\n    initResizeElement();\n    initButtons();\n        \n}    \n\n</script>\n\n\n\n{{{panels}}}\n\n<button onclick=\"newitem()\">New</button> <button onclick=\"submitdesktop()\">Save</button>\n<form  id=\"dform\" name=\"dform\" style=\"display:none;\" method=\"POST\" action=\"/api/settings\" target=\"dpostframe\">\n    <input type=\"hidden\" name=\"network\" id=\"network\" value=\"{{{dsktp.localNetworkId}}}\">\n    <input type=\"hidden\" name=\"node\" id=\"node\" value=\"{{{dsktp.node}}}\">\n    <input type=\"hidden\" name=\"settings.desktopjson\" id=\"settings.desktopjson\" value=\"{}\"><br /><br /><p align=\"right\">\n    <input  class=\"btn btn-primary\" type=\"submit\"></p></form>\n<iframe style=\"display:none;\" frameborder=\"0\" id=\"dpostframe\" name=\"dpostframe\"></iframe>\n\n\n",
+        "output": "str",
+        "x": 600,
+        "y": 460,
+        "wires": [
+            [
+                "198abef2.524a21"
+            ]
+        ],
+        "info": "https://codepen.io/jkasun/pen/QrLjXP"
+    },
+    {
+        "id": "ca53db4c.98b818",
+        "type": "file",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1030,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "748146bc.c571e8",
+        "type": "change",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.body",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 540,
+        "wires": [
+            [
+                "ca53db4c.98b818",
+                "2d34e5ca.70aa1a"
+            ]
+        ]
+    },
+    {
+        "id": "fc131be4.773ec8",
+        "type": "function",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "func": "msg.payload.body = \"<section><h1>\" + msg.dsktp.title.replace(/_/g, \" \") + \"</h1>\\n<p>\" + msg.links + \"</p>\" + msg.payload.body + \"</section>\";\n\n\n\n\n\n\nmsg.filename = \"/home/pi/\" + msg.desktop + \".html\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 460,
+        "wires": [
+            [
+                "3c2485d.05a8d7a",
+                "748146bc.c571e8"
+            ]
+        ]
+    },
+    {
+        "id": "3c2485d.05a8d7a",
+        "type": "function",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "func": "\nglobal.set(\"sections.\" + msg.desktop, msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1140,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "807a2b06.54df68",
+        "type": "function",
+        "z": "78c26ef1.61809",
+        "name": "attach",
+        "func": "msg.payload= msg.desktop + \" Screen from \"+global.get(\"node\");\nmsg.topic=  msg.desktop + \" Screen from  \"+global.get(\"node\");\nmsg.attachments = [{   // utf-8 string as an attachment \n            filename:  msg.desktop + '.html',\n            path: msg.filename\n        }];\n\n//msg.to=\"admin@heatweb.com,jason.lawrence@thermalintegration.com\";\nmsg.to=\"setup@heatweb.com\";\n\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 640,
+        "wires": [
+            [
+                "330292c9.7440ae"
+            ]
+        ]
+    },
+    {
+        "id": "330292c9.7440ae",
+        "type": "link out",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "links": [
+            "4bf50365.a06d4c",
+            "a1744584.91173"
+        ],
+        "x": 935,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "2d34e5ca.70aa1a",
+        "type": "delay",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 640,
+        "y": 640,
+        "wires": [
+            [
+                "807a2b06.54df68"
+            ]
+        ]
+    },
+    {
+        "id": "92e9a8ee.3622a8",
+        "type": "function",
+        "z": "78c26ef1.61809",
+        "name": "PREPARE",
+        "func": "\n\nmsg.dsktp.node = global.get(\"node\");\nmsg.dsktp.localNetworkId = global.get(\"localNetworkId\");\n\n// msg.dsktp.tunnel = global.get(\"readings.\" + msg.dsktp.localNetworkId + \".\" + msg.dsktp.node + \".system.tunnel.value\") || \"\";\n// msg.dsktp.tunnelNR = global.get(\"readings.\" + msg.dsktp.localNetworkId + \".\" + msg.dsktp.node + \".system.tunnelNR.value\") || \"\";\n\nmsg.dsktp.tunnel = \"http://\" + global.get(\"readings.\" + msg.dsktp.localNetworkId + \".\" + msg.dsktp.node + \".cpu.net_1_ip4.value\") + \":8000\";\nmsg.dsktp.tunnelNR = \"http://\" + global.get(\"readings.\" + msg.dsktp.localNetworkId + \".\" + msg.dsktp.node + \".cpu.net_1_ip4.value\") + \":1880\";\n\n\nmsg.dsktp.expires = new Date().getTime() + (1000 * 60 * 720); \nmsg.dsktp.ip = global.get(\"readings.\" + msg.dsktp.localNetworkId + \".\" + msg.dsktp.node + \".system.ipWan.value\") || \"\";\n\n\nmsg.panels=\"\";\nmsg.links=\"<small><b><span class='bgimageurl'></span></b></small><br>\";\n\nvar c=0;\n\nvar lastgrp = \"zxzxz\";\nvar lastd = \"zxzxz\";\nfor (var p in msg.dsktp.windows) {\n    \n    c++;\n    if (!msg.dsktp.windows[p][\"id\"]) { msg.dsktp.windows[p][\"id\"] = \"frame\" + c; }\n    \n    \n    // msg.panels += '<div id=\"' + msg.dsktp.windows[p][\"id\"] + '\" name=\"' + msg.dsktp.windows[p][\"id\"] + '\" class=\"popup\" style=\"' + msg.dsktp.windows[p][\"style\"] + '\">';\n    // msg.panels += '<div class=\"popup-header\" title=\"' + (msg.dsktp.windows[p][\"description\"] || msg.dsktp.windows[p][\"title\"]) + '\"><table width=\"100%\"><tr><td></td><td align=\"center\" class=\"popup-drag\">' + msg.dsktp.windows[p][\"title\"] + '</td><td align=\"right\"><span class=\"wbutt closex\">X</span> </td></tr></table></div>';\n    // msg.panels += '<iframe class=\"' + msg.dsktp.windows[p][\"class\"] + '\" frameBorder=\"0\" src=\"' + msg.dsktp.windows[p][\"src\"] + '\"></iframe>';\n    // msg.panels += '</div>\\n';\n    \n    msg.panels += '<div id=\"' + msg.dsktp.windows[p][\"id\"] + '\" name=\"' + msg.dsktp.windows[p][\"id\"] + '\" class=\"popup\" style=\"' + (msg.dsktp.windows[p][\"style\"]||msg.dsktp.windows[p][\"stylebig\"]||msg.dsktp.windows[p][\"stylesmall\"]) + ' display: none;\">';\n    //msg.panels += '<div class=\"popup-header\" title=\"' + (msg.dsktp.windows[p][\"description\"] || msg.dsktp.windows[p][\"title\"]) + '\"><table width=\"100%\"><tr><td></td><td align=\"center\" class=\"popup-drag\">' + msg.dsktp.windows[p][\"title\"] + '</td><td align=\"right\"><span class=\"wbutt closex\">X</span> </td></tr></table></div>';\n    //msg.panels += '<iframe class=\"' + msg.dsktp.windows[p][\"class\"] + '\" frameBorder=\"0\" src=\"' + msg.dsktp.windows[p][\"src\"] + '\"></iframe>';\n    msg.panels += '</div>\\n';\n    \n    if (lastgrp && lastgrp!==\"x\" && lastgrp == msg.dsktp.windows[p][\"group\"]) { msg.links += ' &nbsp;<small><small><i class=\"fas fa-grip-lines-vertical\"></i></small></small>&nbsp; '; } \n    else if (lastgrp!==\"zxzxz\") { msg.links += \"<br>\\n\";  if (lastgrp==\"nodered\") { msg.links += \"<br>\\n\"; }   }\n    \n    // remove repeated device ids in group listings\n    var tit = msg.dsktp.windows[p][\"title\"];\n    var ifd = tit.split(\" - \")[1];\n    if (ifd == lastd) {  tit = tit.split(\" - \")[0]; }\n    lastd = ifd;\n    \n    msg.links += '<span class=\"dlink\" id=\"dlink-' + msg.dsktp.windows[p][\"id\"] + '\" title=\"' + (msg.dsktp.windows[p][\"description\"]||msg.dsktp.windows[p][\"src\"]) + '\"><small>' + tit + '</small></span>';\n    \n    \n    \n    lastgrp = msg.dsktp.windows[p][\"group\"] || \"x\";\n    \n}\n\nmsg.desktopjson = JSON.stringify(msg.dsktp);\n\nif(msg.dsktp.expires) {\n    \n    var dd = new Date(msg.dsktp.expires);\n    msg.links =  \"<p><b>Remote access expires at \" + dd.toLocaleTimeString() + \" on \" + dd.toLocaleDateString() + \"</b></p>\\n\" + msg.links;\n}\n\n\nmsg.panels = '<div id=\"panels\">' + msg.panels + '</div>';\nmsg.links = '<div id=\"links\">' + msg.links + '</div>';\n\n//msg.wallpaper = \"https://picsum.photos/seed/\" + msg.dsktp.title.split(\" \")[0] + \",\" + (msg.dsktp.title.split(\" \")[1]||\"\") + \"/1800/1000\"\n//msg.wallpaper = \"https://picsum.photos/seed/\" + new Date().getDate() + \"/1800/1000\"\n\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 460,
+        "wires": [
+            [
+                "13fb193b.b62177"
+            ]
+        ]
+    },
+    {
+        "id": "198abef2.524a21",
+        "type": "change",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload.body",
+                "pt": "msg",
+                "from": "src=\"/",
+                "fromt": "str",
+                "to": "src=\"https://hw7.ddns.net/",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload.body",
+                "pt": "msg",
+                "from": "/files/images/wallpaper3.jpg",
+                "fromt": "str",
+                "to": "http://heatweb.co.uk/w/images/d/da/wallpaper1.jpg",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload.body",
+                "pt": "msg",
+                "from": "/files/images/wallpaper1.jpg",
+                "fromt": "str",
+                "to": "http://heatweb.co.uk/w/images/d/da/wallpaper1.jpg",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 460,
+        "wires": [
+            [
+                "fc131be4.773ec8"
+            ]
+        ]
+    },
+    {
+        "id": "1077e46d.46683c",
+        "type": "change",
+        "z": "78c26ef1.61809",
+        "name": "images",
+        "rules": [
+            {
+                "t": "set",
+                "p": "imagelist",
+                "pt": "msg",
+                "to": "[{\"url\":\"https://picsum.photos/seed/1640365663978/1800/1000\",\"tage\":\"city\"},{\"url\":\"https://picsum.photos/seed/1640365868818/1800/1000\",\"tage\":\"mountain\"},{\"url\":\"https://picsum.photos/seed/1640365934969/1800/1000\",\"tage\":\"coast\"},{\"url\":\"https://picsum.photos/seed/1640366025137/1800/1000\",\"tage\":\"beach\"},{\"url\":\"https://picsum.photos/seed/1640366151185/1800/1000\",\"tage\":\"grey hill\"},{\"url\":\"https://picsum.photos/seed/1640372092567/1800/1000\",\"tage\":\"mountains\"},{\"url\":\"https://picsum.photos/seed/1640373094872/1800/1000\",\"tage\":\"desk\"},{\"url\":\"https://picsum.photos/seed/1640387049834/1800/1000\",\"tage\":\"bridge\"},{\"url\":\"https://picsum.photos/seed/1640389328524/1800/1000\",\"tage\":\"mountains\"},{\"url\":\"https://picsum.photos/seed/1640389643432/1800/1000\",\"tage\":\"city\"},{\"url\":\"https://bridgesandballoons.com/Images/2017/08/Isle-of-Mull-and-Oban-56.jpg\",\"tage\":\"oban boats\"},{\"url\":\"https://picsum.photos/seed/1640365934969/1800/1000\",\"tage\":\"z\"},{\"url\":\"https://picsum.photos/seed/1640365934969/1800/1000\",\"tage\":\"z\"}]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ca1b3492.cfbd88",
+        "type": "inject",
+        "z": "78c26ef1.61809",
+        "name": "Design",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "desktop",
+                "v": "desktop_design",
+                "vt": "str"
+            },
+            {
+                "p": "dsktp",
+                "v": "{\"title\":\"Heatweb Design Desktop\",\"backgroundimage1\":\"https://picsum.photos/seed/1640459184546/1800/1000\",\"windows\":[{\"title\":\"Schematic Designer\",\"src\":\"https://hw7.ddns.net/section/svgexplode?svg=HeatNetwork6.svg&basic=1\",\"style\":\"width: 1497px; height: 897px; top: 25px; right: 50px; z-index: 125; left: 409px;\",\"z-order\":1,\"class\":\"scaledframe\",\"id\":\"schematicdesigner\",\"laststyle\":\"stylebig\",\"stylebig\":\"width: 1497px; height: 897px; top: 25px; right: 50px; z-index: 125; left: 409px;\",\"stylesmall\":\"width: 431px; height: 238px; top: 698px; right: 50px; z-index: 120; left: 446px;\"},{\"title\":\"Heat Network Calculator 2021\",\"src\":\"https://hw7.ddns.net/section/hncalc?basic=1\",\"style\":\"width: 1290px; height: 923px; top: 19px; z-index: 135; left: 612px; display: inline;\",\"z-order\":1,\"class\":\"scaledframe\",\"id\":\"calculator2021\",\"laststyle\":\"stylebig\",\"stylebig\":\"width: 1290px; height: 923px; top: 19px; z-index: 135; left: 612px; display: inline;\",\"stylesmall\":\"width: 418px; height: 167px; top: 510px; right: 50px; z-index: 122; left: 46px;\"},{\"title\":\"3D Network\",\"src\":\"https://hw3.ddns.net/index.php?page=3D\",\"style\":\"width: 1525px; height: 923px; top: 27px; right: 50px; z-index: 102; left: 366px; display: inline;\",\"z-order\":1,\"class\":\"ifr\",\"id\":\"3d1\",\"laststyle\":\"stylebig\",\"stylebig\":\"width: 1525px; height: 923px; top: 27px; right: 50px; z-index: 102; left: 366px; display: inline;\",\"stylesmall\":\"width: 364px; height: 177px; top: 584px; right: 50px; z-index: 113; left: 39px;\"},{\"title\":\"Heat Network Calculator 2018\",\"src\":\"http://www.systemdesigner.co.uk/heatnetwork3.php\",\"style\":\"width: 948px; height: 819px; top: 107px; right: 50px; z-index: 129; left: 74px;\",\"z-order\":1,\"class\":\"scaledframe\",\"id\":\"heatnetwork3\",\"laststyle\":\"stylebig\",\"stylebig\":\"width: 948px; height: 819px; top: 107px; right: 50px; z-index: 129; left: 74px;\",\"stylesmall\":\"width: 579px; height: 179px; top: 319px; right: 50px; z-index: 120; left: 46px;\"},{\"title\":\"Heat Network Calculator - 3D Output\",\"src\":\"https://hw3.ddns.net/index.php?page=3D&&startp=heatnetcalc\",\"style\":\"width: 836px; height: 839px; top: 81px; right: 50px; z-index: 138; left: 1046px; display: inline;\",\"z-order\":1,\"class\":\"ifr\",\"id\":\"heatnetwork3d\",\"laststyle\":\"stylebig\",\"stylebig\":\"width: 836px; height: 839px; top: 81px; right: 50px; z-index: 138; left: 1046px; display: inline;\",\"stylesmall\":\"width: 394px; height: 180px; top: 535px; right: 50px; z-index: 132; left: 32px; display: inline;\"}]}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"title\":\"Desktop\",\"subtitle\":\"Heatweb Desktop\",\"body\":\"\"}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 460,
+        "wires": [
+            [
+                "92e9a8ee.3622a8"
+            ]
+        ]
+    },
+    {
+        "id": "eea52537.8e4428",
+        "type": "link in",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "links": [
+            "72953705.597f08"
+        ],
+        "x": 195,
+        "y": 240,
+        "wires": [
+            [
+                "be82bcaf.62b3c"
+            ]
+        ]
+    },
+    {
+        "id": "918b13f2.3a278",
+        "type": "function",
+        "z": "78c26ef1.61809",
+        "name": "desktopremote",
+        "func": "\nvar dev = global.get(\"node\");\nvar net = global.get(\"localNetworkId\");\n// var tunnel = global.get(\"readings.\" + net + \".\" + dev + \".system.tunnel.value\") || \"\";\n// var tunnelNR = global.get(\"readings.\" + net + \".\" + dev + \".system.tunnelNR.value\") || \"\";\n\nvar tunnel = \"http://\" + global.get(\"readings.\" + net + \".\" + dev + \".cpu.net_1_ip4.value\") + \":8000\";\nvar tunnelNR = \"http://\" + global.get(\"readings.\" + net + \".\" + dev + \".cpu.net_1_ip4.value\") + \":1880\";\n\n\nvar exptime = new Date().getTime() + (1000 * 60 * 720); \nvar ip = global.get(\"readings.\" + net + \".\" + dev + \".system.ipWan.value\") || \"\";\n\n\nmsg.dsktp = {\n    \"title\": \"R&D Desktop\",\n    \"tunnel\": tunnel,\n    \"expires\": exptime,\n    \"backgroundimage\": \"https://picsum.photos/seed/1640522604503/1800/1000\",\n    \"backgroundimage1\": \"https://bridgesandballoons.com/Images/2017/08/Isle-of-Mull-and-Oban-56.jpg\",\n    \"windows\": [\n        {\n            \"title\": \"Help\",\n            \"description\": \"Help on Heatweb Desktops\",\n            \"group\": \"standard\",\n            \"body\": msg.help,\n            \"stylebig\": \"right: 0px; width: 650px; height: 98vh; top: 0px; background-color: rgb(192 196 199);\",\n            \"stylesmall\": \"right: 50px; width: 600px; height: 300px; top: 50px; background-color: rgb(192 196 199);\",\n            \"z-order\": 1,\n            \"class\": \"ifr\",\n            \"name\": \"helpf\",\n            \"id\": \"helpf\",\n            \"background-color\": \"rgb(192 196 199)\"\n        }\n    ]\n};\n\n\nvar tit = \"\";\nif (global.get(\"settings.title.value\") && global.get(\"settings.title.value\")!==\"undefined\" && global.get(\"settings.title.value\").trim()!==\"\") {\n    \n    msg.dsktp.title = \"Heatweb Desktop: \" +   global.get(\"settings.title.value\");\n    \n} else {\n    \n   msg.dsktp.title = \"Heatweb Desktop: \" +   global.get(\"nodeName\") || global.get(\"node\"); \n}\n\n\n\nmsg.dsktp.title += \"<br><small>\" +  global.get(\"networkId\") + \" / \" + global.get(\"node\") + \"</small>\"\n//if ( global.get(\"nodeDescription\")) { msg.dsktp.title += \"<small> - \" + global.get(\"nodeDescription\") + \"</small>\"}\nif (ip) { msg.dsktp.title += \" <small><small>\" + ip + \"</small></small>\"}\n\nif (tunnel.indexOf(\"http\")>-1) {\n    \n    var n = global.get(\"localNetworkId\") ;\n        \n        \n     msg.dsktp.windows.push({\n            \"title\": \"Home Page\",\n            \"group\": \"standard\",\n            \"root\": \"tunnel\",\n            \"src\": \"/\",\n            \"stylebig\": \"width: 1160px; height: 826px; top: 44px; right: 50px; left: 693px;\",\n            \"stylesmall\": \"left: 535px; width: 466px; height: 276px; top: 287px;\",\n            \"class\": \"scaledframe\",\n            \"name\": \"homepagef\",\n            \"id\": \"homepagfe\"\n        });  \n        \n             \n        msg.dsktp.windows.push({\n            \"title\": \"Device List\",\n            \"group\": \"standard\",\n            \"root\": \"tunnel\",\n            \"src\": \"/section/devices?basic=1\",\n            \"stylebig\": \"width: 1160px; height: 826px; top: 44px; right: 50px; z-index: 99; left: 693px;\",\n            \"stylesmall\": \"left: 535px; width: 466px; height: 276px; top: 287px; z-index: 1\",\n            \"class\": \"scaledframe\",\n            \"name\": \"devf\",\n            \"id\": \"devf\"\n        });    \n        \n    msg.dsktp.windows.push({\n            \"title\": \"System Settings\",\n            \"group\": \"settings\",\n            \"root\": \"tunnel\",\n            \"src\": \"/settings?basic=1\",\n            \"stylebig\": \"width: 1160px; height: 826px; top: 44px; right: 50px; z-index: 99; left: 693px;\",\n            \"stylesmall\": \"left: 535px; width: 466px; height: 276px; top: 287px; z-index: 1\",\n            \"class\": \"scaledframe\",\n            \"name\": \"setf\",\n            \"id\": \"setf\"\n        });       \n        \n    msg.dsktp.windows.push({\n            \"title\": \"Device Settings\",\n            \"group\": \"settings\",\n            \"root\": \"tunnel\",\n            \"src\": \"/deviceSettings?basic=1\",\n            \"stylebig\": \"width: 1160px; height: 826px; top: 44px; right: 50px; z-index: 99; left: 693px;\",\n            \"stylesmall\": \"left: 535px; width: 466px; height: 276px; top: 287px; z-index: 1\",\n            \"class\": \"scaledframe\",\n            \"name\": \"dsetf\",\n            \"id\": \"dsetf\"\n        });      \n     \n        \n        msg.dsktp.windows.push({\n            \"title\": \"System Notes\",\n            \"group\": \"settings\",\n            \"description\": \"System Notes\",\n            \"root\": \"tunnel\",\n            \"src\": \"/settings?filter=notes&basic=1\",\n            \"stylebig\": \"right: 50px; width: 1050px; height: 800px; top: 50px; background-color: rgb(222 222 222);\",\n            \"stylesmall\": \"right: 50px; width: 500px; height: 600px; top: 50px; background-color: rgb(222 222 222);\",\n            \"z-order\": 1,\n            \"class\": \"ifr\",\n            \"name\": \"notesf\",\n            \"id\": \"notesf\",\n            \"background-color\": \"rgb(222 222 222)\"\n        });\n        \n        \n        msg.dsktp.windows.push({\n            \"title\": \"Custom Values\",\n            \"group\": \"settings\",\n            \"description\": \"System variables manually set\",\n            \"root\": \"tunnel\",\n            \"src\": \"/section/sheet?sheet=custom_values&basic=1\",\n            \"stylebig\": \"right: 50px; width: 1050px; height: 800px; top: 50px; background-color: rgb(222 222 222);\",\n            \"stylesmall\": \"right: 50px; width: 500px; height: 600px; top: 50px; background-color: rgb(222 222 222);\",\n            \"z-order\": 1,\n            \"class\": \"scaledframe\",\n            \"name\": \"variablesf\",\n            \"id\": \"variablesf\",\n            \"background-color\": \"rgb(222 222 222)\"\n        });\n        \n        \n        msg.dsktp.windows.push({\n            \"title\": \"Units\",\n            \"group\": \"json\",\n            \"description\": \"System units\",\n            \"root\": \"tunnel\",\n            \"src\": \"/section/jsoneditor?json=units&basic=1\",\n            \"stylebig\": \"right: 50px; width: 1050px; height: 800px; top: 50px; background-color: rgb(222 222 222);\",\n            \"stylesmall\": \"right: 50px; width: 500px; height: 600px; top: 50px; background-color: rgb(222 222 222);\",\n            \"z-order\": 1,\n            \"class\": \"ifr\",\n            \"name\": \"unitsf\",\n            \"id\": \"unitsf\",\n            \"background-color\": \"rgb(222 222 222)\"\n        });\n        \n        \n        msg.dsktp.windows.push({\n            \"title\": \"People\",\n            \"group\": \"json\",\n            \"description\": \"Contacts\",\n            \"root\": \"tunnel\",\n            \"src\": \"/section/jsoneditor?json=people&basic=1\",\n            \"stylebig\": \"right: 50px; width: 1050px; height: 800px; top: 50px; background-color: rgb(222 222 222);\",\n            \"stylesmall\": \"right: 50px; width: 500px; height: 600px; top: 50px; background-color: rgb(222 222 222);\",\n            \"z-order\": 1,\n            \"class\": \"ifr\",\n            \"name\": \"peoplef\",\n            \"id\": \"peoplef\",\n            \"background-color\": \"rgb(222 222 222)\"\n        });\n        \n        if (tunnelNR.indexOf(\"http\")>-1) {\n\n                msg.dsktp.windows.push({\n                    \"title\": \"Node-RED Dashboard\",\n                    \"root\": \"tunnelNR\",\n                    \"src\":  \"/ui\",\n                    \"group\": \"nodered\",\n                    \"stylesmall\": \"right: 50px; width: 466px; height: 276px; top: 285px; z-index: 118;\",\n                    \"stylebig\": \"width: 1160px; height: 826px; top: 44px; right: 50px; z-index: 128; left: 693px;\",\n                    \"z-order\": 1,\n                    \"class\": \"ifr\",\n                    \"name\": \"nrdashboardf\",\n                    \"id\": \"nrdashboardf\"\n                });\n                \n                msg.dsktp.windows.push({\n                    \"title\": \"Node-RED Editor\",\n                    \"group\": \"nodered\",\n                    \"root\": \"tunnelNR\",\n                    \"src\": \"/\",\n                    \"stylebig\": \"width: 1160px; height: 826px; top: 44px; right: 50px; z-index: 128; left: 693px;\",\n                    \"stylesmall\": \"left: 535px; width: 466px; height: 276px; top: 287px; z-index: 111;\",\n                    \"z-order\": 1,\n                    \"class\": \"ifr\",\n                    \"name\": \"nrf\",\n                    \"id\": \"nrf\"\n                });\n        }\n        \n        \n        if (tunnel.indexOf(\"http\")>-1) {\n            \n            msg.dsktp.windows.push({\n                    \"title\": \"Upload File\",\n                    \"group\": \"nodered\",\n                    \"root\": \"tunnel\",\n                    \"src\":  \"/upload\",\n                    \"stylebig\": \"width: 1160px; height: 826px; top: 44px; right: 50px; z-index: 99; left: 693px;\",\n                    \"stylesmall\": \"left: 535px; width: 466px; height: 400px; top: 287px; z-index: 1\",\n                    \"class\": \"scaledframe\",\n                    \"name\": \"uploadf\",\n                    \"id\": \"uploadf\"\n                });  \n        \n        }\n                \n        \n      \n        if (global.get(\"readings.\"+n+\".\"+dev+\".dat.tF.value\")) {\n        \n            msg.dsktp.windows.push({\n                \"root\": \"tunnel\",\n                \"src\":  \"/dashboard/view?svg=/files/svg/bmshatfr3.svg&show=\" + n + \"//\" + dev + \"//&update=10&network=\" + n + \"&idlist=\" + dev,\n                \"style\": \"background: none; width: 1193px; height: 700px; top: 49px; right: 50px; z-index: 120; left: 663px;\",\n                \"title\": \"Network Guages\",\n                \"group\": \"network_temps\",\n                \"stylebig\": \"background:none; width: 1193px; height: 700px; top: 49px; right: 50px; z-index: 120; left: 663px;\",\n                \"stylesmall\": \"background:none; left: 48px; top: 599px; width: 464px; height: 279px; z-index: 116; display: inline;\",\n                \"z-order\": 1,\n                \"class\": \"ifr\",\n                \"id\": \"bmshatf\"\n            });\n            \n            \n            msg.dsktp.windows.push({\n                \"title\": \"Graph of Network Temperatures\",\n                \"group\": \"network_temps\",\n                \"root\": \"tunnel\",\n                \"src\": \"/graph?show=\" + n + \".\" + dev + \".dat.tR,\" + n + \".\" + dev + \".dat.tF&basic=1\",\n                \"stylesmall\": \"right: 30px; width: 309px; height: 150px; top: 698px; left: 44px; z-index: 111;\",\n                \"stylebig\": \"width: 1356px; height: 662px; top: 11px; right: 50px; z-index: 111; left: 532px;\",\n                \"z-order\": 1,\n                \"class\": \"scaledframe\",\n                \"name\": \"graphbmsf\",\n                \"id\": \"graphbmsf\",\n                \"laststyle\": \"stylebig\"\n            });    \n        \n        }\n        \n    var hashiu=false;\n    var hasch=false;\n    \n    for (var d in global.get(\"readings.\"+n)) {\n        \n        var dt = global.get(\"readings.\"+n+\".\"+d+\".system.deviceType.value\") || \"\";\n        \n        if (dt.toLowerCase().indexOf(\"hiu\")>-1) { \n            \n            hashiu = true;\n            \n            var chstat = parseInt(global.get(\"readings.\"+n+\".\"+d+\".dat.stat.value\") || 0);\n            var svgf = \"singleplatehiu\";\n            if (chstat>-1) { svgf = \"twinplatehiu\"; }\n           \n             msg.dsktp.windows.push({\n                \"title\": (chstat>-1 ? \"Twin\" : \"Single\") + \" Plate HIU - \" + d,\n                \"group\": d,\n                \"root\": \"tunnel\",\n                \"src\": \"/dashboard/view?svg=/files/svg/\" + (chstat>-1 ? \"twinplatehiu\" : \"singleplatehiu\") + \".svg&show=\" + n + \"//\" + d + \"//&update=10&network=\" + n + \"&idlist=\" + d + \"&useSSL=false\",\n                \"stylebig\": \"width: 1193px; height: \" + (chstat>-1 ? \"700\" : \"550\") + \"px; top: 49px; right: 50px; z-index: 120; left: 663px;\",\n                \"stylesmall\": \"left: 48px; top: 599px; width: 464px; height: 279px; z-index: 116; display: inline;\",\n                \"z-order\": 1,\n                \"class\": \"ifr\",\n                \"id\": \"frame\"+ d\n            });\n            \n            \n            msg.dsktp.windows.push({\n                \"title\": \"Graph DHW - \"+d,\n                \"group\": d,\n                \"description\": \"Graph of hot water operation\",\n                \"root\": \"tunnel\",\n                \"src\": \"/graph?show=\" + n + \".\" + d + \".dat.tCo,\" + n + \".\" + d + \".dat.tHoDHW,\" + n + \".\" + d + \".dat.fC,\" + n + \".\" + d + \".settings.setpoint,\" + n + \".\" + d + \".dat.kwHDHW&basic=1\",\n                \"stylesmall\": \"right: 30px; width: 309px; height: 150px; top: 698px; left: 44px; z-index: 111;\",\n                \"stylebig\": \"width: 1356px; height: 662px; top: 11px; right: 50px; z-index: 111; left: 532px;\",\n                \"z-order\": 1,\n                \"class\": \"scaledframe\",\n                \"name\": \"graphdhwf\"+d,\n                \"id\": \"graphdhwf\",\n                \"laststyle\": \"stylebig\"\n            });\n            \n            if (chstat>-1) { \n            \n                hasch = true;\n            \n                msg.dsktp.windows.push({\n                    \"title\": \"Graph CH - \"+d,\n                    \"group\": d,\n                    \"description\": \"Graph of central heating operation\",\n                    \"root\": \"tunnel\",\n                    \"src\": \"/graph?show=\" + n + \".\" + d + \".dat.tCHo,\" + n + \".\" + d + \".dat.tHoCH,\" + n + \".\" + d + \".dat.stat,\" + n + \".\" + d + \".settings.HESupply,\" + n + \".\" + d + \".dat.kwHCH&basic=1\",\n                    \"stylesmall\": \"right: 30px; width: 309px; height: 150px; top: 698px; left: 44px; z-index: 111;\",\n                    \"stylebig\": \"width: 1356px; height: 662px; top: 11px; right: 50px; z-index: 111; left: 532px;\",\n                    \"z-order\": 1,\n                    \"class\": \"scaledframe\",\n                    \"name\": \"graphchf\"+d,\n                    \"id\": \"graphchf\"+d,\n                    \"laststyle\": \"stylebig\"\n                });\n                \n                \n                //msg.dsktp.windows.push();\n                \n            \n            }\n            \n            // break;  // remove if multiple HIUs\n            \n        }\n    }\n\n\n\n    if (hashiu==true) {\n        \n        if (hasch==true) {\n            \n            msg.dsktp.windows.push({\n                \"title\": \"Wiki - The DATA HIU\",\n                \"group\": \"wiki\",\n                \"description\": \"Wiki Page on the DATA HIU\",\n                \"src\": \"https://heatweb.co.uk/w/index.php?title=The_DATA_HIU\",\n                \"stylebig\": \"right: 50px; width: 1050px; height: 800px; top: 50px; \",\n                \"stylesmall\": \"right: 50px; width: 500px; height: 600px; top: 50px; \",\n                \"z-order\": 1,\n                \"class\": \"ifr\",\n                \"name\": \"wikidata\",\n                \"id\": \"wikidata\"\n            });\n            \n            msg.dsktp.windows.push({\n                \"title\": \"Installation - The DATA HIU\",\n                \"group\": \"wiki\",\n                \"description\": \"Installation Instructions on the DATA HIU\",\n                \"src\": \"https://www.heatweb.co.uk/w/images/5/55/TIL_PDF_Binders_Installation_Instructions_D3.pdf\",\n                \"stylebig\": \"right: 56px; width: 450px; height: 700px; top: 90px;\",\n                \"z-order\": 1,\n                \"class\": \"ifr\",\n                \"name\": \"pdfdata\",\n                \"id\": \"pdfdata\"\n            });\n            \n        } else {\n            \n             msg.dsktp.windows.push({\n                \"title\": \"Wiki - The SLIM HIU\",\n                \"group\": \"wiki\",\n                \"description\": \"Wiki Page on the SLIM HIU\",\n                \"src\": \"https://heatweb.co.uk/w/index.php?title=The_SLIM_HIU\",\n                \"stylebig\": \"right: 50px; width: 1050px; height: 800px; top: 50px; \",\n                \"stylesmall\": \"right: 50px; width: 500px; height: 600px; top: 50px; \",\n                \"z-order\": 1,\n                \"class\": \"ifr\",\n                \"name\": \"wikislim\",\n                \"id\": \"wikislim\"\n            });\n            \n             \n            msg.dsktp.windows.push({\n                \"title\": \"Installation - The SLIM HIU\",\n                \"group\": \"wiki\",\n                \"description\": \"Installation Instructions on the SLIM HIU\",\n                \"src\": \"https://www.heatweb.co.uk/w/images/d/d3/SLIM_User_and_Installation_Instructions.pdf\",\n                \"stylebig\": \"right: 56px; width: 450px; height: 700px; top: 90px;\",\n                \"z-order\": 1,\n                \"class\": \"ifr\",\n                \"name\": \"pdfslim\",\n                \"id\": \"pdfslim\"\n            });\n            //http://www.heatweb.co.uk/w/images/d/d3/SLIM_User_and_Installation_Instructions.pdf\n            \n        }\n        \n    }\n\n\n\n\n    \n       \n}\n\n\nvar morew = [\n        {\n            \"title\": \"Single Plate HIU - e00501baf6980c15\",\n            \"src\": msg.payload + \"/dashboard/view?svg=/files/svg/singleplatehiu.svg&show=tilhiusc//e00501baf6980c15//&update=5&network=tilhiusc&idlist=e00501baf6980c15\",\n            \"style\": \"left: 679px; top: 38px; z-index: 106;\",\n            \"z-order\": 1,\n            \"class\": \"ifr\",\n            \"id\": \"frame1\"\n        },\n        {\n            \"title\": \"Desktop Preferences\",\n            \"style\": \"right: 30px; top: 30px; width: 200px; height: 65px; min-height: 65px; max-height: 65px;\",\n            \"z-order\": 1,\n            \"class\": \"ifr\",\n            \"id\": \"preferences\",\n            \"body\": \"<span class='changebgimage' title='Change Background'>B</span>\"\n        },\n        \n        {\n            \"title\": \"Temperature Sensors 3\",\n            \"description\": \"Circuit diagram with pressure & temperature sensors\",\n            \"src\": msg.payload + \"/dashboard/view?svg=/files/svg/bmshatfr3.svg&show=KkkCpGTv//IMSI234500021473914/dat/&update=5&network=KkkCpGTv&idlist=IMSI234500021473914\",\n            \"style\": \"left: 688px; top: 45px; background: none;\",\n            \"z-order\": 1,\n            \"class\": \"ifr\",\n            \"id\": \"frame5\"\n        },\n        {\n            \"title\": \"Graph of Heating Operation\",\n            \"description\": \"Circuit diagram with pressure & temperature sensors\",\n            \"src\": msg.payload + \"/graph?show=tilhiusc.e00501baf6980c15.dat.tCHo,tilhiusc.e00501baf6980c15.dat.tHoCH,tilhiusc.e00501baf6980c15.dat.stat,tilhiusc.e00501baf6980c15.settings.HESupply,tilhiusc.e00501baf6980c15.dat.kwHCH,tilhiusc.tilhiusc01.weather.temp_c&basic=1\",\n            \"style\": \"right: 30px; width: 839px; height: 396px; top: 537px; z-index: 115; left: 1024px;\",\n            \"stylesmall\": \"right: 30px; width: 309px; height: 150px; top: 537px; left: 1024px;\",\n            \"stylebig\": \"right: 30px; width: 1500px; height: 700px; top: 50px; right: 50px;\",\n            \"z-order\": 1,\n            \"class\": \"scaledframe\",\n            \"name\": \"graphf\",\n            \"id\": \"graphf\"\n        }\n        \n        \n        ];\n\n\nmsg.payload = {\n    \"title\": \"Desktop\",\n    \"subtitle\": \"Heatweb Remote Desktop\",\n    \"body\": \"\"\n};\n\nmsg.desktop = \"desktopremote\";\n\nglobal.set(\"desktop.desktop1\",msg.dsktp);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 340,
+        "wires": [
+            [
+                "92e9a8ee.3622a8"
+            ]
+        ]
+    },
+    {
+        "id": "da930b34.7a4ab8",
+        "type": "inject",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 340,
+        "wires": [
+            [
+                "73c76140.340b6"
+            ]
+        ]
+    },
+    {
+        "id": "be82bcaf.62b3c",
+        "type": "trigger",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "2",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 320,
+        "y": 240,
+        "wires": [
+            [
+                "db15a9d5.5bbeb8"
+            ]
+        ]
+    },
+    {
+        "id": "73c76140.340b6",
+        "type": "template",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "field": "help",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<div class=\"help\">\n<p><b>Welcome to Heatweb Desktop</b></p> \n<p>This page has been generated to provide a simple user interface to controllers running <b>node-red-contrib-heatweb</b>.</p>\n<p>For further information please visit the <a target=\"_blank\"  href=\"http://heatweb.co.uk/w/index.php?title=Heatweb_Desktops\">Heatweb Wiki Help</a></p>\n</div>",
+        "output": "str",
+        "x": 560,
+        "y": 340,
+        "wires": [
+            [
+                "918b13f2.3a278"
+            ]
+        ]
+    },
+    {
+        "id": "1d802351.fc2c1d",
+        "type": "inject",
+        "z": "78c26ef1.61809",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "str",
+        "x": 210,
+        "y": 760,
+        "wires": [
+            [
+                "1db19101.30569f"
+            ]
+        ]
+    },
+    {
+        "id": "a40f5e18.a99ed",
+        "type": "template",
+        "z": "78c26ef1.61809",
+        "name": "Notes",
+        "field": "payload.body",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<section><script src=\"https://cdn.ckeditor.com/4.15.1/full-all/ckeditor.js\"></script>\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\n<form method=\"POST\" action=\"/api/settings\" target=\"postframe\"><input type=\"hidden\" name=\"network\" id=\"network\" value=\"local\"><input type=\"hidden\" name=\"node\" id=\"node\" value=\"{{{node}}}\">\n\n<div class=\"form-group\"><textarea name=\"settings.notes\">\n{{{notes}}}\n</textarea>\n<script>\n        var editor = CKEDITOR.replace( \"settings.notes\" );\n        \neditor.on( 'instanceReady', function(event){\n    if(event.editor.getCommand( 'maximize' ).state == CKEDITOR.TRISTATE_OFF);//ckeck if maximize is off\n        event.editor.execCommand( 'maximize');\n});\n        \n</script>\n</div>\n<p align=\"right\"><input  class=\"btn btn-primary\" type=\"submit\"></p>\n</form>\n<iframe display=\"none\" frameborder=\"0\" id=\"postframe\" name=\"postframe\"></iframe></section>\n",
+        "output": "str",
+        "x": 870,
+        "y": 760,
+        "wires": [
+            [
+                "ee55a2af.c6b07"
+            ]
+        ]
+    },
+    {
+        "id": "ee55a2af.c6b07",
+        "type": "change",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "sections.notes",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1121,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7ff1d479.896aac",
+        "type": "function",
+        "z": "78c26ef1.61809",
+        "name": "server",
+        "func": "\nvar dev = global.get(\"node\");\nvar net = global.get(\"localNetworkId\");\nmsg.server = global.get(\"readings.\" + net + \".\" + dev + \".system.tunnel.value\") || \"\";\nmsg.node = dev;\n\nmsg.notes = global.get(\"settings.notes.value\") || \"Please enter notes here.\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 760,
+        "wires": [
+            [
+                "fcc88dd5.4c5f5"
+            ]
+        ]
+    },
+    {
+        "id": "1db19101.30569f",
+        "type": "change",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"title\":\"Notes\",\"subtitle\":\"Notes Editor\",\"body\":\"\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 760,
+        "wires": [
+            [
+                "7ff1d479.896aac"
+            ]
+        ]
+    },
+    {
+        "id": "fcc88dd5.4c5f5",
+        "type": "rbe",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "notes",
+        "x": 730,
+        "y": 760,
+        "wires": [
+            [
+                "a40f5e18.a99ed"
+            ]
+        ]
+    },
+    {
+        "id": "f9a55d85.eb77e",
+        "type": "inject",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "settings.desktopjson.value",
+        "payloadType": "global",
+        "x": 810,
+        "y": 180,
+        "wires": [
+            [
+                "b7cdcaf8.b41608"
+            ]
+        ]
+    },
+    {
+        "id": "1851cd5d.ff4353",
+        "type": "debug",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b7cdcaf8.b41608",
+        "type": "json",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 1030,
+        "y": 220,
+        "wires": [
+            [
+                "1851cd5d.ff4353",
+                "cb9f97a3.b97448"
+            ]
+        ]
+    },
+    {
+        "id": "94bf54ce.e0ec38",
+        "type": "link in",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "links": [
+            "cb9f97a3.b97448"
+        ],
+        "x": 155,
+        "y": 540,
+        "wires": [
+            [
+                "cad104b6.6133a8"
+            ]
+        ]
+    },
+    {
+        "id": "cb9f97a3.b97448",
+        "type": "link out",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "links": [
+            "94bf54ce.e0ec38"
+        ],
+        "x": 1195,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "cad104b6.6133a8",
+        "type": "change",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "dsktp",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"title\":\"Desktop\",\"subtitle\":\"Heatweb Desktop\",\"body\":\"\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "desktop",
+                "pt": "msg",
+                "to": "desktop_user",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 540,
+        "wires": [
+            [
+                "92e9a8ee.3622a8"
+            ]
+        ]
+    },
+    {
+        "id": "3f0b2d27.bf9082",
+        "type": "inject",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 860,
+        "wires": [
+            [
+                "ac121bda.652e18"
+            ]
+        ]
+    },
+    {
+        "id": "ac121bda.652e18",
+        "type": "change",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "settings.desktopjson.type",
+                "pt": "global",
+                "to": "json",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a118733.07df49",
+        "type": "inject",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 260,
+        "y": 80,
+        "wires": [
+            [
+                "75361da6.f66e74"
+            ]
+        ]
+    },
+    {
+        "id": "75361da6.f66e74",
+        "type": "change",
+        "z": "78c26ef1.61809",
+        "name": "DELETE Custom Desktop ",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "settings.desktopjson",
+                "pt": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "db15a9d5.5bbeb8",
+        "type": "switch",
+        "z": "78c26ef1.61809",
+        "name": "desktopjson ?",
+        "property": "settings.desktopjson.value",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 520,
+        "y": 240,
+        "wires": [
+            [
+                "795d42ea.303f8c"
+            ],
+            [
+                "73c76140.340b6"
+            ]
+        ]
+    },
+    {
+        "id": "795d42ea.303f8c",
+        "type": "change",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "settings.desktopjson.value",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 220,
+        "wires": [
+            [
+                "b7cdcaf8.b41608"
+            ]
+        ]
+    },
+    {
+        "id": "d9e24a50.2ab778",
+        "type": "inject",
+        "z": "78c26ef1.61809",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "be82bcaf.62b3c"
+            ]
+        ]
+    }
+]

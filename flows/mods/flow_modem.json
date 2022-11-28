@@ -1,0 +1,1920 @@
+[
+    {
+        "id": "e5ac7e17.ed588",
+        "type": "tab",
+        "label": "Modem",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "7c829d7d.a1b0d4",
+        "type": "exec",
+        "z": "e5ac7e17.ed588",
+        "command": "sudo dhclient -v usb0",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 420,
+        "y": 160,
+        "wires": [
+            [
+                "2020bed1.ef28c2"
+            ],
+            [
+                "2020bed1.ef28c2"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "3425a325.68318c",
+        "type": "inject",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 160,
+        "wires": [
+            [
+                "7c829d7d.a1b0d4"
+            ]
+        ]
+    },
+    {
+        "id": "2020bed1.ef28c2",
+        "type": "debug",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "711f170f.8cef58",
+        "type": "inject",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 280,
+        "wires": [
+            [
+                "dfe3c7f5.c38f38"
+            ]
+        ]
+    },
+    {
+        "id": "dfe3c7f5.c38f38",
+        "type": "exec",
+        "z": "e5ac7e17.ed588",
+        "command": "ifconfig",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 380,
+        "y": 280,
+        "wires": [
+            [
+                "fef5f601.f7bb18"
+            ],
+            [
+                "c39bc090.e6d6c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c39bc090.e6d6c",
+        "type": "debug",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "fef5f601.f7bb18",
+        "type": "split",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "splt": "\\n\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 510,
+        "y": 260,
+        "wires": [
+            [
+                "c39bc090.e6d6c",
+                "574a1267.9ccf1c"
+            ]
+        ]
+    },
+    {
+        "id": "c9499f5f.d85b3",
+        "type": "serial in",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "serial": "60681d0e.666ce4",
+        "x": 290,
+        "y": 440,
+        "wires": [
+            [
+                "eb38fb75.d900c8",
+                "276b1aaf.4e33f6",
+                "6b2fcfe9.0d2cf"
+            ]
+        ]
+    },
+    {
+        "id": "5b6733fd.18f01c",
+        "type": "serial out",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "serial": "60681d0e.666ce4",
+        "x": 1070,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "eb38fb75.d900c8",
+        "type": "debug",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "71185256.8f9a5c",
+        "type": "inject",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "AT",
+        "payloadType": "str",
+        "x": 270,
+        "y": 560,
+        "wires": [
+            [
+                "79181ca1.67bf74"
+            ]
+        ]
+    },
+    {
+        "id": "79181ca1.67bf74",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "AT+CSQ",
+        "func": "msg.payload = \"AT+CSQ\\r\\n\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 560,
+        "wires": [
+            [
+                "fd05929f.24d11"
+            ]
+        ]
+    },
+    {
+        "id": "d6df67c8.e171c8",
+        "type": "ui_text_input",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "group": "b77843a6.57d18",
+        "order": 4,
+        "width": "6",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": "500",
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 880,
+        "y": 820,
+        "wires": [
+            [
+                "12fb6206.18b35e"
+            ]
+        ]
+    },
+    {
+        "id": "9faddde6.032a5",
+        "type": "ui_template",
+        "z": "e5ac7e17.ed588",
+        "group": "b77843a6.57d18",
+        "name": "Virtual Keyboard",
+        "order": 2,
+        "width": "6",
+        "height": "1",
+        "format": "<script> \n    \n// the semi-colon before function invocation is a safety net against concatenated\n// scripts and/or other plugins which may not be closed properly.\n; (function ($, window, document, undefined) {\n\n    // undefined is used here as the undefined global variable in ECMAScript 3 is\n    // mutable (ie. it can be changed by someone else). undefined isn't really being\n    // passed in so we can ensure the value of it is truly undefined. In ES5, undefined\n    // can no longer be modified.\n\n    // window and document are passed through as local variable rather than global\n    // as this (slightly) quickens the resolution process and can be more efficiently\n    // minified (especially when both are regularly referenced in your plugin).\n\n    // Create the defaults once\n    var pluginName = \"jkeyboard\",\n        defaults = {\n            layout: \"english\",\n            input: $('#input'),\n            customLayouts: {\n                selectable: []\n            },\n        };\n\n\n    var function_keys = {\n        backspace: {\n            text: 'DEL',\n        },\n        return: {\n            text: 'Enter'\n        },\n        shift: {\n            text: 'Shift'\n        },\n        space: {\n            text: 'Space'\n        },\n        numeric_switch: {\n            text: '123',\n            command: function () {\n                this.createKeyboard('numeric');\n                this.events();\n            }\n        },\n        layout_switch: {\n            text: '<i class=\"fa fa-keyboard-o\" aria-hidden=\"true\"></i>',\n            command: function () {\n                var l = this.toggleLayout();\n                this.createKeyboard(l);\n                this.events();\n            }\n        },\n        character_switch: {\n            text: 'ABC',\n            command: function () {\n                this.createKeyboard(layout);\n                this.events();\n            }\n        },\n        symbol_switch: {\n            text: '#+=',\n            command: function () {\n                this.createKeyboard('symbolic');\n                this.events();\n            }\n        }\n    };\n\n\n    var layouts = {\n        selectable: ['azeri', 'english', 'russian','french', 'emoji'],\n        azeri: [\n            ['q', 'ü', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'ö', 'ğ'],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ı', 'ə'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'ç', 'ş', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        english: [\n            ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        russian: [\n            ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х'],\n            ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],\n            ['shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        french: [\n            ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l','à','ç'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm','é','è', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        emoji: [\n            ['😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆', '😉', '😊',],\n            ['😋', '😎', '😍', '😘', 'g', 'h', 'j', 'k', 'l','à','ç'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm','é','è', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],            \n        numeric: [\n            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],\n            ['-', '/', ':', ';', '(', ')', '$', '&', '@', '\"'],\n            ['symbol_switch', '.', ',', '?', '!', \"'\", 'backspace'],\n            ['character_switch', 'layout_switch', 'space', 'return'],\n        ],\n        numbers_only: [\n            ['1', '2', '3',],\n            ['4', '5', '6',],\n            ['7', '8', '9',],\n            ['0', 'backspace'],\n        ],\n        symbolic: [\n            ['[', ']', '{', '}', '#', '%', '^', '*', '+', '='],\n            ['_', '\\\\', '|', '~', '<', '>'],\n            ['numeric_switch', '.', ',', '?', '!', \"'\", 'backspace'],\n            ['character_switch', 'layout_switch', 'space', 'return'],\n\n        ]\n    }\n\n    var shift = false, capslock = false, layout = 'english', layout_id = 0;\n\n    // The actual plugin constructor\n    function Plugin(element, options) {\n        this.element = element;\n        // jQuery has an extend method which merges the contents of two or\n        // more objects, storing the result in the first object. The first object\n        // is generally empty as we don't want to alter the default options for\n        // future instances of the plugin\n        this.settings = $.extend({}, defaults, options);\n        // Extend & Merge the cusom layouts\n        layouts = $.extend(true, {}, this.settings.customLayouts, layouts);\n        if (Array.isArray(this.settings.customLayouts.selectable)) {\n            $.merge(layouts.selectable, this.settings.customLayouts.selectable);\n        }\n        this._defaults = defaults;\n        this._name = pluginName;\n        this.init();\n    }\n\n    Plugin.prototype = {\n        init: function () {\n            layout = this.settings.layout;\n            this.createKeyboard(layout);\n            this.events();\n        },\n\n        setInput: function (newInputField) {\n            this.settings.input = newInputField;\n        },\n\n        createKeyboard: function (layout) {\n            shift = false;\n            capslock = false;\n\n            var keyboard_container = $('<ul/>').addClass('jkeyboard'),\n                me = this;\n\n            layouts[layout].forEach(function (line, index) {\n                var line_container = $('<li/>').addClass('jline');\n                line_container.append(me.createLine(line));\n                keyboard_container.append(line_container);\n            });\n\n            $(this.element).html('').append(keyboard_container);\n        },\n\n        createLine: function (line) {\n            var line_container = $('<ul/>');\n\n            line.forEach(function (key, index) {\n                var key_container = $('<li/>').addClass('jkey').data('command', key);\n\n                if (function_keys[key]) {\n                    key_container.addClass(key).html(function_keys[key].text);\n                }\n                else {\n                    key_container.addClass('letter').html(key);\n                }\n\n                line_container.append(key_container);\n            })\n\n            return line_container;\n        },\n\n        events: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift'),\n                space_key = $(this.element).find('.space'),\n                backspace_key = $(this.element).find('.backspace'),\n                return_key = $(this.element).find('.return'),\n\n                me = this,\n                fkeys = Object.keys(function_keys).map(function (k) {\n                    return '.' + k;\n                }).join(',');\n\n            letters.on('click', function () {\n                me.type((shift || capslock) ? $(this).text().toUpperCase() : $(this).text());\n            });\n\n            space_key.on('click', function () {\n                me.type(' ');\n            });\n\n            return_key.on('click', function () {\n                me.type(\"\\n\");\n                me.settings.input.parents('form').submit();\n            });\n\n            backspace_key.on('click', function () {\n                me.backspace();\n            });\n\n            shift_key.on('click', function () {\n                if (capslock) {\n                    me.toggleShiftOff();\n                    capslock = false;\n                } else {\n                    me.toggleShiftOn();\n                }\n            }).on('dblclick', function () {\n                capslock = true;\n            });\n\n\n            $(fkeys).on('click', function () {\n                var command = function_keys[$(this).data('command')].command;\n                if (!command) return;\n\n                command.call(me);\n            });\n        },\n\n        type: function (key) {\n            var input = this.settings.input,\n                val = input.val(),\n                input_node = input.get(0),\n                start = input_node.selectionStart,\n                end = input_node.selectionEnd;\n\n            var max_length = $(input).attr(\"maxlength\");\n            if (start == end && end == val.length) {\n                if (!max_length || val.length < max_length) {\n                    input.val(val + key);\n                    input.change()\n                    $('#vkeyname').text(val + key)\n                }\n            } else {\n                if (input_node.type == \"text\"){\n                    var new_string = this.insertToString(start, end, val, key);\n                    input.val(new_string);\n                    start++;\n                    end = start;\n                    input_node.setSelectionRange(start, end);\n                }else{\n                    input.val(val + key);\n                }\n                input.change()\n                $('#vkeyname').text(val + key)\n                \n            }\n            input.trigger('focus');\n\n            if (shift && !capslock) {\n                this.toggleShiftOff();\n            }\n        },\n\n        backspace: function () {\n            var input = this.settings.input,\n                val = input.val();\n                input_node = input.get(0),\n                start = input_node.selectionStart,\n                end = input_node.selectionEnd;\n            if (input.type == \"text\"){\n                input.val(val.slice(0, start-1) + val.slice(start))\n                input_node.setSelectionRange(start-1, start-1);\n                console.log(val)\n                $('#vkeyname').text(val)\n            }else{\n                input.val(val.slice(0,-1))\n                $('#vkeyname').text(val.slice(0,-1))\n            }\n            input.change()\n            input.focus()\n        },\n\n        toggleShiftOn: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift');\n\n            letters.addClass('uppercase');\n            shift_key.addClass('active')\n            shift = true;\n        },\n\n        toggleShiftOff: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift');\n\n            letters.removeClass('uppercase');\n            shift_key.removeClass('active');\n            shift = false;\n        },\n\n        toggleLayout: function () {\n            layout_id = layout_id || 0;\n            var plain_layouts = layouts.selectable;\n            layout_id++;\n\n            var current_id = layout_id % plain_layouts.length;\n            var SelectedLayoutName = plain_layouts[current_id];\n            $('#vkeyname').text('V-Keyboard ' + SelectedLayoutName )\n            return plain_layouts[current_id];\n        },\n\n        insertToString: function (start, end, string, insert_string) {\n            return string.substring(0, start) + insert_string + string.substring(end, string.length);\n        }\n    };\n\n        /*\n\t\t// A really lightweight plugin wrapper around the constructor,\n\t\t// preventing against multiple instantiations\n\t\t$.fn[ pluginName ] = function ( options ) {\n\t\t\t\treturn this.each(function() {\n\t\t\t\t\t\tif ( !$.data( this, \"plugin_\" + pluginName ) ) {\n\t\t\t\t\t\t\t\t$.data( this, \"plugin_\" + pluginName, new Plugin( this, options ) );\n\t\t\t\t\t\t}\n\t\t\t\t});\n\t\t};\n        */\n        var methods = {\n            init: function(options) {\n                if (!this.data(\"plugin_\" + pluginName)) {\n                    this.data(\"plugin_\" + pluginName, new Plugin(this, options));\n                }\n            },\n\t\t\tsetInput: function(content) {\n\t\t\t\tthis.data(\"plugin_\" + pluginName).setInput($(content));\n            },\n            setLayout: function(layoutname) {\n                // change layout if it is not match current\n                object = this.data(\"plugin_\" + pluginName);\n                if (typeof(layouts[layoutname]) !== 'undefined' && object.settings.layout != layoutname) {\n                    object.settings.layout = layoutname;\n                    object.createKeyboard(layoutname);\n                    object.events();\n                };\n            },\n        };\n\n\t\t$.fn[pluginName] = function (methodOrOptions) {\n            if (methods[methodOrOptions]) {\n                return methods[methodOrOptions].apply(this.first(), Array.prototype.slice.call( arguments, 1));\n            } else if (typeof methodOrOptions === 'object' || ! methodOrOptions) {\n                // Default to \"init\"\n                return methods.init.apply(this.first(), arguments);\n            } else {\n                $.error('Method ' +  methodOrOptions + ' does not exist on jQuery.tooltip');\n            }\n        };\n\n})(jQuery, window, document);\n</script>\n<style>\n    .jkeyboard {\n  display: inline-block;\n}\n.jkeyboard, .jkeyboard .jline, .jkeyboard .jline ul {\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n.jkeyboard .jline {\n  text-align: center;\n  margin-left: -14px;\n}\n.jkeyboard .jline ul li {\n  font-family: arial, sans-serif;\n  font-size: 20px;\n  display: inline-block;\n  border: 1px solid #468db3;\n  -webkit-box-shadow: 0 0 3px #468db3;\n  -webkit-box-shadow: inset 0 0 3px #468db3;\n  margin: 5px 0 1px 6px;\n  color: #000000;\n  border-radius: 5px;\n  width: 52px;\n  height: 52px;\n  box-sizing: border-box;\n  text-align: center;\n  line-height: 52px;\n  overflow: hidden;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: -moz-none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.jkeyboard .jline ul li.uppercase {\n  text-transform: uppercase;\n}\n.jkeyboard .jline ul li:hover, .jkeyboard .jline ul li:active {\n  background-color: #185a82;\n}\n.jkeyboard .jline .return {\n  width: 80px;\n}\n.jkeyboard .jline .space {\n  width: 366px;\n}\n.jkeyboard .jline .numeric_switch {\n  width: 65px;\n}\n.jkeyboard .jline .layout_switch {\n}\n.jkeyboard .jline .shift {\n  width: 60px;\n}\n.jkeyboard .jline .backspace {\n  width: 69px;\n}\n</style>\n\n\n\n\n<style>\nbody {font-family: Arial, Helvetica, sans-serif;}\n\n.nr-dashboard-theme .nr-dashboard-template .md-button:not(:first-of-type) {\n    margin-top: 0px;\n}\n\n/* The Modal (background) */\n.modal {\n    display: none; /* Hidden by default */\n    position: fixed; /* Stay in place */\n    opacity:0.99;\n    z-index: 100; /* Sit on top */\n    left: 0;\n    top: 0;\n    width: 100%; /* Full width */\n    height: 100%; /* Full height */\n    overflow: auto; /* Enable scroll if needed */\n    background-color: rgb(0,0,0); /* Fallback color */\n    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n/* Modal Content */\n.modal-content {\n    position: fixed;\n    background-color: #fefefe;\n    margin: auto;\n    padding: 0;\n    bottom: 0%;\n    left: 50%;\n    transform: translate(-50%, 0%);\n    border: 1px solid #888;\n    width: fit-content;\n    max-width: 100%;\n    max-height: 100%;\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);\n    -webkit-animation-name: animate;\n    -webkit-animation-duration: 0.4s;\n    animation-name: animate;\n    animation-duration: 0.4s\n}\n\n/* Add Animation */\n@-webkit-keyframes animate {\n    from {bottom:100%; opacity:0} \n    to {bottom:0%; opacity:1}\n}\n\n@keyframes animate {\n    from {bottom:100%; opacity:0}\n    to {bottom:0%; opacity:1}\n}\n\n/* The Close Button */\n.close {\n    color: black;\n    float: right;\n    font-size: 28px;\n    font-weight: bold;\n}\n\n.close:hover,\n.close:focus {\n    color: #000;\n    text-decoration: none;\n    cursor: pointer;\n}\n\n.modal-header {\n    padding: 2px 16px;\n    background-color: aliceblue;\n    color: white;\n}\n\n.modal-body {padding: 2px 16px;}\n\n.modal-footer {\n    padding: 2px 16px;\n    background-color: #5cb85c;\n    color: white;\n}\n</style>\n\n<!-- The Modal -->\n<div id=\"myModal\" class=\"modal\">\n\n  <!-- Modal content -->\n  <div class=\"modal-content\">\n      <div class=\"modal-header\">\n      <span class=\"close\" onclick=\"closeModal()\">&times;</span>\n      <h2 id=\"vkeyname\" style=\"background-color: aliceblue !important; color: black !important; text-align: center; min-height: 30px;\">V-Keyboard</h2>\n    </div>\n    <div class=\"modal-body\">\n        <div id=\"keyboard\"></div>\n        <div>\n        </div>\n    </div>\n  </div>\n</div>\n\n\n<script>\n    // Get the modal\nvar modal = document.getElementById('myModal');\n\n/*\n$('input[type=text]').click(function () {\n    $('#keyboard').unbind().removeData();\n        $('#keyboard').jkeyboard({\n            layout: \"english\",\n            input: $('#'+$(this).attr('id'))\n    });\n});\n\n$('input[type=number]').click(function () {\n    $('#keyboard').unbind().removeData();\n        $('#keyboard').jkeyboard({\n            layout: \"numbers_only\",\n            input: $('#'+$(this).attr('id'))\n    });\n});\n*/\n\nvar inputTags;\nvar inputType;\n\nvar getinputs = function() {\n    inputTags = document.getElementsByTagName(\"input\");\n    console.log(inputTags)\n    for (var i = 0; i < inputTags.length; i++) {\n        inputTags[i].addEventListener('click', openModal, false)\n    }\n}\n\nsetTimeout(function(){ getinputs(); }, 1000);\n\nvar inputTarget;\n\nvar openModal = function() {\n    inputType = event.target.type\n    inputTarget = event.target\n    var layoutName;\n    if (inputType == \"number\"){\n        //inputTarget.type = \"number\" //hack because chrome doesn't allow setselection in number inputs\n        //inputTarget.value = \"\"\n        layoutName = \"numbers_only\"\n    }else{\n        layoutName = \"english\"\n    }\n    $('#vkeyname').text(event.target.value)\n    $('#keyboard').unbind().removeData();\n    modal.style.display = \"block\";\n    $('#keyboard').jkeyboard({\n        layout: layoutName,\n        input: $('#'+$(this).attr('id'))\n    });\n}\n\n\n// Get the <span> element that closes the modal\nvar span = document.getElementsByClassName(\"close\")[0];\n\n// When the user clicks on <span> (x), close the modal\n//span.onclick = function(event) {\n  //closeModal()\n//}\n\n// When the user clicks anywhere outside of the modal, close it\nwindow.onclick = function(event) {\n    var source = event.target;\n    if (source == modal || source == span) {\n        closeModal(source)\n    }\n};\n\nvar closeModal = function(source){\n    //console.log(\"closing\")\n    modal.style.display = \"none\";\n   \n    if (inputType == \"number\"){\n        inputTarget.type = \"number\" //hack because chrome doesn't allow selectionstart on number inputs\n    }\n}\n\n</script>\n<script>\n\nvar clickState = 1;\nvar btn = document.querySelector('.VK');\n\nbtn.addEventListener('click', function(){\n\n  if (clickState == 0) {\n    this.textContent = 'V-KeyBoard On';\n    modal = document.getElementById('myModal');\n    clickState = 1;\n  } else {\n    this.textContent = 'V-KeyBoard Off';\n    modal = document.getElementById('empty');\n    clickState = 0;\n  }\n\n});\n</script>\n\n<style>\n.VK{\n    position: fixed;\n    top: 60px;\n    right: 20px;\n    height: 30px;\n}\n</style>\n\n<div id=\"empty\"></div>\n<button style=\"display:none\" class=\"VK\">V-KeyBoard On</button> ",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 300,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1bd1f4f4.b0984b",
+        "type": "ui_text",
+        "z": "e5ac7e17.ed588",
+        "group": "b77843a6.57d18",
+        "order": 6,
+        "width": "12",
+        "height": "1",
+        "name": "",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-right",
+        "className": "",
+        "x": 650,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "3263a6d1.18868a",
+        "type": "ui_button",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "group": "b77843a6.57d18",
+        "order": 5,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Send",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "atcmd",
+        "payloadType": "flow",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 110,
+        "y": 740,
+        "wires": [
+            [
+                "438f8baad725f8ae"
+            ]
+        ]
+    },
+    {
+        "id": "12fb6206.18b35e",
+        "type": "change",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "atcmd",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f1838977.023508",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "r n",
+        "func": "msg.payload = msg.payload + \"\\r\\n\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 760,
+        "wires": [
+            [
+                "fd05929f.24d11"
+            ]
+        ]
+    },
+    {
+        "id": "920f422e.d105a",
+        "type": "ui_dropdown",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "b77843a6.57d18",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Hello",
+                "value": "AT",
+                "type": "str"
+            },
+            {
+                "label": "OK?",
+                "value": "AT+CPSI?",
+                "type": "str"
+            },
+            {
+                "label": "Activate Modem",
+                "value": "AT+CUSBPIDSWITCH=9011,1,1",
+                "type": "str"
+            },
+            {
+                "label": "Modem Setup",
+                "value": "INSTALL",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 780,
+        "y": 880,
+        "wires": [
+            [
+                "d6df67c8.e171c8"
+            ]
+        ]
+    },
+    {
+        "id": "276b1aaf.4e33f6",
+        "type": "delay",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 490,
+        "y": 360,
+        "wires": [
+            [
+                "1bd1f4f4.b0984b"
+            ]
+        ]
+    },
+    {
+        "id": "574a1267.9ccf1c",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "func": "\nvar iface = msg.payload.split(\":\")[0]\n\nif (iface !== \"usb0\") { return null; }\n\nvar lines = msg.payload.split(\"\\n\");\n\nvar direc,ltype;\n\nvar oot = [];\n\nvar megabytesTotal = 0\n\n\n\nfor (var l in lines) {\n    \n    direct=\"\";\n    ltype=\"\";\n    var ootl = {};\n     \n    lines[l]=lines[l].trim(); \n     \n    if (lines[l].indexOf(\"RX\")>-1) { direc = \"RX\"; }\n    else if (lines[l].indexOf(\"TX\")>-1) { direc = \"TX\"; }\n    \n    if (direc==\"\") { continue; }\n    \n    if (lines[l].indexOf(\"bytes\")>-1) { \n        \n        ltype = \"megabytes\"; \n        ootl.payload = parseFloat(lines[l].split(\"bytes \")[1].split(\" \")[0]) / 1000000;\n        megabytesTotal = megabytesTotal + ootl.payload;\n        \n    }\n    else if (lines[l].indexOf(\"errors\")>-1) { \n        \n        ltype = \"errors\"; \n        ootl.payload = parseFloat(lines[l].split(\"errors \")[1].split(\" \")[0]);\n    }\n    \n    if (ltype==\"\") { continue; }\n    \n   \n    ootl.topic = \"modem/\" + ltype + direc;\n    oot.push(ootl);\n    \n    \n}\n\noot.push({\"topic\":\"modem/megabytesTotal\", \"payload\":megabytesTotal});\n\nvar megabytesPM = parseInt(1000000 * (megabytesTotal - (flow.get(\"mblast\") || megabytesTotal))) / 1000000;\nflow.set(\"mblast\",megabytesTotal);\noot.push({\"topic\":\"modem/megabytesPM\", \"payload\":megabytesPM});\noot.push({\"topic\":\"modem/kbps\", \"payload\":parseInt(1000000 * megabytesPM / 60)/1000});\n\nmsg.payload = oot;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 240,
+        "wires": [
+            [
+                "9363a59.3ae2c58"
+            ]
+        ]
+    },
+    {
+        "id": "6b5c1997.01a7f8",
+        "type": "debug",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "9363a59.3ae2c58",
+        "type": "split",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 920,
+        "y": 320,
+        "wires": [
+            [
+                "bd76ea25.e00358"
+            ]
+        ]
+    },
+    {
+        "id": "bd76ea25.e00358",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "func": "msg = msg.payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 320,
+        "wires": [
+            [
+                "6b5c1997.01a7f8",
+                "d30d586c.915748",
+                "df90a3fe.e3591"
+            ]
+        ]
+    },
+    {
+        "id": "d30d586c.915748",
+        "type": "link out",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 1195,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "6b2fcfe9.0d2cf",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "func": "\nflow.set(\"lastUSBin\", new Date().getTime());\n\nvar oot = [];\n\nif (msg.payload.indexOf(\"AT+CIMI\")>-1) {\n    \n    //msg.topic = \"modem/simIMSI\";\n    //msg.payload = msg.payload.split(\"AT+CIMI\")[1].split(\"\\n\")[1].trim();\n    oot.push({\"topic\":\"modem/simIMSI\", \"payload\":msg.payload.split(\"AT+CIMI\")[1].split(\"\\n\")[1].trim()});\n}\n\nelse if (msg.payload.indexOf(\"+CPSI:\")>-1) {\n    \n    //<System Mode>,<Operation Mode>,<MCC>-<MNC>,<TAC>,\n    //<SCellID>,<PCellID>,<Frequency Band>,<earfcn>,<dlbw>,\n    //<ulbw>,<RSRQ>,<RSRP>,<RSSI>,<RSSNR>\n    \n    if (msg.payload.indexOf(\"LTE\")>-1) {\n        \n        flow.set(\"online\",\"1\");\n        \n        var flds = msg.payload.split(\"CPSI:\")[1].trim().split(\",\");\n        \n        oot.push({\"topic\":\"modem/sysMode\", \"payload\":flds[0]});\n        oot.push({\"topic\":\"modem/opMode\", \"payload\":flds[1]});\n        oot.push({\"topic\":\"modem/MCC-MNC\", \"payload\":flds[2]});\n        oot.push({\"topic\":\"modem/TAC\", \"payload\":flds[3]});\n        oot.push({\"topic\":\"modem/SCellID\", \"payload\":flds[4]});\n        oot.push({\"topic\":\"modem/PCellID\", \"payload\":flds[5]});\n        oot.push({\"topic\":\"modem/frqBand\", \"payload\":flds[6]});\n        oot.push({\"topic\":\"modem/earfcn\", \"payload\":flds[7]});\n        oot.push({\"topic\":\"modem/dlbw\", \"payload\":flds[8]});\n        oot.push({\"topic\":\"modem/ulbw\", \"payload\":flds[9]});\n        oot.push({\"topic\":\"modem/RSRQ\", \"payload\":flds[10]});\n        oot.push({\"topic\":\"modem/RSRP\", \"payload\":parseInt(flds[11])/10});\n        oot.push({\"topic\":\"modem/RSSI\", \"payload\":flds[12]});\n        oot.push({\"topic\":\"modem/RSSNR\", \"payload\":flds[13].split(\"\\r\")[0]});\n        \n        var xpSignal = parseInt(140 + (parseInt(flds[11])/10));\n        \n        oot.push({\"topic\":\"system/signalGSM\", \"payload\":xpSignal});\n        \n        \n    }\n    else { flow.set(\"online\",\"0\"); }\n}\n\nif (oot.length<1) { return null; }\n\nmsg.payload = oot;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 440,
+        "wires": [
+            [
+                "175a4b92.2d7184",
+                "9363a59.3ae2c58"
+            ]
+        ]
+    },
+    {
+        "id": "175a4b92.2d7184",
+        "type": "debug",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "96f3e3e8.d29b9",
+        "type": "inject",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "23",
+        "topic": "",
+        "payload": "AT",
+        "payloadType": "str",
+        "x": 270,
+        "y": 620,
+        "wires": [
+            [
+                "916ca55c.5a6138"
+            ]
+        ]
+    },
+    {
+        "id": "916ca55c.5a6138",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "AT+CIMI",
+        "func": "msg.payload = \"AT+CIMI\\r\\n\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 620,
+        "wires": [
+            [
+                "fd05929f.24d11"
+            ]
+        ]
+    },
+    {
+        "id": "24ebaea5.b9caa2",
+        "type": "link in",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "links": [
+            "af6ed0a2.3108e",
+            "57951fb3.4ee4",
+            "9abe6fd2.97b23"
+        ],
+        "x": 315,
+        "y": 840,
+        "wires": [
+            [
+                "d97ffd0b.16ce8",
+                "a635c368.ad31f"
+            ]
+        ]
+    },
+    {
+        "id": "d97ffd0b.16ce8",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "AT+CRESET",
+        "func": "msg.payload = \"AT+CRESET\\r\\n\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 840,
+        "wires": [
+            [
+                "fd05929f.24d11"
+            ]
+        ]
+    },
+    {
+        "id": "5fa614ad.04f2ac",
+        "type": "inject",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "56",
+        "topic": "",
+        "payload": "AT",
+        "payloadType": "str",
+        "x": 210,
+        "y": 680,
+        "wires": [
+            [
+                "4f7fe9ee.c25d78"
+            ]
+        ]
+    },
+    {
+        "id": "4f7fe9ee.c25d78",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "AT+CPSI?",
+        "func": "msg.payload = \"AT+CPSI?\\r\\n\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 680,
+        "wires": [
+            [
+                "79c6ddc0b15b8fda"
+            ]
+        ]
+    },
+    {
+        "id": "fd05929f.24d11",
+        "type": "delay",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 840,
+        "y": 620,
+        "wires": [
+            [
+                "5b6733fd.18f01c",
+                "22f2dfa512ad2292"
+            ]
+        ]
+    },
+    {
+        "id": "df90a3fe.e3591",
+        "type": "switch",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "signalGSM",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "kbps",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 1070,
+        "y": 180,
+        "wires": [
+            [
+                "586160b5.d6aa",
+                "1d6e8e74.a04832"
+            ],
+            [
+                "1d6e8e74.a04832"
+            ]
+        ]
+    },
+    {
+        "id": "586160b5.d6aa",
+        "type": "link out",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "links": [
+            "9189a361.6d051",
+            "26b0c09f.0e9e2"
+        ],
+        "x": 1215,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "1d6e8e74.a04832",
+        "type": "ui_chart",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "group": "b77843a6.57d18",
+        "order": 7,
+        "width": "12",
+        "height": "4",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#e91c1c",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1230,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f4b3803ef5437f68",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "AT+CUSBPIDSWITCH=9011,1,1",
+        "func": "flow.set(\"pleasewait\",\"0\");\nmsg.payload = \"AT+CUSBPIDSWITCH=9011,1,1\\r\\n\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 1420,
+        "wires": [
+            [
+                "caf7800a27331e05"
+            ]
+        ]
+    },
+    {
+        "id": "21ea23703486a270",
+        "type": "delay",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "30",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 520,
+        "y": 1500,
+        "wires": [
+            [
+                "76fd3a5a4487ac35"
+            ]
+        ]
+    },
+    {
+        "id": "caf7800a27331e05",
+        "type": "link out",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "7235b73df778d84e",
+            "39f3596dbd265d3c",
+            "605f3ea78619baa5"
+        ],
+        "x": 1115,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "cdd7e22c8b5c62a8",
+        "type": "inject",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 1160,
+        "wires": [
+            [
+                "52ec6736dba708e9"
+            ]
+        ]
+    },
+    {
+        "id": "22b53b86b8311f25",
+        "type": "delay",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 520,
+        "y": 1200,
+        "wires": [
+            [
+                "4f5eb4d14c8ddd17",
+                "35e63d3ae8f16a98"
+            ]
+        ]
+    },
+    {
+        "id": "4f5eb4d14c8ddd17",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "AT+CGDCONT=1,\"IPV4V6\",\"wlapn.com\"",
+        "func": "flow.set(\"pleasewait\",\"1\");\nmsg.payload = 'AT+CGDCONT=1,\"IPV4V6\",\"wlapn.com\"\\r\\n'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 1200,
+        "wires": [
+            [
+                "caf7800a27331e05"
+            ]
+        ]
+    },
+    {
+        "id": "07d39bd08c908783",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "AT+CGDCONT=6,\"IPV4V6\",\"wlapn.com\"",
+        "func": "msg.payload = 'AT+CGDCONT=6,\"IPV4V6\",\"wlapn.com\"\\r\\n'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 1240,
+        "wires": [
+            [
+                "caf7800a27331e05"
+            ]
+        ]
+    },
+    {
+        "id": "9ba77a9b7babc629",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "AT+CFUN=0",
+        "func": "msg.payload = 'AT+CFUN=0\\r\\n'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 1320,
+        "wires": [
+            [
+                "caf7800a27331e05"
+            ]
+        ]
+    },
+    {
+        "id": "b93b709fc3b94735",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "AT+CGAUTH=1,1,”user”,”pass”",
+        "func": "msg.payload = 'AT+CGAUTH=1,1,”user”,”pass”\\r\\n'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1280,
+        "wires": [
+            [
+                "caf7800a27331e05"
+            ]
+        ]
+    },
+    {
+        "id": "5f39b3cc4616dd5d",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "AT+CFUN=1",
+        "func": "msg.payload = 'AT+CFUN=1\\r\\n'\n\nflow.set(\"pleasewait\",\"0\");\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 1360,
+        "wires": [
+            [
+                "caf7800a27331e05"
+            ]
+        ]
+    },
+    {
+        "id": "35e63d3ae8f16a98",
+        "type": "delay",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 520,
+        "y": 1240,
+        "wires": [
+            [
+                "07d39bd08c908783",
+                "1be320cefcce9908"
+            ]
+        ]
+    },
+    {
+        "id": "fac664aa3bbffccf",
+        "type": "delay",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 520,
+        "y": 1320,
+        "wires": [
+            [
+                "9ba77a9b7babc629",
+                "25af3a2b21d49c26"
+            ]
+        ]
+    },
+    {
+        "id": "1be320cefcce9908",
+        "type": "delay",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 520,
+        "y": 1280,
+        "wires": [
+            [
+                "b93b709fc3b94735",
+                "fac664aa3bbffccf"
+            ]
+        ]
+    },
+    {
+        "id": "25af3a2b21d49c26",
+        "type": "delay",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 520,
+        "y": 1360,
+        "wires": [
+            [
+                "5f39b3cc4616dd5d",
+                "65a99de8ba942ef2"
+            ]
+        ]
+    },
+    {
+        "id": "605f3ea78619baa5",
+        "type": "link in",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "links": [
+            "caf7800a27331e05",
+            "440b8c6c5f6627a5",
+            "7de6aedc7e614b36",
+            "71efc6e058463938"
+        ],
+        "x": 595,
+        "y": 820,
+        "wires": [
+            [
+                "fd05929f.24d11",
+                "d6df67c8.e171c8"
+            ]
+        ]
+    },
+    {
+        "id": "438f8baad725f8ae",
+        "type": "switch",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "INSTALL",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 270,
+        "y": 740,
+        "wires": [
+            [
+                "f0a2cba9d112fba8"
+            ],
+            [
+                "f1838977.023508",
+                "939eef33c83d714e"
+            ]
+        ]
+    },
+    {
+        "id": "9b5fc8faed037ff8",
+        "type": "link in",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "links": [
+            "f0a2cba9d112fba8"
+        ],
+        "x": 215,
+        "y": 1080,
+        "wires": [
+            [
+                "4a808590d1eeac28"
+            ]
+        ]
+    },
+    {
+        "id": "f0a2cba9d112fba8",
+        "type": "link out",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "9b5fc8faed037ff8"
+        ],
+        "x": 395,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "117e934d197b58ff",
+        "type": "ui_toast",
+        "z": "e5ac7e17.ed588",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": false,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "Cancel",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 530,
+        "y": 1080,
+        "wires": [
+            [
+                "d2d984eb5a8d6778"
+            ]
+        ]
+    },
+    {
+        "id": "4a808590d1eeac28",
+        "type": "change",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Run Modem Setup Script ?",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 1080,
+        "wires": [
+            [
+                "117e934d197b58ff"
+            ]
+        ]
+    },
+    {
+        "id": "d2d984eb5a8d6778",
+        "type": "switch",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "OK",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 680,
+        "y": 1080,
+        "wires": [
+            [
+                "52ec6736dba708e9"
+            ]
+        ]
+    },
+    {
+        "id": "6e63eb45b45a06bb",
+        "type": "change",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pleasewait",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "939eef33c83d714e",
+        "type": "trigger",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "30",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 230,
+        "y": 960,
+        "wires": [
+            [
+                "6e63eb45b45a06bb"
+            ]
+        ]
+    },
+    {
+        "id": "79c6ddc0b15b8fda",
+        "type": "switch",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "property": "pleasewait",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 510,
+        "y": 680,
+        "wires": [
+            [
+                "fd05929f.24d11"
+            ]
+        ]
+    },
+    {
+        "id": "65a99de8ba942ef2",
+        "type": "delay",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 520,
+        "y": 1420,
+        "wires": [
+            [
+                "f4b3803ef5437f68",
+                "21ea23703486a270"
+            ]
+        ]
+    },
+    {
+        "id": "76fd3a5a4487ac35",
+        "type": "link out",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "beb83274c8bcddc0",
+            "f3a681e925c883e3"
+        ],
+        "x": 655,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "f3a681e925c883e3",
+        "type": "link in",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "links": [
+            "76fd3a5a4487ac35"
+        ],
+        "x": 255,
+        "y": 100,
+        "wires": [
+            [
+                "7c829d7d.a1b0d4"
+            ]
+        ]
+    },
+    {
+        "id": "3235120eb5b90ad3",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "AT+CUSBPIDSWITCH=9011,1,1",
+        "func": "flow.set(\"pleasewait\",\"1\");\nmsg.payload = \"AT+CUSBPIDSWITCH=9011,1,1\\r\\n\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 80,
+        "wires": [
+            [
+                "71efc6e058463938"
+            ]
+        ]
+    },
+    {
+        "id": "71efc6e058463938",
+        "type": "link out",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "7235b73df778d84e",
+            "39f3596dbd265d3c",
+            "605f3ea78619baa5"
+        ],
+        "x": 1215,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "55ac6574f4603f5d",
+        "type": "inject",
+        "z": "e5ac7e17.ed588",
+        "name": "Check we have data connection",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "70",
+        "topic": "",
+        "payloadType": "date",
+        "x": 520,
+        "y": 80,
+        "wires": [
+            [
+                "b18de9bda97cb912"
+            ]
+        ]
+    },
+    {
+        "id": "b18de9bda97cb912",
+        "type": "switch",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "property": "mblast",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 1,
+        "x": 770,
+        "y": 80,
+        "wires": [
+            [
+                "3235120eb5b90ad3"
+            ]
+        ]
+    },
+    {
+        "id": "49a7fe423cb56453",
+        "type": "inject",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 420,
+        "y": 800,
+        "wires": [
+            [
+                "d97ffd0b.16ce8"
+            ]
+        ]
+    },
+    {
+        "id": "a80708043d309cc2",
+        "type": "inject",
+        "z": "e5ac7e17.ed588",
+        "name": "WATCHDOG",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "180",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "120",
+        "topic": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 1260,
+        "wires": [
+            [
+                "2c9ad358020f4746"
+            ]
+        ]
+    },
+    {
+        "id": "2c9ad358020f4746",
+        "type": "switch",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "property": "online",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 220,
+        "y": 1320,
+        "wires": [
+            [
+                "47d392971a8074a6"
+            ]
+        ]
+    },
+    {
+        "id": "47d392971a8074a6",
+        "type": "trigger",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "nul",
+        "duration": "30",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 230,
+        "y": 1380,
+        "wires": [
+            [
+                "22b53b86b8311f25"
+            ]
+        ]
+    },
+    {
+        "id": "52ec6736dba708e9",
+        "type": "change",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pleasewait",
+                "pt": "flow",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 1160,
+        "wires": [
+            [
+                "22b53b86b8311f25"
+            ]
+        ]
+    },
+    {
+        "id": "158cdd47cb477c10",
+        "type": "inject",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "60",
+        "topic": "",
+        "payloadType": "date",
+        "x": 950,
+        "y": 500,
+        "wires": [
+            [
+                "5507813f64cd2354"
+            ]
+        ]
+    },
+    {
+        "id": "c319a36a810036dd",
+        "type": "link out",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 1315,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "8b61a7856712d34b",
+        "type": "debug",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1430,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "5507813f64cd2354",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "alarms",
+        "func": "var lastUSBin = flow.get(\"lastUSBin\") || 0;\n\nvar timin = new Date().getTime();\n\n\n\n\nvar age = (timin - lastUSBin)/1000;\n\nmsg.topic = \"alarm/modemUSB\";\nmsg.title = \"Modem USB serial connection\";\nif (age < 90) { msg.payload = \"ok\"; }\nelse { msg.payload = \"No modem response\"; }\n\n\nvar msg2 = {};\nmsg2.topic = \"alarm/modemLTE\";\nmsg2.title = \"Modem LTE 4G connection\";\n\nif (msg.payload !== \"ok\") { \n    \n    msg2.payload = \"No modem response\";  \n    \n    var sysage = (timin - flow.get(\"starttime\"))/1000;\n    if (sysage < 900) {\n        return [msg,msg2,null];\n        \n    } else {\n        msg2.topic = \"alarm/modemLTE\";\n        msg2.payload = \"Rebooting System\";\n        return [msg,msg2,msg2];\n    } \n}\n\nelse if (flow.get(\"online\")==\"0\") { msg2.payload = \"No LTE connection\"; }\n\nelse { msg2.payload = \"ok\"; global.set(\"rebooting\",null); }\n    \nreturn [msg,msg2,null];",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 500,
+        "wires": [
+            [
+                "c319a36a810036dd",
+                "8b61a7856712d34b"
+            ],
+            [
+                "c319a36a810036dd",
+                "8b61a7856712d34b"
+            ],
+            [
+                "8b61a7856712d34b",
+                "4e17a4fc854e300d"
+            ]
+        ]
+    },
+    {
+        "id": "bab088b27b68b38d",
+        "type": "inject",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 900,
+        "y": 560,
+        "wires": [
+            [
+                "8a085c8808bb5f94"
+            ]
+        ]
+    },
+    {
+        "id": "8a085c8808bb5f94",
+        "type": "change",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "starttime",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1100,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e4c88d669242d574",
+        "type": "exec",
+        "z": "e5ac7e17.ed588",
+        "command": "sudo shutdown now",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1520,
+        "y": 560,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4e17a4fc854e300d",
+        "type": "delay",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "15",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1340,
+        "y": 560,
+        "wires": [
+            [
+                "e4c88d669242d574"
+            ]
+        ]
+    },
+    {
+        "id": "22f2dfa512ad2292",
+        "type": "debug",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "a635c368.ad31f",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "resetModemCount",
+        "func": "msg.topic = \"set/resetModemCount\";\nmsg.title = \"No Internet Reset Modem Counter\";\n\nmsg.payload = global.get(\"settings.resetModemCount.value\") || 0;\n\nmsg.payload = parseInt(msg.payload) + 1;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 900,
+        "wires": [
+            [
+                "da6da2d1c0e082f0"
+            ]
+        ]
+    },
+    {
+        "id": "da6da2d1c0e082f0",
+        "type": "link out",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 615,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "60681d0e.666ce4",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB2",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "100",
+        "bin": "false",
+        "out": "time",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "b77843a6.57d18",
+        "type": "ui_group",
+        "name": "Modem AT Interface",
+        "tab": "c8185974.465238",
+        "order": 1,
+        "disp": false,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c8185974.465238",
+        "type": "ui_tab",
+        "name": "Modem",
+        "icon": "fa-signal",
+        "order": 20,
+        "disabled": false,
+        "hidden": false
+    }
+]

@@ -1,0 +1,3200 @@
+[
+    {
+        "id": "cb3266cf.ceb2a",
+        "type": "tab",
+        "label": "Bluetooth",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a858abda.b7d77",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "Read",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 700,
+        "wires": [
+            [
+                "9f13027f.9f8808"
+            ]
+        ]
+    },
+    {
+        "id": "45473e03.df3498",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "cat /dev/rfcomm0",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 870,
+        "y": 700,
+        "wires": [
+            [
+                "51c88b2.956b274",
+                "a996be6a.e727"
+            ],
+            [],
+            [
+                "b992978f.665558"
+            ]
+        ]
+    },
+    {
+        "id": "4a2fb33a.62f5fc",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1430,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "385e693.de33216",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "sudo hciconfig hci0 piscan",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 380,
+        "y": 320,
+        "wires": [
+            [
+                "897c437d.39759"
+            ],
+            [],
+            [
+                "1493d3ef.6fa4e4"
+            ]
+        ]
+    },
+    {
+        "id": "1493d3ef.6fa4e4",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "sudo sdptool add --channel=22 SP",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 400,
+        "y": 400,
+        "wires": [
+            [
+                "a8057537.49018"
+            ],
+            [],
+            [
+                "dc16379b.4717a"
+            ]
+        ]
+    },
+    {
+        "id": "dc16379b.4717a",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "sdptool browse local",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 360,
+        "y": 480,
+        "wires": [
+            [
+                "dcedb959.ee39c8"
+            ],
+            [],
+            [
+                "a74efa98.2a58b"
+            ]
+        ]
+    },
+    {
+        "id": "9a4a61a8.5e423",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "30",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "933ad751.a89f8"
+            ]
+        ]
+    },
+    {
+        "id": "16e4e3e.218451c",
+        "type": "comment",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "info": "https://puravidaapps.com/btchat.php\n\nhttps://raspberrypi.stackexchange.com/questions/41776/failed-to-connect-to-sdp-server-on-ffffff000000-no-such-file-or-directory\n\nExploring Beaglebone Page 373\n\n> sudo nano /etc/systemd/system/dbus-org.bluez.service\n> \n> Change \tExecStart=/usr/lib/bluetooth/bluetoothd\n> \n> \n> To \tExecStart=/usr/lib/bluetooth/bluetoothd --compat\n> \t\tExecStartPost=/usr/bin/sdptool add --channel=22 SP\n> ",
+        "x": 1480,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "933ad751.a89f8",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "sudo chmod 777 /var/run/sdp",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 390,
+        "y": 240,
+        "wires": [
+            [
+                "7170a91d.d4af78"
+            ],
+            [],
+            [
+                "385e693.de33216"
+            ]
+        ]
+    },
+    {
+        "id": "7170a91d.d4af78",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "897c437d.39759",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "a8057537.49018",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "dcedb959.ee39c8",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "a74efa98.2a58b",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "start",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "connected",
+                "pt": "flow",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 560,
+        "wires": [
+            [
+                "4ff1b6b2.3d3e08",
+                "cd254164.8a57d"
+            ]
+        ]
+    },
+    {
+        "id": "ad5f7bdd.d340a",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "59928121.15ae7",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "connected=1",
+        "rules": [
+            {
+                "t": "set",
+                "p": "connected",
+                "pt": "flow",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 700,
+        "wires": [
+            [
+                "45473e03.df3498"
+            ]
+        ]
+    },
+    {
+        "id": "b992978f.665558",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "connected=0",
+        "rules": [
+            {
+                "t": "set",
+                "p": "connected",
+                "pt": "flow",
+                "to": "0",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "repeat",
+                "pt": "flow",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1070,
+        "y": 740,
+        "wires": [
+            [
+                "4719ec99.fd797c"
+            ]
+        ]
+    },
+    {
+        "id": "cd254164.8a57d",
+        "type": "switch",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "property": "connected",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 310,
+        "y": 760,
+        "wires": [
+            [
+                "4719ec99.fd797c"
+            ],
+            [
+                "906a651c.30cf08"
+            ],
+            [
+                "a7ecee69.045eb"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a996be6a.e727",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "906a651c.30cf08",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "connected=2",
+        "rules": [
+            {
+                "t": "set",
+                "p": "connected",
+                "pt": "flow",
+                "to": "2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 800,
+        "wires": [
+            [
+                "7f66b6d8.e4b7d8"
+            ]
+        ]
+    },
+    {
+        "id": "2bc11c9d.250c74",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "str",
+        "x": 130,
+        "y": 520,
+        "wires": [
+            [
+                "a74efa98.2a58b"
+            ]
+        ]
+    },
+    {
+        "id": "eb818ae9.47fc7",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "sdptool browse local",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1560,
+        "y": 420,
+        "wires": [
+            [
+                "af9eedcd.3004a"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "52fedb65.af6bec",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1520,
+        "y": 360,
+        "wires": [
+            [
+                "eb818ae9.47fc7"
+            ]
+        ]
+    },
+    {
+        "id": "d151aa96.212d38",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1610,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "af9eedcd.3004a",
+        "type": "split",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "splt": "Service Name:",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1560,
+        "y": 480,
+        "wires": [
+            [
+                "d151aa96.212d38"
+            ]
+        ]
+    },
+    {
+        "id": "f235db6c.9658a",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "kill",
+                "v": "SIGINT",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "SIGINT",
+        "payloadType": "str",
+        "x": 130,
+        "y": 640,
+        "wires": [
+            [
+                "4ff1b6b2.3d3e08"
+            ]
+        ]
+    },
+    {
+        "id": "5aab3443.d2e0bc",
+        "type": "switch",
+        "z": "cb3266cf.ceb2a",
+        "name": "connected=3 ?",
+        "property": "connected",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 1,
+        "x": 1240,
+        "y": 660,
+        "wires": [
+            [
+                "4a2fb33a.62f5fc",
+                "56eb85b3.cc4c64"
+            ]
+        ]
+    },
+    {
+        "id": "ec8563.de6bdaa",
+        "type": "file",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "filename": "/dev/rfcomm0",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 2140,
+        "y": 1300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7f66b6d8.e4b7d8",
+        "type": "function",
+        "z": "cb3266cf.ceb2a",
+        "name": "Hello",
+        "func": "msg.payload = \"Connecting.\";\n\nflow.set(\"conecttime\",new Date().getTime());\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 900,
+        "wires": [
+            [
+                "cff37297.f5ef78"
+            ]
+        ]
+    },
+    {
+        "id": "cff37297.f5ef78",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "connected=3",
+        "rules": [
+            {
+                "t": "set",
+                "p": "connected",
+                "pt": "flow",
+                "to": "3",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "setup",
+                "pt": "flow",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 820,
+        "y": 900,
+        "wires": [
+            [
+                "1ebcd37c.8f61fd"
+            ]
+        ]
+    },
+    {
+        "id": "c3670a6f.38c7d",
+        "type": "link in",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "1ebcd37c.8f61fd",
+            "6e596ef3.307ab8",
+            "84542de.7fb905",
+            "120c59a1.6bcdd6"
+        ],
+        "x": 955,
+        "y": 980,
+        "wires": [
+            [
+                "d3d31d4c.d59fc"
+            ]
+        ]
+    },
+    {
+        "id": "1ebcd37c.8f61fd",
+        "type": "link out",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "c3670a6f.38c7d",
+            "c28ee7d6.c232c8",
+            "ae09edb9.dd02a"
+        ],
+        "x": 945,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "a9f406b0.ce4cf8",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 500,
+        "y": 880,
+        "wires": [
+            [
+                "7f66b6d8.e4b7d8"
+            ]
+        ]
+    },
+    {
+        "id": "3def2c9c.fe4194",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1490,
+        "y": 60,
+        "wires": [
+            [
+                "aabb62fd.defb68"
+            ]
+        ]
+    },
+    {
+        "id": "bc6ce2b2.1851d8",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "buttons",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1500,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aabb62fd.defb68",
+        "type": "template",
+        "z": "cb3266cf.ceb2a",
+        "name": "Buttons",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<style>\n    \n    .sectionhead {\n\t\n\tfont-size: 16px;\n\ttext-align: center;\n\tpadding: 8px 8px;\n\t\n\t\n    }\n    \n    .cmd {\n\t\n\tpadding: 7px 10px;\n\t\n\t\n    }\n\n</style>",
+        "output": "str",
+        "x": 1480,
+        "y": 100,
+        "wires": [
+            [
+                "bc6ce2b2.1851d8"
+            ]
+        ]
+    },
+    {
+        "id": "56eb85b3.cc4c64",
+        "type": "link out",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "2c665455.66217c"
+        ],
+        "x": 1375,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "2c665455.66217c",
+        "type": "link in",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "56eb85b3.cc4c64"
+        ],
+        "x": 275,
+        "y": 120,
+        "wires": [
+            [
+                "50fd5790.ed22a"
+            ]
+        ]
+    },
+    {
+        "id": "cda41707.b604e8",
+        "type": "comment",
+        "z": "cb3266cf.ceb2a",
+        "name": "User Input",
+        "info": "",
+        "x": 140,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "84542de.7fb905",
+        "type": "link out",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "c3670a6f.38c7d",
+            "52ce1bce.f094ac"
+        ],
+        "x": 1155,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c65d02d1.45fc5",
+        "type": "comment",
+        "z": "cb3266cf.ceb2a",
+        "name": "User Output",
+        "info": "",
+        "x": 1270,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "50fd5790.ed22a",
+        "type": "function",
+        "z": "cb3266cf.ceb2a",
+        "name": "User Interface",
+        "func": "\nvar incP = msg.payload;\nvar incT = msg.topic;\n\n\nif (msg.payload.split(\":\")[0]!==\"1234\") {\n    \n    msg.payload = \"Connection refused.\"\n    return [msg,null];\n}\n\n\nvar userReq = msg.payload.substr(msg.payload.indexOf(\":\")+1);\n\nif (userReq.substr(0,8)==\"readings\") {\n    \n    \n    return [null,null,msg];\n}\n\n// MQTT JSON\nelse if (userReq.substr(0,6)==\"MQTT:{\") {\n    \n    \n    var oot = {};\n    var mqttobj = JSON.parse(userReq.substr(5));\n    if(mqttobj[\"set\"]) {\n        for(var ss in mqttobj[\"set\"]) {\n            oot[\"set\" + \"/\" + ss] = mqttobj[\"set\"][ss];\n        }\n    }\n    msg.payload = oot;\n    return [null,msg];\n}\n\nelse if (userReq.substr(0,5)==\"MQTT:\") {\n    \n    var topc = userReq.substr(5);\n    var vv = topc.split(\"=\")[1];\n    topc = topc.split(\"=\")[0];\n    \n    msg.payload = {};\n    msg.payload[topc] = vv;\n    return [null,msg];\n}\n\n\n\nvar readings = global.get(\"readings.\" +  global.get(\"localNetworkId\") + \".\" + global.get(\"node\"));\n\nvar btns = \"\";\nfor (var g in readings) {\n        \n     btns += '<button class=\"button\" onclick=\"myFunction(' + \"'\" + g + \"/#'\" + ')\">' + g +'</button>';\n           \n}\n\nmsg.delay=\"\";\nmsg.payload = \"\";\nvar filter = \"\";\n\n\n\nif (userReq==\"cmd\") {\n    \n    var cmds = JSON.parse(readings.json.commands.value) || [];\n    var cbtns=\"\";\n\n    //msg.payload=\"<b>\" + global.get(\"node\") + \"/\" + grp + \"/#<hr>\";\n    msg.payload += \"<div class='sectionhead' width='100%'>Standard Commands</div>\";\n        //}\n        \n    for (var k in cmds) {\n        \n         cbtns += '<button class=\"button cmd\" onclick=\"myFunction(' + \"'MQTT:\" + cmds[k][\"topic\"] + \"=\" + cmds[k][\"default\"] + \"'\" + ')\">' + cmds[k][\"title\"] +'</button>';\n     \n\n    }\n    \n    msg.payload += cbtns; \n    msg.payload += flow.get(\"buttons\"); \n    flow.set(\"repeat\",\"\");  \n    msg.delay=0; \n    \n}\n\n\n\nelse if (userReq.indexOf(\"/\")>0) {\n    \n    var grp = userReq.split(\"/\")[0];\n    if(userReq.split(\"/\").length==3) { \n        \n        grp = userReq.split(\"/\")[1]; \n        \n        if (userReq.split(\"/\")[2]!==\"#\") {  filter=userReq.split(\"/\")[2]; }\n    }\n    \n    \n    \n\n    //msg.payload=\"<b>\" + global.get(\"node\") + \"/\" + grp + \"/#<hr>\";\n    msg.payload += \"<div class='sectionhead' width='100%'>\" + global.get(\"node\") + \" / \" + grp + \" / \" + (filter || \"#\") + \"</div>\";\n        //}\n        \n    for (var k in readings[grp]) {\n        \n        \n        if (filter!==\"\" && filter!==k) { continue; }\n        \n        var units =  readings[grp][k].units || \"\";\n        if (units!==\"\") { units = \"<td width='1px'><small>\" + units + \"</small></td>\"; }\n        //if (readings[grp][k].title) {\n        \n         msg.payload += '<div onclick=\"myFunction(' + \"'\" + global.get(\"node\") + \"/\" + grp + \"/\" + k + \"'\" + ')\">' ;\n    \n        \n            msg.payload += \"<table width='100%'><tr><td><small>\" + (readings[grp][k].title || k) + \"</td><td align='right'><b>\" + readings[grp][k].value + \"</b></td>\" + units + \"</tr></table><hr class='hr'>\";\n        \n        msg.payload += '</div>';\n        \n         if (filter!==\"\" && grp==\"settings\") { \n             \n             var opt = global.get(\"settings\");\n             if (opt[k] && opt[k][\"options\"]) {\n                var opts = opt[k][\"options\"].split(\",\");\n                for (var optss in opts) {\n                    msg.payload += '<button class=\"button cmd\" onclick=\"myFunction(' + \"'MQTT:\" + global.get(\"node\") + \"/set/\" + k + \"=\" + opts[optss].split(\":\")[0] + \"'\" + ')\">' + (opts[optss].split(\":\")[1] || opts[optss]) +'</button>';\n                }    \n             }\n             else if (opt[k] && (opt[k][\"min\"]||opt[k][\"min\"]===0) && opt[k][\"max\"]) {\n                \n                for (var rc = parseInt(opt[k][\"min\"]); rc<=parseInt(opt[k][\"max\"]); rc++) {\n                    msg.payload += '<button class=\"button cmd\" onclick=\"myFunction(' + \"'MQTT:\" + global.get(\"node\") + \"/set/\" + k + \"=\" + rc + \"'\" + ')\">' + rc + (opt[k][\"units\"]||\"\") +'</button>';\n                }    \n             }\n             \n         }\n         \n        //  else if (filter!==\"\" && !isNaN(readings[grp][k].value)) { \n        \n        //         msg.payload += flow.get(\"chartjs\");\n                \n        //  }\n        //}\n    }\n    \n    msg.payload += flow.get(\"buttons\"); \n    \n    if (grp==\"ana\"||grp==\"dat\"||grp==\"stat\"||grp==\"system\") { msg.delay=10000; }\n    else { msg.delay=55000; }\n    \n}\n\n\n\n\nelse {\n    \n    \n    //var readings = global.get(\"readings.local.\" + global.get(\"node\"));\n\n    msg.payload=\"<hr class='hr'>\";\n    \n    for (var k in readings[\"system\"]) {\n        \n        if (readings[\"system\"][k].title) {\n            msg.payload += \"<table width='100%'><tr><td><small>\" + readings[\"system\"][k].title + \"</td><td align='right'><b>\" + readings[\"system\"][k].value + \"</b></td></tr></table><hr class='hr'>\";\n        }\n    }\n    \n    \n    msg.payload += \"<table width='100%'><tr><td><small>Local IP Address</td><td align='right'><b>\" + readings[\"cpu\"][\"net_1_ip4\"].value + \"</b></td></tr></table><hr class='hr'>\";\n    \n    msg.payload += \"<table width='100%'><tr><td><small>Current State</td><td align='right'><b>\" + readings[\"stat\"][\"state\"].value + \"</b></td></tr></table><hr class='hr'>\";\n    \n    msg.payload += btns; //'<button onclick=\"myFunction(' + \"'ana/#'\" + ')\">Analogue</button>';\n    msg.payload += flow.get(\"buttons\"); \n        \n    \n}\n\nif (msg.delay>0) { \n \n    flow.set(\"repeat\",10000);  \n    flow.set(\"incP\",incP);  \n    flow.set(\"incT\",incT);  \n    \n} else {\n    flow.set(\"repeat\",\"\");  \n}\n\nmsg.payload = '<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0\">\\n' + msg.payload;\n\nreturn [msg,null];",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 660,
+        "y": 120,
+        "wires": [
+            [
+                "fdb411ee.2b1ae",
+                "b79969e6.39f9d"
+            ],
+            [
+                "5ce66945.bda39",
+                "e25d1fb2.a6c7d"
+            ],
+            [
+                "31dc491a.e5bb46"
+            ]
+        ]
+    },
+    {
+        "id": "29507ab.16cdd06",
+        "type": "link in",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "30844a14.a4fee6"
+        ],
+        "x": 555,
+        "y": 920,
+        "wires": [
+            [
+                "7f66b6d8.e4b7d8"
+            ]
+        ]
+    },
+    {
+        "id": "ea58f756.366fc",
+        "type": "comment",
+        "z": "cb3266cf.ceb2a",
+        "name": "Output to Serial Port",
+        "info": "",
+        "x": 1090,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "5652c39d.6f5d4c",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "sudo rfkill unblock bluetooth",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1860,
+        "y": 860,
+        "wires": [
+            [
+                "49e73943.fd2168"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d4651b44.e7dd38",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1800,
+        "y": 820,
+        "wires": [
+            [
+                "5652c39d.6f5d4c"
+            ]
+        ]
+    },
+    {
+        "id": "49e73943.fd2168",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "connected",
+                "pt": "flow",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1830,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "54e664a9.155e0c",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 1660,
+        "wires": [
+            [
+                "a8680785.16fa1"
+            ]
+        ]
+    },
+    {
+        "id": "a8680785.16fa1",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "pidof rfcomm",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 400,
+        "y": 1660,
+        "wires": [
+            [
+                "473755e1.a7d06c"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e4a99f78.47a8e8",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 1660,
+        "wires": []
+    },
+    {
+        "id": "473755e1.a7d06c",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "kill",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 560,
+        "y": 1660,
+        "wires": [
+            [
+                "e4a99f78.47a8e8"
+            ],
+            [],
+            [
+                "b0e1d8fd.5b9f3"
+            ]
+        ]
+    },
+    {
+        "id": "265915ff.ee2922",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "connected=0",
+        "rules": [
+            {
+                "t": "set",
+                "p": "connected",
+                "pt": "flow",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2d1f7336.efffbc",
+        "type": "trigger",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "op1": "",
+        "op2": "1",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "90",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1570,
+        "y": 860,
+        "wires": [
+            [
+                "5652c39d.6f5d4c"
+            ]
+        ]
+    },
+    {
+        "id": "864a3d3.8c868c",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "timin",
+                "v": "",
+                "vt": "date"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "412e666c.7bb86"
+            ]
+        ]
+    },
+    {
+        "id": "412e666c.7bb86",
+        "type": "function",
+        "z": "cb3266cf.ceb2a",
+        "name": "repeat",
+        "func": "\nif ((flow.get(\"repeat\")||\"\")!==\"\") {\n    \n    var lastrun = flow.get(\"lastrun\")|| 0;\n    \n    if (lastrun==0) { \n        flow.set(\"lastrun\",msg.timin);\n        return null;\n    }\n    \n    if ((msg.timin - lastrun) > parseInt(flow.get(\"repeat\"))) {\n        \n        flow.set(\"lastrun\",msg.timin);\n        \n        msg.payload = flow.get(\"incP\");  \n        \n        if (msg.payload.indexOf(\":Authenticate\")>0) { return null; }\n        msg.topic = flow.get(\"incT\");  \n        return msg;\n    }\n    \n    \n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 450,
+        "y": 180,
+        "wires": [
+            [
+                "4dfdc755.fa0058",
+                "50fd5790.ed22a"
+            ]
+        ]
+    },
+    {
+        "id": "4dfdc755.fa0058",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "44dd6b38.b7cc7c",
+        "type": "template",
+        "z": "cb3266cf.ceb2a",
+        "name": "Buttons",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "\n<link rel=\"stylesheet\" href=\"editor.css\">\n\n<style>\n    \n    \n.button {\n\tpadding: 4px 8px;\n\tmargin: 3px 3px;\n\tdisplay: inline;\n\ttext-decoration: none;\n\tcolor: #fff;\n\tbackground: #FF0000;\n\tborder: none;\n\tcursor: pointer;\n\tborder-radius: 4px;\n\tfont-size: 14px;\n\tfont-weight: 600;\n}\n    \n</style>\n\n\n<p id=\"demo\"></p>\n\n<script>\nfunction myFunction(str) {\n  document.getElementById(\"demo\").innerHTML = \"ok\";\n  \n  window.AppInventor.setWebViewString(str);\n  \n}\n</script>",
+        "output": "str",
+        "x": 1500,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d3d31d4c.d59fc",
+        "type": "function",
+        "z": "cb3266cf.ceb2a",
+        "name": "<heatweb>",
+        "func": "msg.payload = \"<heatweb>\"+ msg.payload +\"</heatweb>\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1070,
+        "y": 980,
+        "wires": [
+            [
+                "be3028c8.7705a8"
+            ]
+        ]
+    },
+    {
+        "id": "5ce66945.bda39",
+        "type": "split",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "topic",
+        "x": 930,
+        "y": 140,
+        "wires": [
+            [
+                "2e64263d.16f84a",
+                "b10035dd.9be9c"
+            ]
+        ]
+    },
+    {
+        "id": "2e64263d.16f84a",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "b10035dd.9be9c",
+        "type": "link out",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "b172c8c3.95bbb8"
+        ],
+        "x": 1155,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "e8496276.1d6328",
+        "type": "comment",
+        "z": "cb3266cf.ceb2a",
+        "name": "Handler",
+        "info": "",
+        "x": 1250,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d8e922a.bbde9e",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1550,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "fdb411ee.2b1ae",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "51c88b2.956b274",
+        "type": "switch",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "heatweb>",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "<heatweb",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 1050,
+        "y": 660,
+        "wires": [
+            [],
+            [],
+            [
+                "5aab3443.d2e0bc",
+                "11ab92ef.7bf31d",
+                "8578febd.ec67b"
+            ]
+        ]
+    },
+    {
+        "id": "11ab92ef.7bf31d",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "b79969e6.39f9d",
+        "type": "trigger",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 940,
+        "y": 80,
+        "wires": [
+            [
+                "84542de.7fb905"
+            ]
+        ]
+    },
+    {
+        "id": "1cbaca4a.27a28e",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 1340,
+        "wires": [
+            [
+                "47461eb4.bbecc8"
+            ]
+        ]
+    },
+    {
+        "id": "6ce2c24e.e086ac",
+        "type": "json",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 590,
+        "y": 1340,
+        "wires": [
+            [
+                "9bb74df6.b6e48"
+            ]
+        ]
+    },
+    {
+        "id": "47461eb4.bbecc8",
+        "type": "function",
+        "z": "cb3266cf.ceb2a",
+        "name": "readings",
+        "func": "var net = global.get(\"networkId\");\nvar netloc = global.get(\"localNetworkId\");\n    \n\nmsg.payload={\"readings\":{}};\nmsg.payload.readings[net] = global.get(\"readings.\"+netloc);\n\nflow.set(\"conecttime\",new Date().getTime() - 15000);  // pause mqtt stream\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 440,
+        "y": 1340,
+        "wires": [
+            [
+                "6ce2c24e.e086ac"
+            ]
+        ]
+    },
+    {
+        "id": "2223b646.cb92fa",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "sudo hciconfig hci0 piscan",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1100,
+        "y": 300,
+        "wires": [
+            [
+                "429b05c7.6dabc4"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "429b05c7.6dabc4",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "7c44b076.869f",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 870,
+        "y": 300,
+        "wires": [
+            [
+                "2223b646.cb92fa"
+            ]
+        ]
+    },
+    {
+        "id": "5f614321.79168c",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 400,
+        "wires": [
+            [
+                "1493d3ef.6fa4e4"
+            ]
+        ]
+    },
+    {
+        "id": "29acb962.85c74e",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "hcitool scan",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1050,
+        "y": 380,
+        "wires": [
+            [
+                "38a89f96.687cf8"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "38a89f96.687cf8",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ffdefbe2.26243",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 870,
+        "y": 380,
+        "wires": [
+            [
+                "29acb962.85c74e"
+            ]
+        ]
+    },
+    {
+        "id": "fddaf6ab.8662",
+        "type": "template",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "\n    <script>\n      let url = \"{{{payload}}}\";\n      window.location.href = url;\n    </script>",
+        "output": "str",
+        "x": 580,
+        "y": 1520,
+        "wires": [
+            [
+                "120c59a1.6bcdd6"
+            ]
+        ]
+    },
+    {
+        "id": "120c59a1.6bcdd6",
+        "type": "link out",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "c3670a6f.38c7d",
+            "52ce1bce.f094ac"
+        ],
+        "x": 695,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "5b3f4ea2.ae6b5",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "lsusb",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1030,
+        "y": 460,
+        "wires": [
+            [
+                "7b6c3ffe.c51f"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7b6c3ffe.c51f",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "cf0fe6e5.4e68e8",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 870,
+        "y": 460,
+        "wires": [
+            [
+                "5b3f4ea2.ae6b5"
+            ]
+        ]
+    },
+    {
+        "id": "520c01c5.89b838",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 1520,
+        "wires": [
+            [
+                "f5d67734.a2b6"
+            ]
+        ]
+    },
+    {
+        "id": "f5d67734.a2b6",
+        "type": "function",
+        "z": "cb3266cf.ceb2a",
+        "name": "heatweb link",
+        "func": "\n    \n    flow.set(\"repeat\",\"\");  // stop current feeds\n    msg.payload = \"https://heatweb.co.uk\";\n    return msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 370,
+        "y": 1520,
+        "wires": [
+            [
+                "fddaf6ab.8662"
+            ]
+        ]
+    },
+    {
+        "id": "be3028c8.7705a8",
+        "type": "switch",
+        "z": "cb3266cf.ceb2a",
+        "name": "connected=3 ?",
+        "property": "connected",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 1,
+        "x": 1220,
+        "y": 1060,
+        "wires": [
+            [
+                "d8e922a.bbde9e",
+                "ce8994cb.580f6"
+            ]
+        ]
+    },
+    {
+        "id": "a9e5c82c.cf12b",
+        "type": "link in",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "4b86eab9.b898e4",
+            "4c669252.b819dc",
+            "2d24025.c774efe",
+            "ccf5bf24.ed3048",
+            "993bdecd.032078"
+        ],
+        "x": 955,
+        "y": 1060,
+        "wires": [
+            [
+                "be3028c8.7705a8"
+            ]
+        ]
+    },
+    {
+        "id": "4c669252.b819dc",
+        "type": "link out",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "a9e5c82c.cf12b"
+        ],
+        "x": 875,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "ae09edb9.dd02a",
+        "type": "link in",
+        "z": "cb3266cf.ceb2a",
+        "name": "chkngrok",
+        "links": [
+            "1ebcd37c.8f61fd",
+            "f0582338.0aaab8",
+            "31dc491a.e5bb46"
+        ],
+        "x": 95,
+        "y": 1380,
+        "wires": [
+            [
+                "354f3d26.97af62"
+            ]
+        ]
+    },
+    {
+        "id": "9068049.8c5e978",
+        "type": "function",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "func": "flow.set(\"lastrun\",1);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 960,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e25d1fb2.a6c7d",
+        "type": "trigger",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 940,
+        "y": 180,
+        "wires": [
+            [
+                "9068049.8c5e978"
+            ]
+        ]
+    },
+    {
+        "id": "fbed7ee4.d7e658",
+        "type": "link in",
+        "z": "cb3266cf.ceb2a",
+        "name": "btin",
+        "links": [
+            "6e6115bd.173444",
+            "adae7e8a.85a74"
+        ],
+        "x": 195,
+        "y": 1040,
+        "wires": [
+            [
+                "c2490ab1.3a8ae"
+            ]
+        ]
+    },
+    {
+        "id": "51f26193.fcb9e",
+        "type": "function",
+        "z": "cb3266cf.ceb2a",
+        "name": "SEND",
+        "func": "\nvar sd = flow.get(\"sendData\");\nflow.set(\"sendData\",{});\nflow.set(\"sendJSON\",{});\nfor (var topic in sd) {\n    \n    var tops = topic.split(\"/\");\n    if (!tops[4]) { continue; }\n    \n    var net = tops[0];\n    \n    if (net == global.get(\"networkId\")) { net = global.get(\"localNetworkId\"); }\n    \n    var read = global.get(\"readings.\"+net+\".\"+tops[2]+\".\"+tops[3]+\".\"+tops[4]) || {};\n    \n    //flow.set(\"sendJSON.readings.\"+tops[0]+\".\"+tops[2]+\".\"+tops[3]+\".\"+tops[4], read);\n    \n    if (net == global.get(\"localNetworkId\")) { net = global.get(\"networkId\"); }\n    \n    flow.set(\"sendJSON.readings.\"+net+\".\"+tops[2]+\".\"+tops[3]+\".\"+tops[4], read);\n    \n}\n\nmsg.payload = flow.get(\"sendJSON\") || {};\nif (msg.payload =={}) { return null; }\n\nmsg.payload = JSON.stringify(msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 730,
+        "y": 1180,
+        "wires": [
+            [
+                "ccf5bf24.ed3048"
+            ]
+        ]
+    },
+    {
+        "id": "c2490ab1.3a8ae",
+        "type": "function",
+        "z": "cb3266cf.ceb2a",
+        "name": "SAVE for sending is connected over 30s",
+        "func": "\nif (flow.get(\"connected\")!==\"3\") { return null; }\n\nvar timin = new Date().getTime();\n\n\n\n\n\nflow.set(\"sendData.\" + msg.topic,msg.payload);\n\nif (timin - (flow.get(\"conecttime\")||timin) < 30000) { return null; }\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 420,
+        "y": 1040,
+        "wires": [
+            [
+                "2b735871.dc808"
+            ]
+        ]
+    },
+    {
+        "id": "23c03e8c.0b74f2",
+        "type": "trigger",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "op1": "1",
+        "op2": "",
+        "op1type": "str",
+        "op2type": "nul",
+        "duration": "10",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 350,
+        "y": 1180,
+        "wires": [
+            [
+                "ece31af6.a734e"
+            ]
+        ]
+    },
+    {
+        "id": "ccf5bf24.ed3048",
+        "type": "link out",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "a9e5c82c.cf12b"
+        ],
+        "x": 855,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "ece31af6.a734e",
+        "type": "trigger",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "op1": "",
+        "op2": "1",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "250",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 580,
+        "y": 1180,
+        "wires": [
+            [
+                "51f26193.fcb9e"
+            ]
+        ]
+    },
+    {
+        "id": "93994666.56b1b8",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 560,
+        "y": 620,
+        "wires": [
+            [
+                "265915ff.ee2922"
+            ]
+        ]
+    },
+    {
+        "id": "354f3d26.97af62",
+        "type": "trigger",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "3",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 200,
+        "y": 1380,
+        "wires": [
+            [
+                "d0277b0b.b465b8"
+            ]
+        ]
+    },
+    {
+        "id": "d0277b0b.b465b8",
+        "type": "trigger",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "10",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 270,
+        "y": 1420,
+        "wires": [
+            [
+                "47461eb4.bbecc8"
+            ]
+        ]
+    },
+    {
+        "id": "2b735871.dc808",
+        "type": "switch",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "/settings/",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "/system/",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "/xpVSet",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 310,
+        "y": 1100,
+        "wires": [
+            [
+                "ece31af6.a734e"
+            ],
+            [
+                "ece31af6.a734e"
+            ],
+            [
+                "ece31af6.a734e"
+            ],
+            [
+                "23c03e8c.0b74f2"
+            ]
+        ]
+    },
+    {
+        "id": "df45cc5d.ae295",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1750,
+        "y": 60,
+        "wires": [
+            [
+                "2c0c77c8.965748"
+            ]
+        ]
+    },
+    {
+        "id": "bcc30118.d23c8",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "chartjs",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1760,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2c0c77c8.965748",
+        "type": "template",
+        "z": "cb3266cf.ceb2a",
+        "name": "Chart",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "plain",
+        "template": "\nGraph:\n\n<script src=\"Chart.min.js\"></script>\n<script src=\"utils.js\"></script>\n<!--<script src=\"file:///appinventor_asset/utils.js\"></script>-->\n\n<style>\n    canvas {\n        -moz-user-select: none;\n        -webkit-user-select: none;\n        -ms-user-select: none;\n    }\n</style>\n\n\n<!-- <section style=\"height: 100vh; background: #cbced8\"> -->\n\n<!-- <p>This page recieves real-time tap use data, showing flow rates in each property as well as delivery temperatures.  -->\n\n<div id=\"canvas-holder\" style=\"width:90%;\">\n    <canvas id=\"chart-area\"></canvas>\n</div>\n<!-- <button id=\"randomizeData\">Randomize Data</button>\n<button id=\"addData\">Add Data</button>\n<button id=\"removeData\">Remove Data</button> -->\n<script>\n    var randomScalingFactor = function() {\n        return Math.round(Math.random() * 100);\n    };\n\n    const config = {\n      type: 'line',\n      data: data,\n    };\n    \n    const labels = Utils.months({count: 7});\n    const data = {\n      labels: labels,\n      datasets: [{\n        label: 'My First Dataset',\n        data: [65, 59, 80, 81, 56, 55, 40],\n        fill: false,\n        borderColor: 'rgb(75, 192, 192)',\n        tension: 0.1\n      }]\n    };\n    \n   var ctx = document.getElementById('chart-area');\n   window.myPolarArea = new Chart(ctx, config);\n    \n</script>\n\n<!--<div id=\"mqlist\">-->\n<!-- Waiting for data... -->\n<!--</div>-->\n\n</body>\n\n</html>",
+        "output": "str",
+        "x": 1730,
+        "y": 100,
+        "wires": [
+            [
+                "bcc30118.d23c8"
+            ]
+        ]
+    },
+    {
+        "id": "f9a7af10.7dff08",
+        "type": "template",
+        "z": "cb3266cf.ceb2a",
+        "name": "Chart",
+        "field": "payload.body",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "plain",
+        "template": "\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js\" type=\"text/javascript\"></script>\n\n<script>\nvar readings = {};\n</script>\n\n<style>\n\n.tt {\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 24px;\n  border-collapse: collapse;\n  width: 100%;\n}\n\n.tt td, #customers th {\n  border: 1px solid #ddd;\n  padding: 5px 25px 5px 5px;\n}\n\n.tt tr:nth-child(even){background-color: #f2f2f2;}\n\n.tt tr:hover {background-color: #ddd;}\n\n.tt th {\n  padding: 5px;\n  text-align: left;\n  background-color: #303c43;;\n  color: white;\n}\n</style>\n\n\n</head>\n<body>\n<script type=\"text/javascript\">\n\nvar a = new Date();\n \t\t\n// Create a client instance\n//client = new Paho.MQTT.Client(\"hw3.ddns.net\", Number(8083), \"cl\"+a.getTime());\nclient = new Paho.MQTT.Client(\"broker.hivemq.com\", Number(8000), \"cl\"+a.getTime());\n\n// set callback handlers\nclient.onConnectionLost = onConnectionLost;\nclient.onMessageArrived = onMessageArrived;\n\n///client.username_pw_set(username=\"oop7zooR\",password=\"oop7zooRoop7zooR\")\n// now can connect\n\n// connect the client\n///client.connect({onSuccess:onConnect, useSSL:true});\n\n// Connect the client, with a Username and Password\n//client.connect({onSuccess:onConnect, userName:'oop7zooR', password:'oop7zooRoop7zooR', useSSL:true});\nclient.connect({onSuccess:onConnect, useSSL:false});\n\n// called when the client connects\nfunction onConnect() {\n  // Once a connection has been made, make a subscription and send a message.\n  console.log(\"onConnect\");\n  client.subscribe(\"hw/diversitydemo/+/+/fC\"); // hw/diversitydemo/+/+/fC    //  ihiu/oop7zooR/#\n  message = new Paho.MQTT.Message(\"1\");\n  message.destinationName = \"hw/diversitydemo/start\";   //  ihiu/oop7zooR/oop7zooR/test/test\n  client.send(message);\n}\n\n// called when the client loses its connection\nfunction onConnectionLost(responseObject) {\n  if (responseObject.errorCode !== 0) {\n    console.log(\"onConnectionLost:\"+responseObject.errorMessage);\n}\n}\n\n// called when a message arrives\nfunction onMessageArrived(message) {\n  console.log(\"onMessageArrived:\"+message.payloadString);\n  \n  //document.getElementById(\"mqlist\").innerHTML = mql + message.destinationName + \": \" + message.payloadString + \"<br>\";\n\n  \n  if(!readings[message.destinationName]) {  // if new system add to plot\n\n\n    if (config.data.datasets.length > 0) {\n            config.data.labels.push('HIU' + (config.data.labels.length + 1));\n            config.data.datasets.forEach(function(dataset) {\n                var colorName = colorNames[config.data.labels.length % colorNames.length];\n                dataset.backgroundColor.push(window.chartColors[colorName]);\n                dataset.data.push(parseFloat(message.payloadString));\n            });\n            window.myPolarArea.update();\n        }\n\n        readings[message.destinationName] = { \"topic\":message.destinationName, \"payload\":message.payloadString, \"id\": config.data.labels.length - 1};\n        \n  } else {\n\n        readings[message.destinationName].payload = message.payloadString ;\n  \n\n  }\n\n  readings[message.destinationName].payload = parseFloat(readings[message.destinationName].payload);\n  if (readings[message.destinationName].payload < 0.1) { readings[message.destinationName].payload = 0;}\n  //config.data.datasets[i].data[j] = randomScalingFactor();\n\n  config.data.datasets[0].data[readings[message.destinationName][\"id\"]] = parseFloat(readings[message.destinationName][\"payload\"]);\n  //config.data.labels[readings[message.destinationName][\"id\"]] = \"HIU\" +readings[message.destinationName][\"id\"] + \": \" + parseFloat(readings[message.destinationName][\"payload\"]);\n  window.myPolarArea.update();\n\n\n  \n//   var sortable = [];\n// \tfor (var mqt in readings) {\n// \t\tsortable.push([mqt]);\n// \t}\n\n// \tsortable.sort(function(a, b) {\n// \t\treturn a[0] > b[0];\n// \t});\n  \n  \n  \n// \tvar mql = '<table class=\"tt\"><tr><th align=\"left\">Topic</th><th>Data</th></tr>';\n\t\n// \tfor (var kk in sortable) {\n// \t\tvar k = sortable[kk][0];\n// \t\tmql += \"<tr><td>\" + k.replace(/\\//g,\" / \") + \"</td><td>\" + readings[k].payload + \"</td></tr>\";\n// \t}\n// \tmql += \"</table>\";\n\t\n\t\n// \tdocument.getElementById(\"mqlist\").innerHTML = mql;\n  \n}\n\n\n\n\n</script>\n\n\n\n<script src=\"/includes/chart.js/Chart.min.js\"></script>\n<script src=\"/includes/chart.js/utils.js\"></script>\n\n<style>\n    canvas {\n        -moz-user-select: none;\n        -webkit-user-select: none;\n        -ms-user-select: none;\n    }\n</style>\n\n\n<!-- <section style=\"height: 100vh; background: #cbced8\"> -->\n\n<!-- <p>This page recieves real-time tap use data, showing flow rates in each property as well as delivery temperatures.  -->\n\n<div id=\"canvas-holder\" style=\"width:80%;\">\n    <canvas id=\"chart-area\"></canvas>\n</div>\n<!-- <button id=\"randomizeData\">Randomize Data</button>\n<button id=\"addData\">Add Data</button>\n<button id=\"removeData\">Remove Data</button> -->\n<script>\n    var randomScalingFactor = function() {\n        return Math.round(Math.random() * 100);\n    };\n\n    var chartColors = window.chartColors;\n    var color = Chart.helpers.color;\n\n    //new Chart(document.getElementById(\"chart-area\"), \n    \n     \n    var config= {\n        type: 'bar',\n        data: {\n          labels: [],\n          datasets: [\n            {\n              label: \"\",\n              backgroundColor: [],\n              data: []\n            }\n          ]\n        },\n        options: {\n          legend: { display: false },\n          title: {\n            display: false,\n            text: ''\n          }\n        }\n    }\n    //);\n\n    var colorNames = Object.keys(window.chartColors);\n    \n   window.onload = function() {\n        var ctx = document.getElementById('chart-area');\n        window.myPolarArea = new Chart(ctx, config);\n    };\n</script>\n\n<!--<div id=\"mqlist\">-->\n<!-- Waiting for data... -->\n<!--</div>-->\n\n</body>\n\n</html>",
+        "output": "str",
+        "x": 1950,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f17d50af.eabce8",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1220,
+        "y": 1200,
+        "wires": [
+            [
+                "ce8994cb.580f6"
+            ]
+        ]
+    },
+    {
+        "id": "6fbc1d45.a379e4",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "ls /dev/rfcomm*",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1580,
+        "y": 1200,
+        "wires": [
+            [
+                "3ad1278e.1d43f",
+                "36498f40.14529"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "46f16e2f.84d9c",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2130,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "3ad1278e.1d43f",
+        "type": "switch",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "rfcomm0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1750,
+        "y": 1200,
+        "wires": [
+            [
+                "dba354ef.0b8ce8"
+            ]
+        ]
+    },
+    {
+        "id": "ce8994cb.580f6",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "tosend",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1400,
+        "y": 1200,
+        "wires": [
+            [
+                "6fbc1d45.a379e4"
+            ]
+        ]
+    },
+    {
+        "id": "dba354ef.0b8ce8",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "tosend",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1920,
+        "y": 1200,
+        "wires": [
+            [
+                "46f16e2f.84d9c",
+                "ec8563.de6bdaa"
+            ]
+        ]
+    },
+    {
+        "id": "7372bfb0.521728",
+        "type": "comment",
+        "z": "cb3266cf.ceb2a",
+        "name": "Experimental - onlt send if port exists to prevent locking",
+        "info": "",
+        "x": 1560,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "c8d2484.9ea44b8",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 1740,
+        "wires": [
+            [
+                "b0e1d8fd.5b9f3"
+            ]
+        ]
+    },
+    {
+        "id": "b0e1d8fd.5b9f3",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "sudo rm /dev/rfcomm0",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 410,
+        "y": 1740,
+        "wires": [
+            [],
+            [],
+            [
+                "88cdb8.72e84248"
+            ]
+        ]
+    },
+    {
+        "id": "88cdb8.72e84248",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "connected=0",
+        "rules": [
+            {
+                "t": "set",
+                "p": "connected",
+                "pt": "flow",
+                "to": "0",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "repeat",
+                "pt": "flow",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 1820,
+        "wires": [
+            [
+                "5ac521d4.3816f"
+            ]
+        ]
+    },
+    {
+        "id": "d0fd7c6a.83eb48",
+        "type": "link in",
+        "z": "cb3266cf.ceb2a",
+        "name": "startbt",
+        "links": [
+            "c05d5830.ea922",
+            "5665ac17.be145c"
+        ],
+        "x": 155,
+        "y": 280,
+        "wires": [
+            [
+                "933ad751.a89f8"
+            ]
+        ]
+    },
+    {
+        "id": "5665ac17.be145c",
+        "type": "link out",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "d0fd7c6a.83eb48"
+        ],
+        "x": 355,
+        "y": 2020,
+        "wires": []
+    },
+    {
+        "id": "5ac521d4.3816f",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "sudo rfkill unblock bluetooth",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 440,
+        "y": 1900,
+        "wires": [
+            [],
+            [],
+            [
+                "ab1779c7.7c6c8"
+            ]
+        ]
+    },
+    {
+        "id": "ab1779c7.7c6c8",
+        "type": "delay",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 400,
+        "y": 1960,
+        "wires": [
+            [
+                "5665ac17.be145c"
+            ]
+        ]
+    },
+    {
+        "id": "36498f40.14529",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1750,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "31dc491a.e5bb46",
+        "type": "link out",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "ae09edb9.dd02a"
+        ],
+        "x": 815,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "5e534e26.5f3c2",
+        "type": "status",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "scope": [
+            "45473e03.df3498"
+        ],
+        "x": 790,
+        "y": 820,
+        "wires": [
+            [
+                "33c1a290.9e961e"
+            ]
+        ]
+    },
+    {
+        "id": "bf116262.979b48",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "status",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1190,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "33c1a290.9e961e",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "rfstatus",
+                "pt": "flow",
+                "to": "status",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 980,
+        "y": 820,
+        "wires": [
+            [
+                "bf116262.979b48"
+            ]
+        ]
+    },
+    {
+        "id": "a7ecee69.045eb",
+        "type": "switch",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "property": "rfstatus.text",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "pid",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 150,
+        "y": 840,
+        "wires": [
+            [],
+            [
+                "bc818077.51ea1"
+            ]
+        ]
+    },
+    {
+        "id": "bc818077.51ea1",
+        "type": "change",
+        "z": "cb3266cf.ceb2a",
+        "name": "connected=0",
+        "rules": [
+            {
+                "t": "set",
+                "p": "connected",
+                "pt": "flow",
+                "to": "0",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "repeat",
+                "pt": "flow",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 840,
+        "wires": [
+            [
+                "cd254164.8a57d"
+            ]
+        ]
+    },
+    {
+        "id": "e579f71f.2267d",
+        "type": "mqtt in",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "topic": "+/+/+/url/#",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "7ad2997b.42a908",
+        "inputs": 0,
+        "x": 200,
+        "y": 960,
+        "wires": [
+            [
+                "c2490ab1.3a8ae"
+            ]
+        ]
+    },
+    {
+        "id": "ddd90b6d.e6ec2",
+        "type": "mqtt in",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "topic": "+/+/+/cmd/uploadFlows",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "7ad2997b.42a908",
+        "inputs": 0,
+        "x": 1080,
+        "y": 1340,
+        "wires": [
+            [
+                "2647d203.193996"
+            ]
+        ]
+    },
+    {
+        "id": "2647d203.193996",
+        "type": "trigger",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "op1": "1",
+        "op2": "",
+        "op1type": "str",
+        "op2type": "nul",
+        "duration": "15",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1310,
+        "y": 1340,
+        "wires": [
+            [
+                "42a589ae.f7b8b"
+            ]
+        ]
+    },
+    {
+        "id": "48cb9bd.5b14564",
+        "type": "exec",
+        "z": "cb3266cf.ceb2a",
+        "command": "cat",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1210,
+        "y": 1440,
+        "wires": [
+            [
+                "18d953b8.70e02c"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "dd3a9c4b.da01f8",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1000,
+        "y": 1500,
+        "wires": [
+            [
+                "42a589ae.f7b8b"
+            ]
+        ]
+    },
+    {
+        "id": "b6b964ee.a118b",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1530,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "42a589ae.f7b8b",
+        "type": "function",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "func": "\nmsg.payload = \"/var/lib/node-red/.node-red/flows_\"+global.get(\"node\")+\".json\";\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1040,
+        "y": 1440,
+        "wires": [
+            [
+                "48cb9bd.5b14564",
+                "235f0957.0a4dae"
+            ]
+        ]
+    },
+    {
+        "id": "235f0957.0a4dae",
+        "type": "debug",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "18d953b8.70e02c",
+        "type": "switch",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": ".{",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1350,
+        "y": 1440,
+        "wires": [
+            [
+                "b6b964ee.a118b",
+                "d29b08d4.8cd3d"
+            ]
+        ]
+    },
+    {
+        "id": "993bdecd.032078",
+        "type": "link out",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "a9e5c82c.cf12b"
+        ],
+        "x": 1775,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "d29b08d4.8cd3d",
+        "type": "function",
+        "z": "cb3266cf.ceb2a",
+        "name": "<flow>",
+        "func": "flow.set(\"conecttime\",new Date().getTime() - 25000);  // pause mqtt stream\n\nmsg.payload = \"<flow>\"+ msg.payload +\"</flow>\"\nmsg.payload = \"<heatweb>\"+ msg.payload +\"</heatweb>\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1510,
+        "y": 1440,
+        "wires": [
+            [
+                "a2e115d5.d72668"
+            ]
+        ]
+    },
+    {
+        "id": "a2e115d5.d72668",
+        "type": "delay",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 1660,
+        "y": 1440,
+        "wires": [
+            [
+                "993bdecd.032078"
+            ]
+        ]
+    },
+    {
+        "id": "9bb74df6.b6e48",
+        "type": "trigger",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 740,
+        "y": 1340,
+        "wires": [
+            [
+                "4c669252.b819dc"
+            ]
+        ]
+    },
+    {
+        "id": "4549fe80.a822e",
+        "type": "inject",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "cmd/request",
+        "payload": "#",
+        "payloadType": "str",
+        "x": 290,
+        "y": 1260,
+        "wires": [
+            [
+                "a5aaf6e6.3db5c"
+            ]
+        ]
+    },
+    {
+        "id": "a5aaf6e6.3db5c",
+        "type": "link out",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "b172c8c3.95bbb8"
+        ],
+        "x": 455,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "9f13027f.9f8808",
+        "type": "switch",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "property": "rfstatus.text",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "pid",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 150,
+        "y": 760,
+        "wires": [
+            [],
+            [
+                "cd254164.8a57d"
+            ]
+        ]
+    },
+    {
+        "id": "4719ec99.fd797c",
+        "type": "trigger",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 520,
+        "y": 740,
+        "wires": [
+            [
+                "59928121.15ae7"
+            ]
+        ]
+    },
+    {
+        "id": "4ff1b6b2.3d3e08",
+        "type": "daemon",
+        "z": "cb3266cf.ceb2a",
+        "name": "rfcomm listen",
+        "command": "sudo",
+        "args": "rfcomm watch /dev/rfcomm0 22",
+        "autorun": false,
+        "cr": false,
+        "redo": false,
+        "op": "string",
+        "closer": "SIGKILL",
+        "x": 330,
+        "y": 640,
+        "wires": [
+            [
+                "ad5f7bdd.d340a"
+            ],
+            [],
+            [
+                "265915ff.ee2922"
+            ]
+        ]
+    },
+    {
+        "id": "8578febd.ec67b",
+        "type": "switch",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": ":home",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1370,
+        "y": 780,
+        "wires": [
+            [
+                "458b947d.ded5bc"
+            ]
+        ]
+    },
+    {
+        "id": "30844a14.a4fee6",
+        "type": "link out",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "links": [
+            "29507ab.16cdd06"
+        ],
+        "x": 1635,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "458b947d.ded5bc",
+        "type": "delay",
+        "z": "cb3266cf.ceb2a",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "30",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 1520,
+        "y": 780,
+        "wires": [
+            [
+                "30844a14.a4fee6"
+            ]
+        ]
+    },
+    {
+        "id": "7ad2997b.42a908",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

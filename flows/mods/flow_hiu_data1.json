@@ -1,0 +1,5315 @@
+[
+    {
+        "id": "3d0a40a7.66aa4",
+        "type": "subflow",
+        "name": "html table",
+        "info": "",
+        "in": [
+            {
+                "x": 100,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "790d9c49.fccc04"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 380,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "790d9c49.fccc04",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "790d9c49.fccc04",
+        "type": "function",
+        "z": "3d0a40a7.66aa4",
+        "name": "htmltable",
+        "func": "var htmlt = '<table width=\"100%\">';\n\nfor (var key in msg.payload) {\n    \n    \n    htmlt += '<tr><td>' + key.replace(/_/g, ' ') + '</td><td align=\"right\">' + msg.payload[key] + '</td></tr>';\n}\n\nhtmlt += '<table>';\n\nmsg.payload=htmlt;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 240,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e090c99b.574098",
+        "type": "tab",
+        "label": "HIU",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9140b0c7.7f85b",
+        "type": "serial in",
+        "z": "e090c99b.574098",
+        "name": "hiu",
+        "serial": "5cc70f0836e6a358",
+        "x": 210,
+        "y": 1840,
+        "wires": [
+            [
+                "e6a8c7fd.f7728",
+                "caf3f900.f20a08"
+            ]
+        ]
+    },
+    {
+        "id": "50bcff0b.7bdac",
+        "type": "subflow:3d0a40a7.66aa4",
+        "z": "e090c99b.574098",
+        "name": "html table",
+        "x": 1160,
+        "y": 540,
+        "wires": [
+            [
+                "95990221.d8463"
+            ]
+        ]
+    },
+    {
+        "id": "81eaf0f3.8b0b6",
+        "type": "subflow:3d0a40a7.66aa4",
+        "z": "e090c99b.574098",
+        "x": 1160,
+        "y": 500,
+        "wires": [
+            [
+                "8b6dc809.fa87e8"
+            ]
+        ]
+    },
+    {
+        "id": "72a037.9ebda7c8",
+        "type": "serial in",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "hiu",
+        "serial": "3ea80383.e1f8d4",
+        "x": 210,
+        "y": 1900,
+        "wires": [
+            [
+                "cefe6869.10693"
+            ]
+        ]
+    },
+    {
+        "id": "f9f559ce.5dd4f8",
+        "type": "serial in",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "hiu",
+        "serial": "7e0c6c31.8f0aa4",
+        "x": 210,
+        "y": 1960,
+        "wires": [
+            [
+                "a1db4f59.d2dfe"
+            ]
+        ]
+    },
+    {
+        "id": "ede852b1.9d9638",
+        "type": "serial in",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "hiu",
+        "serial": "4e38699.f981018",
+        "x": 210,
+        "y": 2020,
+        "wires": [
+            [
+                "e5d286c3.db8a3"
+            ]
+        ]
+    },
+    {
+        "id": "220d0690.2e7622",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1130,
+        "y": 2020,
+        "wires": []
+    },
+    {
+        "id": "45988226.c8e5ac",
+        "type": "serial in",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "hiu",
+        "serial": "dccd9d11.4e316",
+        "x": 210,
+        "y": 2120,
+        "wires": [
+            [
+                "6513d969.42a2c8"
+            ]
+        ]
+    },
+    {
+        "id": "a455f86d.bd5a98",
+        "type": "serial in",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "hiu",
+        "serial": "5374dd2d.431cd4",
+        "x": 210,
+        "y": 2180,
+        "wires": [
+            [
+                "da7ed2d2.fe2ff"
+            ]
+        ]
+    },
+    {
+        "id": "8d0f3a1a.63ddf8",
+        "type": "serial in",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "hiu",
+        "serial": "520dbe13.2a881",
+        "x": 210,
+        "y": 2240,
+        "wires": [
+            [
+                "8915aa75.a11b58"
+            ]
+        ]
+    },
+    {
+        "id": "2dfbddeb.330212",
+        "type": "serial in",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "hiu",
+        "serial": "28c44052.d6082",
+        "x": 210,
+        "y": 2300,
+        "wires": [
+            [
+                "135f0612.d2ab32"
+            ]
+        ]
+    },
+    {
+        "id": "48de6e4e.59652",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "request",
+        "func": "\n\n\nif(msg.topic==\"ihiu/iK7iep3i/request/serial\") {\n    \n    var serid = flow.get(\"serialusb\"+msg.payload);\n    if(!serid) { return null; }\n    flow.set(\"usb\",serid);\n    msg.payload=serid;\n    return msg;\n}\nelse if(msg.topic==\"ihiu/iK7iep3i/request/usb\") {\n    \n    flow.set(\"usb\",\"usb\"+msg.payload);\n    msg.payload=\"usb\"+msg.payload;\n    return msg;\n}\nelse if(msg.topic==\"ihiu/iK7iep3i/request/settings\") {\n    \n    msg.payload=\"usb\"+msg.payload;\n    return msg;\n}\nelse if(msg.topic==\"usb\") {\n    \n    flow.set(\"usb\",msg.payload);\n    return msg;\n}\nelse if(msg.topic==\"ihiu/iK7iep3i/request/stop\") {\n    \n    flow.set(\"usb\",\"\");\n    return(null);\n    \n}\nelse if(msg.topic==\"ihiu/iK7iep3i/request\") {\n    \n    msg.usb = flow.get(\"serialusb\"+msg.payload);  // \n\n    return [null,msg];\n}\n\n// user commands\n\n\n\nmsg.usb = flow.get(\"serialusb\"+msg.topic.split(\"/\")[2]);  // \n\n\n\n\nif(msg.topic.indexOf(\"/refresh\")>0) {\n    \n    msg.payload = msg.topic.split(\"/\")[2];\n    \n    return [null,msg];\n}\n\n\nif(msg.topic.indexOf(\"/user\")>0) {\n    \n    //msg.payload = msg.topic.split(\"/\")[2];\n    \n    return [null,null,msg];\n}\n",
+        "outputs": "3",
+        "noerr": 0,
+        "x": 727.5,
+        "y": 962.5000019073486,
+        "wires": [
+            [
+                "b4029b97.d524f8",
+                "80885b24.6ed7e8",
+                "dbb6b961.8e70a8"
+            ],
+            [
+                "3e749186.082526",
+                "4c4a7299.aeed24"
+            ],
+            [
+                "fc50aae1.5eca28"
+            ]
+        ]
+    },
+    {
+        "id": "b8afd74f.f99e08",
+        "type": "switch",
+        "z": "e090c99b.574098",
+        "name": "topic",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "remoteusb",
+                "vt": "global"
+            },
+            {
+                "t": "cont",
+                "v": "/",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 610,
+        "y": 2060,
+        "wires": [
+            [
+                "6a69b8cd.2317d"
+            ],
+            [
+                "1230cc95.667d03"
+            ]
+        ]
+    },
+    {
+        "id": "e6a8c7fd.f7728",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "0",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ihiu/iK7iep3i/usb0/data",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "usb",
+                "pt": "msg",
+                "to": "usb0",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timeusb0",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 1840,
+        "wires": [
+            [
+                "b8afd74f.f99e08"
+            ]
+        ]
+    },
+    {
+        "id": "cefe6869.10693",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "1",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ihiu/iK7iep3i/usb1/data",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "d03b027ae3b94045",
+                "fromt": "str",
+                "to": "d03b027ae3b95555",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "usb",
+                "pt": "msg",
+                "to": "usb1",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timeusb1",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 1900,
+        "wires": [
+            [
+                "b8afd74f.f99e08"
+            ]
+        ]
+    },
+    {
+        "id": "a1db4f59.d2dfe",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "2",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ihiu/iK7iep3i/usb2/data",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "d03b027ae3b94045",
+                "fromt": "str",
+                "to": "d03v02vae3b94045",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "usb",
+                "pt": "msg",
+                "to": "usb2",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timeusb2",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 1960,
+        "wires": [
+            [
+                "b8afd74f.f99e08"
+            ]
+        ]
+    },
+    {
+        "id": "e5d286c3.db8a3",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "3",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ihiu/iK7iep3i/usb3/data",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "d03b027ae3b94045",
+                "fromt": "str",
+                "to": "d03b027ae3b97777",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "usb",
+                "pt": "msg",
+                "to": "usb3",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timeusb3",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 2020,
+        "wires": [
+            [
+                "b8afd74f.f99e08"
+            ]
+        ]
+    },
+    {
+        "id": "6513d969.42a2c8",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ihiu/iK7iep3i/usb4/data",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "d03b027ae3b94045",
+                "fromt": "str",
+                "to": "d03b027ae3b98888",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "usb",
+                "pt": "msg",
+                "to": "usb4",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timeusb4",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 2120,
+        "wires": [
+            [
+                "b8afd74f.f99e08"
+            ]
+        ]
+    },
+    {
+        "id": "da7ed2d2.fe2ff",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "5",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ihiu/iK7iep3i/usb5/data",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "d03b027ae3b94045",
+                "fromt": "str",
+                "to": "d03b027ae3b99999",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "usb",
+                "pt": "msg",
+                "to": "usb5",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timeusb5",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 2180,
+        "wires": [
+            [
+                "b8afd74f.f99e08"
+            ]
+        ]
+    },
+    {
+        "id": "8915aa75.a11b58",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "6",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ihiu/iK7iep3i/usb6/data",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "d03b027ae3b94045",
+                "fromt": "str",
+                "to": "d03b027ae3b9aaaa",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "usb",
+                "pt": "msg",
+                "to": "usb6",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timeusb6",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 2240,
+        "wires": [
+            [
+                "b8afd74f.f99e08"
+            ]
+        ]
+    },
+    {
+        "id": "135f0612.d2ab32",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "7",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ihiu/iK7iep3i/usb7/data",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "d03b027ae3b94045",
+                "fromt": "str",
+                "to": "d03b027ae3b9bbbb",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "usb",
+                "pt": "msg",
+                "to": "usb7",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timeusb7",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 2300,
+        "wires": [
+            [
+                "b8afd74f.f99e08"
+            ]
+        ]
+    },
+    {
+        "id": "6be6b5fb.a7fd54",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "c88e7b3e.9bae08"
+        ],
+        "x": 1275,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "b4029b97.d524f8",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 930,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "ea7ad72e.e28e98",
+        "type": "switch",
+        "z": "e090c99b.574098",
+        "name": "by topic",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "usb0",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "usb1",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "usb2",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "usb3",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "usb4",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "usb5",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "usb6",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "usb7",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "usb8",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 9,
+        "x": 719,
+        "y": 1522,
+        "wires": [
+            [
+                "7721122e.3eb56c",
+                "824d383f.19eaf8"
+            ],
+            [
+                "247cc8a4.66a238"
+            ],
+            [
+                "2333c6e6.0770ca"
+            ],
+            [
+                "21b29b43.4b7554"
+            ],
+            [
+                "7114f648.fb37f8"
+            ],
+            [
+                "edc27520.dde888"
+            ],
+            [
+                "9965ec59.0de9c"
+            ],
+            [
+                "5c0853e4.8b9d5c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8ebd4192.9d6",
+        "type": "serial out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "serial": "5cc70f0836e6a358",
+        "x": 1090,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "80885b24.6ed7e8",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "settings",
+        "func": "var tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(13) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59)\n\nmsg.topic = msg.payload;\nmsg.payload = tosend;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 960,
+        "y": 920,
+        "wires": [
+            [
+                "6be6b5fb.a7fd54"
+            ]
+        ]
+    },
+    {
+        "id": "247cc8a4.66a238",
+        "type": "serial out",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "usbout1",
+        "serial": "3ea80383.e1f8d4",
+        "x": 982.5000076293945,
+        "y": 1440.0000858306885,
+        "wires": []
+    },
+    {
+        "id": "2333c6e6.0770ca",
+        "type": "serial out",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "usbout2",
+        "serial": "7e0c6c31.8f0aa4",
+        "x": 982.5000076293945,
+        "y": 1500.0000858306885,
+        "wires": []
+    },
+    {
+        "id": "21b29b43.4b7554",
+        "type": "serial out",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "usbout3",
+        "serial": "4e38699.f981018",
+        "x": 982.5000076293945,
+        "y": 1560.0000858306885,
+        "wires": []
+    },
+    {
+        "id": "c88e7b3e.9bae08",
+        "type": "link in",
+        "z": "e090c99b.574098",
+        "name": "tousb",
+        "links": [
+            "6be6b5fb.a7fd54",
+            "939710c8.952bd",
+            "5807ced4.1ea4f",
+            "425d8dc1.5fcba4",
+            "5111f409.43cbdc"
+        ],
+        "x": 98,
+        "y": 1522,
+        "wires": [
+            [
+                "e5a16d1d.b9593",
+                "3ed73fdc.a3566"
+            ]
+        ]
+    },
+    {
+        "id": "7114f648.fb37f8",
+        "type": "serial out",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "usbout4",
+        "serial": "dccd9d11.4e316",
+        "x": 985.0000076293945,
+        "y": 1612.5000324249268,
+        "wires": []
+    },
+    {
+        "id": "edc27520.dde888",
+        "type": "serial out",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "usbout5",
+        "serial": "5374dd2d.431cd4",
+        "x": 980,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "9965ec59.0de9c",
+        "type": "serial out",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "usbout6",
+        "serial": "520dbe13.2a881",
+        "x": 980,
+        "y": 1740,
+        "wires": []
+    },
+    {
+        "id": "5c0853e4.8b9d5c",
+        "type": "serial out",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "usbout7",
+        "serial": "28c44052.d6082",
+        "x": 980,
+        "y": 1800,
+        "wires": []
+    },
+    {
+        "id": "f7a2522b.1aa6f",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "parameters",
+        "func": " \n var tosend = \"\";\n \n    \ntosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(14) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59);\n \nmsg.topic = msg.payload;\nmsg.payload = tosend;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1110,
+        "y": 960,
+        "wires": [
+            [
+                "6be6b5fb.a7fd54"
+            ]
+        ]
+    },
+    {
+        "id": "f5bfee94.23e34",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "rotate SINGLE",
+        "func": "var cnt = flow.get(\"cycle\") || 0;\n\nvar today = new Date();\nvar dd = today.getTime();\n\ncnt++;\nif(cnt>0) { cnt=0; }  // SINGLE HIU ONLY\n\n\nfor (i = 0; i < 9; i++) {\n    var ltime = flow.get(\"TIMEusb\"+i)||0;  // the new stuff\n    if((dd - ltime)>30000) { flow.set(\"CONusb\"+i,0); }\n    else { flow.set(\"CONusb\"+i,1); }\n    \n    //if ((flow.get(\"CONusb\"+i)||0)===0) { \n        \n    //    return null;\n        //cnt++; \n        //if(cnt>7) { cnt=0; }\n    //}\n}\n\n\n\nflow.set(\"cycle\", cnt);\n\n\nif ((flow.get(\"CONusb\"+cnt)||0)===0) { \n        \n        return null;\n        \n}\n    \nmsg.payload=\"\"+cnt;\nmsg.topic=\"ihiu/iK7iep3i/request/usb\";\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 280,
+        "wires": [
+            [
+                "a2ce6b89.71ece",
+                "e2e1b2e5.47d85"
+            ]
+        ]
+    },
+    {
+        "id": "a94c5afd.b2653",
+        "type": "link in",
+        "z": "e090c99b.574098",
+        "name": "request",
+        "links": [
+            "a2ce6b89.71ece",
+            "c8a9d998.7f91e8",
+            "c53592d3.3f577",
+            "e44975c2.efaef8"
+        ],
+        "x": 275,
+        "y": 800,
+        "wires": [
+            [
+                "9b823fec.77d54"
+            ]
+        ]
+    },
+    {
+        "id": "a2ce6b89.71ece",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "a94c5afd.b2653"
+        ],
+        "x": 695,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "c020c8fc.01c7a",
+        "type": "link in",
+        "z": "e090c99b.574098",
+        "name": "nextusb",
+        "links": [],
+        "x": 355,
+        "y": 280,
+        "wires": [
+            [
+                "f5bfee94.23e34"
+            ]
+        ]
+    },
+    {
+        "id": "e2e1b2e5.47d85",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 850,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "ef17e566.ef5178",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "isnumeric",
+        "func": "var tp = msg.payload.split(\"=\")[0];\nvar vv = msg.payload.split(\"=\")[1];\n\nif (!vv) return null; \n\nvv = vv.replace(\"-273\",\"nc\");\n\nvar lognoflow = global.get(\"settings.lognoflow\") || false;\n\n\n\n\nmsg.topic = flow.get(\"serial\" + msg.usb) + \"/\"  + tp;\nmsg.payload = vv;\n\n//return [msg,null];\n\n\n//if (isNaN(vv)) { return [msg,null]; }\n\n\n\nif (msg.topic.indexOf(\"dat/t\")>0) { \n    \n    \n     if (isNaN(msg.payload)) {  return [null,null,msg]; }\n    \n     msg.payload=parseFloat(msg.payload);\n     \n     return [null,msg,null]; \n     \n    // if ((msg.flow===true) || (lognoflow===true)) { return [null,msg,null];  }\n     \n    // else  { return [null,null,msg];  }\n     \n     \n     \n} else if (msg.topic.indexOf(\"dat/v\")>0) { \n    \n     msg.payload=parseInt(10 * parseFloat(msg.payload)) / 10;\n     return [null,msg,null]; \n     \n} else if (msg.topic.indexOf(\"dat/x\")>0) { \n    \n     msg.payload=parseFloat(msg.payload);\n     if (msg.payload===0) {\n        return [msg,null,null]; \n     } else {\n        return [null,null,msg]; \n     }\n} else if (!isNaN(msg.payload)) { \n    \n     msg.payload=parseFloat(msg.payload);\n     \n     return [null,null,msg]; \n     \n    \n}    \n\n\nreturn [msg,null,null]; \n\n",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1260,
+        "y": 2420,
+        "wires": [
+            [
+                "80680e.79bae7f"
+            ],
+            [
+                "f8c126ec.446148"
+            ],
+            [
+                "80680e.79bae7f"
+            ]
+        ]
+    },
+    {
+        "id": "1840146.0a4e6ec",
+        "type": "split",
+        "z": "e090c99b.574098",
+        "name": "",
+        "splt": "&",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1110,
+        "y": 2420,
+        "wires": [
+            [
+                "ef17e566.ef5178"
+            ]
+        ]
+    },
+    {
+        "id": "f8539bf1.2e0408",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "DAT",
+        "func": "var DAT = msg.payload.split(',');\n\n\n\nmsg.payload = {};\n\n\n\nmsg.topic = \"DAT\"+msg.usb;\n\nmsg.payload.st = DAT[2];  // state\n\n\n\nmsg.payload.fC = parseFloat(DAT[3]);  // Flow Tapping (l/min)\nmsg.payload.tCo = Math.round( parseFloat(DAT[4]) * 10 ) / 10 ;  // Temperature Tapping\nmsg.payload.tH = Math.round( parseFloat(DAT[5]) * 10 ) / 10 ;  // Temperature District Heating \nmsg.payload.tHoCH = Math.round( parseFloat(DAT[6]) * 10 ) / 10 ;  // Temperature DH Return CH \nmsg.payload.xDHW = parseFloat(DAT[7]);  // Stepper Motor Position for DHW (0 - 270)\nmsg.payload.stat = parseInt(DAT[8]);  // Thermostat (0.0 OFF<br>1.0 ON )\nmsg.payload.dpH = DAT[9];  // District Heating pressure, estimated (bar)\n//msg.payload.r1 = DAT[10];  // District Heating pressure, estimated (bar)\n//msg.payload.r2 = DAT[11];  // District Heating pressure, estimated (bar)\n//msg.payload.r3 = DAT[12];  // District Heating pressure, estimated (bar)\nmsg.payload.fHDHW = parseFloat(DAT[13]);  // District Heating Flow, DHW (l/min)\nmsg.payload.eT = Math.round( parseFloat(DAT[14]) * 10 ) / 10 ;  // Temperature Error\n//msg.payload.r4 = DAT[15];  // District Heating pressure, estimated (bar)\nmsg.payload.TTdhw = DAT[16];  // Setpoint\nmsg.payload.eS = DAT[17];  // ErrorStatus\nmsg.payload.tHoDHW = Math.round( parseFloat(DAT[18]) * 10 ) / 10 ;  // District Heating Return temperature \n\n//msg.payload.tCHo = Math.round( parseFloat(DAT[19]) * 10 ) / 10 ;  // Grundfos temperature) -> central heating T   \nmsg.payload.tCHo = Math.round( parseFloat(DAT[20]) * 10 ) / 10 ;  // Grundfos temperature  -> central heating T   \n//msg.payload.r5 = DAT[20];  // District Heating pressure, estimated (bar)\n\nmsg.payload.pCH = Math.round( parseFloat(DAT[21]) * 10 ) / 10 ;   // Grundfos pressure (bar) [1.1 - 2.5]\n//msg.payload.r6 = DAT[22];  // District Heating pressure, estimated (bar)\nmsg.payload.pump = DAT[23];  // Valve 24V Out(1 open<br>0 close)-> pump\nmsg.payload.xCH = parseFloat(DAT[24]);  // Stepper Motor Position for CH (0 - 270)\nmsg.payload.fHCH = parseFloat(DAT[25]);  // District Heating Flow, CH (l/min)\n\n\nmsg.payload.fH = msg.payload.fHCH + msg.payload.fHDHW;\n\nif (msg.payload.fH>0 &&  msg.payload.tHoCH > 0 ) {\n    msg.payload.tHo = ((msg.payload.tHoDHW *  msg.payload.fHDHW) + (msg.payload.tHoCH *  msg.payload.fHCH)) / msg.payload.fH;\n} else {\n    \n    msg.payload.tHo = msg.payload.tHoDHW;\n\n}\n\n\nmsg.payload.kwHCH = parseInt((msg.payload.fHCH/60) * 42.00 * (msg.payload.tH - msg.payload.tHoCH))/10;\nmsg.payload.kwHDHW = parseInt((msg.payload.fHDHW/60) * 42.00 * (msg.payload.tH - msg.payload.tHoDHW))/10;\nmsg.payload.kwH = msg.payload.kwHCH + msg.payload.kwHDHW;\n\n// validity check\nvar chk = context.get(\"lasttH\"+msg.usb) || msg.payload.tH;\ncontext.set(\"lasttH\"+msg.usb, msg.payload.tH);\nif (Math.abs(chk - msg.payload.tH)>20) { return null; }\n\nchk = context.get(\"lasttHoDHW\"+msg.usb) || msg.payload.tHoDHW;\ncontext.set(\"lasttHoDHW\"+msg.usb, msg.payload.tHoDHW);\nif (Math.abs(chk - msg.payload.tHoDHW)>20) { return null; }\n\nif (msg.payload.tH>105) { return null; }\nif (msg.payload.tCo>105) { return null; }\nif (msg.payload.tHoDHW>105) { return null; }\nif (msg.payload.tHoCH>105) { return null; }\n\n\nflow.set(\"DAT\"+msg.usb,msg.payload);  // the new stuff\n\n\n\nvar stats={};\nvar alarms={};\n\nif(parseInt(msg.payload.st) <7) { alarms.hiuState = \"ok\"; } else { alarms.hiuState = \"sensor_error\"; }\n\n\nvar today = new Date();\nvar dd = today.getTime();\n\nchk = context.get(\"lasttfC\"+msg.usb) || 0;\ncontext.set(\"lasttfC\"+msg.usb, msg.payload.fC);\n\nif (msg.payload.fC>=1) { \n\n    if (chk<1) { \n        \n        flow.set(\"fCstarttime\" + msg.usb, dd); \n        flow.set(\"dhwstartv\" + msg.usb, flow.get(\"vC\" + msg.usb));\n        \n    }\n    \n    var stim = flow.get(\"fCstarttime\"+msg.usb);\n    \n    msg.payload.runtimeDHW =  (dd - stim)/1000;\n    \n    \n    //if (((msg.payload.tCo > 35 && msg.payload.runtimeDHW > 3) || msg.payload.runtimeDHW > 15) && msg.payload.runtimeDHW < 60) {\n        \n        flow.set(\"tCo\" + msg.usb, msg.payload.tCo); \n        flow.set(\"tHoDHW\" + msg.usb, msg.payload.tHoDHW); \n        flow.set(\"tH\" + msg.usb, msg.payload.tH); \n    //}\n    \n    \n} else {\n    \n   \n    \n    if (chk>=1) { \n\n        var stim = flow.get(\"fCstarttime\"+msg.usb);\n    \n        msg.payload.runtimeDHW =  (dd - stim)/1000;      \n            \n        var vC = flow.get(\"vC\" + msg.usb);\n        var startv = flow.get(\"dhwstartv\" + msg.usb) || vC;\n        var vused = parseInt(1000*(vC - startv))/1000;\n        \n        stats.lastvCtime =  flow.get(\"fCstarttime\" + msg.usb);\n        stats.lastvCrun =  vused;\n        stats.lastvClen =  parseInt(10 * msg.payload.runtimeDHW) / 10;\n        stats.lastvCavr =  parseInt(100*vused/( stats.lastvClen/60))/100;\n        stats.lasttCo =  flow.get(\"tCo\" + msg.usb); \n        stats.lasttHoDHW =  flow.get(\"tHoDHW\" + msg.usb); \n        stats.lasttH =  flow.get(\"tH\" + msg.usb); \n        \n        if(stats.lasttCo > 45) { alarms.lastDHW = \"ok\"; }\n        if(stats.lastvClen > 30 && stats.lasttCo < 45) { alarms.lastDHW = \"warming, low DHW temp\"; }\n        else if(stats.lastvClen > 60 && stats.lasttCo < 35) { alarms.lastDHW = \"warming, no DHW\"; }\n        \n        if(stats.lasttHoDHW < 30) { alarms.tHoDHW = \"ok\"; }\n        if(stats.lastvClen > 30 && stats.lasttHoDHW > 30) { alarms.tHoDHW = \"warming, high return temperature\"; }\n        \n        \n    }  \n    \n    msg.payload.runtimeDHW =  0;\n}\n\n\n\nvar lasttime = flow.get(\"TIME\"+msg.usb) || dd;\n\nflow.set(\"TIME\"+msg.usb,dd);  // the new stuff\n\nvar age = (dd - lasttime)/1000;\nif (age<600) { \n    \n    var vH = flow.get(\"vH\"+msg.usb) || 0.0;\n    vH = vH + (age * msg.payload.fHDHW /60);\n    vH = vH + (age * msg.payload.fHCH /60);\n    flow.set(\"vH\"+msg.usb, vH);\n    msg.payload.vH = vH;\n}\n\nvar urlstr = \"xnode=x\";\nfor (var k in msg.payload){\n    \n    urlstr += \"&dat/\" + k + \"=\" + msg.payload[k];\n\n}\n\nmsg2={}; msg2.usb = msg.usb;\nmsg2.group = \"dat\";\nmsg2.payload = urlstr.replace(/\\s/g, '');\n\n\nif (msg.payload.fC>0) { msg2.flow = true; }\nelse if (msg.payload.fHCH>0) { msg2.flow = true; }\nelse if (msg.payload.fHDHW>0) { msg2.flow = true; }\nelse  { msg2.flow = false; }\n\n\nvar urlstr2 = \"xnode=x\";\nfor (var kk in stats){\n    \n    urlstr2 += \"&stat/\" + kk + \"=\" + stats[kk];\n\n}\n\nmsg3={}; msg3.usb = msg.usb;\nmsg3.group = \"stat\";\nmsg3.payload = urlstr2.replace(/\\s/g, '');\n\n\n\n\nvar urlstr1 = \"xnode=x\";\nfor (var kkk in alarms){\n    \n    urlstr1 += \"&alarm/\" + kkk + \"=\" + alarms[kkk];\n\n}\n\nmsg1={}; msg1.usb = msg.usb;\nmsg1.group = \"alarm\";\nmsg1.payload = urlstr1.replace(/\\s/g, '');\n\n\nreturn [msg1,msg2,msg3];",
+        "outputs": "3",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910.0000305175781,
+        "y": 2340,
+        "wires": [
+            [
+                "1840146.0a4e6ec"
+            ],
+            [
+                "1840146.0a4e6ec"
+            ],
+            [
+                "1840146.0a4e6ec"
+            ]
+        ]
+    },
+    {
+        "id": "82c5c5e7.f10798",
+        "type": "switch",
+        "z": "e090c99b.574098",
+        "name": "payload",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "Command",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "DAT,",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "STAT,",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "PARAM,",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "HEATER",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": ":",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 6,
+        "x": 700,
+        "y": 2480,
+        "wires": [
+            [],
+            [
+                "f8539bf1.2e0408"
+            ],
+            [
+                "dc25b190.60c92"
+            ],
+            [
+                "1afd42f6.3ce5ed",
+                "a21d359.ae8d4c8"
+            ],
+            [],
+            [
+                "8bf3c0a7.dd52c"
+            ]
+        ]
+    },
+    {
+        "id": "80680e.79bae7f",
+        "type": "rbe",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "x": 1570,
+        "y": 2420,
+        "wires": [
+            [
+                "d9bc085f.284af"
+            ]
+        ]
+    },
+    {
+        "id": "9b823fec.77d54",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "1000",
+        "extend": true,
+        "units": "ms",
+        "reset": "",
+        "outputs": 1,
+        "x": 460,
+        "y": 800,
+        "wires": [
+            [
+                "48de6e4e.59652",
+                "af218e56.02cb6"
+            ]
+        ]
+    },
+    {
+        "id": "1afd42f6.3ce5ed",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "PARAM",
+        "func": "var DAT = msg.payload.split(',');\n\n\n\nmsg.payload = {};\n\n\nmsg.topic = \"PARAM\"+msg.usb;\n\nmsg.payload.Nodeware = global.get(\"Nodeware\") || \"v0\";  // state\n\nmsg.payload.Firmware = DAT[1];  // state\nmsg.payload.Serial = DAT[9];\n\nmsg.payload.usb = msg.usb;  // state\n\n//validity check - serial should ot change repeatedly\nvar chk = context.get(\"lastSerial\"+msg.usb) || msg.payload.Serial;\ncontext.set(\"lastSerial\"+msg.usb, msg.payload.Serial);\nif (chk != msg.payload.Serial) { return null; }\n\n\nflow.set(\"serial\" + msg.usb,msg.payload.Serial);\nflow.set(\"serialusb\" + msg.payload.Serial, msg.usb);\n\n\n\nflow.set(\"PARAM\"+msg.usb,msg.payload);  // the new stuff\n\nvar urlstr = \"xnode=iK7iep3i\";\nfor (var k in msg.payload){\n    \n    urlstr += \"&system/\" + k + \"=\" + msg.payload[k];\n\n}\n\nmsg2={};  msg2.usb = msg.usb;\nmsg2.payload = urlstr.replace(/\\s/g, '');\n\nmsg.group = \"system\"; msg2.group = \"system\";\n\nreturn [msg,msg2];",
+        "outputs": "2",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 2460,
+        "wires": [
+            [],
+            [
+                "1840146.0a4e6ec"
+            ]
+        ]
+    },
+    {
+        "id": "dc25b190.60c92",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "STAT",
+        "func": "\nvar DAT = msg.payload.split(',');\n\n\n\n\nflow.set(\"TIS\"+msg.usb, DAT[4]);  // the new stuff\n\n\nmsg.payload = {};\n\n\nmsg.topic = \"STAT\"+msg.usb;\n\n\nmsg.payload.vC = DAT[2];  // state\nmsg.payload.DHWCount = DAT[3];\n//msg.payload.TimeInState = DAT[4];\n\nmsg.payload.beacon = 3 * parseInt(parseFloat(DAT[4]) / 180);  // ever 3 min\n\n//msg.payload.e_Counter = DAT[5];\nmsg.payload.e_TEMPERATURESENSORS = DAT[6];\nmsg.payload.e_FLOWSENSOR = DAT[7];\nmsg.payload.e_PRIMARYCONTROL = DAT[8];\nmsg.payload.e_DISTRICTHEATING = DAT[9];\nmsg.payload.e_CHRETURNTEMP = DAT[10];\nmsg.payload.e_DHWTEMP = DAT[11];\nmsg.payload.e_DISTRICTHEATINGTEMP = DAT[12];\nmsg.payload.e_DHRETURNTEMP = DAT[13];\nmsg.payload.e_CENTRALHEATING = DAT[14];\nmsg.payload.e_WARMUPTIMER = DAT[15];\nmsg.payload.e_CHTEMPWARNING = DAT[16];\nmsg.payload.e_CHTEMPERROR = DAT[17];\n\n\n\n// validity check\nvar chk = context.get(\"lastvC\"+msg.usb) || msg.payload.vC;\ncontext.set(\"lastvC\"+msg.usb, msg.payload.vC);\nif (Math.abs(chk - msg.payload.vC)>20) { return null; }\n\nflow.set(\"vC\"+msg.usb,msg.payload.vC);  // the new stuff\n\nflow.set(\"STAT\"+msg.usb,msg.payload);  // the new stuff\n\nvar urlstr = \"xnode=iK7iep3i\";\nfor (var k in msg.payload){\n    \n    urlstr += \"&stat/\" + k + \"=\" + msg.payload[k];\n\n}\n\nmsg2={}; msg2.usb = msg.usb;\n\nmsg2.payload = urlstr.replace(/\\s/g, '');\n\nmsg.group = \"stat\"; msg2.group = \"stat\";\n\nreturn [msg,msg2];",
+        "outputs": "2",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 2400,
+        "wires": [
+            [],
+            [
+                "1840146.0a4e6ec"
+            ]
+        ]
+    },
+    {
+        "id": "dbb6b961.8e70a8",
+        "type": "delay",
+        "z": "e090c99b.574098",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 960,
+        "y": 960,
+        "wires": [
+            [
+                "f7a2522b.1aa6f"
+            ]
+        ]
+    },
+    {
+        "id": "8bf3c0a7.dd52c",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "SETTINGS",
+        "func": "var skey = msg.payload.split(':')[0].replace(/\\s/g, '');\nvar sval = msg.payload.split(':')[1].replace(/\\s/g, '');\n\n\n\n\nvar patt = new RegExp(/^[a-z0-9:.]+$/i);\nif(!patt.test(skey)) { return null; }\nif(!patt.test(sval)) { return null; }\n\nmsg.payload = {};\n\nflow.set(\"settings.\"+flow.get(\"serial\" + msg.usb)+\".\"+skey, sval);  // the new stuff\n\n\nmsg.topic =  flow.get(\"serial\" + msg.usb) + \"/settings/\" + skey;\n\nmsg.payload = sval;  \n\n\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1270,
+        "y": 2520,
+        "wires": [
+            [
+                "80680e.79bae7f",
+                "121021a4.99d09e"
+            ]
+        ]
+    },
+    {
+        "id": "121021a4.99d09e",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 1530,
+        "y": 2600,
+        "wires": []
+    },
+    {
+        "id": "f61a6e0.b545c9",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "load",
+        "func": "\n\nif(!msg.usb) { return null; }\n\nvar urlstr = \"node=iK7iep3i\";\n\nmsg.payload = flow.get(\"DAT\"+msg.usb);  // the new stuff\n\n\nfor (var k in msg.payload){\n    \n    urlstr += \"&dat/\" + k + \"=\" + msg.payload[k];\n\n}\nmsg.payload = flow.get(\"STAT\"+msg.usb);  // the new stuff\n\n\nfor (var k in msg.payload){\n    \n    urlstr += \"&stat/\" + k + \"=\" + msg.payload[k];\n\n}\nmsg.payload = flow.get(\"PARAM\"+msg.usb);  // the new stuff\n\nfor (var k in msg.payload){\n    \n    urlstr += \"&param/\" + k + \"=\" + msg.payload[k];\n\n}\n\n//msg.payload = global.get(\"SYSINFO\");  // the new stuff\n\n//for (var k in msg.payload){\n    \n//    urlstr += \"&system/\" + k + \"=\" + msg.payload[k];\n\n//}\n\n\nmsg.payload = flow.get(\"settings.\"+flow.get(\"serial\"+msg.usb));  // the new stuff\nfor (var k in msg.payload){\n    \n    urlstr += \"&settings/\" + k + \"=\" + msg.payload[k];\n\n}\n\nurlstr += \"&system/tempid=\" + (global.get(\"settings.tempid\") || \"undefined\") + msg.usb;\n\nurlstr += \"&system/usb=\" + msg.usb;\n\nmsg.payload = global.get(\"settings\");  // the new stuff\nfor (var k in msg.payload){\n    \n    urlstr += \"&local/\" + k + \"=\" + msg.payload[k];\n\n}\n\n//urlstr += \"&dat/tX=\" + global.get(\"tX\");\n//urlstr += \"&dat/hX=\" + global.get(\"hX\");\n\nurlstr += \"&stat/tis=\" + flow.get(\"TIS\"+msg.usb);\n\nmsg.payload = urlstr;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1210,
+        "y": 1040,
+        "wires": [
+            [
+                "4146b1cc.badfb"
+            ]
+        ]
+    },
+    {
+        "id": "4146b1cc.badfb",
+        "type": "split",
+        "z": "e090c99b.574098",
+        "name": "",
+        "splt": "&",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1330,
+        "y": 1040,
+        "wires": [
+            [
+                "cc66278e.f774c8"
+            ]
+        ]
+    },
+    {
+        "id": "78f9f023.725b",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "topic",
+        "func": "var tp = msg.payload.split(\"=\")[0];\nvar vv = msg.payload.split(\"=\")[1];\n\nmsg.topic = \"ihiu/iK7iep3i/\" + flow.get(\"serial\" + msg.usb) + \"/\" + tp;\nmsg.payload = vv;\n\nreturn msg; ",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 1570,
+        "y": 1040,
+        "wires": [
+            [
+                "a617f511.42d7a8",
+                "e1ac49b3.759af8"
+            ]
+        ]
+    },
+    {
+        "id": "fc50aae1.5eca28",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1110,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "cc66278e.f774c8",
+        "type": "switch",
+        "z": "e090c99b.574098",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "=",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 1,
+        "x": 1450,
+        "y": 1040,
+        "wires": [
+            [
+                "78f9f023.725b"
+            ]
+        ]
+    },
+    {
+        "id": "23a2aab8.bb0366",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "set HIU",
+        "func": " \n if (!msg.usb) { \n     \n    var hiuser  = msg.topic.split(\"/\")[2];\n    if (flow.get(\"serialusb\" + hiuser)) { msg.usb = flow.get(\"serialusb\" + hiuser); }\n    \n    else { return null; }\n     \n }\n \n \n \n var tosend = \"\";\n \n var msg2 = {};\n \n function convertSet(setp) {\n     \n     \n    var setdec = 100 * parseFloat(setp);\n\t\n    var b3 = Math.floor(setdec / 256);\n    var b4 = setdec % 256;\n\n    var cs = String.fromCharCode(0) +  String.fromCharCode(0) + String.fromCharCode(parseInt(b3)) + String.fromCharCode(parseInt(b4)) ;\n\t\n\treturn cs;\n\n }\n \n if (msg.topic.indexOf(\"/CentralHeatingControl\")>0) {\n \n    if (msg.payload === \"1\") { \n        \n        tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(38) + String.fromCharCode(1) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59);\n \n    } else { \n        \n        tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(38) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59);\n        \n    }\n\n}\nelse if (msg.topic.indexOf(\"/EcoMode\")>0) {\n \n    if (msg.payload === \"1\" || msg.payload === \"comfort\") { \n        \n        tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(10) + String.fromCharCode(1) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59);\n \n    } else { \n        \n        tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(10) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59);\n        \n    }\n\n} else if (msg.topic.indexOf(\"AntiLegionella\")>0) {\n \n    if (msg.payload === \"1\") { \n        \n        tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(34) + String.fromCharCode(1) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59);\n \n    } else { \n        \n        tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(34) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59);\n        \n    }\n\n}\nelse if (msg.topic.indexOf(\"/setpoint\")>0) {\n\n    tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(9) + convertSet(msg.payload) + String.fromCharCode(59);\n\n}\nelse if (msg.topic.indexOf(\"EcoHeatTemperature\")>0) {\n\n    tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(33) + convertSet(msg.payload) + String.fromCharCode(59);\n\n}\nelse if (msg.topic == \"xxxxx\") {\n\n\n    var setdec = 100 * parseFloat(msg.payload);\n\t\n    var b3 = Math.floor(setdec / 256);\n    var b4 = setdec % 256;\n\n\n    tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(9) + String.fromCharCode(0) +  String.fromCharCode(0) + String.fromCharCode(parseInt(b3)) + String.fromCharCode(parseInt(b4)) + String.fromCharCode(59);\n\t\n    \n    msg2.payload = \"setdec \" + b3 + \" .. \" + b4;\n    \n\n    return null; // DISABLED TEMP CONTROL\n\n}\nelse { return null;  }\n\n\n\nmsg.payload = tosend;\n\nreturn msg;\n\n",
+        "outputs": "1",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2700,
+        "y": 1240,
+        "wires": [
+            [
+                "8f8f0196.7222c",
+                "d710525b.743aa"
+            ]
+        ]
+    },
+    {
+        "id": "8f8f0196.7222c",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "1",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "outputs": 1,
+        "x": 2898.3608894348145,
+        "y": 1201.722279548645,
+        "wires": [
+            [
+                "103e9ba1.e12f24"
+            ]
+        ]
+    },
+    {
+        "id": "103e9ba1.e12f24",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "store HIU",
+        "func": "var tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(13) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59)\n\nmsg.payload = tosend;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3077.360980987549,
+        "y": 1201.6110429763794,
+        "wires": [
+            [
+                "d710525b.743aa"
+            ]
+        ]
+    },
+    {
+        "id": "d710525b.743aa",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "pass",
+        "func": "\n\nmsg.payload  = Buffer.from(msg.payload, 'ascii');\n\nmsg.topic=msg.usb;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3230,
+        "y": 1240,
+        "wires": [
+            [
+                "b9f9d52e.dbc388",
+                "939710c8.952bd"
+            ]
+        ]
+    },
+    {
+        "id": "939710c8.952bd",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "c88e7b3e.9bae08"
+        ],
+        "x": 3396.250015258789,
+        "y": 1232.5000114440918,
+        "wires": []
+    },
+    {
+        "id": "b9f9d52e.dbc388",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 3351.250015258789,
+        "y": 1352.5000114440918,
+        "wires": []
+    },
+    {
+        "id": "e5a16d1d.b9593",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 220,
+        "y": 1588,
+        "wires": []
+    },
+    {
+        "id": "a21d359.ae8d4c8",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 900,
+        "y": 2580,
+        "wires": []
+    },
+    {
+        "id": "a617f511.42d7a8",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1750,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "fa35a2c9.167fb",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 310,
+        "y": 220,
+        "wires": [
+            [
+                "f5bfee94.23e34",
+                "e2e1b2e5.47d85"
+            ]
+        ]
+    },
+    {
+        "id": "50f58c2.209ba74",
+        "type": "ui_template",
+        "z": "e090c99b.574098",
+        "group": "c00ac9a8.47bd28",
+        "name": "",
+        "order": 4,
+        "width": "6",
+        "height": "11",
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1300,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "77cc7d0d.b5e584",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "var htmlt = '';\n\nfor (var key in msg.payload) {\n    \n    if (key == \"EEPROM\") { continue; }\n    if (key == \"magic\") { continue; }\n    if (key == \"CHHeaterCurveSlope\") { continue; }\n    if (key == \"CHHeaterCurveDisplacement\") { continue; }\n    \n    htmlt += '<table width=\"100%\"><tr><td>' + key + '</td><td align=\"right\">' + msg.payload[key] + '</td></tr><table>';\n}\n\nhtmlt += '';\n\nhtmlt = htmlt.replace(/Exchanger/g, \"\");\n\nmsg.payload=htmlt;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 580,
+        "wires": [
+            [
+                "50f58c2.209ba74"
+            ]
+        ]
+    },
+    {
+        "id": "95990221.d8463",
+        "type": "ui_template",
+        "z": "e090c99b.574098",
+        "group": "ebf0a5bd.363498",
+        "name": "",
+        "order": 11,
+        "width": "6",
+        "height": "2",
+        "format": "<div ng-bind-html=\"msg.payload\"></div>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 1300,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8b6dc809.fa87e8",
+        "type": "ui_template",
+        "z": "e090c99b.574098",
+        "group": "dd8470c4.5741b",
+        "name": "",
+        "order": 1,
+        "width": "6",
+        "height": "9",
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1300,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "291a49eb.d2c446",
+        "type": "catch",
+        "z": "e090c99b.574098",
+        "name": "",
+        "scope": [
+            "8ebd4192.9d6",
+            "247cc8a4.66a238",
+            "2333c6e6.0770ca",
+            "21b29b43.4b7554",
+            "7114f648.fb37f8",
+            "edc27520.dde888",
+            "9965ec59.0de9c",
+            "5c0853e4.8b9d5c"
+        ],
+        "x": 1140,
+        "y": 1580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2cd22793.052278",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "load",
+        "func": "// temp\nif (!msg.payload) { return null; }\n\nmsg.usb = msg.payload;\n\nif (msg.topic==\"usb\") { flow.set(\"usbpressed\",msg.payload); }\n\nif (!flow.get(\"DAT\"+msg.usb)) { return null; }\n\n\nmsg2={};\nmsg3={};\nmsg4={};\nmsg5={};\n\nmsg6={};\n\nmsg.payload = flow.get(\"DAT\"+msg.usb);  // the new stuff\n\n\nmsg2.payload = flow.get(\"STAT\"+msg.usb);  // the new stuff\n\n\nmsg3.payload = flow.get(\"PARAM\"+msg.usb);  // the new stuff\n\n\n\nif (flow.get(\"serial\"+msg.usb)) {\n    msg4.payload = flow.get(\"settings.\"+flow.get(\"serial\"+msg.usb));  // the new stuff\n}\nmsg5.payload = flow.get(\"serial\"+msg.usb);  // the new stuff\n\n\n\nif(msg.topic!=\"usb\") { msg6 = null; }\nelse { \n    \n    msg6.payload = flow.get(\"usbpressed\"); \n    msg6.topic = \"usb\";\n    \n}\n\nreturn [msg,msg2,msg3,msg4,msg5,msg6];",
+        "outputs": "6",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 540,
+        "wires": [
+            [
+                "a1c76865.5bd338"
+            ],
+            [
+                "81eaf0f3.8b0b6"
+            ],
+            [
+                "50bcff0b.7bdac"
+            ],
+            [
+                "77cc7d0d.b5e584"
+            ],
+            [
+                "8e5ba307.84dc9"
+            ],
+            [
+                "a0ecb5e7.79b9b8",
+                "6b4ac5ad.5c873c"
+            ]
+        ]
+    },
+    {
+        "id": "54447c37.15fb74",
+        "type": "ui_template",
+        "z": "e090c99b.574098",
+        "group": "6b255050.f88d1",
+        "name": "",
+        "order": 0,
+        "width": "6",
+        "height": "13",
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1300,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a1c76865.5bd338",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "var htmlt = '';\n\nfor (var key in msg.payload) {\n    htmlt += '<table width=\"100%\"><tr><td>' + key + '</td><td align=\"right\">' + msg.payload[key] + '</td></tr><table>';\n}\n\nhtmlt += '';\n\nhtmlt = htmlt.replace(/Exchanger/g, \"\");\n\nhtmlt = htmlt.replace(\"st\", \"State\");\nhtmlt = htmlt.replace(\"fC\", \"DHW Flow Rate [l/m]\");\nhtmlt = htmlt.replace(\"tCo\", \"DHW Output Temperatute [C]\");\nhtmlt = htmlt.replace(\"tH\", \"Primary Flow Temp [C]\");\nhtmlt = htmlt.replace(\"tHoDHW\", \"Primary Rtn Temp DHW [C]\");\nhtmlt = htmlt.replace(\"tHoCH\", \"Primary Rtn Temp CH [C]\");\nhtmlt = htmlt.replace(\"tHoDHW\", \"Primary Rtn Temp DHW [C]\");\nhtmlt = htmlt.replace(\"xDHW\", \"Valve Position DHW\");\nhtmlt = htmlt.replace(\"xCH\", \"Valve Position CH\");\nhtmlt = htmlt.replace(\"stat\", \"Room Thermostat\");\nhtmlt = htmlt.replace(\"dpH\", \"Primary Diff Pressure [bar]\");\nhtmlt = htmlt.replace(\"fHDHW\", \"Primary Flow Rate DHW [l/m]\");\nhtmlt = htmlt.replace(\"fHCH\", \"Primary Flow Rate CH [l/m]\");\nhtmlt = htmlt.replace(\"eT\", \"Temp Error DHW [C]\");\n\nhtmlt = htmlt.replace(\"TTdhw\", \"Setpoint DHW [C]\");\nhtmlt = htmlt.replace(\"eS\", \"Error State\");\nhtmlt = htmlt.replace(\"tCHo\", \"CH Output Temp [C]\");\nhtmlt = htmlt.replace(\"pCH\", \"CH System Pressure [bar]\");\nhtmlt = htmlt.replace(\"pump\", \"CH Pump\");\n\n\n\nmsg.payload=htmlt;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 460,
+        "wires": [
+            [
+                "54447c37.15fb74"
+            ]
+        ]
+    },
+    {
+        "id": "caf3f900.f20a08",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 350,
+        "y": 1780,
+        "wires": []
+    },
+    {
+        "id": "823187f.87cad78",
+        "type": "ui_button",
+        "z": "e090c99b.574098",
+        "name": "",
+        "group": "ebf0a5bd.363498",
+        "order": 1,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-refresh",
+        "payload": "usb0",
+        "payloadType": "str",
+        "topic": "usb",
+        "topicType": "str",
+        "x": 570,
+        "y": 360,
+        "wires": [
+            [
+                "2cd22793.052278"
+            ]
+        ]
+    },
+    {
+        "id": "3038fc32.e7a514",
+        "type": "ui_button",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "group": "ebf0a5bd.363498",
+        "order": 2,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "usb1",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "usb1",
+        "payloadType": "str",
+        "topic": "usb",
+        "topicType": "str",
+        "x": 570,
+        "y": 400,
+        "wires": [
+            [
+                "2cd22793.052278"
+            ]
+        ]
+    },
+    {
+        "id": "3859a9a7.7475f6",
+        "type": "ui_button",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "group": "ebf0a5bd.363498",
+        "order": 3,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "usb2",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "usb2",
+        "payloadType": "str",
+        "topic": "usb",
+        "topicType": "str",
+        "x": 570,
+        "y": 440,
+        "wires": [
+            [
+                "2cd22793.052278"
+            ]
+        ]
+    },
+    {
+        "id": "c657e7c8.39deb8",
+        "type": "ui_button",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "group": "ebf0a5bd.363498",
+        "order": 4,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "usb3",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "usb3",
+        "payloadType": "str",
+        "topic": "usb",
+        "topicType": "str",
+        "x": 570,
+        "y": 480,
+        "wires": [
+            [
+                "2cd22793.052278"
+            ]
+        ]
+    },
+    {
+        "id": "600c9033.80d35",
+        "type": "ui_button",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "group": "ebf0a5bd.363498",
+        "order": 5,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "usb4",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "usb4",
+        "payloadType": "str",
+        "topic": "usb",
+        "topicType": "str",
+        "x": 570,
+        "y": 520,
+        "wires": [
+            [
+                "2cd22793.052278"
+            ]
+        ]
+    },
+    {
+        "id": "79b04057.8be9d",
+        "type": "ui_button",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "group": "ebf0a5bd.363498",
+        "order": 7,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "usb5",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "usb5",
+        "payloadType": "str",
+        "topic": "usb",
+        "topicType": "str",
+        "x": 570,
+        "y": 560,
+        "wires": [
+            [
+                "2cd22793.052278"
+            ]
+        ]
+    },
+    {
+        "id": "874a2935.2ffd98",
+        "type": "ui_template",
+        "z": "e090c99b.574098",
+        "d": true,
+        "group": "ebf0a5bd.363498",
+        "name": "",
+        "order": 12,
+        "width": "6",
+        "height": "9",
+        "format": "<div ng-bind-html=\"msg.payload\"></div>\n\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "x": 1300,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e5ba307.84dc9",
+        "type": "template",
+        "z": "e090c99b.574098",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<img src=\"https://zxing.org/w/chart?cht=qr&chs=350x350&chld=L&choe=UTF-8&chl=http%3A%2F%2Fheatweb.info%2Fpair%3Fserial%3D{{payload}}\" width=\"100%\">\n<p>\n<a target=\"_blank\" href=\"https://hw1.ddns.net/graph?show=//{{payload}}//fC,//{{payload}}//tCo,//{{payload}}//tH,//{{payload}}//tHoCH,//{{payload}}//dpH,//{{payload}}//pCH\">Graph</a>\n</p>",
+        "output": "str",
+        "x": 1150,
+        "y": 620,
+        "wires": [
+            [
+                "874a2935.2ffd98"
+            ]
+        ]
+    },
+    {
+        "id": "c53592d3.3f577",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "a94c5afd.b2653"
+        ],
+        "x": 1330.714111328125,
+        "y": 682.8571166992188,
+        "wires": []
+    },
+    {
+        "id": "5f60d37a.24fb8c",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "CONusb0",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 412.5000305175781,
+        "y": 359.99998664855957,
+        "wires": [
+            [
+                "823187f.87cad78"
+            ]
+        ]
+    },
+    {
+        "id": "10429b7d.561255",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "CONusb4",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 412.5000305175781,
+        "y": 519.9999866485596,
+        "wires": [
+            [
+                "600c9033.80d35"
+            ]
+        ]
+    },
+    {
+        "id": "3cc36d6a.fb4b42",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "CONusb1",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 412.5000305175781,
+        "y": 399.99998664855957,
+        "wires": [
+            [
+                "3038fc32.e7a514"
+            ]
+        ]
+    },
+    {
+        "id": "2aea8ca4.03b0f4",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "CONusb2",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 412.5000305175781,
+        "y": 439.99998664855957,
+        "wires": [
+            [
+                "3859a9a7.7475f6"
+            ]
+        ]
+    },
+    {
+        "id": "a6983b4c.4cd708",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "CONusb3",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 412.5000305175781,
+        "y": 479.99998664855957,
+        "wires": [
+            [
+                "c657e7c8.39deb8"
+            ]
+        ]
+    },
+    {
+        "id": "983cd8d3.9d9938",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "CONusb5",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 412.5000305175781,
+        "y": 559.9999866485596,
+        "wires": [
+            [
+                "79b04057.8be9d"
+            ]
+        ]
+    },
+    {
+        "id": "3305d091.c096f",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "props": [
+            {
+                "p": "payload",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "string"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 520,
+        "wires": [
+            [
+                "5f60d37a.24fb8c",
+                "10429b7d.561255",
+                "3cc36d6a.fb4b42",
+                "2aea8ca4.03b0f4",
+                "a6983b4c.4cd708",
+                "983cd8d3.9d9938",
+                "a168a7b0.53fae8",
+                "ccd361d2.a4ace",
+                "2efd20a2.eaf35"
+            ]
+        ]
+    },
+    {
+        "id": "1af1b245.29871e",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "props": [
+            {
+                "p": "payload",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "string"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 390,
+        "y": 740,
+        "wires": [
+            [
+                "86467c5a.1aff"
+            ]
+        ]
+    },
+    {
+        "id": "86467c5a.1aff",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "usbpressed",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 740,
+        "wires": [
+            [
+                "2cd22793.052278"
+            ]
+        ]
+    },
+    {
+        "id": "a0ecb5e7.79b9b8",
+        "type": "rbe",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "x": 990,
+        "y": 680,
+        "wires": [
+            [
+                "829aaf4a.d052"
+            ]
+        ]
+    },
+    {
+        "id": "6510b41f.6bc12c",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 955,
+        "y": 1980,
+        "wires": []
+    },
+    {
+        "id": "c31b8ba8.42cfc8",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 2535,
+        "y": 2420,
+        "wires": []
+    },
+    {
+        "id": "e1ac49b3.759af8",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "4a684f33.663d2"
+        ],
+        "x": 1695,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "af218e56.02cb6",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 710,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "6b4ac5ad.5c873c",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "nul",
+        "duration": "10",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "outputs": 1,
+        "x": 1007.8570556640625,
+        "y": 726.28564453125,
+        "wires": [
+            [
+                "829aaf4a.d052"
+            ]
+        ]
+    },
+    {
+        "id": "829aaf4a.d052",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "nul",
+        "duration": "250",
+        "extend": false,
+        "units": "ms",
+        "reset": "",
+        "outputs": 1,
+        "x": 1204.9996337890625,
+        "y": 683.4285583496094,
+        "wires": [
+            [
+                "c53592d3.3f577"
+            ]
+        ]
+    },
+    {
+        "id": "6a69b8cd.2317d",
+        "type": "switch",
+        "z": "e090c99b.574098",
+        "name": "",
+        "property": "remoteon",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 1,
+        "x": 813.5,
+        "y": 1979,
+        "wires": [
+            [
+                "6510b41f.6bc12c",
+                "cfeb38ad.e3a498"
+            ]
+        ]
+    },
+    {
+        "id": "13971384.630f04",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 749,
+        "y": 1898,
+        "wires": [
+            [
+                "a1dcd649.5d18d"
+            ]
+        ]
+    },
+    {
+        "id": "ee829a3d.8e04a",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "remoteon",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1135,
+        "y": 1898,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a1dcd649.5d18d",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "5",
+        "extend": false,
+        "units": "min",
+        "reset": "",
+        "outputs": 1,
+        "x": 920,
+        "y": 1898,
+        "wires": [
+            [
+                "ee829a3d.8e04a"
+            ]
+        ]
+    },
+    {
+        "id": "cfeb38ad.e3a498",
+        "type": "switch",
+        "z": "e090c99b.574098",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "DAT",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "STAT",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 3,
+        "x": 970,
+        "y": 2040,
+        "wires": [
+            [],
+            [],
+            [
+                "220d0690.2e7622"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2f12d.f8706",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "delay",
+        "func": "\nvar tdiff = msg.timenow - flow.get(\"time\"+msg.usb);\n\nif (tdiff>500 && tdiff<2000) { msg.delay=1400 - tdiff; }\n\nelse { msg.delay=0; }\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 1600,
+        "wires": [
+            [
+                "836eb2b0.3535c"
+            ]
+        ]
+    },
+    {
+        "id": "836eb2b0.3535c",
+        "type": "delay",
+        "z": "e090c99b.574098",
+        "name": "",
+        "pauseType": "delayv",
+        "timeout": "5",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 545,
+        "y": 1602,
+        "wires": [
+            [
+                "ea7ad72e.e28e98"
+            ]
+        ]
+    },
+    {
+        "id": "3ed73fdc.a3566",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "timenow",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 253,
+        "y": 1522,
+        "wires": [
+            [
+                "ea7ad72e.e28e98"
+            ]
+        ]
+    },
+    {
+        "id": "220cf00f.e8bf9",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "props": [
+            {
+                "p": "payload",
+                "v": "usb0",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "v": "usb",
+                "vt": "string"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "topic": "usb",
+        "payload": "usb0",
+        "payloadType": "str",
+        "x": 220,
+        "y": 900,
+        "wires": [
+            [
+                "e6f1555b.8808f8"
+            ]
+        ]
+    },
+    {
+        "id": "e6f1555b.8808f8",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "10",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "outputs": 1,
+        "x": 430,
+        "y": 900,
+        "wires": [
+            [
+                "48de6e4e.59652"
+            ]
+        ]
+    },
+    {
+        "id": "5a140267.23ec1c",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1200,
+        "y": 820,
+        "wires": [
+            [
+                "cd8a0d65.18123"
+            ]
+        ]
+    },
+    {
+        "id": "cd8a0d65.18123",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "\n\nvar diff = parseInt((msg.payload - flow.get(\"timeusb0\"))/1000);\n\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1370,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3e749186.082526",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1050,
+        "y": 1040,
+        "wires": [
+            [
+                "f61a6e0.b545c9"
+            ]
+        ]
+    },
+    {
+        "id": "1230cc95.667d03",
+        "type": "switch",
+        "z": "e090c99b.574098",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "SYNC",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 610,
+        "y": 2120,
+        "wires": [
+            [],
+            [
+                "69c68941.83f0d8"
+            ]
+        ]
+    },
+    {
+        "id": "5c0ee1b0.724e7",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "usb",
+        "payload": "usb1",
+        "payloadType": "str",
+        "x": 220,
+        "y": 940,
+        "wires": [
+            [
+                "d76f2e52.668e98"
+            ]
+        ]
+    },
+    {
+        "id": "d76f2e52.668e98",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "11",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "outputs": 1,
+        "x": 430,
+        "y": 940,
+        "wires": [
+            [
+                "48de6e4e.59652"
+            ]
+        ]
+    },
+    {
+        "id": "51c8d547.8d428c",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "usb",
+        "payload": "usb2",
+        "payloadType": "str",
+        "x": 220,
+        "y": 980,
+        "wires": [
+            [
+                "e4ace55e.211708"
+            ]
+        ]
+    },
+    {
+        "id": "e4ace55e.211708",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "12",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "outputs": 1,
+        "x": 430,
+        "y": 980,
+        "wires": [
+            [
+                "48de6e4e.59652"
+            ]
+        ]
+    },
+    {
+        "id": "34cf6237.e40e1e",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "usb",
+        "payload": "usb3",
+        "payloadType": "str",
+        "x": 220,
+        "y": 1020,
+        "wires": [
+            [
+                "3e058afd.f110c6"
+            ]
+        ]
+    },
+    {
+        "id": "3e058afd.f110c6",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "13",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "outputs": 1,
+        "x": 430,
+        "y": 1020,
+        "wires": [
+            [
+                "48de6e4e.59652"
+            ]
+        ]
+    },
+    {
+        "id": "6dd9d6be.4b0f18",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "usb",
+        "payload": "usb4",
+        "payloadType": "str",
+        "x": 220,
+        "y": 1060,
+        "wires": [
+            [
+                "adbed913.0fefa"
+            ]
+        ]
+    },
+    {
+        "id": "adbed913.0fefa",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "14",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "outputs": 1,
+        "x": 430,
+        "y": 1060,
+        "wires": [
+            [
+                "48de6e4e.59652"
+            ]
+        ]
+    },
+    {
+        "id": "2055d91d.bac5ee",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "usb",
+        "payload": "usb5",
+        "payloadType": "str",
+        "x": 220,
+        "y": 1100,
+        "wires": [
+            [
+                "2af7e1ee.e004a6"
+            ]
+        ]
+    },
+    {
+        "id": "2af7e1ee.e004a6",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "15",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "outputs": 1,
+        "x": 430,
+        "y": 1100,
+        "wires": [
+            [
+                "48de6e4e.59652"
+            ]
+        ]
+    },
+    {
+        "id": "86ced5b9.366c7",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "usb",
+        "payload": "usb6",
+        "payloadType": "str",
+        "x": 220,
+        "y": 1140,
+        "wires": [
+            [
+                "d7115b56.8e2de8"
+            ]
+        ]
+    },
+    {
+        "id": "d7115b56.8e2de8",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "16",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "outputs": 1,
+        "x": 430,
+        "y": 1140,
+        "wires": [
+            [
+                "48de6e4e.59652"
+            ]
+        ]
+    },
+    {
+        "id": "b294a92d.c88fd8",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "usb",
+        "payload": "usb7",
+        "payloadType": "str",
+        "x": 220,
+        "y": 1180,
+        "wires": [
+            [
+                "84d93c65.10b0e8"
+            ]
+        ]
+    },
+    {
+        "id": "84d93c65.10b0e8",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "17",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "outputs": 1,
+        "x": 430,
+        "y": 1180,
+        "wires": [
+            [
+                "48de6e4e.59652"
+            ]
+        ]
+    },
+    {
+        "id": "dc4d6a72.bf68d8",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "Stagnation Test",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "172800",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "usb0,usb1,usb2,usb3,usb4,usb5,usb6,usb7",
+        "payloadType": "str",
+        "x": 230,
+        "y": 2700,
+        "wires": [
+            [
+                "5b45faf1.3c07b4"
+            ]
+        ]
+    },
+    {
+        "id": "1d2066da.800bc9",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "msg.usb = msg.payload;\n    \n    var vHlast = flow.get(\"vHlast\"+msg.usb) || 0.0;\n    var vH = flow.get(\"vH\"+msg.usb) || 0.0;\n    \n    flow.set(\"vHlast\"+msg.usb, vH);\n    \n    if(vH - vHlast < 10) { msg.payload=\"1\"; msg.topic = msg.usb + \"/DHWAntiLegionella\"; }\n    \n    else { msg.payload=\"0\"; msg.topic = msg.usb + \"/DHWAntiLegionella\"; }\n\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 770,
+        "y": 2700,
+        "wires": [
+            [
+                "fa64984b.9d27e8",
+                "393dd622.9eb02a"
+            ]
+        ]
+    },
+    {
+        "id": "5b45faf1.3c07b4",
+        "type": "split",
+        "z": "e090c99b.574098",
+        "name": "",
+        "splt": ",",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "topic",
+        "x": 390,
+        "y": 2700,
+        "wires": [
+            [
+                "1f1830bb.662a4f"
+            ]
+        ]
+    },
+    {
+        "id": "fa64984b.9d27e8",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "console": false,
+        "complete": "false",
+        "x": 930,
+        "y": 2740,
+        "wires": []
+    },
+    {
+        "id": "393dd622.9eb02a",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "254c663c.1890fa"
+        ],
+        "x": 875,
+        "y": 2700,
+        "wires": []
+    },
+    {
+        "id": "254c663c.1890fa",
+        "type": "link in",
+        "z": "e090c99b.574098",
+        "name": "setHIU",
+        "links": [
+            "393dd622.9eb02a",
+            "2dde7725.9f7118",
+            "97c0549d.c9f938"
+        ],
+        "x": 955,
+        "y": 1280,
+        "wires": [
+            [
+                "e6baf0c.cfa1a1",
+                "5da0cba.37e1234"
+            ]
+        ]
+    },
+    {
+        "id": "1f1830bb.662a4f",
+        "type": "delay",
+        "z": "e090c99b.574098",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "20",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 580,
+        "y": 2700,
+        "wires": [
+            [
+                "1d2066da.800bc9"
+            ]
+        ]
+    },
+    {
+        "id": "5870a8e3.65fc5",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "props": [
+            {
+                "p": "payload",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "string"
+            }
+        ],
+        "repeat": "180",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1590,
+        "y": 2340,
+        "wires": [
+            [
+                "9eee7ae5.b3149"
+            ]
+        ]
+    },
+    {
+        "id": "9eee7ae5.b3149",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1600,
+        "y": 2380,
+        "wires": [
+            [
+                "80680e.79bae7f",
+                "109e1397.f04abc"
+            ]
+        ]
+    },
+    {
+        "id": "d9bc085f.284af",
+        "type": "switch",
+        "z": "e090c99b.574098",
+        "name": "",
+        "property": "reset",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1730,
+        "y": 2420,
+        "wires": [
+            [
+                "1ae690c8.0e242f",
+                "94c0863.cefb378"
+            ]
+        ]
+    },
+    {
+        "id": "c1cb144a.bd615",
+        "type": "ui_button",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "group": "ebf0a5bd.363498",
+        "order": 6,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "usb6",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "usb6",
+        "payloadType": "str",
+        "topic": "usb",
+        "topicType": "str",
+        "x": 580.0000305175781,
+        "y": 601.2500019073486,
+        "wires": [
+            [
+                "2cd22793.052278"
+            ]
+        ]
+    },
+    {
+        "id": "c947fa1f.37ff1",
+        "type": "ui_button",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "group": "ebf0a5bd.363498",
+        "order": 8,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "usb7",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "usb7",
+        "payloadType": "str",
+        "topic": "usb",
+        "topicType": "str",
+        "x": 570,
+        "y": 640,
+        "wires": [
+            [
+                "2cd22793.052278"
+            ]
+        ]
+    },
+    {
+        "id": "a168a7b0.53fae8",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "CONusb6",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 422.50006103515625,
+        "y": 601.2499885559082,
+        "wires": [
+            [
+                "c1cb144a.bd615"
+            ]
+        ]
+    },
+    {
+        "id": "ccd361d2.a4ace",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "CONusb7",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 422.50006103515625,
+        "y": 641.2499885559082,
+        "wires": [
+            [
+                "c947fa1f.37ff1"
+            ]
+        ]
+    },
+    {
+        "id": "4c4a7299.aeed24",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1030,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "77ac40ab.f2d73",
+        "type": "switch",
+        "z": "e090c99b.574098",
+        "name": "",
+        "property": "dchk",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 610,
+        "y": 2240,
+        "wires": [
+            [
+                "82c5c5e7.f10798",
+                "93cb53b7.91a218",
+                "be865f3b.a7ae2"
+            ],
+            [
+                "efc89f84.cbee18",
+                "7e22f7b8.8a3448"
+            ]
+        ]
+    },
+    {
+        "id": "69c68941.83f0d8",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "Check Data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "dchk",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "change",
+                "p": "dchk",
+                "pt": "msg",
+                "from": "\\w",
+                "fromt": "re",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "dchk",
+                "pt": "msg",
+                "from": "\\.",
+                "fromt": "re",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "dchk",
+                "pt": "msg",
+                "from": ",",
+                "fromt": "str",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "dchk",
+                "pt": "msg",
+                "from": "\\n",
+                "fromt": "re",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "dchk",
+                "pt": "msg",
+                "from": "-",
+                "fromt": "str",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "dchk",
+                "pt": "msg",
+                "from": "\\r",
+                "fromt": "re",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "dchk",
+                "pt": "msg",
+                "from": ";",
+                "fromt": "str",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "dchk",
+                "pt": "msg",
+                "from": ":",
+                "fromt": "str",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "dchk",
+                "pt": "msg",
+                "from": " ",
+                "fromt": "str",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timestamp",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 2180,
+        "wires": [
+            [
+                "77ac40ab.f2d73"
+            ]
+        ]
+    },
+    {
+        "id": "7e22f7b8.8a3448",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 870,
+        "y": 2260,
+        "wires": []
+    },
+    {
+        "id": "efc89f84.cbee18",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "corrupt",
+        "func": "\nmsg.topic = \"alarm/\" + msg.usb;\nmsg.payload = \"Corrupt Data\";\n\n\nreturn msg; \n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 2220,
+        "wires": [
+            [
+                "80680e.79bae7f"
+            ]
+        ]
+    },
+    {
+        "id": "93cb53b7.91a218",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "ok",
+        "func": "\nmsg.topic = \"alarm/\" + msg.usb;\nmsg.payload = \"ok\";\n\n\nreturn msg; \n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 2180,
+        "wires": [
+            [
+                "18c8e22a.01777e"
+            ]
+        ]
+    },
+    {
+        "id": "18c8e22a.01777e",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "nul",
+        "duration": "1",
+        "extend": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "topic",
+        "outputs": 1,
+        "x": 1070,
+        "y": 2180,
+        "wires": [
+            [
+                "80680e.79bae7f"
+            ]
+        ]
+    },
+    {
+        "id": "51d3e9e5.127b68",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 715,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "c9049e48.91a06",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 310,
+        "y": 1300,
+        "wires": [
+            [
+                "ae9f7fb7.1471c"
+            ]
+        ]
+    },
+    {
+        "id": "ae9f7fb7.1471c",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "51",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "1302f031aea90ca4/set/setpoint",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 1300,
+        "wires": [
+            [
+                "51d3e9e5.127b68"
+            ]
+        ]
+    },
+    {
+        "id": "342fdd27.68b062",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "Standard Calculations",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0",
+        "topic": "calculations",
+        "payload": "[{\"topic\":\"stat/vwatCo24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"weightedAverage\",\"save\":\"daily\",\"wipe\":\"daily\",\"parameters\":[\"dat/tCo\",\"dat/fC\"],\"title\":\"Volume weighted average tap temp for today\",\"units\":\"°C\",\"points\":365,\"deadband\":0.5},{\"topic\":\"stat/vwatHo24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"weightedAverage\",\"save\":\"daily\",\"wipe\":\"daily\",\"parameters\":[\"dat/tHo\",\"dat/fH\"],\"title\":\"Volume weighted average return temp for today\",\"units\":\"°C\",\"points\":365,\"deadband\":0.5},{\"topic\":\"stat/vwatHoCH24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"weightedAverage\",\"save\":\"daily\",\"wipe\":\"daily\",\"parameters\":[\"dat/tHoCH\",\"dat/fHCH\"],\"title\":\"Volume weighted average return temp for today CH\",\"units\":\"°C\",\"points\":365,\"deadband\":0.5},{\"topic\":\"stat/vwatHoDHW24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"weightedAverage\",\"save\":\"daily\",\"wipe\":\"daily\",\"parameters\":[\"dat/tHoDHW\",\"dat/fHDHW\"],\"title\":\"Volume weighted average return temp for today DHW\",\"units\":\"°C\",\"points\":365,\"deadband\":0.5},{\"topic\":\"stat/vwatH24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"weightedAverage\",\"save\":\"daily\",\"wipe\":\"daily\",\"parameters\":[\"dat/tH\",\"dat/fH\"],\"title\":\"Volume weighted average flow temp for today\",\"units\":\"°C\",\"points\":365,\"deadband\":0.5},{\"topic\":\"stat/vH24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"integrate\",\"save\":\"daily\",\"wipe\":\"daily\",\"parameters\":[\"dat/fH\",60],\"title\":\"Primary volume for today\",\"units\":\"litres\",\"points\":365,\"deadband\":5},{\"topic\":\"stat/vHCH24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"integrate\",\"save\":\"daily\",\"wipe\":\"daily\",\"parameters\":[\"dat/fHCH\",60],\"title\":\"Primary volume for today for Central Heating\",\"units\":\"litres\",\"points\":365,\"deadband\":5},{\"topic\":\"stat/vHDHW24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"integrate\",\"save\":\"daily\",\"wipe\":\"daily\",\"parameters\":[\"dat/fHDHW\",60],\"title\":\"Primary volume for today for Hot Water\",\"units\":\"litres\",\"points\":365,\"deadband\":5},{\"topic\":\"stat/vC24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"integrate\",\"save\":\"daily\",\"wipe\":\"daily\",\"parameters\":[\"dat/fC\",60],\"title\":\"Tap volume for today\",\"units\":\"litres\",\"points\":365,\"deadband\":1},{\"topic\":\"dat/tDiff\",\"filter\":\"+/+/+/dat/#\",\"eval\":\"function (a, b) { return a - b; }\",\"parameters\":[\"tH\",\"tHo\"],\"title\":\"Primary temperature drop\",\"units\":\"°C\",\"deadband\":0.5},{\"topic\":\"stat/kwhH24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"integrate\",\"parameters\":[\"dat/kwH\",3600],\"wipe\":\"daily\",\"title\":\"Primary Energy for today\",\"units\":\"kWh\",\"deadband\":0.1},{\"topic\":\"stat/kwhCH24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"integrate\",\"parameters\":[\"dat/kwHCH\",3600],\"wipe\":\"daily\",\"title\":\"Primary Energy for today CH\",\"units\":\"kWh\",\"deadband\":0.1},{\"topic\":\"stat/kwhDHW24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"integrate\",\"parameters\":[\"dat/kwHDHW\",3600],\"wipe\":\"daily\",\"title\":\"Primary Energy for today DHW\",\"units\":\"kWh\",\"deadband\":0.1},{\"topic\":\"meter/tDiff\",\"filter\":\"+/+/+/meter/#\",\"eval\":\"function (a, b) { return a - b; }\",\"parameters\":[\"tF\",\"tR\"],\"title\":\"Primary temperature drop\",\"units\":\"°C\"},{\"topic\":\"stat/vwatR24\",\"filter\":\"+/+/+/meter/#\",\"function\":\"weightedAverage\",\"save\":\"daily\",\"wipe\":\"daily\",\"parameters\":[\"meter/tR\",\"dat/fR\"],\"title\":\"Volume weighted average return temp for today (meter)\",\"units\":\"°C\",\"points\":365,\"deadband\":0.5},{\"topic\":\"tDiff\",\"filter\":\"+/+/+/dat/#\",\"eval\":\"function (a, b) { return a - b; }\",\"parameters\":[\"tIn\",\"tOut\"],\"title\":\"Primary temperature drop\",\"units\":\"°C\"}]",
+        "payloadType": "json",
+        "x": 1840,
+        "y": 2300,
+        "wires": [
+            [
+                "7d2fa481.1baf3c"
+            ]
+        ]
+    },
+    {
+        "id": "94c0863.cefb378",
+        "type": "heatwebCalc",
+        "z": "e090c99b.574098",
+        "name": "",
+        "x": 1970,
+        "y": 2420,
+        "wires": [
+            [
+                "9617953e.fc1b58",
+                "5433ed94.32bfc4"
+            ]
+        ]
+    },
+    {
+        "id": "7d2fa481.1baf3c",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "calculations",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2072.5,
+        "y": 2300.25,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9617953e.fc1b58",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2090,
+        "y": 2540,
+        "wires": []
+    },
+    {
+        "id": "9ca94a7a.d971a8",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 320,
+        "y": 1360,
+        "wires": [
+            [
+                "88afb8d1.7086c8"
+            ]
+        ]
+    },
+    {
+        "id": "88afb8d1.7086c8",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "1302f031aea90ca4/set/EcoMode",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 1360,
+        "wires": [
+            [
+                "51d3e9e5.127b68"
+            ]
+        ]
+    },
+    {
+        "id": "e6baf0c.cfa1a1",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "hsf",
+        "func": "\n//if (!msg.usb) { msg.usb=\"usb0\"; } \n\nif (msg.topic.split(\"/\")[3]!==\"set\") { return null; }\n\nif (!msg.usb) { \n     \n    var hiuser  = msg.topic.split(\"/\")[2];\n    if (flow.get(\"serialusb\" + hiuser)) { msg.usb = flow.get(\"serialusb\" + hiuser); }\n    \n    else { return null; }\n     \n }\n\nmsg.mqtttopic = msg.topic;\nmsg.topic = msg.topic.split(\"/\")[4];\n\nswitch(msg.topic) {\n    case \"setpoint\":\n        msg.hsfcode = 9;\n        msg.type = \"number\";\n        msg.multiply = 100;\n        break;\n        \n    case \"PressureMode\":\n        msg.hsfcode = 11;\n        msg.type = \"number\";\n        msg.multiply = 100;\n        break;\n        \n    case \"WarmupBoost\": //WarmupBoost \n        msg.hsfcode = 12;\n        msg.type = \"number\";\n        msg.multiply = 100;\n        break;\n        \n    case \"EcoMode\": // \n        msg.hsfcode = 10;\n        msg.type = \"onoff\";\n        break;\n \n    case \"DHWAntiLegionella\": //DHWAntiLegionella  \n        msg.hsfcode = 34;\n        msg.type = \"onoff\";\n        break;\n        \n    case \"DHWEcoHeatTemp\": // \n        msg.hsfcode = 33;\n        msg.type = \"number\";\n        msg.multiply = 100;\n        break;\n        \n     case \"DHWEcoHeatTemperature\": // \n        msg.hsfcode = 33;\n        msg.type = \"number\";\n        msg.multiply = 100;\n        break;\n \n    case \"DHWExchangerAntiLegionella\": //DHWAntiLegionella  \n        msg.hsfcode = 34;\n        msg.type = \"onoff\";\n        break;\n        \n    case \"DHWExchangerEcoHeatTemp\": // \n        msg.hsfcode = 33;\n        msg.type = \"number\";\n        msg.multiply = 100;\n        break;\n        \n     case \"DHWExchangerEcoHeatTemperature\": // \n        msg.hsfcode = 33;\n        msg.type = \"number\";\n        msg.multiply = 100;\n        break;\n          \n    case \"DHReturnLimit\": //   \n        msg.hsfcode = 21;\n        msg.type = \"number\";\n        msg.multiply = 100;\n        break;\n        \n    case \"DHWEcoHeatTime\": // \n        msg.hsfcode = 32;\n        msg.type = \"number\";\n        msg.multiply = 1;\n        break;\n        \n    case \"HESupply\": //   \n        msg.hsfcode = 22;\n        msg.type = \"number\";\n        msg.multiply = 100;\n        break;\n        \n    case \"PumpTimeout\": //   \n        msg.hsfcode = 23;\n        msg.type = \"number\";\n        msg.multiply = 1;\n        break;\n    \n    case \"HEProtectionMode\": //   \n        msg.hsfcode = 24;\n        msg.type = \"onoff\";\n        break;\n        \n        \n    case \"CentralHeatingControl\": //\n        msg.hsfcode = 38;\n        msg.type = \"onoff\";\n        break;\n       \n    case \"PrePayShutOff\": //\n        msg.hsfcode = 39;\n        msg.type = \"onoff\";\n        break;\n       \n        \n    default: \n        return null;\n} \n\n\nmsg.topic = msg.mqtttopic;\n\n//msg.payload = \"Changing \"\n\n//global.set(\"modbus.\"+msg.usb+\".34\",parseInt(DAT.CentralHeatingControl));\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 1280,
+        "wires": [
+            [
+                "653a61c.bdad3a",
+                "d2f75ba3.2aea28"
+            ]
+        ]
+    },
+    {
+        "id": "5da0cba.37e1234",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 1070,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "653a61c.bdad3a",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "d2f75ba3.2aea28",
+        "type": "delay",
+        "z": "e090c99b.574098",
+        "name": "",
+        "pauseType": "queue",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "outputs": 1,
+        "x": 1310,
+        "y": 1280,
+        "wires": [
+            [
+                "22743bee.7ee424",
+                "ff5c821f.bfd7b"
+            ]
+        ]
+    },
+    {
+        "id": "22743bee.7ee424",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 1490,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "ff5c821f.bfd7b",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "set HIU",
+        "func": " \n var tosend = \"\";\n \n var msg2 = {};\n \n function convertSet(setp) {\n     \n     \n    //var setdec = 100 * parseFloat(setp);\n    var setdec = parseFloat(setp);\n\t\n    var b3 = Math.floor(setdec / 256);\n    var b4 = setdec % 256;\n\n    var cs = String.fromCharCode(0) +  String.fromCharCode(0) + String.fromCharCode(parseInt(b3)) + String.fromCharCode(parseInt(b4)) ;\n\t\n\treturn cs;\n\n }\n \n if (msg.type == \"onoff\") {\n \n    if (parseInt(msg.payload) == 1 || msg.payload == \"on\" || msg.payload == \"comfort\" ) { \n        \n        msg.payload = 1;\n        tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(msg.hsfcode) + String.fromCharCode(1) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59);\n \n    } else { \n        \n        tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(msg.hsfcode) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59);\n        \n    }\n\n}\nelse if (msg.type == \"number\") {\n\n    if (msg.payload == \"auto\") { \n        \n        tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(msg.hsfcode) + String.fromCharCode(255) + String.fromCharCode(255) + String.fromCharCode(255) + String.fromCharCode(255) + String.fromCharCode(59);\n \n    } else { \n        \n\n        \n        var mult = msg.multiply || 1;\n        var newnum = parseInt(parseFloat(msg.payload) * mult);\n        \n        tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(msg.hsfcode) + convertSet(newnum) + String.fromCharCode(59);\n    }\n}\n\nelse { return null;  }\n\n\n\nmsg.payload = tosend;\n\nreturn msg;\n\n",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 1500,
+        "y": 1280,
+        "wires": [
+            [
+                "71906759.ffcf98",
+                "76dccbf0.a9f6c4",
+                "81332b0d.7dd508",
+                "ebc4393.41ed6c8",
+                "b4966ee9.7405f",
+                "b09bf03862f08c34"
+            ]
+        ]
+    },
+    {
+        "id": "71906759.ffcf98",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "1000",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "topic",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1700,
+        "y": 1100,
+        "wires": [
+            [
+                "50155950.a56f68"
+            ]
+        ]
+    },
+    {
+        "id": "76dccbf0.a9f6c4",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "pass",
+        "func": "\n\nmsg.payload  = Buffer.from(msg.payload, 'ascii');\n\nmsg.topic=msg.usb;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2006.6667175292969,
+        "y": 1283.1166381835938,
+        "wires": [
+            [
+                "a95ff6c7.c53898",
+                "5111f409.43cbdc"
+            ]
+        ]
+    },
+    {
+        "id": "81332b0d.7dd508",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "5",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "topic",
+        "outputs": 1,
+        "x": 1676.6667175292969,
+        "y": 1328.8165893554688,
+        "wires": [
+            [
+                "9afd8698.1c3b18"
+            ]
+        ]
+    },
+    {
+        "id": "50155950.a56f68",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "store HIU",
+        "func": "var tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(13) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59)\n\n//msg.usb=\"usb1\";\n\nmsg.payload = tosend;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1860,
+        "y": 1120,
+        "wires": [
+            [
+                "76dccbf0.a9f6c4"
+            ]
+        ]
+    },
+    {
+        "id": "9afd8698.1c3b18",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "parameters",
+        "func": "var tosend = String.fromCharCode(83) + String.fromCharCode(89) + String.fromCharCode(78) + String.fromCharCode(67) + String.fromCharCode(14) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(0) + String.fromCharCode(59);\n \n\nmsg.payload = tosend;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1857.6667175292969,
+        "y": 1328.8165893554688,
+        "wires": [
+            [
+                "76dccbf0.a9f6c4"
+            ]
+        ]
+    },
+    {
+        "id": "a95ff6c7.c53898",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 2180,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "5111f409.43cbdc",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "c88e7b3e.9bae08"
+        ],
+        "x": 2155,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "86408caa.220f5",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1290,
+        "y": 1480,
+        "wires": [
+            [
+                "344167ec.c02ec8"
+            ]
+        ]
+    },
+    {
+        "id": "344167ec.c02ec8",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "\n\n\n\n\n\nmsg.options = [\"setpoint\",\"WarmupBoost\",\"EcoMode\",\"PressureMode\",\"DHReturnLimit\",\"HESupply\",\"PumpTimeout\",\"PumpProtection\",\"HEProtectionMode\",\"DHWAntiLegionella\",\"DHWEcoHeatTemperature\",\"DHWEcoHeatTime\",\"CentralHeatingControl\",\"PrePayShutOff\"];\n\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1460,
+        "y": 1480,
+        "wires": [
+            [
+                "de36ffeb.6f329"
+            ]
+        ]
+    },
+    {
+        "id": "7c34254.4e45fdc",
+        "type": "ui_button",
+        "z": "e090c99b.574098",
+        "name": "",
+        "group": "c00ac9a8.47bd28",
+        "order": 3,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "SET",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1610,
+        "y": 1620,
+        "wires": [
+            [
+                "b3c61262.c74a5"
+            ]
+        ]
+    },
+    {
+        "id": "221ce459.841a3c",
+        "type": "ui_text_input",
+        "z": "e090c99b.574098",
+        "name": "",
+        "label": "Value",
+        "tooltip": "",
+        "group": "c00ac9a8.47bd28",
+        "order": 2,
+        "width": "4",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1970,
+        "y": 1480,
+        "wires": [
+            [
+                "17ac0198.4b837e"
+            ]
+        ]
+    },
+    {
+        "id": "de36ffeb.6f329",
+        "type": "ui_dropdown",
+        "z": "e090c99b.574098",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "c00ac9a8.47bd28",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "multiple": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1620,
+        "y": 1480,
+        "wires": [
+            [
+                "bc85bfe7.1e0f4"
+            ]
+        ]
+    },
+    {
+        "id": "17ac0198.4b837e",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "valueSetting",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2180,
+        "y": 1480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b3c61262.c74a5",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "msg.usb = flow.get(\"usbpressed\");\n\nvar dev = flow.get(\"serial\"+msg.usb); \n\nmsg.topic = dev + \"/set/\" + flow.get(\"selectedSetting\");\nmsg.payload = flow.get(\"valueSetting\");\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1780,
+        "y": 1620,
+        "wires": [
+            [
+                "39c23cc0.631514",
+                "7a1d48c8.e410e8"
+            ]
+        ]
+    },
+    {
+        "id": "7a1d48c8.e410e8",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 1955,
+        "y": 1620,
+        "wires": []
+    },
+    {
+        "id": "39c23cc0.631514",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1850,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "7721122e.3eb56c",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "bc85bfe7.1e0f4",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "flow.set(\"selectedSetting\",msg.payload);\n\nmsg.usb = flow.get(\"usbpressed\");\n\nvar dev = flow.get(\"serial\"+msg.usb); \n\n//msg.topic = dev + \"/set/\" + flow.get(\"selectedSetting\");\nmsg.payload = flow.get(\"settings.\"+dev+\".\"+flow.get(\"selectedSetting\"));\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1800,
+        "y": 1480,
+        "wires": [
+            [
+                "221ce459.841a3c"
+            ]
+        ]
+    },
+    {
+        "id": "1ae690c8.0e242f",
+        "type": "switch",
+        "z": "e090c99b.574098",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "lastvCtime",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1770,
+        "y": 2520,
+        "wires": [
+            [
+                "71d99bf5.878f74"
+            ]
+        ]
+    },
+    {
+        "id": "20dd7797.de84a8",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "5e093f5a.09171"
+        ],
+        "x": 1935,
+        "y": 2660,
+        "wires": []
+    },
+    {
+        "id": "71d99bf5.878f74",
+        "type": "rbe",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "x": 1780,
+        "y": 2560,
+        "wires": [
+            [
+                "94441d57.f847e"
+            ]
+        ]
+    },
+    {
+        "id": "94441d57.f847e",
+        "type": "delay",
+        "z": "e090c99b.574098",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 1840,
+        "y": 2600,
+        "wires": [
+            [
+                "20dd7797.de84a8"
+            ]
+        ]
+    },
+    {
+        "id": "5433ed94.32bfc4",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "topic",
+                "pt": "msg",
+                "from": "local/me/",
+                "fromt": "str",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "points",
+                "pt": "msg",
+                "to": "5000",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2200,
+        "y": 2420,
+        "wires": [
+            [
+                "acfb1a7.c3786e8",
+                "6bcdff38.b3c4"
+            ]
+        ]
+    },
+    {
+        "id": "acfb1a7.c3786e8",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2350,
+        "y": 2520,
+        "wires": []
+    },
+    {
+        "id": "91fe2822.efb178",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "Sync Settings",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 910,
+        "y": 2880,
+        "wires": [
+            [
+                "b591f3ec.cb462"
+            ]
+        ]
+    },
+    {
+        "id": "97774ec8.e383e",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "var clist = [];\n\nfor (var dev in flow.get(\"settings\")) {\n    \n    if (dev !== \"undefined\") {\n        \n        for (var ss in flow.get(\"settings.\"+dev)) {\n    \n            if (global.get(\"deviceSettings.\"+dev+\".\"+ss)) {\n                \n                var sv = global.get(\"deviceSettings.\"+dev+\".\"+ss+\".value\");\n                var hv = flow.get(\"settings.\"+dev+\".\"+ss);\n                \n                if (!isNaN(sv)) { sv = parseFloat(sv);  hv = parseFloat(hv); }\n                \n                if (sv !== hv) { clist.push(\"local/testset/\"+dev+\"/set/\"+ss+\"=\"+sv); }\n            }\n        }\n        \n        \n    }\n}\n\nmsg.payload = clist;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1320,
+        "y": 2880,
+        "wires": [
+            [
+                "d43831f0.d55ea"
+            ]
+        ]
+    },
+    {
+        "id": "774c60e2.98da7",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1910,
+        "y": 2960,
+        "wires": []
+    },
+    {
+        "id": "97c0549d.c9f938",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "254c663c.1890fa"
+        ],
+        "x": 1855,
+        "y": 2880,
+        "wires": []
+    },
+    {
+        "id": "d43831f0.d55ea",
+        "type": "split",
+        "z": "e090c99b.574098",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1460,
+        "y": 2880,
+        "wires": [
+            [
+                "3bce696e.1e8e66"
+            ]
+        ]
+    },
+    {
+        "id": "3bce696e.1e8e66",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "\nmsg.topic = msg.payload.split(\"=\")[0];\nmsg.payload = msg.payload.split(\"=\")[1]\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1630,
+        "y": 2880,
+        "wires": [
+            [
+                "774c60e2.98da7",
+                "97c0549d.c9f938"
+            ]
+        ]
+    },
+    {
+        "id": "8b0d424e.23e6e",
+        "type": "link in",
+        "z": "e090c99b.574098",
+        "name": "checkSettings",
+        "links": [
+            "27ae5770.285ac8"
+        ],
+        "x": 975,
+        "y": 2940,
+        "wires": [
+            [
+                "b591f3ec.cb462"
+            ]
+        ]
+    },
+    {
+        "id": "b591f3ec.cb462",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "30",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1130,
+        "y": 2880,
+        "wires": [
+            [
+                "97774ec8.e383e"
+            ]
+        ]
+    },
+    {
+        "id": "be865f3b.a7ae2",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "alarm/serial",
+        "func": "\nmsg.topic = flow.get(\"serial\" + msg.usb) + \"/alarm/serial\" ;\nmsg.title = \"Serial connection\"\nmsg.payload = \"ok\";\n\n\nreturn msg; \n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 2120,
+        "wires": [
+            [
+                "42dbf28d.de915c"
+            ]
+        ]
+    },
+    {
+        "id": "42dbf28d.de915c",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "ok",
+        "op2": "no data",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "11",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "topic",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1070,
+        "y": 2120,
+        "wires": [
+            [
+                "80680e.79bae7f",
+                "51f31b26.240574"
+            ]
+        ]
+    },
+    {
+        "id": "51f31b26.240574",
+        "type": "switch",
+        "z": "e090c99b.574098",
+        "name": "HIU connected",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ok",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1320,
+        "y": 2120,
+        "wires": [
+            [
+                "83d4a4b6.c6a6d8"
+            ]
+        ]
+    },
+    {
+        "id": "d92284cb.6a8d38",
+        "type": "link out",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 1695,
+        "y": 2120,
+        "wires": []
+    },
+    {
+        "id": "83d4a4b6.c6a6d8",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "if (msg.topic.indexOf(\"undefined\")>-1) { return null; }\n\nmsg.topic = msg.topic.split(\"/\")[0] + \"/system/deviceType\";\nmsg.payload = \"hiu\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1540,
+        "y": 2120,
+        "wires": [
+            [
+                "d92284cb.6a8d38"
+            ]
+        ]
+    },
+    {
+        "id": "76341d23.fd8674",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "usb",
+        "payload": "usb8",
+        "payloadType": "str",
+        "x": 240,
+        "y": 1220,
+        "wires": [
+            [
+                "fc8593ce.e365"
+            ]
+        ]
+    },
+    {
+        "id": "fc8593ce.e365",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "18",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 450,
+        "y": 1220,
+        "wires": [
+            [
+                "48de6e4e.59652"
+            ]
+        ]
+    },
+    {
+        "id": "57592c01.cb6174",
+        "type": "ui_button",
+        "z": "e090c99b.574098",
+        "d": true,
+        "name": "",
+        "group": "ebf0a5bd.363498",
+        "order": 9,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "usb8",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "usb7",
+        "payloadType": "str",
+        "topic": "usb",
+        "topicType": "str",
+        "x": 570,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2efd20a2.eaf35",
+        "type": "change",
+        "z": "e090c99b.574098",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "CONusb8",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 422.50006103515625,
+        "y": 681.2499885559082,
+        "wires": [
+            [
+                "57592c01.cb6174"
+            ]
+        ]
+    },
+    {
+        "id": "c648cae4.e65ad8",
+        "type": "ui_template",
+        "z": "e090c99b.574098",
+        "d": true,
+        "group": "ebf0a5bd.363498",
+        "name": "Virtual Keyboard",
+        "order": 10,
+        "width": "1",
+        "height": "1",
+        "format": "<script> \n    \n// the semi-colon before function invocation is a safety net against concatenated\n// scripts and/or other plugins which may not be closed properly.\n; (function ($, window, document, undefined) {\n\n    // undefined is used here as the undefined global variable in ECMAScript 3 is\n    // mutable (ie. it can be changed by someone else). undefined isn't really being\n    // passed in so we can ensure the value of it is truly undefined. In ES5, undefined\n    // can no longer be modified.\n\n    // window and document are passed through as local variable rather than global\n    // as this (slightly) quickens the resolution process and can be more efficiently\n    // minified (especially when both are regularly referenced in your plugin).\n\n    // Create the defaults once\n    var pluginName = \"jkeyboard\",\n        defaults = {\n            layout: \"english\",\n            input: $('#input'),\n            customLayouts: {\n                selectable: []\n            },\n        };\n\n\n    var function_keys = {\n        backspace: {\n            text: 'DEL',\n        },\n        return: {\n            text: 'Enter'\n        },\n        shift: {\n            text: 'Shift'\n        },\n        space: {\n            text: 'Space'\n        },\n        numeric_switch: {\n            text: '123',\n            command: function () {\n                this.createKeyboard('numeric');\n                this.events();\n            }\n        },\n        layout_switch: {\n            text: '<i class=\"fa fa-keyboard-o\" aria-hidden=\"true\"></i>',\n            command: function () {\n                var l = this.toggleLayout();\n                this.createKeyboard(l);\n                this.events();\n            }\n        },\n        character_switch: {\n            text: 'ABC',\n            command: function () {\n                this.createKeyboard(layout);\n                this.events();\n            }\n        },\n        symbol_switch: {\n            text: '#+=',\n            command: function () {\n                this.createKeyboard('symbolic');\n                this.events();\n            }\n        }\n    };\n\n\n    var layouts = {\n        selectable: ['azeri', 'english', 'russian','french', 'emoji'],\n        azeri: [\n            ['q', 'ü', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'ö', 'ğ'],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ı', 'ə'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'ç', 'ş', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        english: [\n            ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        russian: [\n            ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х'],\n            ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],\n            ['shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        french: [\n            ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l','à','ç'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm','é','è', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        emoji: [\n            ['😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆', '😉', '😊',],\n            ['😋', '😎', '😍', '😘', 'g', 'h', 'j', 'k', 'l','à','ç'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm','é','è', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],            \n        numeric: [\n            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],\n            ['-', '/', ':', ';', '(', ')', '$', '&', '@', '\"'],\n            ['symbol_switch', '.', ',', '?', '!', \"'\", 'backspace'],\n            ['character_switch', 'layout_switch', 'space', 'return'],\n        ],\n        numbers_only: [\n            ['1', '2', '3',],\n            ['4', '5', '6',],\n            ['7', '8', '9',],\n            ['0', 'backspace'],\n        ],\n        symbolic: [\n            ['[', ']', '{', '}', '#', '%', '^', '*', '+', '='],\n            ['_', '\\\\', '|', '~', '<', '>'],\n            ['numeric_switch', '.', ',', '?', '!', \"'\", 'backspace'],\n            ['character_switch', 'layout_switch', 'space', 'return'],\n\n        ]\n    }\n\n    var shift = false, capslock = false, layout = 'english', layout_id = 0;\n\n    // The actual plugin constructor\n    function Plugin(element, options) {\n        this.element = element;\n        // jQuery has an extend method which merges the contents of two or\n        // more objects, storing the result in the first object. The first object\n        // is generally empty as we don't want to alter the default options for\n        // future instances of the plugin\n        this.settings = $.extend({}, defaults, options);\n        // Extend & Merge the cusom layouts\n        layouts = $.extend(true, {}, this.settings.customLayouts, layouts);\n        if (Array.isArray(this.settings.customLayouts.selectable)) {\n            $.merge(layouts.selectable, this.settings.customLayouts.selectable);\n        }\n        this._defaults = defaults;\n        this._name = pluginName;\n        this.init();\n    }\n\n    Plugin.prototype = {\n        init: function () {\n            layout = this.settings.layout;\n            this.createKeyboard(layout);\n            this.events();\n        },\n\n        setInput: function (newInputField) {\n            this.settings.input = newInputField;\n        },\n\n        createKeyboard: function (layout) {\n            shift = false;\n            capslock = false;\n\n            var keyboard_container = $('<ul/>').addClass('jkeyboard'),\n                me = this;\n\n            layouts[layout].forEach(function (line, index) {\n                var line_container = $('<li/>').addClass('jline');\n                line_container.append(me.createLine(line));\n                keyboard_container.append(line_container);\n            });\n\n            $(this.element).html('').append(keyboard_container);\n        },\n\n        createLine: function (line) {\n            var line_container = $('<ul/>');\n\n            line.forEach(function (key, index) {\n                var key_container = $('<li/>').addClass('jkey').data('command', key);\n\n                if (function_keys[key]) {\n                    key_container.addClass(key).html(function_keys[key].text);\n                }\n                else {\n                    key_container.addClass('letter').html(key);\n                }\n\n                line_container.append(key_container);\n            })\n\n            return line_container;\n        },\n\n        events: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift'),\n                space_key = $(this.element).find('.space'),\n                backspace_key = $(this.element).find('.backspace'),\n                return_key = $(this.element).find('.return'),\n\n                me = this,\n                fkeys = Object.keys(function_keys).map(function (k) {\n                    return '.' + k;\n                }).join(',');\n\n            letters.on('click', function () {\n                me.type((shift || capslock) ? $(this).text().toUpperCase() : $(this).text());\n            });\n\n            space_key.on('click', function () {\n                me.type(' ');\n            });\n\n            return_key.on('click', function () {\n                me.type(\"\\n\");\n                me.settings.input.parents('form').submit();\n            });\n\n            backspace_key.on('click', function () {\n                me.backspace();\n            });\n\n            shift_key.on('click', function () {\n                if (capslock) {\n                    me.toggleShiftOff();\n                    capslock = false;\n                } else {\n                    me.toggleShiftOn();\n                }\n            }).on('dblclick', function () {\n                capslock = true;\n            });\n\n\n            $(fkeys).on('click', function () {\n                var command = function_keys[$(this).data('command')].command;\n                if (!command) return;\n\n                command.call(me);\n            });\n        },\n\n        type: function (key) {\n            var input = this.settings.input,\n                val = input.val(),\n                input_node = input.get(0),\n                start = input_node.selectionStart,\n                end = input_node.selectionEnd;\n\n            var max_length = $(input).attr(\"maxlength\");\n            if (start == end && end == val.length) {\n                if (!max_length || val.length < max_length) {\n                    input.val(val + key);\n                    input.change()\n                    $('#vkeyname').text(val + key)\n                }\n            } else {\n                if (input_node.type == \"text\"){\n                    var new_string = this.insertToString(start, end, val, key);\n                    input.val(new_string);\n                    start++;\n                    end = start;\n                    input_node.setSelectionRange(start, end);\n                }else{\n                    input.val(val + key);\n                }\n                input.change()\n                $('#vkeyname').text(val + key)\n                \n            }\n            input.trigger('focus');\n\n            if (shift && !capslock) {\n                this.toggleShiftOff();\n            }\n        },\n\n        backspace: function () {\n            var input = this.settings.input,\n                val = input.val();\n                input_node = input.get(0),\n                start = input_node.selectionStart,\n                end = input_node.selectionEnd;\n            if (input.type == \"text\"){\n                input.val(val.slice(0, start-1) + val.slice(start))\n                input_node.setSelectionRange(start-1, start-1);\n                console.log(val)\n                $('#vkeyname').text(val)\n            }else{\n                input.val(val.slice(0,-1))\n                $('#vkeyname').text(val.slice(0,-1))\n            }\n            input.change()\n            input.focus()\n        },\n\n        toggleShiftOn: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift');\n\n            letters.addClass('uppercase');\n            shift_key.addClass('active')\n            shift = true;\n        },\n\n        toggleShiftOff: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift');\n\n            letters.removeClass('uppercase');\n            shift_key.removeClass('active');\n            shift = false;\n        },\n\n        toggleLayout: function () {\n            layout_id = layout_id || 0;\n            var plain_layouts = layouts.selectable;\n            layout_id++;\n\n            var current_id = layout_id % plain_layouts.length;\n            var SelectedLayoutName = plain_layouts[current_id];\n            $('#vkeyname').text('V-Keyboard ' + SelectedLayoutName )\n            return plain_layouts[current_id];\n        },\n\n        insertToString: function (start, end, string, insert_string) {\n            return string.substring(0, start) + insert_string + string.substring(end, string.length);\n        }\n    };\n\n        /*\n\t\t// A really lightweight plugin wrapper around the constructor,\n\t\t// preventing against multiple instantiations\n\t\t$.fn[ pluginName ] = function ( options ) {\n\t\t\t\treturn this.each(function() {\n\t\t\t\t\t\tif ( !$.data( this, \"plugin_\" + pluginName ) ) {\n\t\t\t\t\t\t\t\t$.data( this, \"plugin_\" + pluginName, new Plugin( this, options ) );\n\t\t\t\t\t\t}\n\t\t\t\t});\n\t\t};\n        */\n        var methods = {\n            init: function(options) {\n                if (!this.data(\"plugin_\" + pluginName)) {\n                    this.data(\"plugin_\" + pluginName, new Plugin(this, options));\n                }\n            },\n\t\t\tsetInput: function(content) {\n\t\t\t\tthis.data(\"plugin_\" + pluginName).setInput($(content));\n            },\n            setLayout: function(layoutname) {\n                // change layout if it is not match current\n                object = this.data(\"plugin_\" + pluginName);\n                if (typeof(layouts[layoutname]) !== 'undefined' && object.settings.layout != layoutname) {\n                    object.settings.layout = layoutname;\n                    object.createKeyboard(layoutname);\n                    object.events();\n                };\n            },\n        };\n\n\t\t$.fn[pluginName] = function (methodOrOptions) {\n            if (methods[methodOrOptions]) {\n                return methods[methodOrOptions].apply(this.first(), Array.prototype.slice.call( arguments, 1));\n            } else if (typeof methodOrOptions === 'object' || ! methodOrOptions) {\n                // Default to \"init\"\n                return methods.init.apply(this.first(), arguments);\n            } else {\n                $.error('Method ' +  methodOrOptions + ' does not exist on jQuery.tooltip');\n            }\n        };\n\n})(jQuery, window, document);\n</script>\n<style>\n    .jkeyboard {\n  display: inline-block;\n}\n.jkeyboard, .jkeyboard .jline, .jkeyboard .jline ul {\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n.jkeyboard .jline {\n  text-align: center;\n  margin-left: -14px;\n}\n.jkeyboard .jline ul li {\n  font-family: arial, sans-serif;\n  font-size: 20px;\n  display: inline-block;\n  border: 1px solid #468db3;\n  -webkit-box-shadow: 0 0 3px #468db3;\n  -webkit-box-shadow: inset 0 0 3px #468db3;\n  margin: 5px 0 1px 6px;\n  color: #000000;\n  border-radius: 5px;\n  width: 52px;\n  height: 52px;\n  box-sizing: border-box;\n  text-align: center;\n  line-height: 52px;\n  overflow: hidden;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: -moz-none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.jkeyboard .jline ul li.uppercase {\n  text-transform: uppercase;\n}\n.jkeyboard .jline ul li:hover, .jkeyboard .jline ul li:active {\n  background-color: #185a82;\n}\n.jkeyboard .jline .return {\n  width: 80px;\n}\n.jkeyboard .jline .space {\n  width: 366px;\n}\n.jkeyboard .jline .numeric_switch {\n  width: 65px;\n}\n.jkeyboard .jline .layout_switch {\n}\n.jkeyboard .jline .shift {\n  width: 60px;\n}\n.jkeyboard .jline .backspace {\n  width: 69px;\n}\n</style>\n\n\n\n\n<style>\nbody {font-family: Arial, Helvetica, sans-serif;}\n\n.nr-dashboard-theme .nr-dashboard-template .md-button:not(:first-of-type) {\n    margin-top: 0px;\n}\n\n/* The Modal (background) */\n.modal {\n    display: none; /* Hidden by default */\n    position: fixed; /* Stay in place */\n    opacity:0.99;\n    z-index: 100; /* Sit on top */\n    left: 0;\n    top: 0;\n    width: 100%; /* Full width */\n    height: 100%; /* Full height */\n    overflow: auto; /* Enable scroll if needed */\n    background-color: rgb(0,0,0); /* Fallback color */\n    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n/* Modal Content */\n.modal-content {\n    position: fixed;\n    background-color: #fefefe;\n    margin: auto;\n    padding: 0;\n    bottom: 0%;\n    left: 50%;\n    transform: translate(-50%, 0%);\n    border: 1px solid #888;\n    width: fit-content;\n    max-width: 100%;\n    max-height: 100%;\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);\n    -webkit-animation-name: animate;\n    -webkit-animation-duration: 0.4s;\n    animation-name: animate;\n    animation-duration: 0.4s\n}\n\n/* Add Animation */\n@-webkit-keyframes animate {\n    from {bottom:100%; opacity:0} \n    to {bottom:0%; opacity:1}\n}\n\n@keyframes animate {\n    from {bottom:100%; opacity:0}\n    to {bottom:0%; opacity:1}\n}\n\n/* The Close Button */\n.close {\n    color: black;\n    float: right;\n    font-size: 28px;\n    font-weight: bold;\n}\n\n.close:hover,\n.close:focus {\n    color: #000;\n    text-decoration: none;\n    cursor: pointer;\n}\n\n.modal-header {\n    padding: 2px 16px;\n    background-color: aliceblue;\n    color: white;\n}\n\n.modal-body {padding: 2px 16px;}\n\n.modal-footer {\n    padding: 2px 16px;\n    background-color: #5cb85c;\n    color: white;\n}\n</style>\n\n<!-- The Modal -->\n<div id=\"myModal\" class=\"modal\">\n\n  <!-- Modal content -->\n  <div class=\"modal-content\">\n      <div class=\"modal-header\">\n      <span class=\"close\" onclick=\"closeModal()\">&times;</span>\n      <h2 id=\"vkeyname\" style=\"background-color: aliceblue !important; color: black !important; text-align: center; min-height: 30px;\">V-Keyboard</h2>\n    </div>\n    <div class=\"modal-body\">\n        <div id=\"keyboard\"></div>\n        <div>\n        </div>\n    </div>\n  </div>\n</div>\n\n\n<script>\n    // Get the modal\nvar modal = document.getElementById('myModal');\n\n/*\n$('input[type=text]').click(function () {\n    $('#keyboard').unbind().removeData();\n        $('#keyboard').jkeyboard({\n            layout: \"english\",\n            input: $('#'+$(this).attr('id'))\n    });\n});\n\n$('input[type=number]').click(function () {\n    $('#keyboard').unbind().removeData();\n        $('#keyboard').jkeyboard({\n            layout: \"numbers_only\",\n            input: $('#'+$(this).attr('id'))\n    });\n});\n*/\n\nvar inputTags;\nvar inputType;\n\nvar getinputs = function() {\n    inputTags = document.getElementsByTagName(\"input\");\n    console.log(inputTags)\n    for (var i = 0; i < inputTags.length; i++) {\n        inputTags[i].addEventListener('click', openModal, false)\n    }\n}\n\nsetTimeout(function(){ getinputs(); }, 1000);\n\nvar inputTarget;\n\nvar openModal = function() {\n    inputType = event.target.type\n    inputTarget = event.target\n    var layoutName;\n    if (inputType == \"number\"){\n        //inputTarget.type = \"number\" //hack because chrome doesn't allow setselection in number inputs\n        //inputTarget.value = \"\"\n        layoutName = \"numbers_only\"\n    }else{\n        layoutName = \"english\"\n    }\n    $('#vkeyname').text(event.target.value)\n    $('#keyboard').unbind().removeData();\n    modal.style.display = \"block\";\n    $('#keyboard').jkeyboard({\n        layout: layoutName,\n        input: $('#'+$(this).attr('id'))\n    });\n}\n\n\n// Get the <span> element that closes the modal\nvar span = document.getElementsByClassName(\"close\")[0];\n\n// When the user clicks on <span> (x), close the modal\n//span.onclick = function(event) {\n  //closeModal()\n//}\n\n// When the user clicks anywhere outside of the modal, close it\nwindow.onclick = function(event) {\n    var source = event.target;\n    if (source == modal || source == span) {\n        closeModal(source)\n    }\n};\n\nvar closeModal = function(source){\n    //console.log(\"closing\")\n    modal.style.display = \"none\";\n   \n    if (inputType == \"number\"){\n        inputTarget.type = \"number\" //hack because chrome doesn't allow selectionstart on number inputs\n    }\n}\n\n</script>\n<script>\n\nvar clickState = 1;\nvar btn = document.querySelector('.VK');\n\nbtn.addEventListener('click', function(){\n\n  if (clickState == 0) {\n    this.textContent = 'V-KeyBoard On';\n    modal = document.getElementById('myModal');\n    clickState = 1;\n  } else {\n    this.textContent = 'V-KeyBoard Off';\n    modal = document.getElementById('empty');\n    clickState = 0;\n  }\n\n});\n</script>\n\n<style>\n.VK{\n    position: fixed;\n    top: 60px;\n    right: 20px;\n    height: 30px;\n}\n</style>\n\n<div id=\"empty\"></div>\n<button style=\"display:none\" class=\"VK\">V-KeyBoard On</button> ",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 180,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d97a023d.f8dc1",
+        "type": "ui_ui_control",
+        "z": "e090c99b.574098",
+        "name": "",
+        "events": "all",
+        "x": 1360,
+        "y": 1420,
+        "wires": [
+            [
+                "344167ec.c02ec8"
+            ]
+        ]
+    },
+    {
+        "id": "824d383f.19eaf8",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "msg.payload = msg.payload.toString();\n\nmsg.payload = \"/n\" + msg.payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 1380,
+        "wires": [
+            [
+                "8ebd4192.9d6"
+            ]
+        ]
+    },
+    {
+        "id": "ebc4393.41ed6c8",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "1500",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "topic",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1700,
+        "y": 1200,
+        "wires": [
+            [
+                "76dccbf0.a9f6c4"
+            ]
+        ]
+    },
+    {
+        "id": "b4966ee9.7405f",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "2500",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "topic",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1700,
+        "y": 1160,
+        "wires": [
+            [
+                "50155950.a56f68"
+            ]
+        ]
+    },
+    {
+        "id": "6bcdff38.b3c4",
+        "type": "switch",
+        "z": "e090c99b.574098",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "undefined",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2390,
+        "y": 2420,
+        "wires": [
+            [],
+            [
+                "c31b8ba8.42cfc8"
+            ]
+        ]
+    },
+    {
+        "id": "109e1397.f04abc",
+        "type": "rbe",
+        "z": "e090c99b.574098",
+        "name": "",
+        "func": "deadbandEq",
+        "gap": "0.11",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "x": 1620,
+        "y": 2460,
+        "wires": [
+            [
+                "d9bc085f.284af"
+            ]
+        ]
+    },
+    {
+        "id": "f8c126ec.446148",
+        "type": "smooth",
+        "z": "e090c99b.574098",
+        "name": "",
+        "property": "payload",
+        "action": "mean",
+        "count": "3",
+        "round": "1",
+        "mult": "multi",
+        "reduce": false,
+        "x": 1440,
+        "y": 2460,
+        "wires": [
+            [
+                "109e1397.f04abc"
+            ]
+        ]
+    },
+    {
+        "id": "3e7f6d40.8182d2",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "store modbus ama0",
+        "func": "\nmsg.usb=\"ama0\";  \nmsg.usbhiu=\"usb0\"; \n\nvar DAT = flow.get(\"DAT\"+msg.usbhiu);  // the new stuff\n\nglobal.set(\"modbus.\"+msg.usb+\".1\",parseInt(10*parseFloat(DAT.tH)));\nglobal.set(\"modbus.\"+msg.usb+\".2\",parseInt(100*parseFloat(DAT.dpH)));\nglobal.set(\"modbus.\"+msg.usb+\".3\",parseInt(DAT.st));\nglobal.set(\"modbus.\"+msg.usb+\".21\",parseInt(10*parseFloat(DAT.tCo)));\nglobal.set(\"modbus.\"+msg.usb+\".42\",parseInt(10*parseFloat(DAT.tHoCH)));\nglobal.set(\"modbus.\"+msg.usb+\".23\",parseInt(DAT.xDHW));\nglobal.set(\"modbus.\"+msg.usb+\".40\",parseInt(DAT.stat));\nglobal.set(\"modbus.\"+msg.usb+\".24\",parseInt(10*parseFloat(DAT.fHDHW)));\n//global.set(\"modbus.\"+msg.usb+\".10\",parseInt(10*parseFloat(DAT.TTdhw)));\nglobal.set(\"modbus.\"+msg.usb+\".22\",parseInt(10*parseFloat(DAT.tHoDHW)));\nglobal.set(\"modbus.\"+msg.usb+\".41\",parseInt(10*parseFloat(DAT.tCHo)));\nglobal.set(\"modbus.\"+msg.usb+\".45\",parseInt(100*parseFloat(DAT.pCH)));\nglobal.set(\"modbus.\"+msg.usb+\".46\",parseInt(DAT.pump));\nglobal.set(\"modbus.\"+msg.usb+\".43\",parseInt(DAT.xCH));\nglobal.set(\"modbus.\"+msg.usb+\".44\",parseInt(10*parseFloat(DAT.fHCH)));\n\nDAT = flow.get(\"STAT\"+msg.usbhiu);  // the new stuff\n\nglobal.set(\"modbus.\"+msg.usb+\".25\",parseInt(DAT.vC));\n\nDAT = flow.get(\"settings.\"+flow.get(\"serial\" + msg.usbhiu));  // the new stuff\n\n\nglobal.set(\"modbus.\"+msg.usb+\".10\",parseInt(10*parseFloat(DAT.setpoint)));\nglobal.set(\"modbus.\"+msg.usb+\".11\",parseInt(10*parseFloat(DAT.WarmupBoost)));\n\nif(DAT.EcoMode==\"comfort\") { global.set(\"modbus.\"+msg.usb+\".12\",0); }\nelse  { global.set(\"modbus.\"+msg.usb+\".12\",1); }\n\nif(DAT.PressureMode==\"auto\") { global.set(\"modbus.\"+msg.usb+\".6\",1); }\nelse  { global.set(\"modbus.\"+msg.usb+\".6\", 0); }\n\nglobal.set(\"modbus.\"+msg.usb+\".4\",parseInt(DAT.PowerUpCounter));\nglobal.set(\"modbus.\"+msg.usb+\".5\",parseInt(DAT.ErrorCounter));\nglobal.set(\"modbus.\"+msg.usb+\".30\",parseInt(10*parseFloat(DAT.DHReturnLimit)));\nglobal.set(\"modbus.\"+msg.usb+\".31\",parseInt(10*parseFloat(DAT.HESupply)));\nglobal.set(\"modbus.\"+msg.usb+\".32\",parseInt(DAT.PumpTimeout));\nglobal.set(\"modbus.\"+msg.usb+\".33\",parseInt(DAT.HEProtectionMode));\nglobal.set(\"modbus.\"+msg.usb+\".13\",parseInt(DAT.DHWExchangerAntiLegionella));\n\nglobal.set(\"modbus.\"+msg.usb+\".14\",parseInt(10*parseFloat(DAT.DHWExchangerEcoHeatTemperature)));\nglobal.set(\"modbus.\"+msg.usb+\".15\",parseInt(DAT.DHWExchangerEcoHeatTime));\n\n\nglobal.set(\"modbus.\"+msg.usb+\".34\",parseInt(DAT.CentralHeatingControl));\nglobal.set(\"modbus.\"+msg.usb+\".50\",parseInt(DAT.PrePayShutOff));\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1280,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7a864c52.42e624",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1063.0000610351562,
+        "y": 139.400146484375,
+        "wires": [
+            [
+                "3e7f6d40.8182d2"
+            ]
+        ]
+    },
+    {
+        "id": "2d33e8d.51a7c18",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "modbus.ama0",
+        "payloadType": "global",
+        "x": 1092.0000610351562,
+        "y": 247.400146484375,
+        "wires": [
+            [
+                "c9329f63.06708"
+            ]
+        ]
+    },
+    {
+        "id": "c9329f63.06708",
+        "type": "debug",
+        "z": "e090c99b.574098",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1291.0000610351562,
+        "y": 246.916748046875,
+        "wires": []
+    },
+    {
+        "id": "e86093cc.b102b",
+        "type": "catch",
+        "z": "e090c99b.574098",
+        "name": "",
+        "scope": [
+            "3e7f6d40.8182d2"
+        ],
+        "x": 1238.0000610351562,
+        "y": 183.3333740234375,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9c9d6d3a.9ebe5",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "initialise modbus ama0",
+        "func": "\n\nglobal.set(\"modbus\",{});\nglobal.set(\"modbus.ama0\",{});\nglobal.set(\"modbus.ama0.1\",0);\nglobal.set(\"modbus.ama0.2\",0);\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1271.5500793457031,
+        "y": 74.41680908203125,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b12d7dd9.d2e78",
+        "type": "inject",
+        "z": "e090c99b.574098",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1061.5500793457031,
+        "y": 74.41680908203125,
+        "wires": [
+            [
+                "9c9d6d3a.9ebe5"
+            ]
+        ]
+    },
+    {
+        "id": "e37f8350.e7e89",
+        "type": "link in",
+        "z": "e090c99b.574098",
+        "name": "",
+        "links": [
+            "3f36e066.c5745",
+            "662a3ff1.fea2f",
+            "b634da65.916828"
+        ],
+        "x": 1155,
+        "y": 1320,
+        "wires": [
+            [
+                "d2f75ba3.2aea28"
+            ]
+        ]
+    },
+    {
+        "id": "44039f90.98f0d",
+        "type": "comment",
+        "z": "e090c99b.574098",
+        "name": "NOT USB0 - ama0",
+        "info": "",
+        "x": 460,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "b09bf03862f08c34",
+        "type": "trigger",
+        "z": "e090c99b.574098",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "250",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "topic",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1700,
+        "y": 1240,
+        "wires": [
+            [
+                "76dccbf0.a9f6c4"
+            ]
+        ]
+    },
+    {
+        "id": "5cc70f0836e6a358",
+        "type": "serial-port",
+        "serialport": "/dev/ttyAMA4",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "\\n",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "3ea80383.e1f8d4",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB1",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false
+    },
+    {
+        "id": "7e0c6c31.8f0aa4",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB2",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false
+    },
+    {
+        "id": "4e38699.f981018",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB3",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false
+    },
+    {
+        "id": "dccd9d11.4e316",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB4",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false
+    },
+    {
+        "id": "5374dd2d.431cd4",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB5",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false
+    },
+    {
+        "id": "520dbe13.2a881",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB6",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false
+    },
+    {
+        "id": "28c44052.d6082",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB7",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false
+    },
+    {
+        "id": "c00ac9a8.47bd28",
+        "type": "ui_group",
+        "name": "Settings",
+        "tab": "31d8777.fd68588",
+        "order": 4,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "ebf0a5bd.363498",
+        "type": "ui_group",
+        "name": "System",
+        "tab": "31d8777.fd68588",
+        "order": 1,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "dd8470c4.5741b",
+        "type": "ui_group",
+        "name": "Statistics",
+        "tab": "31d8777.fd68588",
+        "order": 5,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "6b255050.f88d1",
+        "type": "ui_group",
+        "name": "Readings",
+        "tab": "31d8777.fd68588",
+        "order": 2,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "31d8777.fd68588",
+        "type": "ui_tab",
+        "name": "HIU Data",
+        "icon": "fa-bath",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    }
+]
