@@ -1135,11 +1135,12 @@
         ],
         "uncaught": false,
         "x": 870,
-        "y": 420,
+        "y": 440,
         "wires": [
             [
                 "f372e60fe196f3c5",
-                "5cfc7059cfd7c1e1"
+                "5cfc7059cfd7c1e1",
+                "7063cdec33096635"
             ]
         ]
     },
@@ -1195,7 +1196,7 @@
         "topic": "topic",
         "outputs": 1,
         "x": 1250,
-        "y": 420,
+        "y": 440,
         "wires": [
             [
                 "d8c8fcfda133eb94",
@@ -1275,6 +1276,64 @@
         "wires": [
             [
                 "5cfc7059cfd7c1e1"
+            ]
+        ]
+    },
+    {
+        "id": "b6acd9f12d19b71b",
+        "type": "trigger",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "5",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "topic",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 680,
+        "y": 400,
+        "wires": [
+            [
+                "ad5bad7a8257ceec"
+            ]
+        ]
+    },
+    {
+        "id": "3d5148924eef0e54",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "Try resending dropped messages",
+        "info": "",
+        "x": 630,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "7063cdec33096635",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "payload[1]",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 550,
+        "y": 400,
+        "wires": [
+            [
+                "b6acd9f12d19b71b"
             ]
         ]
     },
