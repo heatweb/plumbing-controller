@@ -116,6 +116,14 @@
         "env": []
     },
     {
+        "id": "c376bc72122fb9a2",
+        "type": "tab",
+        "label": "Connectivity",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "cb3266cf.ceb2a",
         "type": "tab",
         "label": "Bluetooth",
@@ -4206,7 +4214,6 @@
             "d30d586c.915748",
             "c0a0bdc5.f60f3",
             "a1c82691.72a528",
-            "9abe6fd2.97b23",
             "4383d483.c5616c",
             "2b500c07ee3ffae7",
             "4a837d4dcc6ad59d",
@@ -4227,7 +4234,9 @@
             "1dab6e911927df71",
             "10ee4216045b7731",
             "5518353d16a35f62",
-            "1d8ef88d8c83d435"
+            "1d8ef88d8c83d435",
+            "ca1358f93e7b6dc8",
+            "da6da2d1c0e082f0"
         ],
         "x": 205,
         "y": 180,
@@ -11292,13 +11301,15 @@
         "name": "",
         "links": [
             "af6ed0a2.3108e",
-            "57951fb3.4ee4"
+            "57951fb3.4ee4",
+            "9abe6fd2.97b23"
         ],
         "x": 315,
         "y": 840,
         "wires": [
             [
-                "d97ffd0b.16ce8"
+                "d97ffd0b.16ce8",
+                "a635c368.ad31f"
             ]
         ]
     },
@@ -11974,7 +11985,7 @@
         "to": "",
         "reg": false,
         "x": 430,
-        "y": 900,
+        "y": 960,
         "wires": [
             []
         ]
@@ -11997,7 +12008,7 @@
         "topic": "topic",
         "outputs": 1,
         "x": 230,
-        "y": 900,
+        "y": 960,
         "wires": [
             [
                 "6e63eb45b45a06bb"
@@ -12498,6 +12509,37 @@
         "statusType": "auto",
         "x": 1080,
         "y": 720,
+        "wires": []
+    },
+    {
+        "id": "a635c368.ad31f",
+        "type": "function",
+        "z": "e5ac7e17.ed588",
+        "name": "resetModemCount",
+        "func": "msg.topic = \"set/resetModemCount\";\nmsg.title = \"No Internet Reset Modem Counter\";\n\nmsg.payload = global.get(\"settings.resetModemCount.value\") || 0;\n\nmsg.payload = parseInt(msg.payload) + 1;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 900,
+        "wires": [
+            [
+                "da6da2d1c0e082f0"
+            ]
+        ]
+    },
+    {
+        "id": "da6da2d1c0e082f0",
+        "type": "link out",
+        "z": "e5ac7e17.ed588",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 615,
+        "y": 900,
         "wires": []
     },
     {
@@ -26018,409 +26060,6 @@
         ]
     },
     {
-        "id": "f9330051.032dd",
-        "type": "exec",
-        "z": "caf59ec6.61c85",
-        "command": "curl -4 icanhazip.com",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "oldrc": false,
-        "name": "",
-        "x": 460,
-        "y": 1100,
-        "wires": [
-            [
-                "8533301e.131c5",
-                "b86156e4eee3efcb"
-            ],
-            [
-                "b86156e4eee3efcb"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "b402523e.a6f91",
-        "type": "inject",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "30",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 190,
-        "y": 1080,
-        "wires": [
-            [
-                "f9330051.032dd"
-            ]
-        ]
-    },
-    {
-        "id": "e94e294.1344bd8",
-        "type": "debug",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 870,
-        "y": 1240,
-        "wires": []
-    },
-    {
-        "id": "eea65fc3.a3816",
-        "type": "ui_ui_control",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "events": "change",
-        "x": 160,
-        "y": 1020,
-        "wires": [
-            [
-                "52d28d2d.cbdfc4"
-            ]
-        ]
-    },
-    {
-        "id": "52d28d2d.cbdfc4",
-        "type": "trigger",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "op1": "1",
-        "op2": "0",
-        "op1type": "str",
-        "op2type": "str",
-        "duration": "1",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "hr",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 330,
-        "y": 1020,
-        "wires": [
-            [
-                "f9330051.032dd"
-            ]
-        ]
-    },
-    {
-        "id": "6ce87828.9e4298",
-        "type": "link out",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "links": [
-            "72fc070f.39dd8"
-        ],
-        "x": 835,
-        "y": 1120,
-        "wires": []
-    },
-    {
-        "id": "8533301e.131c5",
-        "type": "function",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "func": "msg.topic = \"system/ipWan\";\n\nif (msg.payload.indexOf(\":\")>-1) { msg.topic = \"system/ip6Wan\"; }\nelse if (msg.payload.indexOf(\".\")>-1) { \n    \n    msg.topic = \"system/ipWan\"; \n    \n    flow.set(\"lastInternet\", new Date().getTime());\n\n}\nelse { return null; }\n\nmsg.payload = msg.payload.trim();\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 700,
-        "y": 1120,
-        "wires": [
-            [
-                "e94e294.1344bd8",
-                "6ce87828.9e4298",
-                "f335e175.6df9c",
-                "556a92c0.e7270c"
-            ]
-        ]
-    },
-    {
-        "id": "36ea6531.c3034a",
-        "type": "inject",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "1800",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "60",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 190,
-        "y": 1120,
-        "wires": [
-            [
-                "f9330051.032dd"
-            ]
-        ]
-    },
-    {
-        "id": "ad159fc9.694d2",
-        "type": "exec",
-        "z": "caf59ec6.61c85",
-        "command": "curl -6 icanhazip.com",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "oldrc": false,
-        "name": "",
-        "x": 460,
-        "y": 1160,
-        "wires": [
-            [
-                "8533301e.131c5"
-            ],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "3de2e538.b1573a",
-        "type": "inject",
-        "z": "caf59ec6.61c85",
-        "d": true,
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "90",
-        "topic": "",
-        "payloadType": "date",
-        "x": 190,
-        "y": 1160,
-        "wires": [
-            [
-                "ad159fc9.694d2"
-            ]
-        ]
-    },
-    {
-        "id": "f335e175.6df9c",
-        "type": "trigger",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "op1": "",
-        "op2": "1",
-        "op1type": "nul",
-        "op2type": "str",
-        "duration": "190",
-        "extend": true,
-        "overrideDelay": false,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 900,
-        "y": 1060,
-        "wires": [
-            [
-                "e818139f.e4767",
-                "b21bf83.249c908"
-            ]
-        ]
-    },
-    {
-        "id": "954f4e2a.469b3",
-        "type": "exec",
-        "z": "caf59ec6.61c85",
-        "d": true,
-        "command": "sudo reboot",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 1410,
-        "y": 1060,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "e818139f.e4767",
-        "type": "delay",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "15",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "outputs": 1,
-        "x": 1100,
-        "y": 1060,
-        "wires": [
-            [
-                "954f4e2a.469b3",
-                "9814f3c8ce55aa94"
-            ]
-        ]
-    },
-    {
-        "id": "a1c82691.72a528",
-        "type": "link out",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "links": [
-            "72fc070f.39dd8"
-        ],
-        "x": 1275,
-        "y": 1120,
-        "wires": []
-    },
-    {
-        "id": "b21bf83.249c908",
-        "type": "function",
-        "z": "caf59ec6.61c85",
-        "name": "rebootCountNoInternet",
-        "func": "msg.topic = \"set/rebootCountNoInternet\";\nmsg.title = \"No Internet Reboot Counter\";\n\nmsg.payload = global.get(\"settings.rebootCountNoInternet.value\") || 0;\n\nmsg.payload = parseInt(msg.payload) + 1;\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1140,
-        "y": 1120,
-        "wires": [
-            [
-                "a1c82691.72a528"
-            ]
-        ]
-    },
-    {
-        "id": "57951fb3.4ee4",
-        "type": "link out",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "links": [
-            "24ebaea5.b9caa2"
-        ],
-        "x": 1075,
-        "y": 1180,
-        "wires": []
-    },
-    {
-        "id": "556a92c0.e7270c",
-        "type": "trigger",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "op1": "",
-        "op2": "1",
-        "op1type": "nul",
-        "op2type": "str",
-        "duration": "125",
-        "extend": true,
-        "overrideDelay": false,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 900,
-        "y": 1180,
-        "wires": [
-            [
-                "a635c368.ad31f",
-                "57951fb3.4ee4"
-            ]
-        ]
-    },
-    {
-        "id": "9abe6fd2.97b23",
-        "type": "link out",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "links": [
-            "72fc070f.39dd8"
-        ],
-        "x": 1275,
-        "y": 1240,
-        "wires": []
-    },
-    {
-        "id": "a635c368.ad31f",
-        "type": "function",
-        "z": "caf59ec6.61c85",
-        "name": "resetModemCount",
-        "func": "msg.topic = \"set/resetModemCount\";\nmsg.title = \"No Internet Reset Modem Counter\";\n\nmsg.payload = global.get(\"settings.resetModemCount.value\") || 0;\n\nmsg.payload = parseInt(msg.payload) + 1;\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1130,
-        "y": 1240,
-        "wires": [
-            [
-                "9abe6fd2.97b23"
-            ]
-        ]
-    },
-    {
-        "id": "3e283cd4.ba17d4",
-        "type": "comment",
-        "z": "caf59ec6.61c85",
-        "name": "INTERNET CONNECTIN WATCHDOG",
-        "info": "",
-        "x": 970,
-        "y": 1020,
-        "wires": []
-    },
-    {
         "id": "f3e7f125f704571f",
         "type": "exec",
         "z": "caf59ec6.61c85",
@@ -26487,164 +26126,6 @@
         "x": 610,
         "y": 720,
         "wires": []
-    },
-    {
-        "id": "bb5d90aa9b8b8de4",
-        "type": "inject",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "60",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "60",
-        "topic": "",
-        "payloadType": "date",
-        "x": 210,
-        "y": 1820,
-        "wires": [
-            [
-                "a1c4cbe2b8ce9045"
-            ]
-        ]
-    },
-    {
-        "id": "a1c4cbe2b8ce9045",
-        "type": "function",
-        "z": "caf59ec6.61c85",
-        "name": "internet alarms",
-        "func": "var lastin = flow.get(\"lastInternet\") || 0;\n\nvar timin = new Date().getTime();\n\nvar age = (timin - lastin)/1000;\n\nmsg.topic = \"alarm/internet\";\nmsg.title = \"Internet connection\";\nif (age < (60*35)) { msg.payload = \"ok\"; }\nelse { msg.payload = \"No internet\"; }\n\n\n// var msg2 = {};\n// msg2.topic = \"alarm/modemLTE\";\n// msg2.title = \"Modem LTE 4G connection\";\n// var online = flow.get(\"online\") || false;\n// if (msg.payload !== \"ok\") { msg2.payload = \"No modem response\";  }\n// else if (online==true) { msg2.payload = \"ok\"; }\n// else { msg2.payload = \"No LTE connection\"; }\n    \nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 400,
-        "y": 1820,
-        "wires": [
-            [
-                "392d126135d185ae"
-            ]
-        ]
-    },
-    {
-        "id": "392d126135d185ae",
-        "type": "link out",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "links": [
-            "72fc070f.39dd8"
-        ],
-        "x": 535,
-        "y": 1820,
-        "wires": []
-    },
-    {
-        "id": "b86156e4eee3efcb",
-        "type": "debug",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 680,
-        "y": 1020,
-        "wires": []
-    },
-    {
-        "id": "3b81355f577c5ed0",
-        "type": "ip",
-        "z": "caf59ec6.61c85",
-        "name": "ip",
-        "https": false,
-        "timeout": "5000",
-        "internalIPv4": true,
-        "internalIPv6": false,
-        "publicIPv4": true,
-        "publicIPv6": false,
-        "x": 310,
-        "y": 1260,
-        "wires": [
-            [
-                "f9250d333c4118ea"
-            ]
-        ]
-    },
-    {
-        "id": "7c78ffbdf659f35e",
-        "type": "inject",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "30",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "10",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 140,
-        "y": 1260,
-        "wires": [
-            [
-                "3b81355f577c5ed0"
-            ]
-        ]
-    },
-    {
-        "id": "f9250d333c4118ea",
-        "type": "debug",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 510,
-        "y": 1260,
-        "wires": []
-    },
-    {
-        "id": "9814f3c8ce55aa94",
-        "type": "exec",
-        "z": "caf59ec6.61c85",
-        "command": "sudo shutdown now",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "oldrc": false,
-        "name": "",
-        "x": 1340,
-        "y": 1000,
-        "wires": [
-            [],
-            [],
-            []
-        ]
     },
     {
         "id": "fae86fdae8a260b0",
@@ -27253,519 +26734,6 @@
         "dname": "",
         "x": 550,
         "y": 260,
-        "wires": []
-    },
-    {
-        "id": "7c19b43c9e35470c",
-        "type": "ping",
-        "z": "caf59ec6.61c85",
-        "protocol": "Automatic",
-        "mode": "timed",
-        "name": "",
-        "host": "www.google.com",
-        "timer": "60",
-        "inputs": 0,
-        "x": 140,
-        "y": 1420,
-        "wires": [
-            [
-                "e8a0adf8d3662d5a"
-            ]
-        ]
-    },
-    {
-        "id": "2b5da55513cf3da9",
-        "type": "debug",
-        "z": "caf59ec6.61c85",
-        "name": "debug 24",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 600,
-        "y": 1340,
-        "wires": []
-    },
-    {
-        "id": "e8a0adf8d3662d5a",
-        "type": "switch",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "gt",
-                "v": "0",
-                "vt": "num"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 2,
-        "x": 410,
-        "y": 1460,
-        "wires": [
-            [
-                "2b5da55513cf3da9",
-                "2a7c2a3a1af9fe08",
-                "62db721746cacbda"
-            ],
-            [
-                "1f143b7f9354cff9",
-                "cbdb2531bff11977"
-            ]
-        ]
-    },
-    {
-        "id": "1f143b7f9354cff9",
-        "type": "trigger",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "op1": "",
-        "op2": "1",
-        "op1type": "nul",
-        "op2type": "str",
-        "duration": "15",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 823,
-        "y": 1468,
-        "wires": [
-            [
-                "b7e344da84a4db3a",
-                "c727a7485e9d0f98"
-            ]
-        ]
-    },
-    {
-        "id": "b7e344da84a4db3a",
-        "type": "delay",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "15",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "outputs": 1,
-        "x": 1053,
-        "y": 1448,
-        "wires": [
-            [
-                "5e084cb5a68b6a5a"
-            ]
-        ]
-    },
-    {
-        "id": "c727a7485e9d0f98",
-        "type": "function",
-        "z": "caf59ec6.61c85",
-        "name": "rebootCountNoInternet",
-        "func": "msg.topic = \"set/rebootCountNoInternet\";\nmsg.title = \"No Internet Reboot Counter\";\n\nmsg.payload = global.get(\"settings.rebootCountNoInternet.value\") || 0;\n\nmsg.payload = parseInt(msg.payload) + 1;\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1100,
-        "y": 1520,
-        "wires": [
-            [
-                "10ee4216045b7731",
-                "723dd3dd7f64f357"
-            ]
-        ]
-    },
-    {
-        "id": "10ee4216045b7731",
-        "type": "link out",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "links": [
-            "72fc070f.39dd8"
-        ],
-        "x": 1295,
-        "y": 1520,
-        "wires": []
-    },
-    {
-        "id": "5e084cb5a68b6a5a",
-        "type": "exec",
-        "z": "caf59ec6.61c85",
-        "command": "sudo shutdown now",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "oldrc": false,
-        "name": "",
-        "x": 1273,
-        "y": 1448,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "2a7c2a3a1af9fe08",
-        "type": "change",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "1",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 620,
-        "y": 1440,
-        "wires": [
-            [
-                "1f143b7f9354cff9",
-                "cbdb2531bff11977"
-            ]
-        ]
-    },
-    {
-        "id": "cbdb2531bff11977",
-        "type": "trigger",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "op1": "",
-        "op2": "1",
-        "op1type": "nul",
-        "op2type": "str",
-        "duration": "3",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 830,
-        "y": 1600,
-        "wires": [
-            [
-                "ba45d07273865a3c",
-                "c10c40ea6363c0f7",
-                "9856e52b00f498ce"
-            ]
-        ]
-    },
-    {
-        "id": "c10c40ea6363c0f7",
-        "type": "exec",
-        "z": "caf59ec6.61c85",
-        "command": "sudo /sbin/ifdown 'wlan0'",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 1110,
-        "y": 1640,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "ba45d07273865a3c",
-        "type": "delay",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 860,
-        "y": 1720,
-        "wires": [
-            [
-                "784529a4899cd05a"
-            ]
-        ]
-    },
-    {
-        "id": "784529a4899cd05a",
-        "type": "exec",
-        "z": "caf59ec6.61c85",
-        "command": "sudo /sbin/ifup --force 'wlan0'",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 1120,
-        "y": 1720,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "9856e52b00f498ce",
-        "type": "function",
-        "z": "caf59ec6.61c85",
-        "name": "resetWlanCount",
-        "func": "msg.topic = \"set/resetWlanCount\";\nmsg.title = \"No Internet Reset WLAN Counter\";\n\nmsg.payload = global.get(\"settings.resetWlanCount.value\") || 0;\n\nmsg.payload = parseInt(msg.payload) + 1;\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1080,
-        "y": 1580,
-        "wires": [
-            [
-                "723dd3dd7f64f357",
-                "10ee4216045b7731"
-            ]
-        ]
-    },
-    {
-        "id": "3ef4452776398bf2",
-        "type": "function",
-        "z": "caf59ec6.61c85",
-        "name": "pingGoogleMs",
-        "func": "msg.topic = \"system/pingInternetMs\";\nmsg.title = \"Ping Internet Time\";\nmsg.units = \"ms\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 1380,
-        "wires": [
-            [
-                "1d8ef88d8c83d435",
-                "a9ab84422ff80e3e"
-            ]
-        ]
-    },
-    {
-        "id": "1d8ef88d8c83d435",
-        "type": "link out",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "links": [
-            "72fc070f.39dd8"
-        ],
-        "x": 915,
-        "y": 1380,
-        "wires": []
-    },
-    {
-        "id": "723dd3dd7f64f357",
-        "type": "debug",
-        "z": "caf59ec6.61c85",
-        "name": "debug 25",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1340,
-        "y": 1580,
-        "wires": []
-    },
-    {
-        "id": "4b1e289eac95eb5f",
-        "type": "ping",
-        "z": "caf59ec6.61c85",
-        "protocol": "Automatic",
-        "mode": "timed",
-        "name": "",
-        "host": "www.heatweb.co.uk",
-        "timer": "60",
-        "inputs": 0,
-        "x": 150,
-        "y": 1480,
-        "wires": [
-            [
-                "e8a0adf8d3662d5a"
-            ]
-        ]
-    },
-    {
-        "id": "62db721746cacbda",
-        "type": "smooth",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "property": "payload",
-        "action": "min",
-        "count": "2",
-        "round": "",
-        "mult": "single",
-        "reduce": true,
-        "x": 600,
-        "y": 1380,
-        "wires": [
-            [
-                "3ef4452776398bf2"
-            ]
-        ]
-    },
-    {
-        "id": "a9ab84422ff80e3e",
-        "type": "debug",
-        "z": "caf59ec6.61c85",
-        "name": "debug 26",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 960,
-        "y": 1340,
-        "wires": []
-    },
-    {
-        "id": "3ad66318e6ac6780",
-        "type": "ping",
-        "z": "caf59ec6.61c85",
-        "protocol": "Automatic",
-        "mode": "timed",
-        "name": "",
-        "host": "192.168.0.1",
-        "timer": "60",
-        "inputs": 0,
-        "x": 130,
-        "y": 1580,
-        "wires": [
-            [
-                "cc90a7588d29413d",
-                "ea4c0b61d13bad65"
-            ]
-        ]
-    },
-    {
-        "id": "cc90a7588d29413d",
-        "type": "switch",
-        "z": "caf59ec6.61c85",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "gt",
-                "v": "0",
-                "vt": "num"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 2,
-        "x": 370,
-        "y": 1580,
-        "wires": [
-            [
-                "2a7c2a3a1af9fe08"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "ea4c0b61d13bad65",
-        "type": "debug",
-        "z": "caf59ec6.61c85",
-        "name": "debug 27",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 380,
-        "y": 1640,
-        "wires": []
-    },
-    {
-        "id": "6b0ead44e170ac28",
-        "type": "ping",
-        "z": "caf59ec6.61c85",
-        "protocol": "Automatic",
-        "mode": "timed",
-        "name": "",
-        "host": "192.168.1.1",
-        "timer": "60",
-        "inputs": 0,
-        "x": 130,
-        "y": 1640,
-        "wires": [
-            [
-                "cc90a7588d29413d",
-                "ea4c0b61d13bad65"
-            ]
-        ]
-    },
-    {
-        "id": "fea93495307d63f3",
-        "type": "comment",
-        "z": "caf59ec6.61c85",
-        "name": "Loss of internet connectivity triggers countdown to reset ",
-        "info": "",
-        "x": 260,
-        "y": 1380,
-        "wires": []
-    },
-    {
-        "id": "8d3f272a40031d15",
-        "type": "comment",
-        "z": "caf59ec6.61c85",
-        "name": "LAN Connectivity prevents reset",
-        "info": "",
-        "x": 190,
-        "y": 1540,
         "wires": []
     },
     {
@@ -28906,6 +27874,708 @@
         "wires": [
             [
                 "bfe7b40b9bc0ae5d"
+            ]
+        ]
+    },
+    {
+        "id": "3e283cd4.ba17d4",
+        "type": "comment",
+        "z": "c376bc72122fb9a2",
+        "name": "INTERNET CONNECTIN WATCHDOG",
+        "info": "",
+        "x": 230,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "9abe6fd2.97b23",
+        "type": "link out",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "24ebaea5.b9caa2"
+        ],
+        "x": 1025,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "bb5d90aa9b8b8de4",
+        "type": "inject",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "60",
+        "topic": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 680,
+        "wires": [
+            [
+                "a1c4cbe2b8ce9045"
+            ]
+        ]
+    },
+    {
+        "id": "a1c4cbe2b8ce9045",
+        "type": "function",
+        "z": "c376bc72122fb9a2",
+        "name": "internet alarms",
+        "func": "var lastin = flow.get(\"lastInternet\") || 0;\n\nvar timin = new Date().getTime();\n\nvar age = (timin - lastin)/1000;\n\nmsg.topic = \"alarm/internet\";\nmsg.title = \"Internet connection\";\nif (age < 60) { msg.payload = \"ok\"; }\nelse { msg.payload = \"Warning, no internet\"; }\n\n\n// var msg2 = {};\n// msg2.topic = \"alarm/modemLTE\";\n// msg2.title = \"Modem LTE 4G connection\";\n// var online = flow.get(\"online\") || false;\n// if (msg.payload !== \"ok\") { msg2.payload = \"No modem response\";  }\n// else if (online==true) { msg2.payload = \"ok\"; }\n// else { msg2.payload = \"No LTE connection\"; }\n    \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 680,
+        "wires": [
+            [
+                "392d126135d185ae"
+            ]
+        ]
+    },
+    {
+        "id": "392d126135d185ae",
+        "type": "link out",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 555,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "3b81355f577c5ed0",
+        "type": "ip",
+        "z": "c376bc72122fb9a2",
+        "name": "ip",
+        "https": false,
+        "timeout": "5000",
+        "internalIPv4": true,
+        "internalIPv6": false,
+        "publicIPv4": true,
+        "publicIPv6": false,
+        "x": 330,
+        "y": 80,
+        "wires": [
+            [
+                "cdbc661df0f64861"
+            ]
+        ]
+    },
+    {
+        "id": "7c78ffbdf659f35e",
+        "type": "inject",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "3b81355f577c5ed0"
+            ]
+        ]
+    },
+    {
+        "id": "7c19b43c9e35470c",
+        "type": "ping",
+        "z": "c376bc72122fb9a2",
+        "protocol": "Automatic",
+        "mode": "timed",
+        "name": "",
+        "host": "www.google.com",
+        "timer": "60",
+        "inputs": 0,
+        "x": 160,
+        "y": 280,
+        "wires": [
+            [
+                "e8a0adf8d3662d5a"
+            ]
+        ]
+    },
+    {
+        "id": "2b5da55513cf3da9",
+        "type": "debug",
+        "z": "c376bc72122fb9a2",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e8a0adf8d3662d5a",
+        "type": "switch",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 430,
+        "y": 320,
+        "wires": [
+            [
+                "2b5da55513cf3da9",
+                "2a7c2a3a1af9fe08",
+                "62db721746cacbda"
+            ],
+            [
+                "cbdb2531bff11977"
+            ]
+        ]
+    },
+    {
+        "id": "1f143b7f9354cff9",
+        "type": "trigger",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "op1": "",
+        "op2": "1",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "15",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 840,
+        "y": 640,
+        "wires": [
+            [
+                "b7e344da84a4db3a",
+                "c727a7485e9d0f98"
+            ]
+        ]
+    },
+    {
+        "id": "b7e344da84a4db3a",
+        "type": "delay",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "15",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 1070,
+        "y": 620,
+        "wires": [
+            [
+                "5e084cb5a68b6a5a"
+            ]
+        ]
+    },
+    {
+        "id": "c727a7485e9d0f98",
+        "type": "function",
+        "z": "c376bc72122fb9a2",
+        "name": "rebootCountNoInternet",
+        "func": "msg.topic = \"set/rebootCountNoInternet\";\nmsg.title = \"No Internet Reboot Counter\";\n\nmsg.payload = global.get(\"settings.rebootCountNoInternet.value\") || 0;\n\nmsg.payload = parseInt(msg.payload) + 1;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1117,
+        "y": 692,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "10ee4216045b7731",
+        "type": "link out",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 1305,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "5e084cb5a68b6a5a",
+        "type": "exec",
+        "z": "c376bc72122fb9a2",
+        "command": "sudo shutdown now",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1290,
+        "y": 620,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2a7c2a3a1af9fe08",
+        "type": "change",
+        "z": "c376bc72122fb9a2",
+        "name": "reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 380,
+        "wires": [
+            [
+                "1f143b7f9354cff9",
+                "cbdb2531bff11977",
+                "ba45d07273865a3c",
+                "0c4205ed9aee068c"
+            ]
+        ]
+    },
+    {
+        "id": "cbdb2531bff11977",
+        "type": "trigger",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "op1": "",
+        "op2": "1",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "3",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 845,
+        "y": 330,
+        "wires": [
+            [
+                "ba45d07273865a3c",
+                "c10c40ea6363c0f7",
+                "9856e52b00f498ce"
+            ]
+        ]
+    },
+    {
+        "id": "c10c40ea6363c0f7",
+        "type": "exec",
+        "z": "c376bc72122fb9a2",
+        "command": "sudo /sbin/ifdown 'wlan0'",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1120,
+        "y": 400,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ba45d07273865a3c",
+        "type": "delay",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 830,
+        "y": 480,
+        "wires": [
+            [
+                "784529a4899cd05a",
+                "0c4205ed9aee068c"
+            ]
+        ]
+    },
+    {
+        "id": "784529a4899cd05a",
+        "type": "exec",
+        "z": "c376bc72122fb9a2",
+        "command": "sudo /sbin/ifup --force 'wlan0'",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1130,
+        "y": 480,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9856e52b00f498ce",
+        "type": "function",
+        "z": "c376bc72122fb9a2",
+        "name": "resetWlanCount",
+        "func": "msg.topic = \"set/resetWlanCount\";\nmsg.title = \"No Internet Reset WLAN Counter\";\n\nmsg.payload = global.get(\"settings.resetWlanCount.value\") || 0;\n\nmsg.payload = parseInt(msg.payload) + 1;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 340,
+        "wires": [
+            [
+                "10ee4216045b7731",
+                "723dd3dd7f64f357"
+            ]
+        ]
+    },
+    {
+        "id": "3ef4452776398bf2",
+        "type": "function",
+        "z": "c376bc72122fb9a2",
+        "name": "pingInternetMs",
+        "func": "msg.topic = \"system/pingInternetMs\";\nmsg.title = \"Ping Internet Time\";\nmsg.units = \"ms\";\n\nflow.set(\"lastInternet\", new Date().getTime());\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 240,
+        "wires": [
+            [
+                "1d8ef88d8c83d435",
+                "a9ab84422ff80e3e"
+            ]
+        ]
+    },
+    {
+        "id": "1d8ef88d8c83d435",
+        "type": "link out",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 935,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "723dd3dd7f64f357",
+        "type": "debug",
+        "z": "c376bc72122fb9a2",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "4b1e289eac95eb5f",
+        "type": "ping",
+        "z": "c376bc72122fb9a2",
+        "protocol": "Automatic",
+        "mode": "timed",
+        "name": "",
+        "host": "www.heatweb.co.uk",
+        "timer": "60",
+        "inputs": 0,
+        "x": 170,
+        "y": 340,
+        "wires": [
+            [
+                "e8a0adf8d3662d5a"
+            ]
+        ]
+    },
+    {
+        "id": "62db721746cacbda",
+        "type": "smooth",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "property": "payload",
+        "action": "min",
+        "count": "2",
+        "round": "",
+        "mult": "single",
+        "reduce": true,
+        "x": 620,
+        "y": 240,
+        "wires": [
+            [
+                "3ef4452776398bf2"
+            ]
+        ]
+    },
+    {
+        "id": "a9ab84422ff80e3e",
+        "type": "debug",
+        "z": "c376bc72122fb9a2",
+        "name": "debug 26",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "3ad66318e6ac6780",
+        "type": "ping",
+        "z": "c376bc72122fb9a2",
+        "protocol": "Automatic",
+        "mode": "timed",
+        "name": "",
+        "host": "192.168.0.1",
+        "timer": "60",
+        "inputs": 0,
+        "x": 150,
+        "y": 440,
+        "wires": [
+            [
+                "cc90a7588d29413d",
+                "ea4c0b61d13bad65"
+            ]
+        ]
+    },
+    {
+        "id": "cc90a7588d29413d",
+        "type": "switch",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 430,
+        "y": 440,
+        "wires": [
+            [
+                "2a7c2a3a1af9fe08"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "ea4c0b61d13bad65",
+        "type": "debug",
+        "z": "c376bc72122fb9a2",
+        "name": "debug 27",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "6b0ead44e170ac28",
+        "type": "ping",
+        "z": "c376bc72122fb9a2",
+        "protocol": "Automatic",
+        "mode": "timed",
+        "name": "",
+        "host": "192.168.1.1",
+        "timer": "60",
+        "inputs": 0,
+        "x": 150,
+        "y": 500,
+        "wires": [
+            [
+                "cc90a7588d29413d",
+                "ea4c0b61d13bad65"
+            ]
+        ]
+    },
+    {
+        "id": "fea93495307d63f3",
+        "type": "comment",
+        "z": "c376bc72122fb9a2",
+        "name": "Loss of internet connectivity triggers countdown to reset ",
+        "info": "",
+        "x": 280,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "8d3f272a40031d15",
+        "type": "comment",
+        "z": "c376bc72122fb9a2",
+        "name": "LAN Connectivity prevents reset",
+        "info": "",
+        "x": 210,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "cdbc661df0f64861",
+        "type": "function",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "func": "\n\nvar msg1 = { topic: \"system/ipLan\", payload: msg.payload.internalIPv4 || \"false\" }\n\nmsg.topic = \"system/ipWan\";\nmsg.payload = msg.payload.publicIPv4 || \"false\" ;\n\n\nreturn [msg,msg1];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 80,
+        "wires": [
+            [
+                "ca1358f93e7b6dc8"
+            ],
+            [
+                "ca1358f93e7b6dc8"
+            ]
+        ]
+    },
+    {
+        "id": "ca1358f93e7b6dc8",
+        "type": "link out",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 685,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "0c4205ed9aee068c",
+        "type": "trigger",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "op1": "",
+        "op2": "1",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "3",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 840,
+        "y": 560,
+        "wires": [
+            [
+                "9abe6fd2.97b23",
+                "1f143b7f9354cff9"
             ]
         ]
     },
