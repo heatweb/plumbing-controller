@@ -1288,7 +1288,7 @@
         "op2": "",
         "op1type": "nul",
         "op2type": "payl",
-        "duration": "5",
+        "duration": "30",
         "extend": true,
         "overrideDelay": false,
         "units": "s",
@@ -1296,7 +1296,7 @@
         "bytopic": "topic",
         "topic": "topic",
         "outputs": 1,
-        "x": 680,
+        "x": 690,
         "y": 400,
         "wires": [
             [
