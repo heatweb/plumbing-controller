@@ -499,11 +499,11 @@
     {
         "id": "550ec543.b55bc4",
         "type": "heatwebConfig",
-        "name": "RPi Touchscreen",
-        "description": "London Climate Hire Touchscreen Controller",
+        "name": "Zero Carbon Controller zccemae4yoh",
+        "description": "Heatweb Zero Carbon Controller Controller",
         "url": "https://hw3.ddns.net",
-        "nodeId": "oawaiT3o",
-        "networkId": "rAndD-lch",
+        "nodeId": "zccamei4ies",
+        "networkId": "rAndD",
         "localNetworkId": "local",
         "localDirectory": "/home/pi/node-hiu",
         "htmlDirectory": "/home/pi/.node-red/node_modules/node-red-contrib-heatweb/public",
@@ -654,26 +654,6 @@
         "type": "ui_group",
         "name": "Browser",
         "tab": "10aaba68.e21626",
-        "order": 1,
-        "disp": false,
-        "width": "12",
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "c8185974.465238",
-        "type": "ui_tab",
-        "name": "Modem",
-        "icon": "fa-signal",
-        "order": 20,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "b77843a6.57d18",
-        "type": "ui_group",
-        "name": "Modem AT Interface",
-        "tab": "c8185974.465238",
         "order": 1,
         "disp": false,
         "width": "12",
@@ -6146,7 +6126,7 @@
         "wires": [
             [
                 "b6cf9f0c.00abb",
-                "61ada898.7707e8"
+                "ca5e7262b706a5c5"
             ]
         ]
     },
@@ -6166,28 +6146,7 @@
         "templateScope": "local",
         "className": "",
         "x": 1170,
-        "y": 240,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "61ada898.7707e8",
-        "type": "ui_template",
-        "z": "9ad9f74f.55ef58",
-        "group": "b77843a6.57d18",
-        "name": "header icons",
-        "order": 1,
-        "width": "6",
-        "height": "1",
-        "format": "<script>\n    (function(scope) {\n        //console.log('Position 1');\n        //console.dir(scope);\n        //console.log(scope.msg);\n        scope.$watch('msg.payload', function(data) {\n            //console.log('Position 2');\n            //console.dir(data);\n            //alert(data);\n            instr = data;\n        });\n    })(scope);\n</script>",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": false,
-        "templateScope": "local",
-        "className": "",
-        "x": 1170,
-        "y": 280,
+        "y": 300,
         "wires": [
             []
         ]
@@ -6390,6 +6349,24 @@
                 "444f8e15b3e99d1a"
             ]
         ]
+    },
+    {
+        "id": "ca5e7262b706a5c5",
+        "type": "mqtt out",
+        "z": "9ad9f74f.55ef58",
+        "name": "",
+        "topic": "html/headerIcons",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7ad2997b.42a908",
+        "x": 1190,
+        "y": 360,
+        "wires": []
     },
     {
         "id": "f745256011e0247a",
