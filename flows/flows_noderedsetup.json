@@ -2030,7 +2030,7 @@
         "type": "function",
         "z": "7b2fdb7c9fb3c336",
         "name": "flow",
-        "func": "\n\nvar credentials = global.get(\"credentials\") || {};\n\nmsg.headers = {};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\") + \"/flow\";\n\n\n// {\n//    \"id\": \"e090c99b.574098\",\n//       \"type\": \"tab\",\n//          \"label\": \"HIU\",\n//             \"disabled\": false,\n//                \"info\": \"\"\n// },\n\n\nfunction checkTab(nodeitem) {\n   return nodeitem.type == \"tab\";\n}\n\nfunction filterTab(nodeitem) {\n   return nodeitem.type != \"tab\";\n}\n\nvar ff = JSON.parse(msg.payload);\n\n\nfor (var part in ff) {\n\n\n   if (credentials.localMqttPassword) {\n\n      if (ff[part].type == \"mqtt-broker\" && (ff[part].broker == \"mqtt\" || ff[part].broker == \"localhost\")) { ff[part].credentials = { \"user\": \"admin\", \"password\": credentials.localMqttPassword }; }\n\n   }\n\n   if (credentials.adminPassword) {\n\n      if (ff[part].type == \"MySQLdatabase\" && ff[part].host == \"mysql\") { ff[part].credentials = { \"user\": \"root\", \"password\": credentials.adminPassword }; }\n\n   }\n\n   if (credentials.localInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"local\") { ff[part].credentials = { \"token\": credentials.localInfluxToken }; }\n\n   }\n   if (credentials.remoteInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"heatweb\") { ff[part].credentials = { \"token\": credentials.remoteInfluxToken }; }\n\n   }\n\n   if (credentials.emailPassword && credentials.emailUser) {\n\n      if (ff[part].type == \"e-mail\") { ff[part].credentials = { \"userid\": credentials.emailUser, \"password\": credentials.emailPassword }; }\n\n   }\n\n}\n\n\n\n\nvar tabf = ff.filter(checkTab)[0];\n\ntabf.nodes = ff.filter(filterTab);\n\n// msg.payload = JSON.stringify({\n//    \"id\": \"91ad452.0000112\",\n//    \"label\": \"HIU\",\n//    \"nodes\": JSON.parse(msg.payload),\n//    \"configs\": []\n// });\n\nmsg.payload = tabf;\nreturn msg;\n\n\n\n\n\n\nmsg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://localhost:\" + msg.port + \"/flow\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n\nif (global.get(\"noderedmqttpass\")) {\n\n   var cfrom = '\"broker\":\"localhost\"';\n   var cto = '\"broker\":\"localhost\", \"credentials\":{\"user\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n\n}\n\nif (global.get(\"settings.flow\")==\"flows_ihiu_setup\") {\n    \n   var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n   var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"setup\",\"password\":\"setup\"}';\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n} else {\n\n   var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n   var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\nvar cfrom = '\"broker\":\"192.168.0.3\"';\nvar cto = '\"broker\":\"192.168.0.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\nmsg.payload = msg.payload.replace(cfrom, cto);\n\nvar cfrom = '\"broker\":\"192.168.1.3\"';\nvar cto = '\"broker\":\"192.168.1.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\nmsg.payload = msg.payload.replace(cfrom, cto);\n\n\nreturn msg;",
+        "func": "\n\nvar credentials = global.get(\"credentials\") || {};\n\nmsg.headers = {};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\") + \"/flow\";\n\n\n// {\n//    \"id\": \"e090c99b.574098\",\n//       \"type\": \"tab\",\n//          \"label\": \"HIU\",\n//             \"disabled\": false,\n//                \"info\": \"\"\n// },\n\n\nfunction checkTab(nodeitem) {\n   return nodeitem.type == \"tab\";\n}\n\nfunction filterTab(nodeitem) {\n   return nodeitem.type != \"tab\";\n}\n\nfunction filterMqttBroker(nodeitem) {\n   return nodeitem.type != \"mqtt-broker\";\n}\n\nvar ff = JSON.parse(msg.payload);\n\n\nvar tabf = ff.filter(checkTab)[0];\n\ntabf.nodes = ff.filter(filterTab).filter(filterMqttBroker);\n\n// msg.payload = JSON.stringify({\n//    \"id\": \"91ad452.0000112\",\n//    \"label\": \"HIU\",\n//    \"nodes\": JSON.parse(msg.payload),\n//    \"configs\": []\n// });\n\nmsg.payload = tabf;\nreturn msg;\n\n\n\n\n\n\nmsg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://localhost:\" + msg.port + \"/flow\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n\nif (global.get(\"noderedmqttpass\")) {\n\n   var cfrom = '\"broker\":\"localhost\"';\n   var cto = '\"broker\":\"localhost\", \"credentials\":{\"user\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n\n}\n\nif (global.get(\"settings.flow\")==\"flows_ihiu_setup\") {\n    \n   var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n   var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"setup\",\"password\":\"setup\"}';\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n} else {\n\n   var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n   var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\nvar cfrom = '\"broker\":\"192.168.0.3\"';\nvar cto = '\"broker\":\"192.168.0.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\nmsg.payload = msg.payload.replace(cfrom, cto);\n\nvar cfrom = '\"broker\":\"192.168.1.3\"';\nvar cto = '\"broker\":\"192.168.1.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\nmsg.payload = msg.payload.replace(cfrom, cto);\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3708,6 +3708,54 @@
         "y": 60,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "3fa85d7b19a76c90",
+        "type": "file in",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "flow_beta_sontay_modbus.json",
+        "filename": "/home/pi/plumbing-controller/flows/flow_beta_sontay_modbus.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 450,
+        "y": 1980,
+        "wires": [
+            [
+                "b221904688d7c8fc"
+            ]
+        ]
+    },
+    {
+        "id": "cff5441ba2a0d6f3",
+        "type": "inject",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "Start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 1980,
+        "wires": [
+            [
+                "3fa85d7b19a76c90"
+            ]
         ]
     },
     {
