@@ -94,6 +94,22 @@
         "env": []
     },
     {
+        "id": "38651eb07e123bba",
+        "type": "tab",
+        "label": "Docker",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c376bc72122fb9a2",
+        "type": "tab",
+        "label": "Connectivity",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "d26c3be6.b5ef58",
         "type": "tab",
         "label": "Setup",
@@ -111,14 +127,6 @@
         "id": "ac900a3fdc09a7bf",
         "type": "tab",
         "label": "Software 2",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "c376bc72122fb9a2",
-        "type": "tab",
-        "label": "Connectivity",
         "disabled": false,
         "info": "",
         "env": []
@@ -187,6 +195,13 @@
         "label": "Sontay Modbus",
         "disabled": true,
         "info": "https://www.binaryconvert.com/convert_signed_int.html?hexadecimal=000019FD"
+    },
+    {
+        "id": "bb7dc97af4d5079f",
+        "type": "tab",
+        "label": "Data",
+        "disabled": true,
+        "info": ""
     },
     {
         "id": "d1f3d002.63ee48",
@@ -382,6 +397,72 @@
             }
         ],
         "env": []
+    },
+    {
+        "id": "3bcc1796d56e0e4a",
+        "type": "subflow",
+        "name": "rbe 24h",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "ed3595ba7ad0e4b1"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 420,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "6fdbb2068778d3c9",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "344fa160119932f8",
+        "type": "subflow",
+        "name": "rbe 5m",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "486403111458df8e"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 420,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "c822677b38fcd83c",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
     },
     {
         "id": "dadb5d41.655b1",
@@ -1916,6 +1997,61 @@
         "responsetimeout": "10000"
     },
     {
+        "id": "cb2f30e6e588172b",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "local",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "b2a59d060360761e",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "064937e416bcf5e9",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "heatweb",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "https://europe-west1-1.gcp.cloud2.influxdata.com",
+        "rejectUnauthorized": true
+    },
+    {
         "id": "dd19c0de.9bebd",
         "type": "rbe",
         "z": "d1f3d002.63ee48",
@@ -2274,6 +2410,134 @@
             [
                 "61b66a77.aec334"
             ]
+        ]
+    },
+    {
+        "id": "ed3595ba7ad0e4b1",
+        "type": "rbe",
+        "z": "3bcc1796d56e0e4a",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "6fdbb2068778d3c9"
+            ]
+        ]
+    },
+    {
+        "id": "ac6886f7de81d7ca",
+        "type": "inject",
+        "z": "3bcc1796d56e0e4a",
+        "name": "",
+        "props": [
+            {
+                "p": "reset",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "repeat": "86400",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 190,
+        "y": 60,
+        "wires": [
+            [
+                "ed3595ba7ad0e4b1"
+            ]
+        ]
+    },
+    {
+        "id": "6fdbb2068778d3c9",
+        "type": "switch",
+        "z": "3bcc1796d56e0e4a",
+        "name": "",
+        "property": "reset",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "486403111458df8e",
+        "type": "rbe",
+        "z": "344fa160119932f8",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "c822677b38fcd83c"
+            ]
+        ]
+    },
+    {
+        "id": "9dd86fca5dcbfcab",
+        "type": "inject",
+        "z": "344fa160119932f8",
+        "name": "",
+        "props": [
+            {
+                "p": "reset",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "486403111458df8e"
+            ]
+        ]
+    },
+    {
+        "id": "c822677b38fcd83c",
+        "type": "switch",
+        "z": "344fa160119932f8",
+        "name": "",
+        "property": "reset",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            []
         ]
     },
     {
@@ -4236,7 +4500,8 @@
             "5518353d16a35f62",
             "1d8ef88d8c83d435",
             "ca1358f93e7b6dc8",
-            "da6da2d1c0e082f0"
+            "da6da2d1c0e082f0",
+            "f35f2c270fa6bc6f"
         ],
         "x": 205,
         "y": 180,
@@ -24295,6 +24560,868 @@
         ]
     },
     {
+        "id": "f745256011e0247a",
+        "type": "mqtt in",
+        "z": "38651eb07e123bba",
+        "name": "",
+        "topic": "cmd/restart5001",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "7ad2997b.42a908",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 240,
+        "y": 100,
+        "wires": [
+            [
+                "ba39249e5eadbc26"
+            ]
+        ]
+    },
+    {
+        "id": "8379c3e79edb861b",
+        "type": "exec",
+        "z": "38651eb07e123bba",
+        "command": "sudo docker restart mynodered1",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 790,
+        "y": 100,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ba39249e5eadbc26",
+        "type": "trigger",
+        "z": "38651eb07e123bba",
+        "name": "",
+        "op1": "1",
+        "op2": "",
+        "op1type": "str",
+        "op2type": "nul",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 490,
+        "y": 100,
+        "wires": [
+            [
+                "8379c3e79edb861b"
+            ]
+        ]
+    },
+    {
+        "id": "3e283cd4.ba17d4",
+        "type": "comment",
+        "z": "c376bc72122fb9a2",
+        "name": "INTERNET CONNECTIN WATCHDOG",
+        "info": "",
+        "x": 230,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "9abe6fd2.97b23",
+        "type": "link out",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "24ebaea5.b9caa2"
+        ],
+        "x": 1025,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "bb5d90aa9b8b8de4",
+        "type": "inject",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "60",
+        "topic": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 680,
+        "wires": [
+            [
+                "a1c4cbe2b8ce9045"
+            ]
+        ]
+    },
+    {
+        "id": "a1c4cbe2b8ce9045",
+        "type": "function",
+        "z": "c376bc72122fb9a2",
+        "name": "internet alarms",
+        "func": "var lastin = flow.get(\"lastInternet\") || 0;\n\nvar timin = new Date().getTime();\n\nvar age = (timin - lastin)/1000;\n\nmsg.topic = \"alarm/internet\";\nmsg.title = \"Internet connection\";\nif (age < 60) { msg.payload = \"ok\"; }\nelse { msg.payload = \"Warning, no internet\"; }\n\n\n// var msg2 = {};\n// msg2.topic = \"alarm/modemLTE\";\n// msg2.title = \"Modem LTE 4G connection\";\n// var online = flow.get(\"online\") || false;\n// if (msg.payload !== \"ok\") { msg2.payload = \"No modem response\";  }\n// else if (online==true) { msg2.payload = \"ok\"; }\n// else { msg2.payload = \"No LTE connection\"; }\n    \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 680,
+        "wires": [
+            [
+                "392d126135d185ae",
+                "a23b0b16b75dd81a"
+            ]
+        ]
+    },
+    {
+        "id": "392d126135d185ae",
+        "type": "link out",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 555,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "3b81355f577c5ed0",
+        "type": "ip",
+        "z": "c376bc72122fb9a2",
+        "name": "ip",
+        "https": false,
+        "timeout": "5000",
+        "internalIPv4": true,
+        "internalIPv6": false,
+        "publicIPv4": true,
+        "publicIPv6": false,
+        "x": 330,
+        "y": 80,
+        "wires": [
+            [
+                "cdbc661df0f64861"
+            ]
+        ]
+    },
+    {
+        "id": "7c78ffbdf659f35e",
+        "type": "inject",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "3b81355f577c5ed0"
+            ]
+        ]
+    },
+    {
+        "id": "7c19b43c9e35470c",
+        "type": "ping",
+        "z": "c376bc72122fb9a2",
+        "protocol": "Automatic",
+        "mode": "timed",
+        "name": "",
+        "host": "www.google.com",
+        "timer": "60",
+        "inputs": 0,
+        "x": 160,
+        "y": 280,
+        "wires": [
+            [
+                "e8a0adf8d3662d5a"
+            ]
+        ]
+    },
+    {
+        "id": "2b5da55513cf3da9",
+        "type": "debug",
+        "z": "c376bc72122fb9a2",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e8a0adf8d3662d5a",
+        "type": "switch",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 430,
+        "y": 320,
+        "wires": [
+            [
+                "2b5da55513cf3da9",
+                "2a7c2a3a1af9fe08",
+                "62db721746cacbda"
+            ],
+            [
+                "cbdb2531bff11977"
+            ]
+        ]
+    },
+    {
+        "id": "1f143b7f9354cff9",
+        "type": "trigger",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "op1": "",
+        "op2": "1",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "15",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 830,
+        "y": 780,
+        "wires": [
+            [
+                "b7e344da84a4db3a",
+                "c727a7485e9d0f98"
+            ]
+        ]
+    },
+    {
+        "id": "b7e344da84a4db3a",
+        "type": "delay",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "15",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 1060,
+        "y": 760,
+        "wires": [
+            [
+                "5e084cb5a68b6a5a"
+            ]
+        ]
+    },
+    {
+        "id": "c727a7485e9d0f98",
+        "type": "function",
+        "z": "c376bc72122fb9a2",
+        "name": "rebootCountNoInternet",
+        "func": "msg.topic = \"set/rebootCountNoInternet\";\nmsg.title = \"No Internet Reboot Counter\";\n\nmsg.payload = global.get(\"settings.rebootCountNoInternet.value\") || 0;\n\nmsg.payload = parseInt(msg.payload) + 1;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 820,
+        "wires": [
+            [
+                "f35f2c270fa6bc6f"
+            ]
+        ]
+    },
+    {
+        "id": "10ee4216045b7731",
+        "type": "link out",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 1305,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "5e084cb5a68b6a5a",
+        "type": "exec",
+        "z": "c376bc72122fb9a2",
+        "command": "sudo shutdown now",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1290,
+        "y": 760,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2a7c2a3a1af9fe08",
+        "type": "change",
+        "z": "c376bc72122fb9a2",
+        "name": "reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 380,
+        "wires": [
+            [
+                "1f143b7f9354cff9",
+                "cbdb2531bff11977",
+                "ba45d07273865a3c",
+                "0c4205ed9aee068c"
+            ]
+        ]
+    },
+    {
+        "id": "cbdb2531bff11977",
+        "type": "trigger",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "op1": "",
+        "op2": "1",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "3",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 830,
+        "y": 320,
+        "wires": [
+            [
+                "ba45d07273865a3c",
+                "c10c40ea6363c0f7",
+                "9856e52b00f498ce"
+            ]
+        ]
+    },
+    {
+        "id": "c10c40ea6363c0f7",
+        "type": "exec",
+        "z": "c376bc72122fb9a2",
+        "command": "sudo /sbin/ifdown 'wlan0'",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1120,
+        "y": 400,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ba45d07273865a3c",
+        "type": "delay",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 820,
+        "y": 480,
+        "wires": [
+            [
+                "784529a4899cd05a",
+                "0c4205ed9aee068c"
+            ]
+        ]
+    },
+    {
+        "id": "784529a4899cd05a",
+        "type": "exec",
+        "z": "c376bc72122fb9a2",
+        "command": "sudo /sbin/ifup --force 'wlan0'",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1130,
+        "y": 480,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9856e52b00f498ce",
+        "type": "function",
+        "z": "c376bc72122fb9a2",
+        "name": "resetWlanCount",
+        "func": "msg.topic = \"set/resetWlanCount\";\nmsg.title = \"No Internet Reset WLAN Counter\";\n\nmsg.payload = global.get(\"settings.resetWlanCount.value\") || 0;\n\nmsg.payload = parseInt(msg.payload) + 1;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 340,
+        "wires": [
+            [
+                "10ee4216045b7731",
+                "723dd3dd7f64f357"
+            ]
+        ]
+    },
+    {
+        "id": "3ef4452776398bf2",
+        "type": "function",
+        "z": "c376bc72122fb9a2",
+        "name": "pingInternetMs",
+        "func": "msg.topic = \"system/pingInternetMs\";\nmsg.title = \"Ping Internet Time\";\nmsg.units = \"ms\";\n\nflow.set(\"lastInternet\", new Date().getTime());\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 240,
+        "wires": [
+            [
+                "1d8ef88d8c83d435",
+                "a9ab84422ff80e3e"
+            ]
+        ]
+    },
+    {
+        "id": "1d8ef88d8c83d435",
+        "type": "link out",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8",
+            "d72c7804b3a94dfe"
+        ],
+        "x": 935,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "723dd3dd7f64f357",
+        "type": "debug",
+        "z": "c376bc72122fb9a2",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "4b1e289eac95eb5f",
+        "type": "ping",
+        "z": "c376bc72122fb9a2",
+        "protocol": "Automatic",
+        "mode": "timed",
+        "name": "",
+        "host": "www.heatweb.co.uk",
+        "timer": "60",
+        "inputs": 0,
+        "x": 170,
+        "y": 340,
+        "wires": [
+            [
+                "e8a0adf8d3662d5a"
+            ]
+        ]
+    },
+    {
+        "id": "62db721746cacbda",
+        "type": "smooth",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "property": "payload",
+        "action": "min",
+        "count": "2",
+        "round": "",
+        "mult": "single",
+        "reduce": true,
+        "x": 620,
+        "y": 240,
+        "wires": [
+            [
+                "3ef4452776398bf2"
+            ]
+        ]
+    },
+    {
+        "id": "a9ab84422ff80e3e",
+        "type": "debug",
+        "z": "c376bc72122fb9a2",
+        "name": "debug 26",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "3ad66318e6ac6780",
+        "type": "ping",
+        "z": "c376bc72122fb9a2",
+        "protocol": "Automatic",
+        "mode": "timed",
+        "name": "",
+        "host": "192.168.0.1",
+        "timer": "60",
+        "inputs": 0,
+        "x": 150,
+        "y": 440,
+        "wires": [
+            [
+                "cc90a7588d29413d",
+                "ea4c0b61d13bad65"
+            ]
+        ]
+    },
+    {
+        "id": "cc90a7588d29413d",
+        "type": "switch",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 430,
+        "y": 440,
+        "wires": [
+            [
+                "2a7c2a3a1af9fe08"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "ea4c0b61d13bad65",
+        "type": "debug",
+        "z": "c376bc72122fb9a2",
+        "name": "debug 27",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "6b0ead44e170ac28",
+        "type": "ping",
+        "z": "c376bc72122fb9a2",
+        "protocol": "Automatic",
+        "mode": "timed",
+        "name": "",
+        "host": "192.168.1.1",
+        "timer": "60",
+        "inputs": 0,
+        "x": 150,
+        "y": 500,
+        "wires": [
+            [
+                "cc90a7588d29413d",
+                "ea4c0b61d13bad65"
+            ]
+        ]
+    },
+    {
+        "id": "fea93495307d63f3",
+        "type": "comment",
+        "z": "c376bc72122fb9a2",
+        "name": "Loss of internet connectivity triggers countdown to reset ",
+        "info": "",
+        "x": 280,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "8d3f272a40031d15",
+        "type": "comment",
+        "z": "c376bc72122fb9a2",
+        "name": "LAN Connectivity prevents reset",
+        "info": "",
+        "x": 210,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "cdbc661df0f64861",
+        "type": "function",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "func": "\n\nvar msg1 = { topic: \"system/ipLan\", payload: msg.payload.internalIPv4 || \"false\" }\n\nmsg.topic = \"system/ipWan\";\nmsg.payload = msg.payload.publicIPv4 || \"false\" ;\n\n\nreturn [msg,msg1];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 80,
+        "wires": [
+            [
+                "ca1358f93e7b6dc8"
+            ],
+            [
+                "ca1358f93e7b6dc8"
+            ]
+        ]
+    },
+    {
+        "id": "ca1358f93e7b6dc8",
+        "type": "link out",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 685,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "0c4205ed9aee068c",
+        "type": "trigger",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "op1": "",
+        "op2": "1",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "90",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 830,
+        "y": 560,
+        "wires": [
+            [
+                "9abe6fd2.97b23",
+                "d41fd4714443ef23"
+            ]
+        ]
+    },
+    {
+        "id": "f35f2c270fa6bc6f",
+        "type": "link out",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 1295,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "d41fd4714443ef23",
+        "type": "trigger",
+        "z": "c376bc72122fb9a2",
+        "name": "",
+        "op1": "",
+        "op2": "1",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "3",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 830,
+        "y": 660,
+        "wires": [
+            [
+                "1f143b7f9354cff9",
+                "99bb7f82081d21dd"
+            ]
+        ]
+    },
+    {
+        "id": "99bb7f82081d21dd",
+        "type": "exec",
+        "z": "c376bc72122fb9a2",
+        "command": "sudo service networking restart",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1150,
+        "y": 660,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d72c7804b3a94dfe",
+        "type": "link in",
+        "z": "c376bc72122fb9a2",
+        "name": "link in 1",
+        "links": [
+            "1d8ef88d8c83d435"
+        ],
+        "x": 265,
+        "y": 620,
+        "wires": [
+            [
+                "a1c4cbe2b8ce9045"
+            ]
+        ]
+    },
+    {
+        "id": "a23b0b16b75dd81a",
+        "type": "debug",
+        "z": "c376bc72122fb9a2",
+        "name": "debug 28",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 760,
+        "wires": []
+    },
+    {
         "id": "3ccf6b40.057534",
         "type": "ui_text",
         "z": "d26c3be6.b5ef58",
@@ -27874,708 +29001,6 @@
         "wires": [
             [
                 "bfe7b40b9bc0ae5d"
-            ]
-        ]
-    },
-    {
-        "id": "3e283cd4.ba17d4",
-        "type": "comment",
-        "z": "c376bc72122fb9a2",
-        "name": "INTERNET CONNECTIN WATCHDOG",
-        "info": "",
-        "x": 230,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "9abe6fd2.97b23",
-        "type": "link out",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "mode": "link",
-        "links": [
-            "24ebaea5.b9caa2"
-        ],
-        "x": 1025,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "bb5d90aa9b8b8de4",
-        "type": "inject",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "60",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "60",
-        "topic": "",
-        "payloadType": "date",
-        "x": 230,
-        "y": 680,
-        "wires": [
-            [
-                "a1c4cbe2b8ce9045"
-            ]
-        ]
-    },
-    {
-        "id": "a1c4cbe2b8ce9045",
-        "type": "function",
-        "z": "c376bc72122fb9a2",
-        "name": "internet alarms",
-        "func": "var lastin = flow.get(\"lastInternet\") || 0;\n\nvar timin = new Date().getTime();\n\nvar age = (timin - lastin)/1000;\n\nmsg.topic = \"alarm/internet\";\nmsg.title = \"Internet connection\";\nif (age < 60) { msg.payload = \"ok\"; }\nelse { msg.payload = \"Warning, no internet\"; }\n\n\n// var msg2 = {};\n// msg2.topic = \"alarm/modemLTE\";\n// msg2.title = \"Modem LTE 4G connection\";\n// var online = flow.get(\"online\") || false;\n// if (msg.payload !== \"ok\") { msg2.payload = \"No modem response\";  }\n// else if (online==true) { msg2.payload = \"ok\"; }\n// else { msg2.payload = \"No LTE connection\"; }\n    \nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 420,
-        "y": 680,
-        "wires": [
-            [
-                "392d126135d185ae"
-            ]
-        ]
-    },
-    {
-        "id": "392d126135d185ae",
-        "type": "link out",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "links": [
-            "72fc070f.39dd8"
-        ],
-        "x": 555,
-        "y": 680,
-        "wires": []
-    },
-    {
-        "id": "3b81355f577c5ed0",
-        "type": "ip",
-        "z": "c376bc72122fb9a2",
-        "name": "ip",
-        "https": false,
-        "timeout": "5000",
-        "internalIPv4": true,
-        "internalIPv6": false,
-        "publicIPv4": true,
-        "publicIPv6": false,
-        "x": 330,
-        "y": 80,
-        "wires": [
-            [
-                "cdbc661df0f64861"
-            ]
-        ]
-    },
-    {
-        "id": "7c78ffbdf659f35e",
-        "type": "inject",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "30",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "10",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 160,
-        "y": 80,
-        "wires": [
-            [
-                "3b81355f577c5ed0"
-            ]
-        ]
-    },
-    {
-        "id": "7c19b43c9e35470c",
-        "type": "ping",
-        "z": "c376bc72122fb9a2",
-        "protocol": "Automatic",
-        "mode": "timed",
-        "name": "",
-        "host": "www.google.com",
-        "timer": "60",
-        "inputs": 0,
-        "x": 160,
-        "y": 280,
-        "wires": [
-            [
-                "e8a0adf8d3662d5a"
-            ]
-        ]
-    },
-    {
-        "id": "2b5da55513cf3da9",
-        "type": "debug",
-        "z": "c376bc72122fb9a2",
-        "name": "debug 24",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 620,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "e8a0adf8d3662d5a",
-        "type": "switch",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "gt",
-                "v": "0",
-                "vt": "num"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 2,
-        "x": 430,
-        "y": 320,
-        "wires": [
-            [
-                "2b5da55513cf3da9",
-                "2a7c2a3a1af9fe08",
-                "62db721746cacbda"
-            ],
-            [
-                "cbdb2531bff11977"
-            ]
-        ]
-    },
-    {
-        "id": "1f143b7f9354cff9",
-        "type": "trigger",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "op1": "",
-        "op2": "1",
-        "op1type": "nul",
-        "op2type": "str",
-        "duration": "15",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 840,
-        "y": 640,
-        "wires": [
-            [
-                "b7e344da84a4db3a",
-                "c727a7485e9d0f98"
-            ]
-        ]
-    },
-    {
-        "id": "b7e344da84a4db3a",
-        "type": "delay",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "15",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "outputs": 1,
-        "x": 1070,
-        "y": 620,
-        "wires": [
-            [
-                "5e084cb5a68b6a5a"
-            ]
-        ]
-    },
-    {
-        "id": "c727a7485e9d0f98",
-        "type": "function",
-        "z": "c376bc72122fb9a2",
-        "name": "rebootCountNoInternet",
-        "func": "msg.topic = \"set/rebootCountNoInternet\";\nmsg.title = \"No Internet Reboot Counter\";\n\nmsg.payload = global.get(\"settings.rebootCountNoInternet.value\") || 0;\n\nmsg.payload = parseInt(msg.payload) + 1;\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1117,
-        "y": 692,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "10ee4216045b7731",
-        "type": "link out",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "links": [
-            "72fc070f.39dd8"
-        ],
-        "x": 1305,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "5e084cb5a68b6a5a",
-        "type": "exec",
-        "z": "c376bc72122fb9a2",
-        "command": "sudo shutdown now",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "oldrc": false,
-        "name": "",
-        "x": 1290,
-        "y": 620,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "2a7c2a3a1af9fe08",
-        "type": "change",
-        "z": "c376bc72122fb9a2",
-        "name": "reset",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "1",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 610,
-        "y": 380,
-        "wires": [
-            [
-                "1f143b7f9354cff9",
-                "cbdb2531bff11977",
-                "ba45d07273865a3c",
-                "0c4205ed9aee068c"
-            ]
-        ]
-    },
-    {
-        "id": "cbdb2531bff11977",
-        "type": "trigger",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "op1": "",
-        "op2": "1",
-        "op1type": "nul",
-        "op2type": "str",
-        "duration": "3",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 845,
-        "y": 330,
-        "wires": [
-            [
-                "ba45d07273865a3c",
-                "c10c40ea6363c0f7",
-                "9856e52b00f498ce"
-            ]
-        ]
-    },
-    {
-        "id": "c10c40ea6363c0f7",
-        "type": "exec",
-        "z": "c376bc72122fb9a2",
-        "command": "sudo /sbin/ifdown 'wlan0'",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 1120,
-        "y": 400,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "ba45d07273865a3c",
-        "type": "delay",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 830,
-        "y": 480,
-        "wires": [
-            [
-                "784529a4899cd05a",
-                "0c4205ed9aee068c"
-            ]
-        ]
-    },
-    {
-        "id": "784529a4899cd05a",
-        "type": "exec",
-        "z": "c376bc72122fb9a2",
-        "command": "sudo /sbin/ifup --force 'wlan0'",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 1130,
-        "y": 480,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "9856e52b00f498ce",
-        "type": "function",
-        "z": "c376bc72122fb9a2",
-        "name": "resetWlanCount",
-        "func": "msg.topic = \"set/resetWlanCount\";\nmsg.title = \"No Internet Reset WLAN Counter\";\n\nmsg.payload = global.get(\"settings.resetWlanCount.value\") || 0;\n\nmsg.payload = parseInt(msg.payload) + 1;\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1090,
-        "y": 340,
-        "wires": [
-            [
-                "10ee4216045b7731",
-                "723dd3dd7f64f357"
-            ]
-        ]
-    },
-    {
-        "id": "3ef4452776398bf2",
-        "type": "function",
-        "z": "c376bc72122fb9a2",
-        "name": "pingInternetMs",
-        "func": "msg.topic = \"system/pingInternetMs\";\nmsg.title = \"Ping Internet Time\";\nmsg.units = \"ms\";\n\nflow.set(\"lastInternet\", new Date().getTime());\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 800,
-        "y": 240,
-        "wires": [
-            [
-                "1d8ef88d8c83d435",
-                "a9ab84422ff80e3e"
-            ]
-        ]
-    },
-    {
-        "id": "1d8ef88d8c83d435",
-        "type": "link out",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "links": [
-            "72fc070f.39dd8"
-        ],
-        "x": 935,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "723dd3dd7f64f357",
-        "type": "debug",
-        "z": "c376bc72122fb9a2",
-        "name": "debug 25",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1350,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "4b1e289eac95eb5f",
-        "type": "ping",
-        "z": "c376bc72122fb9a2",
-        "protocol": "Automatic",
-        "mode": "timed",
-        "name": "",
-        "host": "www.heatweb.co.uk",
-        "timer": "60",
-        "inputs": 0,
-        "x": 170,
-        "y": 340,
-        "wires": [
-            [
-                "e8a0adf8d3662d5a"
-            ]
-        ]
-    },
-    {
-        "id": "62db721746cacbda",
-        "type": "smooth",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "property": "payload",
-        "action": "min",
-        "count": "2",
-        "round": "",
-        "mult": "single",
-        "reduce": true,
-        "x": 620,
-        "y": 240,
-        "wires": [
-            [
-                "3ef4452776398bf2"
-            ]
-        ]
-    },
-    {
-        "id": "a9ab84422ff80e3e",
-        "type": "debug",
-        "z": "c376bc72122fb9a2",
-        "name": "debug 26",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 980,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "3ad66318e6ac6780",
-        "type": "ping",
-        "z": "c376bc72122fb9a2",
-        "protocol": "Automatic",
-        "mode": "timed",
-        "name": "",
-        "host": "192.168.0.1",
-        "timer": "60",
-        "inputs": 0,
-        "x": 150,
-        "y": 440,
-        "wires": [
-            [
-                "cc90a7588d29413d",
-                "ea4c0b61d13bad65"
-            ]
-        ]
-    },
-    {
-        "id": "cc90a7588d29413d",
-        "type": "switch",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "gt",
-                "v": "0",
-                "vt": "num"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 2,
-        "x": 430,
-        "y": 440,
-        "wires": [
-            [
-                "2a7c2a3a1af9fe08"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "ea4c0b61d13bad65",
-        "type": "debug",
-        "z": "c376bc72122fb9a2",
-        "name": "debug 27",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 400,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "6b0ead44e170ac28",
-        "type": "ping",
-        "z": "c376bc72122fb9a2",
-        "protocol": "Automatic",
-        "mode": "timed",
-        "name": "",
-        "host": "192.168.1.1",
-        "timer": "60",
-        "inputs": 0,
-        "x": 150,
-        "y": 500,
-        "wires": [
-            [
-                "cc90a7588d29413d",
-                "ea4c0b61d13bad65"
-            ]
-        ]
-    },
-    {
-        "id": "fea93495307d63f3",
-        "type": "comment",
-        "z": "c376bc72122fb9a2",
-        "name": "Loss of internet connectivity triggers countdown to reset ",
-        "info": "",
-        "x": 280,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "8d3f272a40031d15",
-        "type": "comment",
-        "z": "c376bc72122fb9a2",
-        "name": "LAN Connectivity prevents reset",
-        "info": "",
-        "x": 210,
-        "y": 400,
-        "wires": []
-    },
-    {
-        "id": "cdbc661df0f64861",
-        "type": "function",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "func": "\n\nvar msg1 = { topic: \"system/ipLan\", payload: msg.payload.internalIPv4 || \"false\" }\n\nmsg.topic = \"system/ipWan\";\nmsg.payload = msg.payload.publicIPv4 || \"false\" ;\n\n\nreturn [msg,msg1];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 520,
-        "y": 80,
-        "wires": [
-            [
-                "ca1358f93e7b6dc8"
-            ],
-            [
-                "ca1358f93e7b6dc8"
-            ]
-        ]
-    },
-    {
-        "id": "ca1358f93e7b6dc8",
-        "type": "link out",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "links": [
-            "72fc070f.39dd8"
-        ],
-        "x": 685,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "0c4205ed9aee068c",
-        "type": "trigger",
-        "z": "c376bc72122fb9a2",
-        "name": "",
-        "op1": "",
-        "op2": "1",
-        "op1type": "nul",
-        "op2type": "str",
-        "duration": "3",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 840,
-        "y": 560,
-        "wires": [
-            [
-                "9abe6fd2.97b23",
-                "1f143b7f9354cff9"
             ]
         ]
     },
@@ -39267,5 +39692,674 @@
                 "e857ae6f.a401"
             ]
         ]
+    },
+    {
+        "id": "8d2bdb3948eb93f1",
+        "type": "influxdb out",
+        "z": "bb7dc97af4d5079f",
+        "influxdb": "cb2f30e6e588172b",
+        "name": "",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "heatweb",
+        "bucket": "heatweb",
+        "x": 890,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "7f6ac3549ff079e0",
+        "type": "debug",
+        "z": "bb7dc97af4d5079f",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "5f624b8658ee8064",
+        "type": "link in",
+        "z": "bb7dc97af4d5079f",
+        "name": "link in 3",
+        "links": [
+            "a938c2e8f258a061",
+            "962b30a1333f36d6"
+        ],
+        "x": 165,
+        "y": 500,
+        "wires": [
+            [
+                "3db84835686957bb"
+            ]
+        ]
+    },
+    {
+        "id": "3db84835686957bb",
+        "type": "switch",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "settings/title",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 260,
+        "y": 500,
+        "wires": [
+            [
+                "bed984f8b547b2f2"
+            ]
+        ]
+    },
+    {
+        "id": "bed984f8b547b2f2",
+        "type": "function",
+        "z": "bb7dc97af4d5079f",
+        "name": "store titles",
+        "func": "flow.set(\"title.\"+msg.topic.split(\"/\")[2], msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a938c2e8f258a061",
+        "type": "link out",
+        "z": "bb7dc97af4d5079f",
+        "name": "link out 9",
+        "mode": "link",
+        "links": [
+            "07c0acabb2881b4c",
+            "5f624b8658ee8064"
+        ],
+        "x": 665,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d6bf4c8617db644b",
+        "type": "mqtt in",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "7ad2997b.42a908",
+        "nl": false,
+        "rap": false,
+        "inputs": 1,
+        "x": 540,
+        "y": 140,
+        "wires": [
+            [
+                "a938c2e8f258a061",
+                "c030bf29f8543fbb"
+            ]
+        ]
+    },
+    {
+        "id": "cfa318a298d52ac6",
+        "type": "function",
+        "z": "bb7dc97af4d5079f",
+        "name": "InfluxDB",
+        "func": "\nvar oot = {};\nvar tags = {};\nvar tops = msg.topic.split(\"/\");\n\n\n\n\nif (!tops[4]) { return null; }\n\nvar net = global.get(\"config.networkId\") || \"local\";\nnet = (tops[0] == \"local\" ? net : tops[0])\n\ntags.node = tops[1];\ntags.device = tops[2];\ntags.network = net;\ntags.vargroup = tops[3];\ntags.varkey = tops[4];\n\n//tags.title = flow.get(\"title.\" + tops[2]) || tops[2];\n\nvar msg1={};\nmsg1.topic = \"\"+msg.topic;\n\ntry {\n\n    \n\n    if (isNaN(msg.payload)) { msg1.payload = '' + msg.payload  }\n    else { msg1.payload = parseFloat(msg.payload); }\n    \n\n    oot[tops[3] + '_' + tops[4]] = msg1.payload;\n\n    msg1.measurement = net + '_' + tops[1] + '_' + tops[2];\n    msg1.payload = [oot, tags];\n\n    return msg1;\n\n\n\n\n} catch { return null; }\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 320,
+        "wires": [
+            [
+                "8d2bdb3948eb93f1",
+                "7f6ac3549ff079e0",
+                "0651f596ada12b3b"
+            ]
+        ]
+    },
+    {
+        "id": "761ec70754c423d0",
+        "type": "subflow:344fa160119932f8",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "x": 480,
+        "y": 280,
+        "wires": [
+            [
+                "cfa318a298d52ac6"
+            ]
+        ]
+    },
+    {
+        "id": "07c0acabb2881b4c",
+        "type": "link in",
+        "z": "bb7dc97af4d5079f",
+        "name": "link in 1",
+        "links": [
+            "190658415505c339",
+            "a938c2e8f258a061"
+        ],
+        "x": 165,
+        "y": 320,
+        "wires": [
+            [
+                "dcf4a957f4f99360",
+                "44ba45692c1c7871"
+            ]
+        ]
+    },
+    {
+        "id": "c030bf29f8543fbb",
+        "type": "debug",
+        "z": "bb7dc97af4d5079f",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "44ba45692c1c7871",
+        "type": "function",
+        "z": "bb7dc97af4d5079f",
+        "name": "Metrics List",
+        "func": "\n\n\nvar metrics = {};\n\nmetrics.timestamp = new Date().getTime();\nmetrics.topic = msg.topic;\nmetrics.payload = msg.payload;\n\nvar mname = msg.topic.replace(/\\//g,\"_\")\n\n\nflow.set(\"metrics.\" + mname, metrics);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dcf4a957f4f99360",
+        "type": "switch",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "/dat/",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "/stat/",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 300,
+        "y": 320,
+        "wires": [
+            [
+                "761ec70754c423d0"
+            ],
+            [
+                "761ec70754c423d0"
+            ],
+            [
+                "8c0c09d3adbc45cf"
+            ]
+        ]
+    },
+    {
+        "id": "0651f596ada12b3b",
+        "type": "influxdb out",
+        "z": "bb7dc97af4d5079f",
+        "influxdb": "064937e416bcf5e9",
+        "name": "",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "heatweb",
+        "bucket": "heatweb",
+        "x": 900,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "d6d2db6df8ec9045",
+        "type": "influxdb in",
+        "z": "bb7dc97af4d5079f",
+        "influxdb": "cb2f30e6e588172b",
+        "name": "",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "heatweb",
+        "x": 810,
+        "y": 500,
+        "wires": [
+            [
+                "69869fa964a7c97a",
+                "5cbb9ede4c3149f8"
+            ]
+        ]
+    },
+    {
+        "id": "6b152ce8a4c5e60f",
+        "type": "inject",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "props": [
+            {
+                "p": "query",
+                "v": "from(bucket: \"heatweb\")    |> range(start: -10y, stop: now())  |> filter(fn: (r) => r[\"_field\"] == \"settings_title\")   |> last()  |> yield(name: \"last\")",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 650,
+        "y": 500,
+        "wires": [
+            [
+                "d6d2db6df8ec9045"
+            ]
+        ]
+    },
+    {
+        "id": "69869fa964a7c97a",
+        "type": "debug",
+        "z": "bb7dc97af4d5079f",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "5cbb9ede4c3149f8",
+        "type": "function",
+        "z": "bb7dc97af4d5079f",
+        "name": "load titles",
+        "func": "\nfor (var mynode in msg.payload) {\n\n    flow.set(\"title.\" + msg.payload[mynode].node, msg.payload[mynode]._value);\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "950648c0c6e2895f",
+        "type": "inject",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 60,
+        "wires": [
+            [
+                "77f4c2e4fa6539d3"
+            ]
+        ]
+    },
+    {
+        "id": "77f4c2e4fa6539d3",
+        "type": "file in",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "filename": "/boot/heatweb/config.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 390,
+        "y": 60,
+        "wires": [
+            [
+                "70acc4676d8213df"
+            ]
+        ]
+    },
+    {
+        "id": "bbe372b762c9304c",
+        "type": "change",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "config",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "70acc4676d8213df",
+        "type": "json",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 590,
+        "y": 60,
+        "wires": [
+            [
+                "bbe372b762c9304c"
+            ]
+        ]
+    },
+    {
+        "id": "8c0c09d3adbc45cf",
+        "type": "subflow:3bcc1796d56e0e4a",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "x": 480,
+        "y": 340,
+        "wires": [
+            [
+                "cfa318a298d52ac6"
+            ]
+        ]
+    },
+    {
+        "id": "6f22ad63faf003fd",
+        "type": "inject",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 140,
+        "wires": [
+            [
+                "8918515ac59d33ab"
+            ]
+        ]
+    },
+    {
+        "id": "8918515ac59d33ab",
+        "type": "function",
+        "z": "bb7dc97af4d5079f",
+        "name": "subscriptions",
+        "func": "\nmsg.topic = [];\nvar topic = global.get(\"config.networkId\") + \"/#\";\nmsg.topic.push({\"topic\": topic, \"qos\":0});\n\nmsg.action=\"subscribe\"\nmsg.payload = null;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 140,
+        "wires": [
+            [
+                "d6bf4c8617db644b"
+            ]
+        ]
+    },
+    {
+        "id": "cfba670749e516ad",
+        "type": "http in",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "url": "/metrics",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 620,
+        "wires": [
+            [
+                "f0ca0f96f2cafdd7"
+            ]
+        ]
+    },
+    {
+        "id": "e6f6ddc9f3cefe6e",
+        "type": "http response",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 750,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "f0ca0f96f2cafdd7",
+        "type": "function",
+        "z": "bb7dc97af4d5079f",
+        "name": "Metrics",
+        "func": "\n//temperature{ node = \"mynode\", topic = \"zigbee2mqtt_0x00157d00032b1234\" } { { payload } }\n\nvar metrics = flow.get(\"metrics\")||{};\n//flow.set(\"metrics\",{});\n\nvar net = global.get(\"config.networkId\") || \"local\";\n\nvar oot = \"\";\n//oot = 'stat_state {network=\"local\", node=\"mynodered1\", device=\"prometheus\", vargroup=\"stat\", varkey=\"state\"} 1\\n';\n\nfor (var m in metrics) {\n\n    if (isNaN(metrics[m].payload)) { continue; }\n    \n    var tops = metrics[m].topic.split(\"/\");\n\n    //if (tops[3] != \"dat\") { continue; }    \n\n    oot += tops[3] + '_' + tops[4] + '{network=\"' + net + '\",node=\"' + tops[1] + '\",device=\"' + tops[2] + '\",vargroup=\"' + tops[3] + '\",varkey=\"' + tops[4] + '\"} ' + metrics[m].payload + \"\\n\";\n\n}\n\n\nmsg.payload = oot;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 620,
+        "wires": [
+            [
+                "e6f6ddc9f3cefe6e",
+                "117ad9adb3cb2895"
+            ]
+        ]
+    },
+    {
+        "id": "117ad9adb3cb2895",
+        "type": "debug",
+        "z": "bb7dc97af4d5079f",
+        "name": "debug 16",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "f9b829673ede18e6",
+        "type": "http in",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "url": "/metrics/:vargroup",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 240,
+        "y": 680,
+        "wires": [
+            [
+                "67cbed5866f31055"
+            ]
+        ]
+    },
+    {
+        "id": "67cbed5866f31055",
+        "type": "function",
+        "z": "bb7dc97af4d5079f",
+        "name": "Metrics",
+        "func": "\nvar metrics = flow.get(\"metrics\")||{};\n\n\nvar net = global.get(\"config.networkId\") || \"local\";\n\nvar oot = \"\";\n//oot = 'stat_state {network=\"local\", node=\"mynodered1\", device=\"prometheus\", vargroup=\"stat\", varkey=\"state\"} 1\\n';\n\nfor (var m in metrics) {\n\n    var tops = metrics[m].topic.split(\"/\");\n    \n    if (isNaN(metrics[m].payload)) { continue; }\n    if (tops[3] != msg.req.params.vargroup) { continue; }    \n\n    \n    oot += tops[3] + '_' + tops[4] + '{network=\"' + net + '\",node=\"' + tops[1] + '\",device=\"' + tops[2] + '\",vargroup=\"' + tops[3] + '\",varkey=\"' + tops[4] + '\"} ' + metrics[m].payload + \"\\n\";\n\n}\n\n\nmsg.payload = oot;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 680,
+        "wires": [
+            [
+                "e6f6ddc9f3cefe6e",
+                "117ad9adb3cb2895"
+            ]
+        ]
+    },
+    {
+        "id": "98e511d6ef6eb614",
+        "type": "http in",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "url": "/readings/:vargroup",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 250,
+        "y": 800,
+        "wires": [
+            [
+                "fe1a7a311b04e80c"
+            ]
+        ]
+    },
+    {
+        "id": "fe1a7a311b04e80c",
+        "type": "function",
+        "z": "bb7dc97af4d5079f",
+        "name": "Metrics",
+        "func": "\nvar metrics = flow.get(\"metrics\")||{};\n\n\nvar net = global.get(\"config.networkId\") || \"local\";\n\nvar oot = {readings:[]};\n//oot = 'stat_state {network=\"local\", node=\"mynodered1\", device=\"prometheus\", vargroup=\"stat\", varkey=\"state\"} 1\\n';\n\nfor (var m in metrics) {\n\n    var tops = metrics[m].topic.split(\"/\");\n    \n    if (!isNaN(metrics[m].payload)) { metrics[m].payload = parseFloat(metrics[m].payload); }\n    if (msg.req.params.vargroup && tops[3] != msg.req.params.vargroup) { continue; }    \n\n    var tline = {};\n    tline.value = metrics[m].payload;\n    tline.timestamp = metrics[m].timestamp;\n    tline.network = net;\n    tline.node = tops[1];\n    tline.device = tops[2];\n    tline.vargroup = tops[3];\n    tline.varkey = tops[4];\n\n    oot.readings.push(tline);\n    \n    //oot += tops[3] + '_' + tops[4] + '{network=\"' + net + '\",node=\"' + tops[1] + '\",device=\"' + tops[2] + '\",vargroup=\"' + tops[3] + '\",varkey=\"' + tops[4] + '\"} ' + metrics[m].payload + \"\\n\";\n\n}\n\n\nmsg.payload = oot;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 740,
+        "wires": [
+            [
+                "3678b4ae51a6c3ee"
+            ]
+        ]
+    },
+    {
+        "id": "986db4a1afd02673",
+        "type": "http in",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "url": "/readings",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 740,
+        "wires": [
+            [
+                "fe1a7a311b04e80c"
+            ]
+        ]
+    },
+    {
+        "id": "3678b4ae51a6c3ee",
+        "type": "http response",
+        "z": "bb7dc97af4d5079f",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 750,
+        "y": 740,
+        "wires": []
     }
 ]
