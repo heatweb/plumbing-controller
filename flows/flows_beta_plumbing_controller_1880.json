@@ -612,15 +612,6 @@
         "hidden": false
     },
     {
-        "id": "55240225.da318c",
-        "type": "ui_tab",
-        "name": "More",
-        "icon": "dashboard",
-        "order": 17,
-        "disabled": false,
-        "hidden": false
-    },
-    {
         "id": "36b47e47.04f1c2",
         "type": "ui_group",
         "name": "Buttons",
@@ -629,24 +620,6 @@
         "disp": false,
         "width": "3",
         "collapse": false
-    },
-    {
-        "id": "82ab3134.d3b4f",
-        "type": "ui_tab",
-        "name": "MQTT Network",
-        "icon": "fa-cog",
-        "order": 25,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "31d8777.fd68588",
-        "type": "ui_tab",
-        "name": "HIU Data",
-        "icon": "fa-bath",
-        "order": 5,
-        "disabled": false,
-        "hidden": false
     },
     {
         "id": "c982fbb8.1deb38",
@@ -686,15 +659,6 @@
         "width": "12",
         "collapse": false,
         "className": ""
-    },
-    {
-        "id": "a28ff08f.3a822",
-        "type": "ui_tab",
-        "name": "SVG",
-        "icon": "dashboard",
-        "order": 19,
-        "disabled": false,
-        "hidden": false
     },
     {
         "id": "c8185974.465238",
@@ -769,76 +733,6 @@
         "className": ""
     },
     {
-        "id": "7bf4aae7.4ecf34",
-        "type": "ui_tab",
-        "name": "Inputs",
-        "icon": "dashboard",
-        "order": 22,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "f32de2e7.2e4bb",
-        "type": "ui_tab",
-        "name": "IO Setup",
-        "icon": "fa-cog",
-        "order": 24,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "12ba52b2.c0ce3d",
-        "type": "ui_tab",
-        "name": "Video",
-        "icon": "fa-video-camera",
-        "order": 8,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "4bc72fe7.4e718",
-        "type": "ui_tab",
-        "name": "Pumps",
-        "icon": "fa-play-circle",
-        "order": 6,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "93e19e4f.b80ed",
-        "type": "ui_tab",
-        "name": "SVG",
-        "icon": "dashboard",
-        "order": 26,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "95801a22.bd5f18",
-        "type": "ui_tab",
-        "name": "SVG",
-        "icon": "dashboard",
-        "order": 27,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "f31f7b99.d7a6e8",
-        "type": "ui_tab",
-        "name": "Modbus",
-        "icon": "dashboard",
-        "order": 28
-    },
-    {
-        "id": "66cec8f95229db4a",
-        "type": "ui_tab",
-        "name": "MQTT Connect",
-        "icon": "dashboard",
-        "order": 29,
-        "disabled": false,
-        "hidden": false
-    },
-    {
         "id": "4d0f060d.dee7e8",
         "type": "ui_group",
         "name": "Update",
@@ -888,13 +782,6 @@
         "hidden": false
     },
     {
-        "id": "16de0243.87ddfe",
-        "type": "ui_tab",
-        "name": "M-Bus",
-        "icon": "plug",
-        "order": 3
-    },
-    {
         "id": "4b943d8a3af36042",
         "type": "mqtt-broker",
         "name": "",
@@ -930,39 +817,6 @@
         "width": "4",
         "collapse": false,
         "className": ""
-    },
-    {
-        "id": "638b0699.8b44f8",
-        "type": "ui_tab",
-        "name": "Home",
-        "icon": "dashboard",
-        "order": 1,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "3e483ad9b8798814",
-        "type": "ui_tab",
-        "name": "Heatmap",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "4e49ccae.5e3364",
-        "type": "ui_tab",
-        "name": "Heatmap",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "4779176.99cd2e8",
-        "type": "ui_tab",
-        "name": "Home",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
     },
     {
         "id": "dd19c0de.9bebd",
@@ -11098,7 +10952,7 @@
         "z": "f0a27113.452c7",
         "name": "onTab",
         "events": "all",
-        "x": 110,
+        "x": 130,
         "y": 80,
         "wires": [
             [
