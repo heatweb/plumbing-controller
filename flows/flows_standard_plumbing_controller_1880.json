@@ -4129,8 +4129,8 @@
         "nodeConfig": "550ec543.b55bc4",
         "proxy1Name": "",
         "proxy1Address": "",
-        "x": 910,
-        "y": 160,
+        "x": 1010,
+        "y": 180,
         "wires": [
             [
                 "e2a5359d.ef1ea"
@@ -4146,12 +4146,11 @@
         "nodeConfig": "550ec543.b55bc4",
         "timeout": "720",
         "remotePassword": "letmein",
-        "x": 910,
-        "y": 60,
+        "x": 1010,
+        "y": 120,
         "wires": [
             [
-                "e2a5359d.ef1ea",
-                "89ecbd8f.a8aed"
+                "e2a5359d.ef1ea"
             ]
         ]
     },
@@ -4166,19 +4165,19 @@
         "defaultPoints": "10",
         "deadband": "",
         "storeHistoricEx": "",
-        "x": 490,
-        "y": 340,
+        "x": 370,
+        "y": 180,
         "wires": [
             [
-                "94b9e1d9.4a7a6",
-                "ebec191eb32eee17",
                 "8b488cbb14b093cb",
-                "5794e74d.4504f8"
+                "5794e74d.4504f8",
+                "de5cbb28.0bca7"
             ],
             [
                 "f7abd73e.da268",
                 "16d3ed6.1101e13",
-                "6ed780fa.52d71"
+                "6ed780fa.52d71",
+                "5794e74d.4504f8"
             ]
         ]
     },
@@ -4227,8 +4226,8 @@
             "110e496a3bb255d1",
             "1dab6e911927df71"
         ],
-        "x": 315,
-        "y": 340,
+        "x": 205,
+        "y": 180,
         "wires": [
             [
                 "6db74d6.e025e34"
@@ -4243,26 +4242,8 @@
         "links": [
             "72fc070f.39dd8"
         ],
-        "x": 1095,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "602219a.4904268",
-        "type": "mqtt out",
-        "z": "580bb6a3.5dc1d",
-        "name": "Retain",
-        "topic": "",
-        "qos": "0",
-        "retain": "true",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "7ad2997b.42a908",
-        "x": 1130,
-        "y": 460,
+        "x": 1195,
+        "y": 160,
         "wires": []
     },
     {
@@ -4279,49 +4260,9 @@
         "correl": "",
         "expiry": "",
         "broker": "7ad2997b.42a908",
-        "x": 1140,
-        "y": 360,
+        "x": 620,
+        "y": 180,
         "wires": []
-    },
-    {
-        "id": "de5cbb28.0bca7",
-        "type": "switch",
-        "z": "580bb6a3.5dc1d",
-        "name": "",
-        "property": "topic",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "cont",
-                "v": "/cmd/",
-                "vt": "str"
-            },
-            {
-                "t": "cont",
-                "v": "/set/",
-                "vt": "str"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 3,
-        "x": 890,
-        "y": 400,
-        "wires": [
-            [
-                "5794e74d.4504f8"
-            ],
-            [
-                "5794e74d.4504f8"
-            ],
-            [
-                "602219a.4904268",
-                "311e9db6.ba1b82"
-            ]
-        ]
     },
     {
         "id": "f7abd73e.da268",
@@ -4358,8 +4299,8 @@
         "checkall": "false",
         "repair": false,
         "outputs": 5,
-        "x": 730,
-        "y": 580,
+        "x": 610,
+        "y": 320,
         "wires": [
             [],
             [],
@@ -4381,8 +4322,8 @@
         "links": [
             "fbed7ee4.d7e658"
         ],
-        "x": 875,
-        "y": 660,
+        "x": 735,
+        "y": 360,
         "wires": []
     },
     {
@@ -4394,7 +4335,7 @@
             "72fc070f.39dd8"
         ],
         "x": 455,
-        "y": 820,
+        "y": 480,
         "wires": []
     },
     {
@@ -4419,7 +4360,7 @@
         "payload": "local/+/+/+/net_1_ip4",
         "payloadType": "str",
         "x": 220,
-        "y": 900,
+        "y": 560,
         "wires": [
             [
                 "32f9b18e.982aee"
@@ -4439,8 +4380,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 750,
-        "y": 520,
+        "x": 630,
+        "y": 260,
         "wires": []
     },
     {
@@ -4465,7 +4406,7 @@
         "payload": "local/+/+/+/net_2_ip4",
         "payloadType": "str",
         "x": 220,
-        "y": 940,
+        "y": 600,
         "wires": [
             [
                 "32f9b18e.982aee"
@@ -4494,7 +4435,7 @@
         "payload": "local/+/+/+/mem_total",
         "payloadType": "str",
         "x": 220,
-        "y": 980,
+        "y": 640,
         "wires": [
             [
                 "32f9b18e.982aee"
@@ -4523,7 +4464,7 @@
         "payload": "local/+/+/+/mem_free",
         "payloadType": "str",
         "x": 220,
-        "y": 1020,
+        "y": 680,
         "wires": [
             [
                 "32f9b18e.982aee"
@@ -4547,8 +4488,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 700,
-        "y": 760,
+        "x": 640,
+        "y": 420,
         "wires": [
             [
                 "69cac137.62091"
@@ -4568,8 +4509,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 750,
-        "y": 840,
+        "x": 810,
+        "y": 420,
         "wires": []
     },
     {
@@ -4595,7 +4536,7 @@
         "payload": "local/+/+/dat/#",
         "payloadType": "str",
         "x": 240,
-        "y": 660,
+        "y": 320,
         "wires": [
             [
                 "32f9b18e.982aee"
@@ -4624,7 +4565,7 @@
         "payload": "local/+/+/+/fs_0_use",
         "payloadType": "str",
         "x": 220,
-        "y": 1060,
+        "y": 720,
         "wires": [
             [
                 "32f9b18e.982aee"
@@ -4653,7 +4594,7 @@
         "payload": "local/+/+/system/#",
         "payloadType": "str",
         "x": 230,
-        "y": 700,
+        "y": 360,
         "wires": [
             [
                 "32f9b18e.982aee"
@@ -4682,7 +4623,7 @@
         "payload": "local/+/+/+/upTime",
         "payloadType": "str",
         "x": 220,
-        "y": 780,
+        "y": 440,
         "wires": [
             [
                 "32f9b18e.982aee"
@@ -4711,7 +4652,7 @@
         "payload": "local/+/+/+/upTimeH",
         "payloadType": "str",
         "x": 220,
-        "y": 820,
+        "y": 480,
         "wires": [
             [
                 "32f9b18e.982aee"
@@ -4740,7 +4681,7 @@
         "payload": "local/+/+/+/os_hostname",
         "payloadType": "str",
         "x": 250,
-        "y": 860,
+        "y": 520,
         "wires": [
             [
                 "32f9b18e.982aee"
@@ -4770,7 +4711,7 @@
         "payload": "local/+/+/settings/#",
         "payloadType": "str",
         "x": 220,
-        "y": 740,
+        "y": 400,
         "wires": [
             [
                 "32f9b18e.982aee"
@@ -4785,8 +4726,8 @@
         "links": [
             "66c2e225.64a90c"
         ],
-        "x": 1095,
-        "y": 520,
+        "x": 735,
+        "y": 140,
         "wires": []
     },
     {
@@ -4811,35 +4752,10 @@
         "payload": "local/+/+/cpu/#",
         "payloadType": "str",
         "x": 240,
-        "y": 1140,
+        "y": 800,
         "wires": [
             [
                 "32f9b18e.982aee"
-            ]
-        ]
-    },
-    {
-        "id": "94b9e1d9.4a7a6",
-        "type": "switch",
-        "z": "580bb6a3.5dc1d",
-        "name": "set",
-        "property": "topic",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "cont",
-                "v": "/set/",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 770,
-        "y": 300,
-        "wires": [
-            [
-                "2dde7725.9f7118"
             ]
         ]
     },
@@ -4851,8 +4767,8 @@
         "links": [
             "254c663c.1890fa"
         ],
-        "x": 895,
-        "y": 300,
+        "x": 735,
+        "y": 100,
         "wires": []
     },
     {
@@ -4872,8 +4788,8 @@
         "topic": "",
         "payload": "{\"admin\":{\"networks\":[{\"networkId\":\"local\",\"server\":\"192.168.0.250\",\"port\":8080,\"secure\":false,\"user\":\"admin\",\"password\":\"12345678\"}]},\"guest\":{\"networks\":[{\"networkId\":\"local\",\"server\":\"192.168.0.250\",\"port\":8080,\"secure\":false,\"user\":\"guest\",\"password\":\"guest\"}]}}",
         "payloadType": "json",
-        "x": 160,
-        "y": 420,
+        "x": 1000,
+        "y": 60,
         "wires": [
             [
                 "94ba0d3d.e77e1"
@@ -4899,217 +4815,10 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 320,
-        "y": 420,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "89ecbd8f.a8aed",
-        "type": "debug",
-        "z": "580bb6a3.5dc1d",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1230,
+        "x": 1160,
         "y": 60,
-        "wires": []
-    },
-    {
-        "id": "5679869b.3f7e98",
-        "type": "inject",
-        "z": "580bb6a3.5dc1d",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"title\":\"Sheets\",\"body\":\"\"}",
-        "payloadType": "json",
-        "x": 290,
-        "y": 1200,
-        "wires": [
-            [
-                "f2b8df74.df24a"
-            ]
-        ]
-    },
-    {
-        "id": "f2b8df74.df24a",
-        "type": "template",
-        "z": "580bb6a3.5dc1d",
-        "name": "editor",
-        "field": "payload.body",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "\n<script src=\"https://bossanova.uk/jspreadsheet/v4/jexcel.js\"></script>\n<link rel=\"stylesheet\" href=\"https://bossanova.uk/jspreadsheet/v4/jexcel.css\" type=\"text/css\" />\n \n<script src=\"https://jsuites.net/v4/jsuites.js\"></script>\n<link rel=\"stylesheet\" href=\"https://jsuites.net/v4/jsuites.css\" type=\"text/css\" />\n\n<link rel=\"stylesheet\" type=\"text/css\" href=\"https://fonts.googleapis.com/css?family=Material+Icons\" />\n\n\n<style>\n    /*.jexcel_content {*/\n    /*    font-size: 15px;*/\n    /*}*/\n    \n    .jexcel {\n        white-space: normal;\n    }\n</style>\n\n\n<section>\n<div id=\"mytit\" name=\"mytit\"><h1>Sheets</h1></div>\n<br>\n\n<div id=\"metasec\">        \n<div id=\"spreadsheetmeta\"></div>\n<br><br> \n</div>\n\n<div id=\"spreadsheet\"></div>\n \n\n<br><br>\n\n\n\n<script>\n\n function camelize(str) {\n      return str.replace(/(?:^\\w|[A-Z]|\\b\\w)/g, function(word, index) {\n        return index === 0 ? word.toLowerCase() : word.toUpperCase();\n      }).replace(/\\s+/g, '');\n    }\n    \n    function but() {\n        \n        \n        console.log(myspreadsheet.getJson());\n        console.log(myspreadsheet.getConfig());\n        \n        var mydata = myspreadsheet.getJson();\n        var myconfig = myspreadsheet.getConfig();\n        \n        \n        \n        var urlParams = new URLSearchParams(window.location.search);\n\n        var saveas = urlParams.get('sheet') || \"\"; \n        if (saveas==\"null\") { saveas=\"\"; }\n            \n        if (docType.value == \"array\") {\n            \n            var nn = prompt(\"Fileame\", urlParams.get('json'));\n            if(nn.indexOf(\" \")>-1) { nn = camelize(nn); }\n            if(nn==null) { return null; }\n            if(nn.indexOf(\".json\")<1) { nn += \".json\"; }\n            if(nn.indexOf(\"/files/json/\")<0) { nn = \"/files/json/\" + nn; }\n            var msg = [];\n            \n            for(var ar in mydata) {\n                \n                msg.push(mydata[ar][0]); \n            }\n            \n            \n            \n            $(\"#svgtext\").val(JSON.stringify(msg));\n            $(\"#svgfile\").val(nn ); \n            \n        } else if (docType.value == \"object\") {\n            \n            var nn = prompt(\"Fileame\", urlParams.get('json'));\n            if(nn==null) { return null; }\n            if(nn.indexOf(\" \")>-1) { nn = camelize(nn); }\n            if(nn.indexOf(\".json\")<1) { nn += \".json\"; }\n            if(nn.indexOf(\"/files/json/\")<0) { nn = \"/files/json/\" + nn; }\n            \n            var msg = mydata;\n            \n            $(\"#svgtext\").val(JSON.stringify(msg));\n            $(\"#svgfile\").val(nn); \n            \n        } else {\n            \n            var nn = prompt(\"Sheet Name\", saveas);\n            if(nn==null||nn==\"\"||nn==\"null\") { return null; }\n            if(nn.indexOf(\" \")>-1) { nn = camelize(nn); }\n            \n            var msg = {\"data\":mydata,\"config\":myconfig};\n        \n            var mymeta = myspreadsheetmeta.getJson();\n            for (var mtd in mymeta) {\n                if (mymeta[mtd].key!== \"data\" && mymeta[mtd].key!== \"config\") {\n                    var nk = mymeta[mtd].key;\n                    if(nk.indexOf(\" \")>-1) { nk = camelize(nk); }\n                    msg[nk] = mymeta[mtd].value;\n                }\n            }\n            if (!msg.created && !msg.updated) { msg.created = (new Date().toLocaleString()); }\n            else  { msg.updated = (new Date().toLocaleString()); }\n            \n            \n            // remove imported options from url dropdowns  -- why is this working its after the msg \n            for (var cc in myconfig.columns) {\n                if (myconfig.columns[cc].url && myconfig.columns[cc].source) {\n                    myconfig.columns[cc].source = [];\n                }\n            }\n            \n            \n            // html table\n            var n = myspreadsheet.getColumnData(0).length;\n            //alert(n);\n            var htmlout=\"<table>\";\n            var calculated = [];\n            \n            htmlout += \"<thead>\";\n            for (var cc in myspreadsheet.getRowData(0)) {\n                htmlout += \"<th>\";\n                //var rc = String.fromCharCode(parseInt(cc)+65) + (parseInt(rr)+1);\n                //alert(rc);\n                htmlout += myspreadsheet.getHeader(parseInt(cc));\n                htmlout += \"</th>\";\n            }\n            \n            htmlout += \"</thead>\";\n            \n            for (var rr in myspreadsheet.getColumnData(0)) {\n                \n                vdat={}; \n                htmlout += \"<tr>\";\n                for (var cc in myspreadsheet.getRowData(0)) {\n                    htmlout += \"<td>\";\n                    var rc = String.fromCharCode(parseInt(cc)+65) + (parseInt(rr)+1);\n                    //alert(rc);\n                    htmlout += myspreadsheet.getLabel(rc);\n                    htmlout += \"</td>\";\n                    \n                     // myconfig.columns[cc].name;\n                    if (myspreadsheet.getValue(rc) && isNaN(myspreadsheet.getValue(rc)) && myspreadsheet.getValue(rc).indexOf(\"=\")===0) { vdat[myconfig.columns[cc].name] = myspreadsheet.getLabel(rc); }\n                }\n                htmlout += \"</tr>\";\n                calculated.push(vdat);\n            }\n            htmlout += \"</table>\";\n            //alert(htmlout);\n            \n            msg.html = htmlout;\n            msg.calculated= calculated;\n            \n            //save\n            $(\"#svgtext\").val(JSON.stringify(msg));\n            $(\"#svgfile\").val(\"/files/json/sheet_\" + nn + \".json\");  //  + (new Date().getTime()) +\n    \n        }\n        \n        \n        \n        \n        $(\"#nextform\").submit(); \n        \n        // post full json\n        var mqttmsg = {};\n        mqttmsg.topic = document.getElementById(\"svgfile\").value;\n        \n        if (metadata[\"network\"].indexOf(\" \")>0) { alert(\"Network names cannot contain spaces. \"); }\n        else if (metadata[\"device\"].indexOf(\" \")>0) { alert(\"Device names cannot contain spaces. \"); }\n        else if (mqttmsg.topic.indexOf(\"/files/json/\")===0) {\n        \n            mqttmsg.topic = \"json/\" + mqttmsg.topic.replace(\"/files/json/\",\"\").replace(\".json\",\"\").replace(\"/\",\"_\");\n            \n            if(metadata[\"device\"] && metadata[\"network\"]) { mqttmsg.topic = metadata[\"network\"] + \"/\" + (metadata[\"author\"]||\"spreadsheet\").replace(/ /g,\"_\") + \"/\" + metadata[\"device\"] + \"/\" + mqttmsg.topic; }\n            else if(metadata[\"device\"]) { mqttmsg.topic = metadata[\"device\"] + \"/\" + mqttmsg.topic; }\n            else if(metadata[\"network\"]) { mqttmsg.topic = metadata[\"network\"] + \"/\" + (metadata[\"author\"]||\"spreadsheet\").replace(/ /g,\"_\") + \"/network/\" + mqttmsg.topic; }\n            \n            mqttmsg.payload =  document.getElementById(\"svgtext\").value;\n            \n            $.ajax({\n                url: \"/api/msg\", \n                type: \"POST\",      \n                data: mqttmsg,     \n                cache: false,\n                success: function(returnhtml){   \n                    \n                    alert(\"JSON posted successfully to \" + mqttmsg.topic); \n                         \n                },\n                error: function(XMLHttpRequest, textStatus, errorThrown) { \n                    \n                    alert(\"Failed to post JSON.\");\n                }            \n            }); \n        }       \n        \n            \n        \n    }\n    function fullscreen(mode) {\n    \n        myspreadsheet.fullscreen(mode);\n        \n    }\n    \n    function getmeta(txt) {\n        \n        var txtout = \"\" + txt;\n        \n        txtout = txtout.replace(\"{\"+\"{json}\"+\"}\", myfilename);    \n        \n        var metat = \"\";\n        for (var mt in metadata) {\n            //if (key!== \"data\" && key!== \"config\" && key!== \"sheet\" && key!== \"json\") { }\n            txtout = txtout.replace(\"{\"+\"{meta.\"+mt+\"}\"+\"}\", metadata[mt]);\n            txtout = txtout.replace(\"{\"+\"{\"+mt+\"}\"+\"}\", metadata[mt]);\n            if (mt!== \"next\" && mt!== \"created\"  && mt!== \"updated\" && metadata[mt]) { \n                 metat = metat + (metat==\"\"?\"\":\"&\") + mt + \"=\" + metadata[mt];\n            }\n        }\n        txtout = txtout.replace(\"{\"+\"{meta}\"+\"}\", metat);    \n        txtout = txtout.replace(\"{\"+\"{metadata}\"+\"}\", metat);    \n        \n        metat=\"\";\n        \n        //if (selectedColumnName == \"selection\") { selectionData = myspreadsheet.getJson()[selectedRow];  console.log(selectionData);   }\n        var temp = myspreadsheet.getJson();\n        for (var v in temp) {\n            if(temp[v].selection) { selectionData = temp[v];  break;}\n        }\n        \n        \n        for (var mt in selectionData) {\n            txtout = txtout.replace(\"{\"+\"{selection.\"+mt+\"}\"+\"}\", selectionData[mt]); \n            if (mt!== \"selection\" && selectionData[mt]) { \n                 metat = metat + (metat==\"\"?\"\":\"&\") + mt + \"=\" + selectionData[mt];\n            }\n        }\n        txtout = txtout.replace(\"{\"+\"{selection}\"+\"}\", metat);   \n        \n        \n        return txtout;\n    }\n    \n    \n    function run() {\n        \n      \n            // document.getElementById(\"results1\").location  = metadata.run.replace(\"{\"+\"{json}\"+\"}\", myfilename);\n            \n            var url = getmeta(metadata.run); \n            \n            window.open(url)  ;\n                \n          \n        \n    }\n    \n    \n    function next() {\n        \n      \n            // document.getElementById(\"results1\").location  = metadata.run.replace(\"{\"+\"{json}\"+\"}\", myfilename);\n                \n            //window.location.href = (metadata.next.replace(\"{\"+\"{json}\"+\"}\", myfilename))  ;\n            \n            var url = getmeta(metadata.next); \n            window.location.href = url  ;\n        \n    }\n    \n    \n    function postmqtt() {\n        \n        \n        var mydata = myspreadsheet.getJson();\n        \n        var successful = 0;\n        \n        if (1==1) {\n        \n            for(var lne in mydata) {\n                \n                if (!mydata[lne].key) { continue; }\n                //if (!mydata[lne].device) { continue; }\n                if (!mydata[lne].value===null) { continue; }\n                \n                var mqttmsg = {};\n                mqttmsg.topic = \"\"\n                if (mydata[lne].network) { mqttmsg.topic = mydata[lne].network  + \"/\" +  (sheetname||\"sheet\") +  \"/\" ; }\n                else if (metadata.network) { mqttmsg.topic = metadata.network  + \"/\" +  (sheetname||\"sheet\") +  \"/\" ; }\n                \n                \n                \n                if (mydata[lne].device) {  mqttmsg.topic += mydata[lne].device + \"/\"; }\n                else if (metadata.device) {  mqttmsg.topic += metadata.device + \"/\"; }\n                else if (mqttmsg.topic !== \"\") { continue; }\n                \n                mqttmsg.topic +=   (mydata[lne].group || metadata.group || \"stat\") + \"/\" +  mydata[lne].key;\n                mqttmsg.payload = mydata[lne].value;\n                if (mydata[lne].title) { mqttmsg.title = mydata[lne].title; }\n                if (mydata[lne].units) { mqttmsg.units = mydata[lne].units; }\n                if (mydata[lne].attributes) { mqttmsg.attributes = mydata[lne].attributes; }\n                \n                console.log(mqttmsg);\n                \n                  // erm not really need to delay and wait for responses\n                \n                \n                $.ajax({\n                    url: \"/api/msg\", \n                    type: \"POST\",      \n                    data: mqttmsg,     \n                    cache: false,\n                    success: function(returnhtml){   \n                        \n                        console.log(returnhtml);\n                        successful++;\n                        clearTimeout(suc);\n                        suc = setTimeout(function(){ alert(successful + \" messages sent.\"); }, 1000);\n                             \n                    },\n                    error: function(XMLHttpRequest, textStatus, errorThrown) { \n                        \n                        \n                    }            \n                }); \n                \n                \n                \n                \n                \n                \n            }\n        }\n        \n        \n        \n    }\n    \n    \n    \n</script>  \n\n<select style=\"display:none\" id=\"docType\" name=\"docType\"><option selected value=\"sheet\">Spreadsheet</option><option value=\"object\">Object Array</option><option value=\"array\">Basic Array</option></select>\n\n<span style=\"display:none\"  id=\"runsec\">\n<input type=\"button\" onClick=\"run()\" value=\"Run\">     \n</span>\n\n\n<span style=\"display:none\"  id=\"nextsec\">\n<input type=\"button\" onClick=\"next()\" value=\"Next\">     \n</span>\n\n<span id=\"savesec\">   \n    \n    <input type=\"button\" onClick=\"postmqtt()\" value=\"Post\">    \n    \n    <input type=\"button\" onClick=\"but()\" value=\"Save\"> \n    \n</span>     \n<span id=\"editsec\">\n \n    \n    <span id=\"columnsec\">\n        &nbsp;&nbsp;&nbsp; Add Column: \n         \n        {{!--<input type=\"button\" onClick=\"fullscreen(true)\" value=\"Full Screen\">--}}\n        \n        <input type=\"button\" onClick=\"addCol('text')\" value=\"Text\">\n        <input type=\"button\" onClick=\"addCol('html')\" value=\"HTML\">\n        <input type=\"button\" onClick=\"addCol('number')\" value=\"Number\">\n        <input type=\"button\" onClick=\"addCol('currency')\" value=\"Currency\">\n        <input type=\"button\" onClick=\"addCol('check')\" value=\"Check\">\n        <input type=\"button\" onClick=\"addCol('radio')\" value=\"Radio\">\n        <input type=\"button\" onClick=\"addCol('select')\" value=\"Dropdown\">\n        <input type=\"button\" onClick=\"addCol('image')\" value=\"Image\">\n        \n        {{!--<input type=\"button\" onClick=\"addCol('colour')\" value=\"Colour\">--}}\n        {{!--<input type=\"button\" onClick=\"myspreadsheet.insertColumn(1,,0,{type: 'checkbox',title:'Enabled',width:80})\" value=\"Add Check\">--}}\n        \n        \n        &nbsp;&nbsp;&nbsp;\n        <input type=\"button\" onClick=\"addOption()\" value=\"Add Option\">\n        <input type=\"button\" onClick=\"moveColumn(-1)\" value=\"<\">\n        <input type=\"button\" onClick=\"moveColumn(1)\" value=\">\">\n          \n         &nbsp;&nbsp;&nbsp; \n        <input type=\"button\" onClick=\"test()\" value=\"Test\">\n        <input type=\"button\" onclick=\"mergecells()\" value=\"Merge\">\n        <input type=\"button\" onclick=\"unmergecells()\" value=\"Split\">\n        \n    </span>\n\n</span>      \n\n<script>\n\nfunction test() {\n    alert(myspreadsheet.getLabel(\"F1\"));\n    \n}\n\nfunction addCol(ctype) {\n    \n    var cc = myspreadsheet.getConfig().columns.length;\n    \n    ntit = prompt(\"Please enter the column Title\", \"\") ;\n    if (!ntit) { return null; }\n    \n    nid = prompt(\"Please confirm Key\", camelize(ntit)) ;\n    if (!nid) { return null; }\n    \n    if (ctype==\"text\") { myspreadsheet.insertColumn(1,cc,0,{type: 'text',title:ntit, name:nid, width:150}); }\n    else if (ctype==\"html\") { myspreadsheet.insertColumn(1,cc,0,{type: 'html',title:ntit, name:nid, width:400}); }\n    else if (ctype==\"date\") { myspreadsheet.insertColumn(1,cc,0,{type: 'calendar',title:ntit, name:nid, width:80}); }\n    else if (ctype==\"check\") { myspreadsheet.insertColumn(1,cc,0,{type: 'checkbox',title:ntit, name:nid, width:80}); }\n    else if (ctype==\"radio\") { myspreadsheet.insertColumn(1,cc,0,{type: 'radio',title:ntit, name:nid, width:80}); }\n    else if (ctype==\"image\") { myspreadsheet.insertColumn(1,cc,0,{type: 'image',title:ntit, name:nid, width:120}); }\n    else if (ctype==\"number\") { myspreadsheet.insertColumn(1,cc,0,{type: 'numeric',title:ntit, name:nid, mask:'#,##,00',width:80,decimal:'.'}); }\n    else if (ctype==\"currency\") { myspreadsheet.insertColumn(1,cc,0,{type: 'numeric',title:ntit, name:nid, mask:'£ #,##,00',width:80,decimal:'.'}); }\n    else if (ctype==\"colour\") { myspreadsheet.insertColumn(1,cc,0,{type: 'color',title:ntit, name:nid, width:80,render:'square'}); }\n    else if (ctype==\"select\") { \n        \n        var nv=\"Option\";\n        var optslist = [];\n        while(nv!==\"\" && nv!==null) {\n            \n            nv=\"\"; \n            nv = prompt(\"Add an option (leave blank or press cancel to finish)\", nv);\n            if (nv !== \"\" && nv!==null) { optslist.push(nv); }\n            \n        }\n        \n        \n        var opts = {\n            type: 'dropdown',\n            title:ntit,\n            name:nid,\n            width:175,\n            source:optslist\n        };\n            \n        if (optslist.length==1 && optslist[0].indexOf(\".json\")>0) {\n          \n          opts.url = optslist[0];\n          if (opts.url.indexOf(\"http\")<0) { opts.url = \"/files/json/\" + opts.url; }\n          opts.source=[];\n            \n            \n        } \n        \n        myspreadsheet.insertColumn(1,cc,0, opts); \n        \n        if (opts.url) {\n            //seems long way to refresh but works....\n            initialiseSheet(myspreadsheet.getJson(),myspreadsheet.getConfig().columns,myspreadsheet.getConfig().comments,myspreadsheet.getConfig().mergeCells);\n        }\n        \n    }\n    \n    \n}\n\n\n\nvar metadata = {};\nvar tim;\nvar suc;\nvar sheetname = \"new\";\nvar docType = document.getElementById(\"docType\");\n\nvar myspreadsheet = {};\n\nvar selectedColumn = \"\";\nvar selectedColumnName = \"\";\nvar selectionData;\nvar selectedRow;\nvar selectedRange;\n\n\nvar selectionActive = function(instance, x1, y1, x2, y2, origin) {\n    //var cellName1 = jexcel.getColumnNameFromId([x1, y1]);\n    //var cellName2 = jexcel.getColumnNameFromId([x2, y2]);\n    //console.log(instance);\n    console.log(x1, x2);\n    selectedRange = \"\";\n    \n    if (x1==x2 && y1==y2) {\n        \n        selectedColumn = x1;\n        selectedRow = y1;\n        \n        selectedColumnName = myspreadsheet.getConfig().columns[x1].name;\n        \n        console.log(myspreadsheet.getHeader(x1));\n        console.log(myspreadsheet.getConfig().columns[x1]);\n        \n        \n        \n        \n    } else { \n        \n        selectedColumn = \"\"; \n        selectedColumnName=\"\";\n        \n        selectedRange = x1 + \",\" + y1 + \",\" + x2 + \",\" + y2;\n    \n    }\n    \n}\n\n\nfunction addOption() {\n    \n    \n    if (!selectedColumn) { return null; }\n    \n     \n    //var mydata = myspreadsheet.getJson();\n    \n    var cdat = myspreadsheet.getConfig().columns;\n    if (!cdat[selectedColumn].source) { return null; }\n    \n    var nn = prompt(\"New option for \" + myspreadsheet.getHeader(selectedColumn), \"\");\n    if (nn==null || nn == \"\") { return null; }\n    \n    cdat[selectedColumn].source.push(nn);\n    \n    var coms = myspreadsheet.getConfig().comments;\n    \n    initialiseSheet(myspreadsheet.getJson(),cdat,coms,myspreadsheet.getConfig().mergeCells);\n    \n}\n\n\nfunction moveColumn(plus) {\n    \n    \n    if (!selectedColumn) { return null; }\n    \n    \n    myspreadsheet.moveColumn(selectedColumn,selectedColumn + plus);\n    selectedColumn = selectedColumn + plus;\n}\n\n\n\n function mergecells() {\n    \n    if (selectedRange && selectedRange!==\"\") {\n        \n        var rc = String.fromCharCode(parseInt(selectedRange.split(\",\")[0])+65) + (parseInt(selectedRange.split(\",\")[1])+1);\n        var w = 1 + parseInt(selectedRange.split(\",\")[2]) - parseInt(selectedRange.split(\",\")[0]);\n        var h = 1 + parseInt(selectedRange.split(\",\")[3]) - parseInt(selectedRange.split(\",\")[1]);\n        myspreadsheet.setMerge(rc, w, h);\n    }\n    \n }\n\n\n\n function unmergecells() {\n    \n    if (selectedRange && selectedRange!==\"\") {\n        \n        var rc = String.fromCharCode(parseInt(selectedRange.split(\",\")[0])+65) + (parseInt(selectedRange.split(\",\")[1])+1);\n        //var w = 1 + parseInt(selectedRange.split(\",\")[2]) - parseInt(selectedRange.split(\",\")[0]);\n        //var h = 1 + parseInt(selectedRange.split(\",\")[3]) - parseInt(selectedRange.split(\",\")[1]);\n        myspreadsheet.removeMerge(rc);\n    }\n    \n }\n\n        \n        \nfunction initialiseSheet(data,columns,comments,mergeCells) {\n    \n    document.getElementById('spreadsheet').innerHTML = \"\";\n                         \n                         \n                    var xtras = docType.value == \"array\" ? false:true;\n                       \n                    myspreadsheet = jspreadsheet(document.getElementById('spreadsheet'), {\n                        data:data,\n                        columns: columns,\n                        allowComments: true,              \n                        updateTable: function (instance, cell, col, row, val, id) {\n                            \n                            if ((\"\"+val).indexOf(\"<\")<0 && (\"\"+val).indexOf(\" \")<0) {\n                                if ((\"\"+val).indexOf(\".jp\")>0 || (\"\"+val).indexOf(\".png\")>0) {\n                                    \n                                    if (val.indexOf(\"http\")<0 && val.indexOf(\"/\")<0) { val = \"/files/images/\" + val; }\n                                        \n                                    cell.innerHTML = '<img src=\"' + val + '\" style=\"max-width:100px;\">';\n                                    \n                                    \n                                }\n                                else if ((\"\"+val).indexOf(\".svg\")>0) {\n                                    \n                                    if (val.indexOf(\"http\")<0 && val.indexOf(\"/\")<0) { val = \"/files/svg/\" + val; }    \n                                        \n                                    cell.innerHTML = '<img src=\"' + val + '\" style=\"max-width:100px;\">';\n                                    \n                                }\n                            }\n                            \n                        },\n                        onchange: function (instance, cell, col, row, val, id) { \n                            \n                            \n                            console.log(\"selectedRow = \"+selectedRow);\n                            //if (selectedColumnName == \"selection\") { selectionData = myspreadsheet.getJson()[selectedRow];  console.log(selectionData);   }\n                        },\n                        onselection: selectionActive,\n                        wordWrap: true,\n                        columnDrag: true,\n                        rowDrag: true,\n                        rowResize: true,\n                        allowInsertColumn: xtras,\n                        allowDeleteColumn: xtras,\n                        allowRenameColumn: xtras,\n                        mergeCells: mergeCells\n                    }); \n                    \n                    \n                    for (var com in comments) {\n                        \n                        \n                        \n                        try {\n                          myspreadsheet.setComments(com, comments[com]); \n                        }\n                        catch(err) {\n                          \n                        }\n                    }\n                    \n}\n\n\n////////////////////////////////// Custom Functions\n\nvar META= function(v) {\n    v = metadata[v] || 0;\n    return v;\n}\n\nvar CEIL= function(v) {\n    v = Math.ceil(v);\n    return v;\n}\n\nvar FLOOR= function(v) {\n    v = Math.floor(v);\n    return v;\n}\n\n\nvar refreshMeta = function() {\n    \n    // if (!myspreadsheetmeta) { return null; }\n    // alert(\"refresh\");\n    metadata = {};\n                                \n    var mymeta = myspreadsheetmeta.getJson();\n    for (var mtd in mymeta) {\n        if (mymeta[mtd].key!== \"data\" && mymeta[mtd].key && mymeta[mtd].value && mymeta[mtd].key!== \"config\") {\n            var nk = mymeta[mtd].key;\n            if(nk.indexOf(\" \")>-1) { nk = camelize(nk); }\n            metadata[nk] = mymeta[mtd].value;\n        }\n    }\n     \n     \n    //seems long way to refresh but works....\n    initialiseSheet(myspreadsheet.getJson(),myspreadsheet.getConfig().columns,myspreadsheet.getConfig().comments);\n                                \n}\n\nvar upgradeMeta = function() {\n\n    var urlParams = new URLSearchParams(window.location.search);\n    \n    urlParams.forEach(function(value, key) {\n      console.log(value, key);\n      if (key!== \"data\" && key!== \"config\" && key!== \"sheet\" && key!== \"json\"  && key!== \"edit\") {\n            metadata[key] = value;\n        }\n    });\n    \n\n}\n\nvar myfilename = \"\";\nvar form_url;\n\n// #################################################################################### START\n\n$(document).ready(function () {\n\n      var urlParams = new URLSearchParams(window.location.search);\n\n        if (urlParams.get('sheet')) {\n            \n            sheetname = urlParams.get('sheet');\n            form_url = \"sheet_\" + sheetname;\n            \n        } else if (urlParams.get('json')) {\n            \n            sheetname = urlParams.get('json').replace(\".json\",\"\").replace(\"/files/json/\",\"\");\n            form_url = sheetname; \n            \n        } else {\n            \n            sheetname = \"new\"; \n            form_url = \"sheet_\" + sheetname;\n            \n        }\n\n      if (sheetname) {\n          \n            var form_data = {};\n            \n            \n            \n            if (form_url.indexOf(\"/\")<0) { form_url = \"/files/json/\" + form_url; }  \n            if (form_url.indexOf(\".json\")<0 && form_url.indexOf(\"/api/\")<0) { form_url += \".json\" ; } \n            \n            myfilename = form_url;\n            \n            document.getElementById('mytit').innerHTML = \"<h2>\" + sheetname + \"</h2>\";\n            \n            \n            //var form_target = $(this).attr(\"target\") || \"result\";\n            //var ftarget = \"#\" + form_target;\n            \n            var form_method = \"GET\";\n            \n            //$(\"#loadingimg\").show();\n            \n            $.ajax({\n                url: form_url, \n                type: form_method,      \n                data: form_data,     \n                cache: false,\n                success: function(returnhtml){   \n                    \n                    console.log(returnhtml);\n                    \n                    //userdata = JSON.parse(returnhtml);\n                    \n                    var data = returnhtml.data || returnhtml; \n                    \n                    \n                    var metad = [];\n                    var columns =  []; \n                    var comments = []; \n                    var mystyle={};\n                    var mergeCells;\n                    \n                    if (returnhtml.config) {   // if a sheet\n                    \n                        docType.value = \"sheet\";\n                    \n                        columns = returnhtml.config.columns || []; \n                        comments = returnhtml.config.comments || []; \n                        mystyle = returnhtml.config.style || []; \n                        mergeCells = returnhtml.config.mergeCells || null; \n                        \n                        console.log(data);\n                    \n                    \n                        for (var mtd in returnhtml) {\n                            if (mtd!== \"data\" && mtd!== \"config\" && mtd!== \"html\" && mtd!== \"calculated\") {\n                                //metad.push({\"key\":mtd,\"value\":returnhtml[mtd]});\n                                metadata[mtd]=returnhtml[mtd];\n                            }\n                        }\n                        \n                        upgradeMeta();\n                        \n                        for (var mtd in metadata) {\n                            if (mtd!== \"data\" && mtd!== \"config\" && mtd!== \"html\") {\n                                metad.push({\"key\":mtd,\"value\":metadata[mtd]});\n                                //metadata[mtd]=returnhtml[mtd];\n                            }\n                        }\n                        \n                        \n                        if (metadata.run) { \n                            document.getElementById(\"runsec\").style.display=\"inline\"; \n                            if (!urlParams.get('edit') && !metadata['edit']) { \n                                document.getElementById(\"editsec\").style.display=\"none\"; \n                                document.getElementById(\"savesec\").style.display=\"none\"; \n                                document.getElementById(\"metasec\").style.display=\"none\"; \n                            }\n                        }\n                        \n                        if (metadata.basic || urlParams.get('basic')) { \n                            \n                            document.getElementById(\"editsec\").style.display=\"none\"; \n                            document.getElementById(\"metasec\").style.display=\"none\"; \n                            \n                        }\n                        \n                        if (metadata[\"next\"]) { \n                            document.getElementById(\"nextsec\").style.display=\"inline\"; \n                            if (!urlParams.get('edit') && !metadata['edit']) {\n                                document.getElementById(\"editsec\").style.display=\"none\"; \n                                document.getElementById(\"savesec\").style.display=\"none\"; \n                                document.getElementById(\"metasec\").style.display=\"none\"; \n                            }\n                        }\n                        \n                    } else { \n                        \n                        \n                        document.getElementById('metasec').style.display=\"none\";\n                        document.getElementById('columnsec').style.display=\"none\";\n                        \n                        \n                        if (returnhtml[0] && typeof returnhtml[0] === 'object' && returnhtml[0] !== null) {\n                        \n                            docType.value = \"object\";\n                            \n                            for (var alin in data[0]) {\n                                \n                                var ob = {\n                                    type: 'text',\n                                    title: alin,\n                                    width: 150\n                                }\n                                columns.push(ob);\n                            }\n                            \n                            \n                            \n                            \n                            \n                        } else {\n                        \n                            docType.value = \"array\";\n                            \n                            for (var alin in data) {\n                                data[alin] = [data[alin]];\n                            }\n                            \n                            var ob = {\n                                type: 'text',\n                                title: 'Values',\n                                width: 700,\n                                align:'left'\n                            }\n                            columns.push(ob);\n                        }\n                        \n                    }  \n                    \n                    initialiseSheet(data,columns,comments,mergeCells);\n                    \n                    console.log(mystyle);\n                    if (mystyle) { myspreadsheet.setStyle(mystyle); }\n                    \n                    \n                    if (metad.length<1) { metad=[{\"key\":\"title\",\"value\":sheetname||\"My new workbook\"},{\"key\":\"author\",\"value\":\"\"}]; }\n                    myspreadsheetmeta = jspreadsheet(document.getElementById('spreadsheetmeta'), {\n                            data:metad,\n                            columns:[{\n                                type: 'text',\n                                name:'key',\n                                title:'Key',\n                                width:200,\n                                align:'left'\n                            },{\n                                type: 'text',\n                                name:'value',\n                                title:'Value',\n                                width:800,\n                                align:'left'\n                            }],\n                            allowInsertColumn: false,\n                            allowDeleteColumn: false,\n                            allowRenameColumn: false,              \n                            onchange: function (instance, cell, col, row, val, id) {\n                                \n                                clearTimeout(tim);\n                                tim = setTimeout(function(){ refreshMeta(); }, 250);\n                                \n                                \n                            }\n                        }); \n                  \n                    \n                    //$(ftarget).html(returnhtml);               \n                },\n                error: function(XMLHttpRequest, textStatus, errorThrown) { \n                    \n                    \n                    //alert(\"Status: \" + textStatus); alert(\"Error: \" + errorThrown); \n                    \n                    if (errorThrown==\"Not Found\") {\n                        \n                        alert(\"NEW SHEET CREATED\"); \n                        \n                        myspreadsheet = jspreadsheet(document.getElementById('spreadsheet'), {\n                            data:[{\"network\":\"\",\"device\":\"\",\"group\":\"\"}],\n                            columns:[{\n                                type: 'text',\n                                name:'network',\n                                title:'Network',\n                                width:150\n                            },{\n                                type: 'text',\n                                name:'device',\n                                title:'Device',\n                                width:250\n                            },{\n                                type: 'text',\n                                name:'group',\n                                title:'Group',\n                                width:200\n                            },{\n                                type: 'text',\n                                name:'key',\n                                title:'Key',\n                                width:150\n                            },{\n                                type: 'text',\n                                name:'value',\n                                title:'Value',\n                                width:150\n                            },{\n                                type: 'text',\n                                name:'units',\n                                title:'Units',\n                                width:100\n                            },{\n                                type: 'text',\n                                name:'title',\n                                title:'Title',\n                                width:300\n                            }]\n                        }); \n                        \n                        myspreadsheetmeta = jspreadsheet(document.getElementById('spreadsheetmeta'), {\n                            data:[{\"key\":\"title\",\"value\":urlParams.get('sheet')||\"My new spreadsheet\"},{\"key\":\"description\",\"value\":\"\"},{\"key\":\"author\",\"value\":\"\"},{\"key\":\"created\",\"value\":(new Date().toLocaleString())}],\n                            columns:[{\n                                type: 'text',\n                                name:'key',\n                                title:'Key',\n                                width:200,\n                                align:'left'\n                            },{\n                                type: 'text',\n                                name:'value',\n                                title:'Value',\n                                width:500,\n                                align:'left'\n                            }],\n                            allowInsertColumn: false,\n                            allowDeleteColumn: false,\n                            allowRenameColumn: false,              \n                            onchange: function (instance, cell, col, row, val, id) {\n                                \n                                clearTimeout(tim);\n                                tim = setTimeout(function(){ refreshMeta(); }, 250);\n                                \n                                \n                            }\n                        }); \n                        \n                    }\n                }            \n            });    \n            \n          \n          \n          \n          \n          \n          \n      }\n      \n      \n      \n      \n      \n\n});\n</script>\n\n \n\n    <form id=\"nextform\" name=\"nextform\" method=\"post\" action=\"/api/files/save\" ajax=\"true\" target=\"result1\">\n    <input type=\"hidden\" id=\"svgtext\" name=\"svgtext\" value=\"\">\n    <input type=\"hidden\" id=\"svgfile\" name=\"svgfile\" value=\"\">\n    <input type=\"hidden\" id=\"show\" name=\"show\" value=\"\">\n    </form>\n    <iframe width=\"100%\" frameborder=\"0\" id=\"result1\" name=\"result1\" ></iframe>\n    \n    <div id=\"runresults\"></div>\n    \n</section>\n\n",
-        "output": "str",
-        "x": 450,
-        "y": 1200,
-        "wires": [
-            [
-                "1ea99348.4a6ebd",
-                "ac369b44.bec8a8"
-            ]
-        ],
-        "info": "https://bossanova.uk/jspreadsheet/v4/"
-    },
-    {
-        "id": "1ea99348.4a6ebd",
-        "type": "change",
-        "z": "580bb6a3.5dc1d",
-        "name": "sheet",
-        "rules": [
-            {
-                "t": "set",
-                "p": "sections.sheet",
-                "pt": "global",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 610,
-        "y": 1200,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "ac369b44.bec8a8",
-        "type": "function",
-        "z": "580bb6a3.5dc1d",
-        "name": "",
-        "func": "msg.filename = global.get(\"htmlDirectory\") + \"/sections/sheet.html\";\nmsg.payload = msg.payload.body;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 620,
-        "y": 1240,
-        "wires": [
-            [
-                "d339e015.ed455"
-            ]
-        ]
-    },
-    {
-        "id": "d339e015.ed455",
-        "type": "file",
-        "z": "580bb6a3.5dc1d",
-        "name": "",
-        "filename": "",
-        "appendNewline": false,
-        "createDir": false,
-        "overwriteFile": "true",
-        "encoding": "none",
-        "x": 780,
-        "y": 1240,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "fefc5fee.1b973",
-        "type": "inject",
-        "z": "580bb6a3.5dc1d",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 1400,
-        "y": 100,
-        "wires": [
-            [
-                "b20198e3.859378"
-            ]
-        ]
-    },
-    {
-        "id": "b20198e3.859378",
-        "type": "change",
-        "z": "580bb6a3.5dc1d",
-        "name": "",
-        "rules": [
-            {
-                "t": "delete",
-                "p": "settings.label_tF",
-                "pt": "global"
-            },
-            {
-                "t": "delete",
-                "p": "settings.label_tR",
-                "pt": "global"
-            },
-            {
-                "t": "delete",
-                "p": "settings.label_tCpu",
-                "pt": "global"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1560,
-        "y": 100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ebec191eb32eee17",
-        "type": "function",
-        "z": "580bb6a3.5dc1d",
-        "name": "only local",
-        "func": "\nif (msg.topic.split(\"/\")[0]==global.get(\"networkId\")) { msg.topic = msg.topic.replace(global.get(\"networkId\"),global.get(\"localNetworkId\")); }\n\nif (msg.topic.split(\"/\")[0]!==global.get(\"localNetworkId\")) { return null; }\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 760,
-        "y": 400,
-        "wires": [
-            [
-                "de5cbb28.0bca7"
-            ]
         ]
     },
     {
@@ -5120,10 +4829,11 @@
         "mode": "link",
         "links": [
             "3a197b072de52765",
-            "03eda15622c029f1"
+            "03eda15622c029f1",
+            "ef923f9f8ffe71dd"
         ],
-        "x": 915,
-        "y": 600,
+        "x": 735,
+        "y": 320,
         "wires": []
     },
     {
@@ -5139,8 +4849,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 770,
-        "y": 440,
+        "x": 630,
+        "y": 60,
         "wires": []
     },
     {
@@ -5152,8 +4862,8 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 940,
-        "y": 720,
+        "x": 620,
+        "y": 520,
         "wires": [
             [
                 "5591a77bf54b568e"
@@ -5167,8 +4877,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 1210,
-        "y": 720,
+        "x": 890,
+        "y": 520,
         "wires": []
     },
     {
@@ -5182,73 +4892,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1080,
-        "y": 720,
+        "x": 760,
+        "y": 520,
         "wires": [
             [
                 "fb19782f815bcb84"
             ]
-        ]
-    },
-    {
-        "id": "b13ead5bbc6447d5",
-        "type": "inject",
-        "z": "580bb6a3.5dc1d",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 630,
-        "y": 980,
-        "wires": [
-            [
-                "8a91817c8f410e98"
-            ]
-        ]
-    },
-    {
-        "id": "8a91817c8f410e98",
-        "type": "change",
-        "z": "580bb6a3.5dc1d",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "readings.local.shedNode1.system.upTimeH.topic",
-                "pt": "global",
-                "to": "rAndD-shed/shedNode1/shedNode1/system/upTimeH",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "readings.local.shedNode1.system.upTime.topic",
-                "pt": "global",
-                "to": "rAndD-shed/shedNode1/shedNode1/system/upTime",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 830,
-        "y": 980,
-        "wires": [
-            []
         ]
     },
     {
@@ -5262,8 +4911,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 520,
+        "x": 1200,
+        "y": 300,
         "wires": [
             [
                 "0a7561544c78863d"
@@ -5290,8 +4939,8 @@
         "onceDelay": 0.1,
         "topic": "",
         "payloadType": "date",
-        "x": 140,
-        "y": 520,
+        "x": 1000,
+        "y": 320,
         "wires": [
             [
                 "ff28800e4bbba1c7"
@@ -5306,8 +4955,8 @@
         "links": [
             "72fc070f.39dd8"
         ],
-        "x": 495,
-        "y": 520,
+        "x": 1345,
+        "y": 300,
         "wires": []
     },
     {
@@ -5330,8 +4979,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 150,
-        "y": 480,
+        "x": 990,
+        "y": 280,
         "wires": [
             [
                 "ff28800e4bbba1c7"
@@ -5360,7 +5009,7 @@
         "payload": "local/+/+/+/cpu_currentload",
         "payloadType": "str",
         "x": 240,
-        "y": 1100,
+        "y": 760,
         "wires": [
             [
                 "32f9b18e.982aee"
@@ -5376,8 +5025,8 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 190,
-        "y": 100,
+        "x": 670,
+        "y": 660,
         "wires": [
             [
                 "1c09662af1958f62",
@@ -5396,8 +5045,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
-        "y": 40,
+        "x": 920,
+        "y": 600,
         "wires": [
             [
                 "de79189b967c2492",
@@ -5414,8 +5063,8 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 150,
-        "y": 40,
+        "x": 630,
+        "y": 600,
         "wires": [
             [
                 "1c09662af1958f62"
@@ -5429,8 +5078,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 590,
-        "y": 40,
+        "x": 1090,
+        "y": 600,
         "wires": []
     },
     {
@@ -5445,8 +5094,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 620,
-        "y": 100,
+        "x": 1100,
+        "y": 660,
         "wires": []
     },
     {
@@ -5458,8 +5107,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 140,
-        "y": 180,
+        "x": 620,
+        "y": 740,
         "wires": [
             [
                 "37ee9ad397338449",
@@ -5478,8 +5127,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
-        "y": 180,
+        "x": 860,
+        "y": 760,
         "wires": [
             [
                 "859484ecdc7e8eff",
@@ -5494,8 +5143,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 670,
-        "y": 180,
+        "x": 1050,
+        "y": 760,
         "wires": []
     },
     {
@@ -5511,8 +5160,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 340,
-        "y": 140,
+        "x": 840,
+        "y": 720,
         "wires": []
     },
     {
@@ -5524,8 +5173,8 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 140,
-        "y": 240,
+        "x": 620,
+        "y": 800,
         "wires": [
             [
                 "37ee9ad397338449",
@@ -5545,8 +5194,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 640,
-        "y": 220,
+        "x": 1060,
+        "y": 800,
         "wires": []
     },
     {
@@ -5562,8 +5211,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 160,
-        "y": 300,
+        "x": 840,
+        "y": 800,
         "wires": []
     },
     {
@@ -5579,8 +5228,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 420,
-        "y": 100,
+        "x": 900,
+        "y": 660,
         "wires": []
     },
     {
@@ -5596,8 +5245,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 350,
-        "y": 260,
+        "x": 230,
+        "y": 100,
         "wires": [
             [
                 "8aa46b4ede182d15"
@@ -5625,11 +5274,48 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 480,
-        "y": 260,
+        "x": 360,
+        "y": 100,
         "wires": [
             [
                 "6db74d6.e025e34"
+            ]
+        ]
+    },
+    {
+        "id": "de5cbb28.0bca7",
+        "type": "switch",
+        "z": "580bb6a3.5dc1d",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "/cmd/",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "/set/",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 610,
+        "y": 120,
+        "wires": [
+            [],
+            [
+                "2dde7725.9f7118"
+            ],
+            [
+                "311e9db6.ba1b82"
             ]
         ]
     },
