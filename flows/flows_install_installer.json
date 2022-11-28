@@ -113,7 +113,8 @@
                 "default": "#0094CE",
                 "baseColor": "#0094CE",
                 "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": false
+                "edited": true,
+                "reset": false
             },
             "darkTheme": {
                 "default": "#097479",
@@ -416,7 +417,7 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 1230,
+        "x": 1290,
         "y": 680,
         "wires": []
     },
@@ -433,7 +434,8 @@
         "y": 680,
         "wires": [
             [
-                "a81c91208ef5cb68"
+                "a81c91208ef5cb68",
+                "f8422b93c4de805b"
             ]
         ]
     },
@@ -481,7 +483,7 @@
         "z": "2f4ac1a1c27d6cd6",
         "name": "",
         "group": "7aa8283c410b5409",
-        "order": 2,
+        "order": 1,
         "width": "0",
         "height": "0",
         "passthru": false,
@@ -1035,6 +1037,75 @@
         "x": 330,
         "y": 420,
         "wires": []
+    },
+    {
+        "id": "edfa0785f8665084",
+        "type": "inject",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 640,
+        "y": 780,
+        "wires": [
+            [
+                "f8422b93c4de805b"
+            ]
+        ]
+    },
+    {
+        "id": "a22be1dfc1a08335",
+        "type": "ui_template",
+        "z": "2f4ac1a1c27d6cd6",
+        "group": "7aa8283c410b5409",
+        "name": "",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 980,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f8422b93c4de805b",
+        "type": "template",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "field": "template",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<script>\n    window.location = \"http://localhost:5099/ui\"\n</script>",
+        "output": "str",
+        "x": 820,
+        "y": 780,
+        "wires": [
+            [
+                "a22be1dfc1a08335"
+            ]
+        ]
     },
     {
         "id": "111ced82138086e3",
