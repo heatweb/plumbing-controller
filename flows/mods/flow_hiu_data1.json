@@ -1,48 +1,5 @@
 [
     {
-        "id": "3d0a40a7.66aa4",
-        "type": "subflow",
-        "name": "html table",
-        "info": "",
-        "in": [
-            {
-                "x": 100,
-                "y": 180,
-                "wires": [
-                    {
-                        "id": "790d9c49.fccc04"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 380,
-                "y": 180,
-                "wires": [
-                    {
-                        "id": "790d9c49.fccc04",
-                        "port": 0
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "790d9c49.fccc04",
-        "type": "function",
-        "z": "3d0a40a7.66aa4",
-        "name": "htmltable",
-        "func": "var htmlt = '<table width=\"100%\">';\n\nfor (var key in msg.payload) {\n    \n    \n    htmlt += '<tr><td>' + key.replace(/_/g, ' ') + '</td><td align=\"right\">' + msg.payload[key] + '</td></tr>';\n}\n\nhtmlt += '<table>';\n\nmsg.payload=htmlt;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 240,
-        "y": 180,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "e090c99b.574098",
         "type": "tab",
         "label": "HIU",
@@ -61,31 +18,6 @@
             [
                 "e6a8c7fd.f7728",
                 "caf3f900.f20a08"
-            ]
-        ]
-    },
-    {
-        "id": "50bcff0b.7bdac",
-        "type": "subflow:3d0a40a7.66aa4",
-        "z": "e090c99b.574098",
-        "name": "html table",
-        "x": 1160,
-        "y": 540,
-        "wires": [
-            [
-                "95990221.d8463"
-            ]
-        ]
-    },
-    {
-        "id": "81eaf0f3.8b0b6",
-        "type": "subflow:3d0a40a7.66aa4",
-        "z": "e090c99b.574098",
-        "x": 1160,
-        "y": 500,
-        "wires": [
-            [
-                "8b6dc809.fa87e8"
             ]
         ]
     },
@@ -1624,10 +1556,10 @@
                 "a1c76865.5bd338"
             ],
             [
-                "81eaf0f3.8b0b6"
+                "2b7390f814823513"
             ],
             [
-                "50bcff0b.7bdac"
+                "afa4280500e05a8d"
             ],
             [
                 "77cc7d0d.b5e584"
@@ -5154,6 +5086,38 @@
         "wires": [
             [
                 "76dccbf0.a9f6c4"
+            ]
+        ]
+    },
+    {
+        "id": "2b7390f814823513",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "htmltable",
+        "func": "var htmlt = '<table width=\"100%\">';\n\nfor (var key in msg.payload) {\n    \n    \n    htmlt += '<tr><td>' + key.replace(/_/g, ' ') + '</td><td align=\"right\">' + msg.payload[key] + '</td></tr>';\n}\n\nhtmlt += '<table>';\n\nmsg.payload=htmlt;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1160,
+        "y": 500,
+        "wires": [
+            [
+                "8b6dc809.fa87e8"
+            ]
+        ]
+    },
+    {
+        "id": "afa4280500e05a8d",
+        "type": "function",
+        "z": "e090c99b.574098",
+        "name": "htmltable",
+        "func": "var htmlt = '<table width=\"100%\">';\n\nfor (var key in msg.payload) {\n    \n    \n    htmlt += '<tr><td>' + key.replace(/_/g, ' ') + '</td><td align=\"right\">' + msg.payload[key] + '</td></tr>';\n}\n\nhtmlt += '<table>';\n\nmsg.payload=htmlt;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1156,
+        "y": 540,
+        "wires": [
+            [
+                "95990221.d8463"
             ]
         ]
     },
