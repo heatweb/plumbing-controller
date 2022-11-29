@@ -34,7 +34,7 @@
         "id": "594506cc.51e408",
         "type": "tab",
         "label": "Scrolling text ",
-        "disabled": false,
+        "disabled": true,
         "info": ""
     },
     {
@@ -2329,7 +2329,8 @@
         "wires": [
             [
                 "f99552bd6f696c2f",
-                "0b642012c1953bc9"
+                "0b642012c1953bc9",
+                "8d2434ea4445563e"
             ]
         ]
     },
@@ -4275,6 +4276,25 @@
         ],
         "x": 1425,
         "y": 1940,
+        "wires": []
+    },
+    {
+        "id": "8d2434ea4445563e",
+        "type": "ui_toast",
+        "z": "7b2fdb7c9fb3c336",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1490,
+        "y": 1820,
         "wires": []
     },
     {
