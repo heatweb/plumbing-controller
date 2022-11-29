@@ -1,0 +1,780 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_NODE-RED",
+      "label": "Node-RED",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "marcusolsson-json-datasource",
+      "pluginName": "JSON API"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.2.1"
+    },
+    {
+      "type": "datasource",
+      "id": "marcusolsson-json-datasource",
+      "name": "JSON API",
+      "version": "1.3.2"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "${DS_NODE-RED}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vargroup"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 148
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "device"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 128
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "varkey"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 153
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "title"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 327
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 14,
+        "x": 0,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "cacheDurationSeconds": 0,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "${DS_NODE-RED}"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.readings[*].device"
+            },
+            {
+              "jsonPath": "$.readings[*].varkey",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].title",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].value",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].units",
+              "language": "jsonpath",
+              "name": ""
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": "/stat"
+        }
+      ],
+      "title": "stat",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "${DS_NODE-RED}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vargroup"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 148
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "device"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 128
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "varkey"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 153
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 10,
+        "x": 14,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "cacheDurationSeconds": 0,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "${DS_NODE-RED}"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.readings[*].device"
+            },
+            {
+              "jsonPath": "$.readings[*].varkey",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].title",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].value",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].units",
+              "language": "jsonpath",
+              "name": ""
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": "/dat"
+        }
+      ],
+      "title": "dat",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "${DS_NODE-RED}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vargroup"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 148
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "device"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 128
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "varkey"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 153
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "title"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 278
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 353
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 20,
+        "w": 14,
+        "x": 0,
+        "y": 4
+      },
+      "id": 6,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "varkey"
+          }
+        ]
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "cacheDurationSeconds": 30,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "${DS_NODE-RED}"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.readings[*].device"
+            },
+            {
+              "jsonPath": "$.readings[*].varkey",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].title",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].value",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].units",
+              "language": "jsonpath",
+              "name": ""
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": "/system"
+        }
+      ],
+      "title": "system",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "${DS_NODE-RED}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vargroup"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 148
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "device"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 128
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "varkey"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 153
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "title"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 257
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 10,
+        "x": 14,
+        "y": 7
+      },
+      "id": 5,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "cacheDurationSeconds": 0,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "${DS_NODE-RED}"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.readings[*].device"
+            },
+            {
+              "jsonPath": "$.readings[*].varkey",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].title",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].value",
+              "language": "jsonpath",
+              "name": ""
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": "/alarm"
+        }
+      ],
+      "title": "alarm",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "${DS_NODE-RED}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vargroup"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 148
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "device"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 128
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "varkey"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 153
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "title"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 257
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 14,
+        "y": 16
+      },
+      "id": 7,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "cacheDurationSeconds": 0,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "${DS_NODE-RED}"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.readings[*].device"
+            },
+            {
+              "jsonPath": "$.readings[*].varkey",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].title",
+              "language": "jsonpath",
+              "name": ""
+            },
+            {
+              "jsonPath": "$.readings[*].value",
+              "language": "jsonpath",
+              "name": ""
+            }
+          ],
+          "method": "GET",
+          "queryParams": "",
+          "refId": "A",
+          "urlPath": "/settings"
+        }
+      ],
+      "title": "settings",
+      "type": "table"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "JSON Data",
+  "uid": "1I_7tPO4k",
+  "version": 10,
+  "weekStart": ""
+}
