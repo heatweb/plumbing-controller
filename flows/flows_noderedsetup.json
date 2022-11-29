@@ -1839,7 +1839,7 @@
         "console": "false",
         "complete": "false",
         "x": 1130,
-        "y": 2100,
+        "y": 2280,
         "wires": []
     },
     {
@@ -1854,7 +1854,7 @@
         "finalize": "",
         "libs": [],
         "x": 630,
-        "y": 2100,
+        "y": 2280,
         "wires": [
             [
                 "533585d0507e1846"
@@ -1871,7 +1871,7 @@
         "url": "",
         "tls": "",
         "x": 950,
-        "y": 2100,
+        "y": 2280,
         "wires": [
             [
                 "14706ee08a7281cc"
@@ -1890,7 +1890,7 @@
         "sendError": false,
         "allProps": false,
         "x": 430,
-        "y": 2100,
+        "y": 2280,
         "wires": [
             [
                 "965f6774a2f6bc4a"
@@ -1928,7 +1928,7 @@
         "to": "",
         "reg": false,
         "x": 770,
-        "y": 2100,
+        "y": 2280,
         "wires": [
             [
                 "10c3f10f2034697f"
@@ -1986,7 +1986,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 210,
-        "y": 2100,
+        "y": 2280,
         "wires": [
             [
                 "1c17f55858a0b059"
@@ -2000,7 +2000,7 @@
         "name": "Deploy Complete Flows",
         "info": "",
         "x": 180,
-        "y": 1420,
+        "y": 1380,
         "wires": []
     },
     {
@@ -2010,7 +2010,7 @@
         "name": "Deploy Individual Parts",
         "info": "",
         "x": 160,
-        "y": 2040,
+        "y": 2220,
         "wires": []
     },
     {
@@ -2021,7 +2021,7 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 1210,
+        "x": 1470,
         "y": 1880,
         "wires": []
     },
@@ -2036,7 +2036,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 670,
+        "x": 990,
         "y": 1880,
         "wires": [
             [
@@ -2059,7 +2059,7 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 1030,
+        "x": 1290,
         "y": 1880,
         "wires": [
             [
@@ -2097,7 +2097,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 850,
+        "x": 1130,
         "y": 1880,
         "wires": [
             [
@@ -2155,29 +2155,12 @@
         "chunk": false,
         "sendError": false,
         "allProps": false,
-        "x": 420,
+        "x": 720,
         "y": 1880,
         "wires": [
             [
                 "b221904688d7c8fc"
             ]
-        ]
-    },
-    {
-        "id": "682b9b6e8f55838b",
-        "type": "file in",
-        "z": "7b2fdb7c9fb3c336",
-        "name": "flow_hiu.json",
-        "filename": "/home/pi/plumbing-controller/flows/flow_hiu.json",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "allProps": false,
-        "x": 410,
-        "y": 2020,
-        "wires": [
-            []
         ]
     },
     {
@@ -2281,7 +2264,7 @@
         "type": "function",
         "z": "7b2fdb7c9fb3c336",
         "name": "flows",
-        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\")  + \"/flows\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nvar credentials = global.get(\"credentials\")||{};\n\n//var ff = msg.payload;\nvar ff = JSON.parse(msg.payload);\n\nfor (var part in ff) {\n\n\n   if (credentials.localMqttPassword) {\n\n      if (ff[part].type == \"mqtt-broker\" && (ff[part].broker == \"mqtt\" || ff[part].broker == \"localhost\")) { ff[part].credentials = { \"user\": \"admin\", \"password\": credentials.localMqttPassword }; }\n    \n   }\n\n   if (credentials.adminPassword) {\n\n      if (ff[part].type == \"MySQLdatabase\" && ff[part].host == \"mysql\") { ff[part].credentials = { \"user\": \"root\", \"password\": credentials.adminPassword }; }\n\n   }\n\n   if (credentials.localInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"local\") { ff[part].credentials = { \"token\": credentials.localInfluxToken }; }\n\n   }\n   if (credentials.remoteInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"heatweb\") { ff[part].credentials = { \"token\": credentials.remoteInfluxToken }; }\n\n   }\n\n   if (credentials.emailPassword && credentials.emailUser) {\n\n      if (ff[part].type == \"e-mail\") { ff[part].credentials = { \"userid\": credentials.emailUser, \"password\": credentials.emailPassword }; }\n\n   }\n\n   \n\n// //testing\n// var str1 = '\"type\": \"credentials\"'\nvar creds = [{ \"value\": \"xxx\", \"type\": \"str\" }, { \"value\": \"ddddd\", \"type\": \"str\" }, { \"value\": \"fffff\", \"type\": \"str\" }];\nvar creds2 = JSON.stringify(creds) ;\n// creds2 = creds2.substr(1);\n// creds2 = creds2.substr(0, creds2.length - 1);\n// msg.payload = msg.payload.replace(str1, creds2);\n// // not working !!!\n\n   if (ff[part].type == \"credentials\") { ff[part].credentials = creds2; }\n\n\n}\n\nmsg.payload = JSON.stringify(ff);\n\nreturn msg;",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\")  + \"/flows\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nvar credentials = global.get(\"credentials\")||{};\nvar config = global.get(\"config\") || {};\n\n//var ff = msg.payload;\nvar ff = JSON.parse(msg.payload);\n\nfor (var part in ff) {\n\n   if (ff[part].type == \"heatwebConfig\") { \n      \n      ff[part].name = config.name ; \n      ff[part].description = config.description;\n      ff[part].nodeId = config.nodeId;\n      ff[part].networkId = config.networkId; \n\n   }\n   \n\n   if (credentials.localMqttPassword) {\n\n      if (ff[part].type == \"mqtt-broker\" && (ff[part].broker == \"mqtt\" || ff[part].broker == \"localhost\")) { ff[part].credentials = { \"user\": \"admin\", \"password\": credentials.localMqttPassword }; }\n    \n   }\n\n   if (credentials.adminPassword) {\n\n      if (ff[part].type == \"MySQLdatabase\" && ff[part].host == \"mysql\") { ff[part].credentials = { \"user\": \"root\", \"password\": credentials.adminPassword }; }\n\n   }\n\n   if (credentials.localInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"local\") { ff[part].credentials = { \"token\": credentials.localInfluxToken }; }\n\n   }\n   if (credentials.remoteInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"heatweb\") { ff[part].credentials = { \"token\": credentials.remoteInfluxToken }; }\n\n   }\n\n   if (credentials.emailPassword && credentials.emailUser) {\n\n      if (ff[part].type == \"e-mail\") { ff[part].credentials = { \"userid\": credentials.emailUser, \"password\": credentials.emailPassword }; }\n\n   }\n\n   \n\n// //testing\n// var str1 = '\"type\": \"credentials\"'\nvar creds = [{ \"value\": \"xxx\", \"type\": \"str\" }, { \"value\": \"ddddd\", \"type\": \"str\" }, { \"value\": \"fffff\", \"type\": \"str\" }];\nvar creds2 = JSON.stringify(creds) ;\n// creds2 = creds2.substr(1);\n// creds2 = creds2.substr(0, creds2.length - 1);\n// msg.payload = msg.payload.replace(str1, creds2);\n// // not working !!!\n\n   if (ff[part].type == \"credentials\") { ff[part].credentials = creds2; }\n\n\n}\n\nmsg.payload = JSON.stringify(ff);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3627,7 +3610,7 @@
         "chunk": false,
         "sendError": false,
         "allProps": false,
-        "x": 430,
+        "x": 710,
         "y": 1940,
         "wires": [
             [
@@ -3714,14 +3697,14 @@
         "id": "3fa85d7b19a76c90",
         "type": "file in",
         "z": "7b2fdb7c9fb3c336",
-        "name": "flow_beta_sontay_modbus.json",
+        "name": "",
         "filename": "/home/pi/plumbing-controller/flows/flow_beta_sontay_modbus.json",
         "filenameType": "str",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
         "allProps": false,
-        "x": 450,
+        "x": 580,
         "y": 1980,
         "wires": [
             [
@@ -3755,6 +3738,198 @@
         "wires": [
             [
                 "3fa85d7b19a76c90"
+            ]
+        ]
+    },
+    {
+        "id": "da164e179ed2b0ce",
+        "type": "file in",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "flows_beta_plumbing_controller_1880",
+        "filename": "/home/pi/plumbing-controller/flows/flows_beta_plumbing_controller_1880.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 510,
+        "y": 1440,
+        "wires": [
+            [
+                "32c9fbe6b2a71042"
+            ]
+        ]
+    },
+    {
+        "id": "c3a0879b515a7b0b",
+        "type": "inject",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "5002",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 1440,
+        "wires": [
+            [
+                "da164e179ed2b0ce"
+            ]
+        ]
+    },
+    {
+        "id": "86f8b246aa1f52a5",
+        "type": "file in",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "filename": "/home/pi/plumbing-controller/flows/mods/flow_m_bus.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 610,
+        "y": 2040,
+        "wires": [
+            [
+                "b221904688d7c8fc"
+            ]
+        ]
+    },
+    {
+        "id": "149a97749a287f0c",
+        "type": "inject",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "Start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 2040,
+        "wires": [
+            [
+                "86f8b246aa1f52a5"
+            ]
+        ]
+    },
+    {
+        "id": "df75842f86ae0323",
+        "type": "file in",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "filename": "/home/pi/plumbing-controller/flows/mods/flow_bluetooth.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 600,
+        "y": 2080,
+        "wires": [
+            [
+                "b221904688d7c8fc"
+            ]
+        ]
+    },
+    {
+        "id": "0dbeb19795c1e853",
+        "type": "inject",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "Start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 2080,
+        "wires": [
+            [
+                "df75842f86ae0323"
+            ]
+        ]
+    },
+    {
+        "id": "7510f392f22305fe",
+        "type": "file in",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "filename": "/home/pi/plumbing-controller/flows/mods/flow_modem.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 610,
+        "y": 2120,
+        "wires": [
+            [
+                "b221904688d7c8fc"
+            ]
+        ]
+    },
+    {
+        "id": "8fc221c511844bd0",
+        "type": "inject",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "Start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 2120,
+        "wires": [
+            [
+                "7510f392f22305fe"
             ]
         ]
     },
