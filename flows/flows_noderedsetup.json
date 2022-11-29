@@ -122,11 +122,11 @@
     {
         "id": "36b47e47.04f1c2",
         "type": "ui_group",
-        "name": "Select Application",
-        "tab": "d1282254e8888410",
+        "name": "Select Mods",
+        "tab": "5d24c14b70500a20",
         "order": 2,
         "disp": true,
-        "width": "12",
+        "width": "6",
         "collapse": false,
         "className": ""
     },
@@ -161,22 +161,11 @@
         "collapse": false
     },
     {
-        "id": "f405b29b0175ff69",
-        "type": "ui_group",
-        "name": "Default",
-        "tab": "7700440dec525a5e",
-        "order": 1,
-        "disp": false,
-        "width": "12",
-        "collapse": false,
-        "className": ""
-    },
-    {
         "id": "888f4ceb.4b158",
         "type": "ui_tab",
         "name": "Setup",
         "icon": "fa-cog",
-        "order": 23,
+        "order": 6,
         "disabled": false,
         "hidden": false
     },
@@ -185,7 +174,7 @@
         "type": "ui_tab",
         "name": "Browser",
         "icon": "fa-line-chart",
-        "order": 12,
+        "order": 4,
         "disabled": false,
         "hidden": false
     },
@@ -194,16 +183,7 @@
         "type": "ui_tab",
         "name": "Wifi",
         "icon": "wifi",
-        "order": 21,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "7700440dec525a5e",
-        "type": "ui_tab",
-        "name": "Network",
-        "icon": "dashboard",
-        "order": 30,
+        "order": 5,
         "disabled": false,
         "hidden": false
     },
@@ -341,7 +321,7 @@
         "type": "ui_tab",
         "name": "Readings",
         "icon": "fa-table",
-        "order": 8,
+        "order": 3,
         "disabled": false,
         "hidden": false
     },
@@ -359,7 +339,7 @@
         "type": "ui_tab",
         "name": "Widgets",
         "icon": "dashboard",
-        "order": 3,
+        "order": 2,
         "disabled": false,
         "hidden": true
     },
@@ -421,7 +401,7 @@
         "id": "1ebe6305.3aa6ad",
         "type": "ui_group",
         "name": "LAB",
-        "tab": "2d3c18ea.7ea3d8",
+        "tab": "5d24c14b70500a20",
         "order": 3,
         "disp": false,
         "width": "6",
@@ -432,15 +412,37 @@
         "id": "2d3c18ea.7ea3d8",
         "type": "ui_tab",
         "name": "Table",
-        "icon": "dashboard"
+        "icon": "dashboard",
+        "order": 9
     },
     {
         "id": "d1282254e8888410",
         "type": "ui_tab",
         "name": "Applications",
         "icon": "dashboard",
+        "order": 7,
         "disabled": false,
         "hidden": false
+    },
+    {
+        "id": "5d24c14b70500a20",
+        "type": "ui_tab",
+        "name": "Mods",
+        "icon": "dashboard",
+        "order": 8,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "23eed81a7ee85c56",
+        "type": "ui_group",
+        "name": "Select Applications",
+        "tab": "d1282254e8888410",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "dd19c0de.9bebd",
@@ -1791,6 +1793,261 @@
         ]
     },
     {
+        "id": "2d072824c6553cb9",
+        "type": "fs-file-lister",
+        "z": "d26c3be6.b5ef58",
+        "name": "",
+        "start": "/home/pi/plumbing-controller/flows/mods",
+        "pattern": "flow_*.json",
+        "folders": "*",
+        "hidden": true,
+        "lstype": "files",
+        "path": true,
+        "single": true,
+        "depth": "3",
+        "stat": false,
+        "showWarnings": true,
+        "x": 420,
+        "y": 100,
+        "wires": [
+            [
+                "d19d75dc0cf0b6fd",
+                "778a715403c263da"
+            ]
+        ]
+    },
+    {
+        "id": "868df38dada71be9",
+        "type": "inject",
+        "z": "d26c3be6.b5ef58",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 100,
+        "wires": [
+            [
+                "2d072824c6553cb9"
+            ]
+        ]
+    },
+    {
+        "id": "d19d75dc0cf0b6fd",
+        "type": "debug",
+        "z": "d26c3be6.b5ef58",
+        "name": "debug 26",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "38f185597cb5b3ac",
+        "type": "ui_template",
+        "z": "d26c3be6.b5ef58",
+        "group": "36b47e47.04f1c2",
+        "name": "",
+        "order": 5,
+        "width": "6",
+        "height": "8",
+        "format": "<script>\n    var value = \"hello world\";\n// or overwrite value in your callback function ...\nthis.scope.action = function() { return value; }\n</script>\n<br>\n<md-button ng-click=\"send({payload:action()})\">\n    Click me to send a hello world\n</md-button>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 780,
+        "y": 160,
+        "wires": [
+            [
+                "227f235df3f0c946",
+                "7f769c6e77c5fa51"
+            ]
+        ]
+    },
+    {
+        "id": "227f235df3f0c946",
+        "type": "debug",
+        "z": "d26c3be6.b5ef58",
+        "name": "debug 27",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "6849d4565b71eaf0",
+        "type": "ui_ui_control",
+        "z": "d26c3be6.b5ef58",
+        "name": "",
+        "events": "change",
+        "x": 220,
+        "y": 160,
+        "wires": [
+            [
+                "2d072824c6553cb9"
+            ]
+        ]
+    },
+    {
+        "id": "778a715403c263da",
+        "type": "function",
+        "z": "d26c3be6.b5ef58",
+        "name": "function 1",
+        "func": "\n\nmsg.template =\"<script>\\n\";\nmsg.template += 'this.scope.action = function(m) { return m; }\\n';\nmsg.template += '</script>\\n';\nmsg.template += '<br>\\n';\n\nmsg.payload.sort();\n\nfor (var item in msg.payload) {\n\n    msg.template += '<md-button ng-click=\"send({payload:action(' + \"'\" + msg.payload[item] + \"'\" + ')})\">\\n';\n    msg.template += msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/_/g, \" \") + '\\n';\n    msg.template += '</md-button>\\n';\n\n}\n    \nmsg.payload = null;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 160,
+        "wires": [
+            [
+                "38f185597cb5b3ac"
+            ]
+        ]
+    },
+    {
+        "id": "76d8e235c0410b97",
+        "type": "link out",
+        "z": "d26c3be6.b5ef58",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "c2e30f26d233c6a0"
+        ],
+        "x": 995,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3c8e957812aaab8d",
+        "type": "file in",
+        "z": "d26c3be6.b5ef58",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 870,
+        "y": 260,
+        "wires": [
+            [
+                "76d8e235c0410b97"
+            ]
+        ]
+    },
+    {
+        "id": "717546fd81815f0c",
+        "type": "ui_toast",
+        "z": "d26c3be6.b5ef58",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "Continue",
+        "cancel": "Cancel",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 530,
+        "y": 260,
+        "wires": [
+            [
+                "7a17c287a8da3d3b"
+            ]
+        ]
+    },
+    {
+        "id": "7a17c287a8da3d3b",
+        "type": "switch",
+        "z": "d26c3be6.b5ef58",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Continue",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 690,
+        "y": 260,
+        "wires": [
+            [
+                "3c8e957812aaab8d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7f769c6e77c5fa51",
+        "type": "change",
+        "z": "d26c3be6.b5ef58",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 260,
+        "wires": [
+            [
+                "717546fd81815f0c"
+            ]
+        ]
+    },
+    {
         "id": "e3b7bcf37e26b9f2",
         "type": "debug",
         "z": "7b2fdb7c9fb3c336",
@@ -2071,7 +2328,8 @@
         "y": 1880,
         "wires": [
             [
-                "f99552bd6f696c2f"
+                "f99552bd6f696c2f",
+                "0b642012c1953bc9"
             ]
         ]
     },
@@ -2339,7 +2597,7 @@
         "type": "ui_button",
         "z": "7b2fdb7c9fb3c336",
         "name": "",
-        "group": "36b47e47.04f1c2",
+        "group": "23eed81a7ee85c56",
         "order": 2,
         "width": "2",
         "height": "2",
@@ -3991,6 +4249,35 @@
         ]
     },
     {
+        "id": "c2e30f26d233c6a0",
+        "type": "link in",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "link in 2",
+        "links": [
+            "76d8e235c0410b97"
+        ],
+        "x": 895,
+        "y": 1820,
+        "wires": [
+            [
+                "b221904688d7c8fc"
+            ]
+        ]
+    },
+    {
+        "id": "0b642012c1953bc9",
+        "type": "link out",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "ef7f6e180ea4284c"
+        ],
+        "x": 1425,
+        "y": 1940,
+        "wires": []
+    },
+    {
         "id": "97d4f0dbe521c35a",
         "type": "debug",
         "z": "ac900a3fdc09a7bf",
@@ -4565,7 +4852,7 @@
         "type": "ui_button",
         "z": "ac900a3fdc09a7bf",
         "name": "",
-        "group": "36b47e47.04f1c2",
+        "group": "23eed81a7ee85c56",
         "order": 2,
         "width": "2",
         "height": "2",
@@ -5819,6 +6106,22 @@
         "payloadType": "str",
         "x": 250,
         "y": 460,
+        "wires": [
+            [
+                "67195cf7.a5ea24"
+            ]
+        ]
+    },
+    {
+        "id": "ef7f6e180ea4284c",
+        "type": "link in",
+        "z": "594506cc.51e408",
+        "name": "link in 3",
+        "links": [
+            "0b642012c1953bc9"
+        ],
+        "x": 305,
+        "y": 280,
         "wires": [
             [
                 "67195cf7.a5ea24"
