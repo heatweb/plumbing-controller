@@ -417,8 +417,8 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 1290,
-        "y": 680,
+        "x": 1190,
+        "y": 900,
         "wires": []
     },
     {
@@ -430,8 +430,8 @@
         "ret": "txt",
         "url": "",
         "tls": "",
-        "x": 1070,
-        "y": 680,
+        "x": 970,
+        "y": 900,
         "wires": [
             [
                 "a81c91208ef5cb68",
@@ -450,8 +450,8 @@
         "chunk": false,
         "sendError": false,
         "allProps": false,
-        "x": 750,
-        "y": 680,
+        "x": 650,
+        "y": 900,
         "wires": [
             [
                 "4b6d09f07e1981b1"
@@ -469,8 +469,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 930,
-        "y": 680,
+        "x": 830,
+        "y": 900,
         "wires": [
             [
                 "264333ee20fc67c7"
@@ -676,7 +676,7 @@
         "y": 680,
         "wires": [
             [
-                "7e3e3794bc5adb58"
+                "f565de59feac159a"
             ]
         ]
     },
@@ -1059,8 +1059,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 640,
-        "y": 780,
+        "x": 480,
+        "y": 1000,
         "wires": [
             [
                 "f8422b93c4de805b"
@@ -1082,8 +1082,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 980,
-        "y": 780,
+        "x": 880,
+        "y": 1000,
         "wires": [
             []
         ]
@@ -1099,11 +1099,60 @@
         "syntax": "mustache",
         "template": "<script>\n    window.location = \"http://localhost:5099/ui\"\n</script>",
         "output": "str",
-        "x": 820,
-        "y": 780,
+        "x": 720,
+        "y": 1000,
         "wires": [
             [
                 "a22be1dfc1a08335"
+            ]
+        ]
+    },
+    {
+        "id": "0e2b815ea7ce504a",
+        "type": "debug",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1090,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "f565de59feac159a",
+        "type": "function",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "node-red-contrib-fs",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\") + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-fs\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 800,
+        "wires": [
+            [
+                "a6937f93fd0e2f96"
+            ]
+        ]
+    },
+    {
+        "id": "a6937f93fd0e2f96",
+        "type": "http request",
+        "z": "2f4ac1a1c27d6cd6",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 890,
+        "y": 800,
+        "wires": [
+            [
+                "0e2b815ea7ce504a",
+                "7e3e3794bc5adb58"
             ]
         ]
     },

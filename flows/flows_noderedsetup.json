@@ -123,7 +123,7 @@
         "id": "36b47e47.04f1c2",
         "type": "ui_group",
         "name": "Select Application",
-        "tab": "888f4ceb.4b158",
+        "tab": "d1282254e8888410",
         "order": 2,
         "disp": true,
         "width": "12",
@@ -433,6 +433,14 @@
         "type": "ui_tab",
         "name": "Table",
         "icon": "dashboard"
+    },
+    {
+        "id": "d1282254e8888410",
+        "type": "ui_tab",
+        "name": "Applications",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
     },
     {
         "id": "dd19c0de.9bebd",
@@ -1306,7 +1314,7 @@
         "passthru": false,
         "mode": "text",
         "delay": "5000",
-        "topic": "set/name",
+        "topic": "setconfig/name",
         "sendOnBlur": true,
         "className": "",
         "topicType": "str",
@@ -1354,7 +1362,7 @@
         "passthru": false,
         "mode": "email",
         "delay": "5000",
-        "topic": "set/email",
+        "topic": "setconfig/email",
         "sendOnBlur": true,
         "className": "",
         "topicType": "str",
@@ -1656,7 +1664,7 @@
         "passthru": false,
         "mode": "text",
         "delay": "5000",
-        "topic": "set/nodeId",
+        "topic": "setconfig/nodeId",
         "sendOnBlur": true,
         "className": "",
         "topicType": "str",
@@ -1682,7 +1690,7 @@
         "passthru": false,
         "mode": "email",
         "delay": "5000",
-        "topic": "set/networkId",
+        "topic": "setconfig/networkId",
         "sendOnBlur": true,
         "className": "",
         "topicType": "str",
@@ -3578,7 +3586,8 @@
         "y": 1300,
         "wires": [
             [
-                "16957a90e206a36d"
+                "16957a90e206a36d",
+                "f565de59feac159a"
             ]
         ]
     },
@@ -3930,6 +3939,54 @@
         "wires": [
             [
                 "7510f392f22305fe"
+            ]
+        ]
+    },
+    {
+        "id": "0e2b815ea7ce504a",
+        "type": "debug",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 970,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "f565de59feac159a",
+        "type": "function",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "node-red-contrib-fs",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\") + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-fs\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 1360,
+        "wires": [
+            [
+                "a6937f93fd0e2f96"
+            ]
+        ]
+    },
+    {
+        "id": "a6937f93fd0e2f96",
+        "type": "http request",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 770,
+        "y": 1360,
+        "wires": [
+            [
+                "0e2b815ea7ce504a"
             ]
         ]
     },
