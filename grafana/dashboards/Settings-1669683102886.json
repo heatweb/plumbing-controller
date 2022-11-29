@@ -1,0 +1,235 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_STATIC",
+      "label": "Static",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "marcusolsson-static-datasource",
+      "pluginName": "Static"
+    },
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.2.1"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "marcusolsson-static-datasource",
+      "name": "Static",
+      "version": "1.4.4"
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "volkovlabs-form-panel",
+      "name": "Data Manipulation",
+      "version": "2.6.0"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "marcusolsson-static-datasource",
+        "uid": "${DS_STATIC}"
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "links": [],
+      "options": {
+        "buttonGroup": {
+          "orientation": "right",
+          "size": "md"
+        },
+        "elements": [
+          {
+            "id": "title",
+            "labelWidth": 15,
+            "section": "General",
+            "title": "System Title",
+            "tooltip": "",
+            "type": "string",
+            "value": "Testing"
+          },
+          {
+            "id": "email",
+            "labelWidth": 15,
+            "section": "General",
+            "title": "Email Address",
+            "tooltip": "",
+            "type": "string",
+            "value": "admin@heatweb.com"
+          },
+          {
+            "id": "postCode",
+            "labelWidth": 15,
+            "section": "General",
+            "title": "Post Code",
+            "tooltip": "",
+            "type": "string",
+            "value": ""
+          },
+          {
+            "id": "tSet",
+            "labelWidth": 10,
+            "section": "Application",
+            "title": "Setpoint",
+            "tooltip": "",
+            "type": "number",
+            "unit": "°C",
+            "value": "55"
+          }
+        ],
+        "initial": {
+          "code": "console.log(options, data, response, elements, locationService, templateService)",
+          "contentType": "application/json",
+          "highlight": false,
+          "highlightColor": "red",
+          "method": "GET",
+          "url": "http://192.168.0.17:1880/settingsapi"
+        },
+        "layout": {
+          "sections": [
+            {
+              "name": "General"
+            },
+            {
+              "name": "Application"
+            }
+          ],
+          "variant": "split"
+        },
+        "reset": {
+          "backgroundColor": "purple",
+          "foregroundColor": "yellow",
+          "icon": "process",
+          "text": "Reset",
+          "variant": "secondary"
+        },
+        "submit": {
+          "backgroundColor": "purple",
+          "foregroundColor": "yellow",
+          "icon": "cog",
+          "text": "Submit",
+          "variant": "destructive"
+        },
+        "update": {
+          "code": "console.log(options, data, response, elements, locationService, templateService)",
+          "confirm": true,
+          "contentType": "application/json",
+          "header": [],
+          "method": "POST",
+          "url": "http://192.168.0.17:1880/settingsapi"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "marcusolsson-static-datasource",
+            "uid": "${DS_STATIC}"
+          },
+          "refId": "A"
+        }
+      ],
+      "type": "volkovlabs-form-panel"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "id": 4,
+      "links": [],
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<br>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"border-radius: 2px; background: rgb(61, 61, 61); padding: 7px 15px;height: 32px;line-height: 30px;vertical-align: middle; cursor: pointer;\"><a href=\"/d/HLgkuSNVk/start?orgId=1&refresh=30s&kiosk\" target=\"_top\">Home</a></span>",
+        "mode": "html"
+      },
+      "pluginVersion": "9.2.1",
+      "type": "text"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Settings",
+  "uid": "LuDpZXHVz",
+  "version": 51,
+  "weekStart": ""
+}
