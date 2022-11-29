@@ -1807,13 +1807,12 @@
         "depth": "3",
         "stat": false,
         "showWarnings": true,
-        "x": 420,
-        "y": 100,
+        "x": 440,
+        "y": 140,
         "wires": [
             [
                 "d19d75dc0cf0b6fd",
-                "778a715403c263da",
-                "7bc4773ca6357551"
+                "778a715403c263da"
             ]
         ]
     },
@@ -1834,12 +1833,12 @@
         "repeat": "",
         "crontab": "",
         "once": true,
-        "onceDelay": 0.1,
+        "onceDelay": "3",
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 210,
-        "y": 100,
+        "x": 230,
+        "y": 140,
         "wires": [
             [
                 "2d072824c6553cb9"
@@ -1858,8 +1857,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 620,
-        "y": 100,
+        "x": 640,
+        "y": 140,
         "wires": []
     },
     {
@@ -1877,8 +1876,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 780,
-        "y": 160,
+        "x": 800,
+        "y": 200,
         "wires": [
             [
                 "227f235df3f0c946",
@@ -1891,15 +1890,15 @@
         "type": "debug",
         "z": "d26c3be6.b5ef58",
         "name": "debug 27",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 980,
-        "y": 160,
+        "x": 1000,
+        "y": 200,
         "wires": []
     },
     {
@@ -1908,11 +1907,12 @@
         "z": "d26c3be6.b5ef58",
         "name": "",
         "events": "change",
-        "x": 220,
-        "y": 160,
+        "x": 240,
+        "y": 200,
         "wires": [
             [
-                "2d072824c6553cb9"
+                "2d072824c6553cb9",
+                "7bc4773ca6357551"
             ]
         ]
     },
@@ -1921,14 +1921,14 @@
         "type": "function",
         "z": "d26c3be6.b5ef58",
         "name": "function 1",
-        "func": "\n\nmsg.template =\"<script>\\n\";\nmsg.template += 'this.scope.action = function(m) { return m; }\\n';\nmsg.template += '</script>\\n';\nmsg.template += '<br><p>Press to install from the following mods.</p>\\n';\nmsg.template += '<small><p>To remove mods, start from a fresh application.</p></small>\\n';\n\nmsg.payload.sort();\nvar onfirst = \"<br>\";\nfor (var item in msg.payload) {\n\n    var tit = msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/_/g, \" \");\n    msg.template += '<br>\\n';\n    msg.template += '<small><p><b>' + tit +'</b></p></small>\\n';\n    \n    \n    var fileid = \"flow_\" + msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/ /g, \"_\");\n    var info = flow.get(\"flowinfo.\" + fileid); \n    //msg.template += '<small><p>' + fileid + '</p></small>\\n';\n    if (info) { msg.template += '<small><p>' + info + '</p></small>\\n'; }\n\n\n    msg.template += onfirst + '<md-button ng-click=\"send({payload:action(' + \"'\" + msg.payload[item] + \"'\" + ')})\">\\n';\n     onfirst = \"\";\n    msg.template += tit + '\\n';\n    msg.template += '</md-button>\\n';\n\n}\n    \nmsg.payload = null;\n\nreturn msg;",
+        "func": "\nvar searchfor = flow.get(\"searchfor\")||\"\";\n\nmsg.template =\"<script>\\n\";\nmsg.template += 'this.scope.action = function(m) { return m; }\\n';\nmsg.template += '</script>\\n';\nmsg.template += '<br><p>Press to install from the following mods.</p>\\n';\nmsg.template += '<small><p>To remove mods, start from a fresh application.</p></small>\\n';\n\nmsg.payload.sort();\n//var onfirst = \"<br>\";\nfor (var item in msg.payload) {\n\n    var loot = \"\";\n    var tit = msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/_/g, \" \");\n    var fileid = \"flow_\" + msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/ /g, \"_\");\n    var info = flow.get(\"flowinfo.\" + fileid); \n\n    loot += '<br>\\n<div style=\"border: 1px solid; padding: 10px; border-radius: 5px; border-color: #837360; padding-bottom: 16px;\">';\n    loot += '<small><p style=\"padding-bottom: 10px;\"><b>' + tit +'</b></p></small>\\n';\n\n    if (searchfor && (tit + \" \" + info).toLowerCase().indexOf(searchfor.toLowerCase()) < 0) {  continue;  }\n    \n    //msg.template += '<small><p>' + fileid + '</p></small>\\n';\n    if (info) { loot += '<p>' + info + '</p><br>\\n'; }\n\n\n    loot += '<md-button style=\"width:100%\" ng-click=\"send({payload:action(' + \"'\" + msg.payload[item] + \"'\" + ')})\">\\n';\n    // onfirst = \"\";\n    loot += 'INSTALL ' + tit + '\\n';\n    loot += '</md-button></div>\\n';\n\n\n\n    msg.template += loot;\n    \n\n}\n    \nmsg.payload = null;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 620,
-        "y": 160,
+        "x": 640,
+        "y": 200,
         "wires": [
             [
                 "38f185597cb5b3ac"
@@ -1944,8 +1944,8 @@
         "links": [
             "c2e30f26d233c6a0"
         ],
-        "x": 1505,
-        "y": 240,
+        "x": 1645,
+        "y": 260,
         "wires": []
     },
     {
@@ -1960,8 +1960,8 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 1380,
-        "y": 240,
+        "x": 1520,
+        "y": 260,
         "wires": [
             [
                 "76d8e235c0410b97"
@@ -1983,8 +1983,8 @@
         "className": "",
         "topic": "",
         "name": "",
-        "x": 1040,
-        "y": 240,
+        "x": 1180,
+        "y": 260,
         "wires": [
             [
                 "7a17c287a8da3d3b"
@@ -2011,8 +2011,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1200,
-        "y": 240,
+        "x": 1340,
+        "y": 260,
         "wires": [
             [
                 "3c8e957812aaab8d"
@@ -2040,8 +2040,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 860,
-        "y": 240,
+        "x": 1000,
+        "y": 260,
         "wires": [
             [
                 "717546fd81815f0c"
@@ -2060,8 +2060,8 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 640,
-        "y": 340,
+        "x": 860,
+        "y": 360,
         "wires": [
             [
                 "9fd7f2062c46a1d0"
@@ -2079,8 +2079,8 @@
         "arraySpltType": "len",
         "stream": false,
         "addname": "",
-        "x": 310,
-        "y": 340,
+        "x": 530,
+        "y": 360,
         "wires": [
             [
                 "7642388ecb8d41cc"
@@ -2092,15 +2092,15 @@
         "type": "debug",
         "z": "d26c3be6.b5ef58",
         "name": "debug 28",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 980,
-        "y": 340,
+        "x": 1200,
+        "y": 360,
         "wires": []
     },
     {
@@ -2123,8 +2123,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 470,
-        "y": 340,
+        "x": 690,
+        "y": 360,
         "wires": [
             [
                 "c357940457183e69"
@@ -2136,14 +2136,14 @@
         "type": "function",
         "z": "d26c3be6.b5ef58",
         "name": "function 2",
-        "func": "var fileid = \"flow\" + msg.filename.split(\"/flow\")[2].replace(\".json\", \"\").replace(/ /g,\"_\");\n\n\nfunction checkTab(nodeitem) {\n    return nodeitem.type == \"tab\";\n}\n\n\nvar ff = JSON.parse(msg.payload);\n\n\nvar info = ff.filter(checkTab)[0].info || \"\";\n\nif (info) { flow.set(\"flowinfo.\"+fileid,info); }\n\nreturn msg;",
+        "func": "\nfunction markdown(src) {\n\n    var rx_lt = /</g;\n    var rx_gt = />/g;\n    var rx_space = /\\t|\\r|\\uf8ff/g;\n    var rx_escape = /\\\\([\\\\\\|`*_{}\\[\\]()#+\\-~])/g;\n    var rx_hr = /^([*\\-=_] *){3,}$/gm;\n    var rx_blockquote = /\\n *&gt; *([^]*?)(?=(\\n|$){2})/g;\n    var rx_list = /\\n( *)(?:[*\\-+]|((\\d+)|([a-z])|[A-Z])[.)]) +([^]*?)(?=(\\n|$){2})/g;\n    var rx_listjoin = /<\\/(ol|ul)>\\n\\n<\\1>/g;\n    var rx_highlight = /(^|[^A-Za-z\\d\\\\])(([*_])|(~)|(\\^)|(--)|(\\+\\+)|`)(\\2?)([^<]*?)\\2\\8(?!\\2)(?=\\W|_|$)/g;\n    var rx_code = /\\n((```|~~~).*\\n?([^]*?)\\n?\\2|((    .*?\\n)+))/g;\n    var rx_link = /((!?)\\[(.*?)\\]\\((.*?)( \".*\")?\\)|\\\\([\\\\`*_{}\\[\\]()#+\\-.!~]))/g;\n    var rx_table = /\\n(( *\\|.*?\\| *\\n)+)/g;\n    var rx_thead = /^.*\\n( *\\|( *\\:?-+\\:?-+\\:? *\\|)* *\\n|)/;\n    var rx_row = /.*\\n/g;\n    var rx_cell = /\\||(.*?[^\\\\])\\|/g;\n    var rx_heading = /(?=^|>|\\n)([>\\s]*?)(#{1,6}) (.*?)( #*)? *(?=\\n|$)/g;\n    var rx_para = /(?=^|>|\\n)\\s*\\n+([^<]+?)\\n+\\s*(?=\\n|<|$)/g;\n    var rx_stash = /-\\d+\\uf8ff/g;\n\n    function replace(rex, fn) {\n        src = src.replace(rex, fn);\n    }\n\n    function element(tag, content) {\n        return '<' + tag + '>' + content + '</' + tag + '>';\n    }\n\n    function blockquote(src) {\n        return src.replace(rx_blockquote, function (all, content) {\n            return element('blockquote', blockquote(highlight(content.replace(/^ *&gt; */gm, ''))));\n        });\n    }\n\n    function list(src) {\n        return src.replace(rx_list, function (all, ind, ol, num, low, content) {\n            var entry = element('li', highlight(content.split(\n                RegExp('\\n ?' + ind + '(?:(?:\\\\d+|[a-zA-Z])[.)]|[*\\\\-+]) +', 'g')).map(list).join('</li><li>')));\n\n            return '\\n' + (ol\n                ? '<ol start=\"' + (num\n                    ? ol + '\">'\n                    : parseInt(ol, 36) - 9 + '\" style=\"list-style-type:' + (low ? 'low' : 'upp') + 'er-alpha\">') + entry + '</ol>'\n                : element('ul', entry));\n        });\n    }\n\n    function highlight(src) {\n        return src.replace(rx_highlight, function (all, _, p1, emp, sub, sup, small, big, p2, content) {\n            return _ + element(\n                emp ? (p2 ? 'strong' : 'em')\n                    : sub ? (p2 ? 's' : 'sub')\n                        : sup ? 'sup'\n                            : small ? 'small'\n                                : big ? 'big'\n                                    : 'code',\n                highlight(content));\n        });\n    }\n\n    function unesc(str) {\n        return str.replace(rx_escape, '$1');\n    }\n\n    var stash = [];\n    var si = 0;\n\n    src = '\\n' + src + '\\n';\n\n    replace(rx_lt, '&lt;');\n    replace(rx_gt, '&gt;');\n    replace(rx_space, '  ');\n\n    // blockquote\n    src = blockquote(src);\n\n    // horizontal rule\n    replace(rx_hr, '<hr/>');\n\n    // list\n    src = list(src);\n    replace(rx_listjoin, '');\n\n    // code\n    replace(rx_code, function (all, p1, p2, p3, p4) {\n        stash[--si] = element('pre', element('code', p3 || p4.replace(/^    /gm, '')));\n        return si + '\\uf8ff';\n    });\n\n    // link or image\n    replace(rx_link, function (all, p1, p2, p3, p4, p5, p6) {\n        stash[--si] = p4\n            ? p2\n                ? '<img src=\"' + p4 + '\" alt=\"' + p3 + '\"/>'\n                : '<a href=\"' + p4 + '\">' + unesc(highlight(p3)) + '</a>'\n            : p6;\n        return si + '\\uf8ff';\n    });\n\n    // table\n    replace(rx_table, function (all, table) {\n        var sep = table.match(rx_thead)[1];\n        return '\\n' + element('table',\n            table.replace(rx_row, function (row, ri) {\n                return row == sep ? '' : element('tr', row.replace(rx_cell, function (all, cell, ci) {\n                    return ci ? element(sep && !ri ? 'th' : 'td', unesc(highlight(cell || ''))) : ''\n                }))\n            })\n        )\n    });\n\n    // heading\n    replace(rx_heading, function (all, _, p1, p2) { return _ + element('h' + p1.length, unesc(highlight(p2))) });\n\n    // paragraph\n    replace(rx_para, function (all, content) { return element('p', unesc(highlight(content))) });\n\n    // stash\n    replace(rx_stash, function (all) { return stash[parseInt(all)] });\n\n    return src.trim();\n}\n\n\n\n\nvar fileid = \"flow\" + msg.filename.split(\"/flow\")[2].replace(\".json\", \"\").replace(/ /g,\"_\");\n\n\nfunction checkTab(nodeitem) {\n    return nodeitem.type == \"tab\";\n}\n\n\nvar ff = JSON.parse(msg.payload);\n\n\nvar info = ff.filter(checkTab)[0].info || \"\";\n\nif (info) { flow.set(\"flowinfo.\" + fileid,markdown(info)); }\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
-        "y": 340,
+        "x": 1000,
+        "y": 360,
         "wires": [
             [
                 "caf57c6e7c8ebff8"
@@ -2167,11 +2167,93 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 270,
-        "y": 280,
+        "x": 390,
+        "y": 360,
         "wires": [
             [
                 "c7095a20e528cc48"
+            ]
+        ]
+    },
+    {
+        "id": "ca76704180c26cf6",
+        "type": "ui_text_input",
+        "z": "d26c3be6.b5ef58",
+        "name": "",
+        "label": "Search",
+        "tooltip": "",
+        "group": "36b47e47.04f1c2",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 240,
+        "y": 80,
+        "wires": [
+            [
+                "ed9b0fe21821cd30"
+            ]
+        ]
+    },
+    {
+        "id": "ed9b0fe21821cd30",
+        "type": "change",
+        "z": "d26c3be6.b5ef58",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "searchfor",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 80,
+        "wires": [
+            [
+                "2d072824c6553cb9"
+            ]
+        ]
+    },
+    {
+        "id": "358963331e684e54",
+        "type": "inject",
+        "z": "d26c3be6.b5ef58",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 360,
+        "wires": [
+            [
+                "7bc4773ca6357551"
             ]
         ]
     },
