@@ -1812,7 +1812,8 @@
         "wires": [
             [
                 "d19d75dc0cf0b6fd",
-                "778a715403c263da"
+                "7bc4773ca6357551",
+                "fa940e563b52cdd6"
             ]
         ]
     },
@@ -1857,7 +1858,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 640,
+        "x": 660,
         "y": 140,
         "wires": []
     },
@@ -1876,7 +1877,7 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 800,
+        "x": 940,
         "y": 200,
         "wires": [
             [
@@ -1897,7 +1898,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1000,
+        "x": 1140,
         "y": 200,
         "wires": []
     },
@@ -1911,8 +1912,7 @@
         "y": 200,
         "wires": [
             [
-                "2d072824c6553cb9",
-                "7bc4773ca6357551"
+                "2d072824c6553cb9"
             ]
         ]
     },
@@ -1921,13 +1921,13 @@
         "type": "function",
         "z": "d26c3be6.b5ef58",
         "name": "function 1",
-        "func": "\nvar searchfor = flow.get(\"searchfor\")||\"\";\n\nmsg.template =\"<script>\\n\";\nmsg.template += 'this.scope.action = function(m) { return m; }\\n';\nmsg.template += '</script>\\n';\nmsg.template += '<div style=\"margin-bottom: 15px;\"><br><p>Press to install from the following mods.</p>\\n';\nmsg.template += '<small><p>To remove mods, start from a fresh application.</p></small><br></div>\\n';\n\nmsg.payload.sort();\n//var onfirst = \"<br>\";\nfor (var item in msg.payload) {\n\n    var loot = \"\";\n    var tit = msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/_/g, \" \");\n    var fileid = \"flow_\" + msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/ /g, \"_\");\n    var info = flow.get(\"flowinfo.\" + fileid); \n\n    loot += '\\n<div style=\"border: 1px solid; padding: 10px; border-radius: 5px; border-color: #837360; padding-bottom: 16px; margin-bottom: 15px;\">';\n    loot += '<small><p style=\"padding-bottom: 10px;\"><b>' + tit +'</b></p></small>\\n';\n\n    if (searchfor && (tit + \" \" + info).toLowerCase().indexOf(searchfor.toLowerCase()) < 0) {  continue;  }\n    \n    //msg.template += '<small><p>' + fileid + '</p></small>\\n';\n    if (info) { loot += '<p>' + info + '</p><br>\\n'; }\n\n\n    loot += '<md-button style=\"width:100%\" ng-click=\"send({payload:action(' + \"'\" + msg.payload[item] + \"'\" + ')})\">\\n';\n    // onfirst = \"\";\n    loot += 'INSTALL ' + tit + '\\n';\n    loot += '</md-button></div>\\n';\n\n\n\n    msg.template += loot;\n    \n\n}\n    \nmsg.payload = null;\n\nreturn msg;",
+        "func": "\nvar searchfor = flow.get(\"searchfor\")||\"\";\n\nmsg.template =\"<script>\\n\";\nmsg.template += 'this.scope.action = function(m) { return m; }\\n';\nmsg.template += '</script>\\n';\nmsg.template += '<div style=\"margin-bottom: 15px;\"><br><p>Press to install from the following mods.</p>\\n';\nmsg.template += '<small><p>To remove mods, start from a fresh application.</p></small><br></div>\\n';\n\nmsg.payload.sort();\n//var onfirst = \"<br>\";\nfor (var item in msg.payload) {\n\n    var loot = \"\";\n    var tit = msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/_/g, \" \");\n    //var fileid = \"flow_\" + msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/ /g, \"_\");\n    var fileid = msg.payload[item].replace(/\\//g, \"_\").replace(/\\./g, \"_\")\n    var info = flow.get(\"flowinfo.\" + fileid)||{}; \n\n    loot += '\\n<div style=\"border: 1px solid; padding: 10px; border-radius: 5px; border-color: #837360; padding-bottom: 16px; margin-bottom: 15px;\">';\n    loot += '<small><p style=\"padding-bottom: 10px;\"><b>' + tit +'</b></p></small>\\n';\n\n    if (searchfor && (tit + \" \" + info.info).toLowerCase().indexOf(searchfor.toLowerCase()) < 0) {  continue;  }\n    \n    //msg.template += '<small><p>' + fileid + '</p></small>\\n';\n    if (info.info) { loot += '<p>' + info.info + '</p><br>\\n'; }\n\n    var resi = global.get(\"results.\" + fileid) ; \n    if (!resi) { \n        loot += '<md-button style=\"width:100%\" ng-click=\"send({payload:action(' + \"'\" + msg.payload[item] + \"'\" + ')})\">\\n';\n        loot += 'INSTALL ' + tit + '\\n';\n        loot += '</md-button>';\n    }\n    else {\n\n        loot += 'Installed: <i>' + resi.id +'</i>\\n';\n        loot += '</md-button>';\n\n    }\n\n    loot += '</div>\\n';\n\n    msg.template += loot;\n    \n\n}\n    \nmsg.payload = null;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 640,
+        "x": 780,
         "y": 200,
         "wires": [
             [
@@ -1944,7 +1944,7 @@
         "links": [
             "c2e30f26d233c6a0"
         ],
-        "x": 1645,
+        "x": 1785,
         "y": 260,
         "wires": []
     },
@@ -1960,7 +1960,7 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 1520,
+        "x": 1660,
         "y": 260,
         "wires": [
             [
@@ -1983,7 +1983,7 @@
         "className": "",
         "topic": "",
         "name": "",
-        "x": 1180,
+        "x": 1320,
         "y": 260,
         "wires": [
             [
@@ -2011,7 +2011,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1340,
+        "x": 1480,
         "y": 260,
         "wires": [
             [
@@ -2040,7 +2040,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1000,
+        "x": 1140,
         "y": 260,
         "wires": [
             [
@@ -2136,13 +2136,13 @@
         "type": "function",
         "z": "d26c3be6.b5ef58",
         "name": "function 2",
-        "func": "// https://adamvleggett.github.io/drawdown/\n\n\n\nfunction markdown(src) {\n\n    var rx_lt = /</g;\n    var rx_gt = />/g;\n    var rx_space = /\\t|\\r|\\uf8ff/g;\n    var rx_escape = /\\\\([\\\\\\|`*_{}\\[\\]()#+\\-~])/g;\n    var rx_hr = /^([*\\-=_] *){3,}$/gm;\n    var rx_blockquote = /\\n *&gt; *([^]*?)(?=(\\n|$){2})/g;\n    var rx_list = /\\n( *)(?:[*\\-+]|((\\d+)|([a-z])|[A-Z])[.)]) +([^]*?)(?=(\\n|$){2})/g;\n    var rx_listjoin = /<\\/(ol|ul)>\\n\\n<\\1>/g;\n    var rx_highlight = /(^|[^A-Za-z\\d\\\\])(([*_])|(~)|(\\^)|(--)|(\\+\\+)|`)(\\2?)([^<]*?)\\2\\8(?!\\2)(?=\\W|_|$)/g;\n    var rx_code = /\\n((```|~~~).*\\n?([^]*?)\\n?\\2|((    .*?\\n)+))/g;\n    var rx_link = /((!?)\\[(.*?)\\]\\((.*?)( \".*\")?\\)|\\\\([\\\\`*_{}\\[\\]()#+\\-.!~]))/g;\n    var rx_table = /\\n(( *\\|.*?\\| *\\n)+)/g;\n    var rx_thead = /^.*\\n( *\\|( *\\:?-+\\:?-+\\:? *\\|)* *\\n|)/;\n    var rx_row = /.*\\n/g;\n    var rx_cell = /\\||(.*?[^\\\\])\\|/g;\n    var rx_heading = /(?=^|>|\\n)([>\\s]*?)(#{1,6}) (.*?)( #*)? *(?=\\n|$)/g;\n    var rx_para = /(?=^|>|\\n)\\s*\\n+([^<]+?)\\n+\\s*(?=\\n|<|$)/g;\n    var rx_stash = /-\\d+\\uf8ff/g;\n\n    function replace(rex, fn) {\n        src = src.replace(rex, fn);\n    }\n\n    function element(tag, content) {\n        return '<' + tag + '>' + content + '</' + tag + '>';\n    }\n\n    function blockquote(src) {\n        return src.replace(rx_blockquote, function (all, content) {\n            return element('blockquote', blockquote(highlight(content.replace(/^ *&gt; */gm, ''))));\n        });\n    }\n\n    function list(src) {\n        return src.replace(rx_list, function (all, ind, ol, num, low, content) {\n            var entry = element('li', highlight(content.split(\n                RegExp('\\n ?' + ind + '(?:(?:\\\\d+|[a-zA-Z])[.)]|[*\\\\-+]) +', 'g')).map(list).join('</li><li>')));\n\n            return '\\n' + (ol\n                ? '<ol start=\"' + (num\n                    ? ol + '\">'\n                    : parseInt(ol, 36) - 9 + '\" style=\"list-style-type:' + (low ? 'low' : 'upp') + 'er-alpha\">') + entry + '</ol>'\n                : element('ul', entry));\n        });\n    }\n\n    function highlight(src) {\n        return src.replace(rx_highlight, function (all, _, p1, emp, sub, sup, small, big, p2, content) {\n            return _ + element(\n                emp ? (p2 ? 'strong' : 'em')\n                    : sub ? (p2 ? 's' : 'sub')\n                        : sup ? 'sup'\n                            : small ? 'small'\n                                : big ? 'big'\n                                    : 'code',\n                highlight(content));\n        });\n    }\n\n    function unesc(str) {\n        return str.replace(rx_escape, '$1');\n    }\n\n    var stash = [];\n    var si = 0;\n\n    src = '\\n' + src + '\\n';\n\n    replace(rx_lt, '&lt;');\n    replace(rx_gt, '&gt;');\n    replace(rx_space, '  ');\n\n    // blockquote\n    src = blockquote(src);\n\n    // horizontal rule\n    replace(rx_hr, '<hr/>');\n\n    // list\n    src = list(src);\n    replace(rx_listjoin, '');\n\n    // code\n    replace(rx_code, function (all, p1, p2, p3, p4) {\n        stash[--si] = element('pre', element('code', p3 || p4.replace(/^    /gm, '')));\n        return si + '\\uf8ff';\n    });\n\n    // link or image\n    replace(rx_link, function (all, p1, p2, p3, p4, p5, p6) {\n        stash[--si] = p4\n            ? p2\n                ? '<img src=\"' + p4 + '\" alt=\"' + p3 + '\"/>'\n                : '<a href=\"' + p4 + '\">' + unesc(highlight(p3)) + '</a>'\n            : p6;\n        return si + '\\uf8ff';\n    });\n\n    // table\n    replace(rx_table, function (all, table) {\n        var sep = table.match(rx_thead)[1];\n        return '\\n' + element('table',\n            table.replace(rx_row, function (row, ri) {\n                return row == sep ? '' : element('tr', row.replace(rx_cell, function (all, cell, ci) {\n                    return ci ? element(sep && !ri ? 'th' : 'td', unesc(highlight(cell || ''))) : ''\n                }))\n            })\n        )\n    });\n\n    // heading\n    replace(rx_heading, function (all, _, p1, p2) { return _ + element('h' + p1.length, unesc(highlight(p2))) });\n\n    // paragraph\n    replace(rx_para, function (all, content) { return element('p', unesc(highlight(content))) });\n\n    // stash\n    replace(rx_stash, function (all) { return stash[parseInt(all)] });\n\n    return src.trim();\n}\n\n\n\n\nvar fileid = \"flow\" + msg.filename.split(\"/flow\")[2].replace(\".json\", \"\").replace(/ /g,\"_\");\n\n\nfunction checkTab(nodeitem) {\n    return nodeitem.type == \"tab\";\n}\n\n\nvar ff = JSON.parse(msg.payload);\n\n\nvar info = ff.filter(checkTab)[0].info || \"\";\n\nif (info) { flow.set(\"flowinfo.\" + fileid,markdown(info)); }\n\nreturn msg;",
+        "func": "// https://adamvleggett.github.io/drawdown/\n\n\n\nfunction markdown(src) {\n\n    var rx_lt = /</g;\n    var rx_gt = />/g;\n    var rx_space = /\\t|\\r|\\uf8ff/g;\n    var rx_escape = /\\\\([\\\\\\|`*_{}\\[\\]()#+\\-~])/g;\n    var rx_hr = /^([*\\-=_] *){3,}$/gm;\n    var rx_blockquote = /\\n *&gt; *([^]*?)(?=(\\n|$){2})/g;\n    var rx_list = /\\n( *)(?:[*\\-+]|((\\d+)|([a-z])|[A-Z])[.)]) +([^]*?)(?=(\\n|$){2})/g;\n    var rx_listjoin = /<\\/(ol|ul)>\\n\\n<\\1>/g;\n    var rx_highlight = /(^|[^A-Za-z\\d\\\\])(([*_])|(~)|(\\^)|(--)|(\\+\\+)|`)(\\2?)([^<]*?)\\2\\8(?!\\2)(?=\\W|_|$)/g;\n    var rx_code = /\\n((```|~~~).*\\n?([^]*?)\\n?\\2|((    .*?\\n)+))/g;\n    var rx_link = /((!?)\\[(.*?)\\]\\((.*?)( \".*\")?\\)|\\\\([\\\\`*_{}\\[\\]()#+\\-.!~]))/g;\n    var rx_table = /\\n(( *\\|.*?\\| *\\n)+)/g;\n    var rx_thead = /^.*\\n( *\\|( *\\:?-+\\:?-+\\:? *\\|)* *\\n|)/;\n    var rx_row = /.*\\n/g;\n    var rx_cell = /\\||(.*?[^\\\\])\\|/g;\n    var rx_heading = /(?=^|>|\\n)([>\\s]*?)(#{1,6}) (.*?)( #*)? *(?=\\n|$)/g;\n    var rx_para = /(?=^|>|\\n)\\s*\\n+([^<]+?)\\n+\\s*(?=\\n|<|$)/g;\n    var rx_stash = /-\\d+\\uf8ff/g;\n\n    function replace(rex, fn) {\n        src = src.replace(rex, fn);\n    }\n\n    function element(tag, content) {\n        return '<' + tag + '>' + content + '</' + tag + '>';\n    }\n\n    function blockquote(src) {\n        return src.replace(rx_blockquote, function (all, content) {\n            return element('blockquote', blockquote(highlight(content.replace(/^ *&gt; */gm, ''))));\n        });\n    }\n\n    function list(src) {\n        return src.replace(rx_list, function (all, ind, ol, num, low, content) {\n            var entry = element('li', highlight(content.split(\n                RegExp('\\n ?' + ind + '(?:(?:\\\\d+|[a-zA-Z])[.)]|[*\\\\-+]) +', 'g')).map(list).join('</li><li>')));\n\n            return '\\n' + (ol\n                ? '<ol start=\"' + (num\n                    ? ol + '\">'\n                    : parseInt(ol, 36) - 9 + '\" style=\"list-style-type:' + (low ? 'low' : 'upp') + 'er-alpha\">') + entry + '</ol>'\n                : element('ul', entry));\n        });\n    }\n\n    function highlight(src) {\n        return src.replace(rx_highlight, function (all, _, p1, emp, sub, sup, small, big, p2, content) {\n            return _ + element(\n                emp ? (p2 ? 'strong' : 'em')\n                    : sub ? (p2 ? 's' : 'sub')\n                        : sup ? 'sup'\n                            : small ? 'small'\n                                : big ? 'big'\n                                    : 'code',\n                highlight(content));\n        });\n    }\n\n    function unesc(str) {\n        return str.replace(rx_escape, '$1');\n    }\n\n    var stash = [];\n    var si = 0;\n\n    src = '\\n' + src + '\\n';\n\n    replace(rx_lt, '&lt;');\n    replace(rx_gt, '&gt;');\n    replace(rx_space, '  ');\n\n    // blockquote\n    src = blockquote(src);\n\n    // horizontal rule\n    replace(rx_hr, '<hr/>');\n\n    // list\n    src = list(src);\n    replace(rx_listjoin, '');\n\n    // code\n    replace(rx_code, function (all, p1, p2, p3, p4) {\n        stash[--si] = element('pre', element('code', p3 || p4.replace(/^    /gm, '')));\n        return si + '\\uf8ff';\n    });\n\n    // link or image\n    replace(rx_link, function (all, p1, p2, p3, p4, p5, p6) {\n        stash[--si] = p4\n            ? p2\n                ? '<img src=\"' + p4 + '\" alt=\"' + p3 + '\"/>'\n                : '<a href=\"' + p4 + '\">' + unesc(highlight(p3)) + '</a>'\n            : p6;\n        return si + '\\uf8ff';\n    });\n\n    // table\n    replace(rx_table, function (all, table) {\n        var sep = table.match(rx_thead)[1];\n        return '\\n' + element('table',\n            table.replace(rx_row, function (row, ri) {\n                return row == sep ? '' : element('tr', row.replace(rx_cell, function (all, cell, ci) {\n                    return ci ? element(sep && !ri ? 'th' : 'td', unesc(highlight(cell || ''))) : ''\n                }))\n            })\n        )\n    });\n\n    // heading\n    replace(rx_heading, function (all, _, p1, p2) { return _ + element('h' + p1.length, unesc(highlight(p2))) });\n\n    // paragraph\n    replace(rx_para, function (all, content) { return element('p', unesc(highlight(content))) });\n\n    // stash\n    replace(rx_stash, function (all) { return stash[parseInt(all)] });\n\n    return src.trim();\n}\n\n\n\n\n//var fileid = \"flow\" + msg.filename.split(\"/flow\")[2].replace(\".json\", \"\").replace(/ /g,\"_\");\nvar fileid = msg.filename.replace(/\\//g, \"_\").replace(/\\./g, \"_\");\n\nfunction checkTab(nodeitem) {\n    return nodeitem.type == \"tab\";\n}\n\n\nvar ff = JSON.parse(msg.payload);\n\n\nvar info = ff.filter(checkTab)[0].info || \"\";\nvar id = ff.filter(checkTab)[0].id || \"\";\n\nif (info) { flow.set(\"flowinfo.\" + fileid + \".info\",markdown(info)); }\nif (id) { flow.set(\"flowinfo.\" + fileid + \".id\", id); }\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1000,
+        "x": 1040,
         "y": 360,
         "wires": [
             [
@@ -2249,11 +2249,52 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 210,
+        "x": 190,
         "y": 360,
         "wires": [
             [
                 "7bc4773ca6357551"
+            ]
+        ]
+    },
+    {
+        "id": "fa940e563b52cdd6",
+        "type": "delay",
+        "z": "d26c3be6.b5ef58",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 640,
+        "y": 200,
+        "wires": [
+            [
+                "778a715403c263da"
+            ]
+        ]
+    },
+    {
+        "id": "6dbc87601629c01e",
+        "type": "link in",
+        "z": "d26c3be6.b5ef58",
+        "name": "link in 4",
+        "links": [
+            "1882881c9344cb0a"
+        ],
+        "x": 285,
+        "y": 260,
+        "wires": [
+            [
+                "2d072824c6553cb9"
             ]
         ]
     },
@@ -2282,7 +2323,8 @@
         "y": 1680,
         "wires": [
             [
-                "e3b7bcf37e26b9f2"
+                "e3b7bcf37e26b9f2",
+                "ab51230af157d685"
             ]
         ]
     },
@@ -2540,7 +2582,8 @@
             [
                 "f99552bd6f696c2f",
                 "0b642012c1953bc9",
-                "8d2434ea4445563e"
+                "8d2434ea4445563e",
+                "e41eb025473efd36"
             ]
         ]
     },
@@ -4486,7 +4529,7 @@
         "links": [
             "ef7f6e180ea4284c"
         ],
-        "x": 1425,
+        "x": 1445,
         "y": 1940,
         "wires": []
     },
@@ -4507,6 +4550,55 @@
         "name": "",
         "x": 1490,
         "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "e41eb025473efd36",
+        "type": "function",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "save results",
+        "func": "if (msg.filename) {\n\n    var fn = msg.filename.replace(/\\//g, \"_\").replace(/\\./g, \"_\");\n    global.set(\"results.\"+fn, JSON.parse(msg.payload));\n\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1370,
+        "y": 2020,
+        "wires": [
+            [
+                "1882881c9344cb0a"
+            ]
+        ]
+    },
+    {
+        "id": "ab51230af157d685",
+        "type": "function",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "clean results",
+        "func": "global.set(\"results\"),{};\n\nif (msg.filename) {\n\n    var fn = msg.filename.replace(/\\//g, \"_\").replace(/\\./g, \"_\");\n    global.set(\"results.\"+fn, JSON.parse(msg.payload));\n\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 1760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1882881c9344cb0a",
+        "type": "link out",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "link out 4",
+        "mode": "link",
+        "links": [
+            "6dbc87601629c01e"
+        ],
+        "x": 1505,
+        "y": 2020,
         "wires": []
     },
     {
