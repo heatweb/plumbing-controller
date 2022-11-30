@@ -1807,13 +1807,12 @@
         "depth": "3",
         "stat": false,
         "showWarnings": true,
-        "x": 440,
+        "x": 430,
         "y": 140,
         "wires": [
             [
                 "d19d75dc0cf0b6fd",
-                "7bc4773ca6357551",
-                "fa940e563b52cdd6"
+                "778a715403c263da"
             ]
         ]
     },
@@ -1833,12 +1832,12 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": true,
-        "onceDelay": "3",
+        "once": false,
+        "onceDelay": "5",
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 230,
+        "x": 210,
         "y": 140,
         "wires": [
             [
@@ -1858,7 +1857,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 660,
+        "x": 650,
         "y": 140,
         "wires": []
     },
@@ -1877,7 +1876,7 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 940,
+        "x": 820,
         "y": 200,
         "wires": [
             [
@@ -1898,7 +1897,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1140,
+        "x": 1020,
         "y": 200,
         "wires": []
     },
@@ -1908,7 +1907,7 @@
         "z": "d26c3be6.b5ef58",
         "name": "",
         "events": "change",
-        "x": 240,
+        "x": 230,
         "y": 200,
         "wires": [
             [
@@ -1921,13 +1920,13 @@
         "type": "function",
         "z": "d26c3be6.b5ef58",
         "name": "function 1",
-        "func": "\nvar searchfor = flow.get(\"searchfor\")||\"\";\n\nmsg.template =\"<script>\\n\";\nmsg.template += 'this.scope.action = function(m) { return m; }\\n';\nmsg.template += '</script>\\n';\nmsg.template += '<div style=\"margin-bottom: 15px;\"><br><p>Press to install from the following mods.</p>\\n';\nmsg.template += '<small><p>To remove mods, start from a fresh application.</p></small><br></div>\\n';\n\nmsg.payload.sort();\n//var onfirst = \"<br>\";\nfor (var item in msg.payload) {\n\n    var loot = \"\";\n    var tit = msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/_/g, \" \");\n    //var fileid = \"flow_\" + msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/ /g, \"_\");\n    var fileid = msg.payload[item].replace(/\\//g, \"_\").replace(/\\./g, \"_\")\n    var info = flow.get(\"flowinfo.\" + fileid)||{}; \n\n    loot += '\\n<div style=\"border: 1px solid; padding: 10px; border-radius: 5px; border-color: #837360; padding-bottom: 16px; margin-bottom: 15px;\">';\n    loot += '<small><p style=\"padding-bottom: 10px;\"><b>' + tit +'</b></p></small>\\n';\n\n    if (searchfor && (tit + \" \" + info.info).toLowerCase().indexOf(searchfor.toLowerCase()) < 0) {  continue;  }\n    \n    //msg.template += '<small><p>' + fileid + '</p></small>\\n';\n    if (info.info) { loot += '<p>' + info.info + '</p><br>\\n'; }\n\n    var resi = global.get(\"results.\" + fileid) ; \n    if (!resi) { \n        loot += '<md-button style=\"width:100%\" ng-click=\"send({payload:action(' + \"'\" + msg.payload[item] + \"'\" + ')})\">\\n';\n        loot += 'INSTALL ' + tit + '\\n';\n        loot += '</md-button>';\n    }\n    else {\n\n        loot += 'Installed: <i>' + resi.id +'</i>\\n';\n        loot += '</md-button>';\n\n    }\n\n    loot += '</div>\\n';\n\n    msg.template += loot;\n    \n\n}\n    \nmsg.payload = null;\n\nreturn msg;",
+        "func": "\nvar searchfor = flow.get(\"searchfor\")||\"\";\n\nmsg.template =\"<script>\\n\";\nmsg.template += 'this.scope.action = function(m) { return m; }\\n';\nmsg.template += '</script>\\n';\nmsg.template += '<div style=\"margin-bottom: 15px;\"><br><p>Press to install from the following mods.</p>\\n';\nmsg.template += '<small><p>To remove mods, start from a fresh application.</p></small><br></div>\\n';\n\nmsg.payload.sort();\n//var onfirst = \"<br>\";\nfor (var item in msg.payload) {\n\n    var loot = \"\";\n    var tit = msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/_/g, \" \");\n    //var fileid = \"flow_\" + msg.payload[item].split(\"flow_\")[1].split(\".json\")[0].replace(/ /g, \"_\");\n    var fileid = msg.payload[item].replace(/\\//g, \"_\").replace(/\\./g, \"_\")\n    var info = flow.get(\"flowinfo.\" + fileid)||{}; \n\n    loot += '\\n<div style=\"border: 1px solid; padding: 10px; border-radius: 5px; border-color: #837360; padding-bottom: 16px; margin-bottom: 15px;\">';\n    loot += '<small><p style=\"padding-bottom: 10px;\"><b>' + tit +'</b></p></small>\\n';\n\n    if (searchfor && (tit + \" \" + info.info).toLowerCase().indexOf(searchfor.toLowerCase()) < 0) {  continue;  }\n    \n    //msg.template += '<small><p>' + fileid + '</p></small>\\n';\n    if (info.info) { loot += '<p>' + info.info + '</p><br>\\n'; }\n\n    var resi = global.get(\"results.\" + fileid) ; \n    if (!resi) { \n        loot += '<md-button style=\"width:100%\" ng-click=\"send({payload:action(' + \"'\" + msg.payload[item] + \"'\" + ')})\">\\n';\n        loot += 'INSTALL ' + tit + '\\n';\n        loot += '</md-button>';\n    }\n    else {\n\n        if (resi.id) { loot += 'Installed: <i>' + resi.id +'</i>\\n'; }\n        else { loot += '<b>ERROR: <i>' + resi.message + '</i></b>\\n'; }\n        \n    }\n\n    loot += '</div>\\n';\n\n    msg.template += loot;\n    \n\n}\n    \nmsg.payload = null;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
+        "x": 660,
         "y": 200,
         "wires": [
             [
@@ -1944,7 +1943,7 @@
         "links": [
             "c2e30f26d233c6a0"
         ],
-        "x": 1785,
+        "x": 1685,
         "y": 260,
         "wires": []
     },
@@ -1960,7 +1959,7 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 1660,
+        "x": 1560,
         "y": 260,
         "wires": [
             [
@@ -1983,7 +1982,7 @@
         "className": "",
         "topic": "",
         "name": "",
-        "x": 1320,
+        "x": 1200,
         "y": 260,
         "wires": [
             [
@@ -2011,7 +2010,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1480,
+        "x": 1380,
         "y": 260,
         "wires": [
             [
@@ -2040,7 +2039,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1140,
+        "x": 1020,
         "y": 260,
         "wires": [
             [
@@ -2060,7 +2059,7 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 860,
+        "x": 850,
         "y": 360,
         "wires": [
             [
@@ -2079,7 +2078,7 @@
         "arraySpltType": "len",
         "stream": false,
         "addname": "",
-        "x": 530,
+        "x": 520,
         "y": 360,
         "wires": [
             [
@@ -2099,7 +2098,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1200,
+        "x": 1190,
         "y": 360,
         "wires": []
     },
@@ -2123,7 +2122,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 690,
+        "x": 680,
         "y": 360,
         "wires": [
             [
@@ -2142,36 +2141,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1040,
+        "x": 1030,
         "y": 360,
         "wires": [
             [
-                "caf57c6e7c8ebff8"
-            ]
-        ]
-    },
-    {
-        "id": "7bc4773ca6357551",
-        "type": "trigger",
-        "z": "d26c3be6.b5ef58",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "nul",
-        "duration": "1",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 390,
-        "y": 360,
-        "wires": [
-            [
-                "c7095a20e528cc48"
+                "caf57c6e7c8ebff8",
+                "1f40a6210d351fab"
             ]
         ]
     },
@@ -2193,7 +2168,7 @@
         "sendOnBlur": true,
         "className": "",
         "topicType": "msg",
-        "x": 240,
+        "x": 230,
         "y": 80,
         "wires": [
             [
@@ -2220,7 +2195,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 430,
+        "x": 420,
         "y": 80,
         "wires": [
             [
@@ -2229,7 +2204,48 @@
         ]
     },
     {
-        "id": "358963331e684e54",
+        "id": "6dbc87601629c01e",
+        "type": "link in",
+        "z": "d26c3be6.b5ef58",
+        "name": "link in 4",
+        "links": [
+            "1882881c9344cb0a"
+        ],
+        "x": 275,
+        "y": 260,
+        "wires": [
+            [
+                "2d072824c6553cb9"
+            ]
+        ]
+    },
+    {
+        "id": "1f40a6210d351fab",
+        "type": "trigger",
+        "z": "d26c3be6.b5ef58",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "2",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 430,
+        "y": 280,
+        "wires": [
+            [
+                "2d072824c6553cb9"
+            ]
+        ]
+    },
+    {
+        "id": "d39f0b76342af096",
         "type": "inject",
         "z": "d26c3be6.b5ef58",
         "name": "",
@@ -2245,56 +2261,38 @@
         "repeat": "",
         "crontab": "",
         "once": true,
-        "onceDelay": 0.1,
+        "onceDelay": "5",
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 190,
+        "x": 200,
         "y": 360,
         "wires": [
             [
-                "7bc4773ca6357551"
+                "7b04d2f5a2951d19"
             ]
         ]
     },
     {
-        "id": "fa940e563b52cdd6",
-        "type": "delay",
+        "id": "7b04d2f5a2951d19",
+        "type": "fs-file-lister",
         "z": "d26c3be6.b5ef58",
         "name": "",
-        "pauseType": "delay",
-        "timeout": "1",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 640,
-        "y": 200,
+        "start": "/home/pi/plumbing-controller/flows",
+        "pattern": "flow_*.json",
+        "folders": "*",
+        "hidden": true,
+        "lstype": "files",
+        "path": true,
+        "single": true,
+        "depth": "3",
+        "stat": false,
+        "showWarnings": true,
+        "x": 370,
+        "y": 360,
         "wires": [
             [
-                "778a715403c263da"
-            ]
-        ]
-    },
-    {
-        "id": "6dbc87601629c01e",
-        "type": "link in",
-        "z": "d26c3be6.b5ef58",
-        "name": "link in 4",
-        "links": [
-            "1882881c9344cb0a"
-        ],
-        "x": 285,
-        "y": 260,
-        "wires": [
-            [
-                "2d072824c6553cb9"
+                "c7095a20e528cc48"
             ]
         ]
     },
