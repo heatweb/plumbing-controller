@@ -1,0 +1,1429 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.2.7-0f96ed148c"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "marcuscalidus-svg-panel",
+      "name": "SVG",
+      "version": "0.3.4"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "aliasColors": {},
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "doInit": {},
+      "format": "short",
+      "gridPos": {
+        "h": 12,
+        "w": 16,
+        "x": 0,
+        "y": 0
+      },
+      "handleMetric": {},
+      "id": 2,
+      "js_code": "//console.log(ctrl.series);\r\n\r\n\r\n\r\n  \r\nfunction hexdec (hexv) {\r\n    \r\n    var hexString = (hexv + '').replace(/[^a-f0-9]/gi, '')\r\n    return parseInt(hexString, 16);\r\n    \r\n  }\r\n  \r\n  function dechex (number) {\r\n    \r\n    if (number < 0) {\r\n      number = 0xFFFFFFFF + number + 1\r\n    }\r\n    var hx =  parseInt(number, 10).toString(16);\r\n    \r\n    if (hx.length==1) { hx = \"0\" + hx; }\r\n    return hx;\r\n  }\r\n  \r\n  function color_avg(color1,color2,factor) {\r\n  \r\n          // extract RGB values for color1.\r\n          \r\n          var r1 = color1.substr(1,2);\r\n          var g1 = color1.substr(3,2);\r\n          var b1 = color1.substr(5,2);\r\n          \r\n          var r2 = color2.substr(1,2);\r\n          var g2 = color2.substr(3,2);\r\n          var b2 = color2.substr(5,2);\r\n  \r\n          // get the average RGB values.\r\n          var r_avg = (hexdec(r1)*(1-factor)+hexdec(r2)*factor);\r\n          var g_avg = (hexdec(g1)*(1-factor)+hexdec(g2)*factor);\r\n          var b_avg = (hexdec(b1)*(1-factor)+hexdec(b2)*factor);\r\n  \r\n          // construct the result color.    \r\n          var color_avg = '#' + dechex(r_avg) + dechex(g_avg)+ dechex(b_avg);\r\n  \r\n          // return it.\r\n          return color_avg;\r\n  }\r\n  \r\n  \r\n  function tempColour(temp) {\r\n      \r\n      \r\n      \r\n      var values = parseFloat(temp);\r\n      \r\n      if(values===0) { return(\"#ffffff\"); }\r\n\r\n      var tempcolour = \"#ff6c6c\";\r\n  \r\n      var tv = Math.ceil(values / 10);\r\n  \r\n      var factr = 1 - (tv - (values / 10));\r\n  \r\n  \r\n      //if ($tv<1) { $tempcolour = '#57007f'; }\r\n      //elseif ($tv==1) { $tempcolour = color_avg(\"#57007f\",\"#140af7\",$factr); }\r\n      //elseif ($tv==2) { $tempcolour = color_avg(\"#140af7\",\"#008ef9\",$factr); }\r\n      \r\n      if (tv<1) { tempcolour = '#ffffff'; }\r\n      else if (tv==1) { tempcolour = color_avg(\"#ffffff\",\"#ffffff\",factr); }\r\n      else if (tv==2) { tempcolour = color_avg(\"#ffffff\",\"#008ef9\",factr); }\r\n      else if (tv==3) { tempcolour = color_avg(\"#008ef9\",\"#14fffb\",factr); }\r\n      else if (tv==4) { tempcolour = color_avg(\"#14fffb\",\"#66fe00\",factr); }\r\n      else if (tv==5) { tempcolour = color_avg(\"#66fe00\",\"#f7fe02\",factr); }\r\n      else if (tv==6) { tempcolour = color_avg(\"#f7fe02\",\"#fdbe10\",factr); }\r\n      else if (tv==7) { tempcolour = color_avg(\"#fdbe10\",\"#f08e12\",factr); }\r\n      else if (tv==8) { tempcolour = color_avg(\"#f08e12\",\"#ff4f19\",factr); }\r\n      else if (tv==9) { tempcolour = color_avg(\"#ff4f19\",\"#c90504\",factr); }\r\n      else if (tv>9) { tempcolour = \"#c90504\";  }\r\n  \r\n              \r\n      return(tempcolour);\r\n      \r\n  }\r\n  \r\n\r\n\r\n  console.log(\"ctrl...\",ctrl);\r\n  console.log(\"rows...\",ctrl.data[0].rows);\r\n  \r\n  for (var row in ctrl.data) {\r\n     \r\n     \r\n        var val = ctrl.data[row].datapoints.lastItem[0];\r\n        console.log(\"val...\",val);\r\n      \r\n        //\"{__name__=\"dat_tF_metric\", __proxy_source__=\"influx\", device=\"boilers\", network=\"putneyplaza\", node=\"zcccaef4ahl\", vargroup=\"dat\", varkey=\"tF\"}\"\r\n        var rinf = ctrl.data[row].alias;\r\n        \r\n        var dev = rinf.split(\"device=\")[1].split('\"')[1];\r\n        console.log(\"dev...\",dev);\r\n\r\n        var varkey = rinf.split(\"varkey=\")[1].split('\"')[1];\r\n        // var varkey = ctrl.data[0].rows[row].varkey;\r\n        \r\n        var vargroup = rinf.split(\"vargroup=\")[1].split('\"')[1];\r\n        // var vargroup = ctrl.data[0].rows[row].vargroup;\r\n         \r\n        \r\n        //$(svgnode).find(\"[device='\"+dev+\"']\").filter(\"[varkey='\"+varkey+\"']\").filter(\"text\").html(val);\r\n        \r\n        if (!isNaN(val)) { val = parseInt(10*parseFloat(val)) / 10; }\r\n        \r\n     \r\n        $(svgnode).find(\"[varkey='\"+varkey+\"']\")\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"device\" ) || $( this ).attr( \"device\" ) == dev;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"vargroup\" ) || $( this ).attr( \"vargroup\" ) == vargroup;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"styleplus\" );\r\n        })\r\n        .filter(\"text\").html(val);\r\n        \r\n        \r\n        $(svgnode).find(\"[varkey='\"+varkey+\"']\")\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"device\" ) || $( this ).attr( \"device\" ) == dev;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"vargroup\" ) || $( this ).attr( \"vargroup\" ) == vargroup;\r\n        })\r\n        .filter(function( index ) {\r\n            return $( this ).attr( \"styleplus\" ) == \"integer\";\r\n        })\r\n        .filter(\"text\").html(parseInt(val));\r\n        \r\n        \r\n        var valcol = tempColour(val) ;\r\n        console.log(\"colour...\",valcol);\r\n        \r\n        $(svgnode).find(\"[varkey='\"+varkey+\"']\")\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"device\" ) || $( this ).attr( \"device\" ) == dev;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"vargroup\" ) || $( this ).attr( \"vargroup\" ) == vargroup;\r\n        })\r\n        .filter(\"path\").css({ fill: valcol });\r\n        \r\n  }\r\n  \r\n \r\n  ",
+      "js_init_code": "",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "repositories": {
+        "rtmaster": {
+          "description": "simple examples",
+          "items": [
+            {
+              "category": "arrows",
+              "description": "Arrow facing up",
+              "name": "arrow-up",
+              "path": "rtmaster/arrows/arrow-up.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down",
+              "name": "arrow-down",
+              "path": "rtmaster/arrows/arrow-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing right",
+              "name": "arrow-right",
+              "path": "rtmaster/arrows/arrow-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left",
+              "name": "arrow-left",
+              "path": "rtmaster/arrows/arrow-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up right",
+              "name": "arrow-up-right",
+              "path": "rtmaster/arrows/arrow-up-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up left",
+              "name": "arrow-up-left",
+              "path": "rtmaster/arrows/arrow-up-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down left",
+              "name": "arrow-down-left",
+              "path": "rtmaster/arrows/arrow-down-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down right",
+              "name": "arrow-down-right",
+              "path": "rtmaster/arrows/arrow-down-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left right",
+              "name": "arrow-left-right",
+              "path": "rtmaster/arrows/arrow-left-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down",
+              "name": "arrow-up-down",
+              "path": "rtmaster/arrows/arrow-up-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down left right",
+              "name": "arrow-up-down-left-right",
+              "path": "rtmaster/arrows/arrow-up-down-left-right.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Factory",
+              "name": "factory",
+              "path": "rtmaster/facilities/factory.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Jackup",
+              "name": "jackup",
+              "path": "rtmaster/facilities/jackup.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Plant",
+              "name": "plant",
+              "path": "rtmaster/facilities/plant.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Semisub",
+              "name": "semisub",
+              "path": "rtmaster/facilities/semisub.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Ship",
+              "name": "ship",
+              "path": "rtmaster/facilities/ship.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Truck",
+              "name": "truck",
+              "path": "rtmaster/facilities/truck.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Light Bulb",
+              "name": "light-bulb",
+              "path": "rtmaster/indicators/light-bulb.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Green Light Indicator",
+              "name": "light-green",
+              "path": "rtmaster/indicators/light-green.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Orange Light Indicator",
+              "name": "light-orange",
+              "path": "rtmaster/indicators/light-orange.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Red Light Indicator",
+              "name": "light-red",
+              "path": "rtmaster/indicators/light-red.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Compressor",
+              "name": "compressor",
+              "path": "rtmaster/industrial/compressor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Derrick",
+              "name": "derrick",
+              "path": "rtmaster/industrial/derrick.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Heat Exchanger",
+              "name": "heatexchanger",
+              "path": "rtmaster/industrial/heatexchanger.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Motor",
+              "name": "motor",
+              "path": "rtmaster/industrial/motor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Pump",
+              "name": "pump",
+              "path": "rtmaster/industrial/pump.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Tank",
+              "name": "tank-horizontal",
+              "path": "rtmaster/industrial/tank-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Tank",
+              "name": "tank-vertical",
+              "path": "rtmaster/industrial/tank-vertical.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Turbine",
+              "name": "turbine",
+              "path": "rtmaster/industrial/turbine.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Vessel",
+              "name": "vessel-horizontal",
+              "path": "rtmaster/industrial/vessel-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Vessel",
+              "name": "vessel-vertical",
+              "path": "rtmaster/industrial/vessel-vertical.svg"
+            },
+            {
+              "category": "letters",
+              "description": "A",
+              "name": "A",
+              "path": "rtmaster/letters/letter-a.svg"
+            },
+            {
+              "category": "letters",
+              "description": "B",
+              "name": "B",
+              "path": "rtmaster/letters/letter-b.svg"
+            },
+            {
+              "category": "letters",
+              "description": "C",
+              "name": "C",
+              "path": "rtmaster/letters/letter-c.svg"
+            },
+            {
+              "category": "letters",
+              "description": "D",
+              "name": "D",
+              "path": "rtmaster/letters/letter-d.svg"
+            },
+            {
+              "category": "letters",
+              "description": "E",
+              "name": "E",
+              "path": "rtmaster/letters/letter-e.svg"
+            },
+            {
+              "category": "letters",
+              "description": "F",
+              "name": "F",
+              "path": "rtmaster/letters/letter-f.svg"
+            },
+            {
+              "category": "letters",
+              "description": "G",
+              "name": "G",
+              "path": "rtmaster/letters/letter-g.svg"
+            },
+            {
+              "category": "letters",
+              "description": "H",
+              "name": "H",
+              "path": "rtmaster/letters/letter-h.svg"
+            },
+            {
+              "category": "letters",
+              "description": "I",
+              "name": "I",
+              "path": "rtmaster/letters/letter-i.svg"
+            },
+            {
+              "category": "letters",
+              "description": "J",
+              "name": "J",
+              "path": "rtmaster/letters/letter-j.svg"
+            },
+            {
+              "category": "letters",
+              "description": "K",
+              "name": "K",
+              "path": "rtmaster/letters/letter-k.svg"
+            },
+            {
+              "category": "letters",
+              "description": "L",
+              "name": "L",
+              "path": "rtmaster/letters/letter-l.svg"
+            },
+            {
+              "category": "letters",
+              "description": "M",
+              "name": "M",
+              "path": "rtmaster/letters/letter-m.svg"
+            },
+            {
+              "category": "letters",
+              "description": "N",
+              "name": "N",
+              "path": "rtmaster/letters/letter-n.svg"
+            },
+            {
+              "category": "letters",
+              "description": "O",
+              "name": "O",
+              "path": "rtmaster/letters/letter-o.svg"
+            },
+            {
+              "category": "letters",
+              "description": "P",
+              "name": "P",
+              "path": "rtmaster/letters/letter-p.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Q",
+              "name": "Q",
+              "path": "rtmaster/letters/letter-q.svg"
+            },
+            {
+              "category": "letters",
+              "description": "R",
+              "name": "R",
+              "path": "rtmaster/letters-letter-r.svg"
+            },
+            {
+              "category": "letters",
+              "description": "S",
+              "name": "S",
+              "path": "rtmaster/letters/letter-s.svg"
+            },
+            {
+              "category": "letters",
+              "description": "T",
+              "name": "T",
+              "path": "rtmaster/letters/letter-t.svg"
+            },
+            {
+              "category": "letters",
+              "description": "U",
+              "name": "U",
+              "path": "rtmaster/letters/letter-u.svg"
+            },
+            {
+              "category": "letters",
+              "description": "V",
+              "name": "V",
+              "path": "rtmaster/letters/letter-v.svg"
+            },
+            {
+              "category": "letters",
+              "description": "W",
+              "name": "W",
+              "path": "rtmaster/letters/letter-w.svg"
+            },
+            {
+              "category": "letters",
+              "description": "X",
+              "name": "X",
+              "path": "rtmaster/letters/letter-x.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Y",
+              "name": "Y",
+              "path": "rtmaster/letters/letter-y.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Z",
+              "name": "Z",
+              "path": "rtmaster/letters/letter-z.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Laboratory Flask",
+              "name": "flask",
+              "path": "rtmaster/meters/flask.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Flowmeter",
+              "name": "flowmeter",
+              "path": "rtmaster/meters/flowmeter.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Gauge",
+              "name": "gauge",
+              "path": "rtmaster/meters/gauge.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "0",
+              "name": "0",
+              "path": "rtmaster/numbers/number-0.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "1",
+              "name": "1",
+              "path": "rtmaster/numbers/number-1.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "2",
+              "name": "2",
+              "path": "rtmaster/numbers/number-2.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "3",
+              "name": "3",
+              "path": "rtmaster/numbers/number-3.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "4",
+              "name": "4",
+              "path": "rtmaster/numbers/number-4.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "5",
+              "name": "5",
+              "path": "rtmaster/numbers/number-5.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "6",
+              "name": "6",
+              "path": "rtmaster/numbers/number-6.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "7",
+              "name": "7",
+              "path": "rtmaster/numbers/number-7.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "8",
+              "name": "8",
+              "path": "rtmaster/numbers/number-8.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "9",
+              "name": "9",
+              "path": "rtmaster/numbers/number-9.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down",
+              "name": "pipe-curve-down",
+              "path": "rtmaster/pipes/pipe-curve-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down left",
+              "name": "pipe-curve-down-left",
+              "path": "rtmaster/pipes/pipe-curve-down-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down right",
+              "name": "pipe-curve-down-right",
+              "path": "rtmaster/pipes/pipe-curve-down-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve left",
+              "name": "pipe-curve-left",
+              "path": "rtmaster/pipes/pipe-curve-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve right",
+              "name": "pipe-curve-right",
+              "path": "rtmaster/pipes/pipe-curve-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up",
+              "name": "pipe-curve-up",
+              "path": "rtmaster/pipes/pipe-curve-up.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up left",
+              "name": "pipe-curve-up-left",
+              "path": "rtmaster/pipes/pipe-curve-up-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up right",
+              "name": "pipe-curve-up-right",
+              "path": "rtmaster/pipes/pipe-curve-up-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal left",
+              "name": "pipe-diagonal-left",
+              "path": "rtmaster/pipes/pipe-diagonal-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal right",
+              "name": "pipe-diagonal-right",
+              "path": "rtmaster/pipes/pipe-diagonal-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange horizontal",
+              "name": "pipe-flange-horizontal",
+              "path": "rtmaster/pipes/pipe-flange-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange intersection",
+              "name": "pipe-flange-intersection",
+              "path": "rtmaster/pipes/pipe-flange-intersection.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange vertical",
+              "name": "pipe-flange-vertical",
+              "path": "rtmaster/pipes/pipe-flange-vertical.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe horizontal",
+              "name": "pipe-horizontal",
+              "path": "rtmaster/pipes/pipe-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee down",
+              "name": "pipe-tee-down",
+              "path": "rtmaster/pipes/pipe-tee-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee left",
+              "name": "pipe-tee-left",
+              "path": "rtmaster/pipes/pipe-tee-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee right",
+              "name": "pipe-tee-right",
+              "path": "rtmaster/pipes/pipe-tee-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee up",
+              "name": "pipe-tee-up",
+              "path": "rtmaster/pipes/pipe-tee-up"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe vertical",
+              "name": "pipe-vertical",
+              "path": "rtmaster/pipes/pipe-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Circle",
+              "name": "circle",
+              "path": "rtmaster/shapes/circle.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Gear",
+              "name": "gear",
+              "path": "rtmaster/shapes/gear.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal",
+              "name": "line-horizontal",
+              "path": "rtmaster/shapes/line-horizontal.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow left",
+              "name": "line-horizontal-arrow-left",
+              "path": "rtmaster/shapes/line-horizontal-arrow-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow right",
+              "name": "line-horizontal-arrow-right",
+              "path": "rtmaster/shapes/line-horizontal-arrow-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical",
+              "name": "line-vertical",
+              "path": "rtmaster/shapes/line-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow down",
+              "name": "line-vertical-arrow-down",
+              "path": "rtmaster/shapes/line-vertical-arrow-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow up",
+              "name": "line-vertical-arrow-up",
+              "path": "rtmaster/shapes/line-vertical-arrow-up.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Square",
+              "name": "square",
+              "path": "rtmaster/shapes/square.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle down",
+              "name": "triangle-down",
+              "path": "rtmaster/shapes/triangle-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle left",
+              "name": "triangle-left",
+              "path": "rtmaster/shapes/triangle-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle right",
+              "name": "triangle-right",
+              "path": "rtmaster/shapes/triangle-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle-up",
+              "name": "triangle-up",
+              "path": "rtmaster/shapes/triangle-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve Horizontal",
+              "name": "valve-horizontal",
+              "path": "rtmaster/valves/valve-horizontal.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve left right",
+              "name": "valve-left-right",
+              "path": "rtmaster/valves/valve-left-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round down",
+              "name": "valve-round-down",
+              "path": "rtmaster/valves/valve-round-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round left",
+              "name": "valve-round-left",
+              "path": "rtmaster/valves/valve-round-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round right",
+              "name": "valve-round-right",
+              "path": "rtmaster/valves/valve-round-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round up",
+              "name": "valve-round-up",
+              "path": "rtmaster/valves/valve-round-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square down",
+              "name": "valve-square-down",
+              "path": "rtmaster/valves/valve-square-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square left",
+              "name": "valve-square-left",
+              "path": "rtmaster/valves/valve-square-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square right",
+              "name": "valve-square-right",
+              "path": "rtmaster/valves/valve-square-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square up",
+              "name": "valve-square-up",
+              "path": "rtmaster/valves/valve-square-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve vertical",
+              "name": "valve-vertical",
+              "path": "rtmaster/valves/valve-vertical"
+            }
+          ],
+          "license": "Apache 2.0",
+          "url": "https://github.com/rtmaster"
+        }
+      },
+      "svgBuilderData": {
+        "elements": [],
+        "height": "100%",
+        "viewport": {
+          "height": 1000,
+          "width": 1000,
+          "x": 0,
+          "y": 0
+        },
+        "width": "100%"
+      },
+      "svg_data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\n\n<svg\n   xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n   xmlns:cc=\"http://creativecommons.org/ns#\"\n   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n   xmlns:svg=\"http://www.w3.org/2000/svg\"\n   xmlns=\"http://www.w3.org/2000/svg\"\n   xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n   xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n   xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n   width=\"100%\"\n   height=\"100%\"\n   viewBox=\"0 0 133.93046 42.663384\"\n   version=\"1.1\"\n   id=\"svg1170\"\n   inkscape:version=\"0.92.4 (5da689c313, 2019-01-14)\"\n   sodipodi:docname=\"singleplatehiuv2.svg\">\n  <defs\n     id=\"defs1164\">\n    <marker\n       inkscape:stockid=\"Arrow1Mstart\"\n       orient=\"auto\"\n       refY=\"0\"\n       refX=\"0\"\n       id=\"Arrow1Mstart\"\n       style=\"overflow:visible\"\n       inkscape:isstock=\"true\">\n      <path\n         id=\"path1897\"\n         d=\"M 0,0 5,-5 -12.5,0 5,5 Z\"\n         style=\"fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt\"\n         transform=\"matrix(0.4,0,0,0.4,4,0)\"\n         inkscape:connector-curvature=\"0\" />\n    </marker>\n    <marker\n       inkscape:stockid=\"Arrow1Lend\"\n       orient=\"auto\"\n       refY=\"0\"\n       refX=\"0\"\n       id=\"Arrow1Lend\"\n       style=\"overflow:visible\"\n       inkscape:isstock=\"true\">\n      <path\n         id=\"path1894\"\n         d=\"M 0,0 5,-5 -12.5,0 5,5 Z\"\n         style=\"fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt\"\n         transform=\"matrix(-0.8,0,0,-0.8,-10,0)\"\n         inkscape:connector-curvature=\"0\" />\n    </marker>\n    <marker\n       inkscape:stockid=\"Arrow1Lstart\"\n       orient=\"auto\"\n       refY=\"0\"\n       refX=\"0\"\n       id=\"Arrow1Lstart\"\n       style=\"overflow:visible\"\n       inkscape:isstock=\"true\">\n      <path\n         id=\"path1891\"\n         d=\"M 0,0 5,-5 -12.5,0 5,5 Z\"\n         style=\"fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt\"\n         transform=\"matrix(0.8,0,0,0.8,10,0)\"\n         inkscape:connector-curvature=\"0\" />\n    </marker>\n    <linearGradient\n       id=\"linearGradient5755-1\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(-0.04368338,0,0,0.02225559,101.72601,60.528209)\"\n       x1=\"-45.709404\"\n       y1=\"74.787079\"\n       x2=\"-28.789349\"\n       y2=\"74.787079\"\n       xlink:href=\"#linearGradient5755\" />\n    <linearGradient\n       id=\"linearGradient8535-0-4-9-7-7-4-2-3-8\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(-0.152347,0,0,0.077617,361.29663,168.99114)\"\n       x1=\"-45.709404\"\n       y1=\"74.787079\"\n       x2=\"-28.789349\"\n       y2=\"74.787079\"\n       xlink:href=\"#linearGradient5755\" />\n    <linearGradient\n       id=\"linearGradient8535-0-4-9-7-7-4-2-3\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(-0.04368338,0,0,0.04081143,25.134315,59.431991)\"\n       x1=\"-45.709404\"\n       y1=\"74.787079\"\n       x2=\"-28.789349\"\n       y2=\"74.787079\"\n       xlink:href=\"#linearGradient5755\" />\n    <radialGradient\n       cx=\"70.596664\"\n       cy=\"76.948669\"\n       r=\"52.895233\"\n       fx=\"70.596664\"\n       fy=\"76.948669\"\n       id=\"radialGradient12424-7-9-4\"\n       xlink:href=\"#linearGradient12443\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(0.02732782,-1.0657846,0.99967129,0.02563805,-10.431775,150.39216)\" />\n    <linearGradient\n       id=\"linearGradient12443\">\n      <stop\n         id=\"stop12445\"\n         style=\"stop-color:#ffffff;stop-opacity:0.80000001\"\n         offset=\"0\" />\n      <stop\n         id=\"stop12449\"\n         style=\"stop-color:#ffffff;stop-opacity:0.69999999\"\n         offset=\"0.40932989\" />\n      <stop\n         id=\"stop12447\"\n         style=\"stop-color:#ffffff;stop-opacity:0.322\"\n         offset=\"1\" />\n    </linearGradient>\n    <radialGradient\n       cx=\"70.596664\"\n       cy=\"76.948669\"\n       r=\"52.895233\"\n       fx=\"70.596664\"\n       fy=\"76.948669\"\n       id=\"radialGradient12424-7-9-4-1\"\n       xlink:href=\"#linearGradient12443\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(0.02732782,-1.0657846,0.99967129,0.02563805,-10.431775,150.39216)\" />\n  </defs>\n  <sodipodi:namedview\n     id=\"base\"\n     pagecolor=\"#ffffff\"\n     bordercolor=\"#666666\"\n     borderopacity=\"1.0\"\n     inkscape:pageopacity=\"0.0\"\n     inkscape:pageshadow=\"2\"\n     inkscape:zoom=\"2.8\"\n     inkscape:cx=\"170.77232\"\n     inkscape:cy=\"126.02092\"\n     inkscape:document-units=\"mm\"\n     inkscape:current-layer=\"layer1\"\n     showgrid=\"false\"\n     fit-margin-left=\"0.1\"\n     fit-margin-top=\"0.1\"\n     fit-margin-bottom=\"0.1\"\n     fit-margin-right=\"0.1\"\n     inkscape:window-width=\"1920\"\n     inkscape:window-height=\"1017\"\n     inkscape:window-x=\"-8\"\n     inkscape:window-y=\"-8\"\n     inkscape:window-maximized=\"1\"\n     inkscape:pagecheckerboard=\"0\"\n     height=\"58.24484mm\"\n     inkscape:snap-global=\"false\" />\n  <metadata\n     id=\"metadata1167\">\n    <rdf:RDF>\n      <cc:Work\n         rdf:about=\"\">\n        <dc:format>image/svg+xml</dc:format>\n        <dc:type\n           rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\" />\n        <dc:title></dc:title>\n      </cc:Work>\n    </rdf:RDF>\n  </metadata>\n  <g\n     inkscape:label=\"Layer 1\"\n     inkscape:groupmode=\"layer\"\n     id=\"layer1\"\n     transform=\"translate(-2.5699559,-33.29542)\">\n    <rect\n       style=\"opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.05291667;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n       id=\"rect357\"\n       width=\"133.67754\"\n       height=\"42.410465\"\n       x=\"2.6964142\"\n       y=\"33.421879\"\n       rx=\"0.75804746\"\n       ry=\"0.75804746\" />\n    <g\n       id=\"g510\"\n       transform=\"matrix(0.88979009,0,0,0.88979009,1.1182878,10.189586)\">\n      <g\n         id=\"g-11\"\n         transform=\"matrix(0.3294851,0,0,0.30228381,-225.96744,-138.44965)\">\n        <text\n           style=\"font-style:normal;font-weight:normal;font-size:15.2656002px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.35694003px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n           x=\"782.39502\"\n           y=\"657.86603\"\n           id=\"text-9\"\n           transform=\"matrix(0.715423,0,0,0.888494,282.45181,77.1577)\">\n          <tspan\n             id=\"tspan-6\"\n             x=\"782.39502\"\n             y=\"657.86603\"\n             style=\"font-size:13.69999981px;line-height:0.17;word-spacing:0px;stroke-width:1.35694003px\">kW</tspan>\n        </text>\n        <text\n           varkey=\"kwTarget\"\n           transform=\"scale(0.95783247,1.0440239)\"\n           id=\"text371\"\n           y=\"633.51251\"\n           x=\"875.39069\"\n           style=\"font-style:normal;font-weight:normal;font-size:17.88528442px;line-height:1.25;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.83837277\"\n           xml:space=\"preserve\"><tspan\n             style=\"font-size:17.88528442px;text-align:end;text-anchor:end;stroke-width:0.83837277\"\n             y=\"633.51251\"\n             x=\"875.39069\"\n             id=\"tspan369\"\n             sodipodi:role=\"line\">0.00</tspan></text>\n      </g>\n      <g\n         id=\"g-10\"\n         transform=\"matrix(0.3294851,0,0,0.30228381,-225.96048,-133.28832)\">\n        <text\n           style=\"font-style:normal;font-weight:normal;font-size:15.2656002px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.35694003px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n           x=\"782.39502\"\n           y=\"657.86603\"\n           id=\"text-10\"\n           transform=\"matrix(0.715423,0,0,0.888494,281.39871,80.931442)\">\n          <tspan\n             id=\"tspan-7\"\n             x=\"782.39502\"\n             y=\"657.86603\"\n             style=\"font-size:13.69999981px;line-height:0.17;word-spacing:0px;stroke-width:1.35694003px\">ltr/min</tspan>\n        </text>\n        <text\n           transform=\"scale(0.95783247,1.0440239)\"\n           varkey=\"fV\"\n           id=\"text371-1\"\n           y=\"637.59589\"\n           x=\"875.19025\"\n           style=\"font-style:normal;font-weight:normal;font-size:17.88528442px;line-height:1.25;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.83837277\"\n           xml:space=\"preserve\"><tspan\n             style=\"font-size:17.88528442px;text-align:end;text-anchor:end;stroke-width:0.83837277\"\n             y=\"637.59589\"\n             x=\"875.19025\"\n             id=\"tspan369-0\"\n             sodipodi:role=\"line\">0.00</tspan></text>\n      </g>\n    </g>\n    <path\n       varkey=\"tCo\"\n       inkscape:connector-curvature=\"0\"\n       style=\"opacity:1;fill:#b3b3b3;fill-opacity:1;stroke:#000000;stroke-width:0.172042px;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n       d=\"M 128.65442,45.458859 H 85.121014 v 1.245295 h 43.533406\"\n       id=\"rect1664-1-8-7\"\n       class=\"key col_#n_#id_dat_tCo\" />\n    <path\n       inkscape:connector-curvature=\"0\"\n       style=\"opacity:1;fill:url(#linearGradient8535-0-4-9-7-7-4-2-3);fill-opacity:1;stroke:none;stroke-width:0.38957199;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\"\n       d=\"m 27.177735,46.520357 -0.774187,0.0075 v 10.858118 h 0.774187 z\"\n       id=\"rect5745-3-5-2-1-2-7-8-1-5-5-7-1\" />\n    <path\n       varkey=\"tHo\"\n       inkscape:connector-curvature=\"0\"\n       style=\"opacity:1;fill:#b3b3b3;fill-opacity:1;stroke:#000000;stroke-width:0.172042px;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n       d=\"m 11.692836,57.181776 h 32.021557 l 0.732329,1.245292 H 11.692836\"\n       id=\"rect1664-1-8-0-9\"\n       class=\"key col_#n_#id_dat_tHo\"\n       sodipodi:nodetypes=\"cccc\" />\n    <path\n       varkey=\"tH\"\n       inkscape:connector-curvature=\"0\"\n       style=\"opacity:1;fill:#b3b3b3;fill-opacity:1;stroke:#000000;stroke-width:0.172042px;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n       d=\"m 11.692836,45.223736 h 68.950795 v 1.245581 H 11.692836\"\n       id=\"rect1664-1-8-0-3\"\n       class=\"key col_#n_#id_dat_tH\"\n       sodipodi:nodetypes=\"cccc\" />\n    <path\n       varkey=\"tHo\"\n       sodipodi:nodetypes=\"cccc\"\n       inkscape:connector-curvature=\"0\"\n       style=\"opacity:1;fill:#b3b3b3;fill-opacity:1;stroke:#000000;stroke-width:0.172042px;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n       d=\"m 43.572652,57.181776 h 37.070979 v 1.245292 h -36.33865\"\n       id=\"rect1664-1-8-0\"\n       class=\"key col_#n_#id_dat_tHoDHW\" />\n    <polygon\n       style=\"fill:#000000;stroke:#000000\"\n       points=\"470.224,37.075 480.197,37.075 475.21,49.439 \"\n       class=\"id44key col_#n_tCo\"\n       id=\"svg_24-62\"\n       transform=\"matrix(0,-0.21376639,0.17992769,0,123.767,147.74861)\" />\n    <a\n       id=\"a8877\"\n       target=\"ibox\"\n       transform=\"matrix(0.16304297,0,0,0.14958273,-7.4620775,-54.985072)\">\n      <g\n         class=\"led_#n_#id_dat_fHDHW\"\n         transform=\"matrix(1.4653434,0,0,1.4653434,37.16829,-511.4546)\"\n         id=\"g1255-8\">\n        <g\n           id=\"g5157-1\"\n           transform=\"rotate(-12.693025,257.22666,863.25501)\"\n           class=\"needle_#id_dat_xDHW\">\n          <circle\n             r=\"12.274684\"\n             cy=\"605.52692\"\n             cx=\"666.86725\"\n             id=\"path5069-9\"\n             style=\"opacity:1;fill:#ececec;fill-opacity:1;stroke:#000000;stroke-width:0.9375;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n             transform=\"rotate(31.167378)\" />\n          <path\n             inkscape:connector-curvature=\"0\"\n             style=\"color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#00ff00;stroke-width:3.52042007;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate\"\n             d=\"m 265.66533,854.82908 -16.85008,16.76254\"\n             id=\"path5112-3\" />\n        </g>\n      </g>\n    </a>\n    <path\n       inkscape:connector-curvature=\"0\"\n       style=\"opacity:1;fill:#80b3ff;fill-opacity:1;stroke:#000000;stroke-width:0.172042px;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n       d=\"M 128.57299,57.198406 H 85.094061 V 58.4437 h 43.478929\"\n       id=\"rect1664-1-8-0-8\" />\n    <g\n       id=\"g1688\"\n       transform=\"matrix(0.25124354,0,0,0.23050164,-53.888566,-110.61875)\">\n      <path\n         inkscape:connector-curvature=\"0\"\n         id=\"rect1559-83-9-3\"\n         d=\"m 675.77318,640.03702 h 48.08576 v 27.33814 h -17.86827 l -3.40632,11.08489 -5.61153,-11.08489 h -21.19964 z\"\n         style=\"opacity:0.5;fill:#333333;fill-opacity:0.99795903;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\" />\n      <a\n         transform=\"translate(-29.7995)\"\n         id=\"a6657\">\n        <g\n           id=\"g1949\"\n           transform=\"translate(-45.013065)\">\n          <path\n             inkscape:connector-curvature=\"0\"\n             class=\"key col_#n_#id_dat_tCo\"\n             id=\"rect1559-83\"\n             d=\"m 751.83608,638.32832 h 48.08576 v 27.33814 h -17.86827 l -4.73214,12.41071 -4.28571,-12.41071 h -21.19964 z\"\n             style=\"opacity:1;fill:#ececec;fill-opacity:0.99795903;stroke:#cccccc;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n             varkey=\"tCo\" />\n          <rect\n             style=\"display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.01770997;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\"\n             id=\"rect8887-0-4-0-0-6-2-6-93-5\"\n             width=\"43.23428\"\n             height=\"21.807983\"\n             x=\"754.18677\"\n             y=\"641.06287\" />\n          <text\n             style=\"font-style:normal;font-weight:normal;font-size:15.2656002px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.35694003px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n             x=\"786.23059\"\n             y=\"658.604\"\n             id=\"text8913-7-5-4-2-7-9-8-74\">\n            <tspan\n               id=\"tspan8915-5-6-7-9-2-1-9-50\"\n               x=\"786.23059\"\n               y=\"658.604\"\n               style=\"font-size:13.74720001px;line-height:0.17;stroke-width:1.35694003px\">C</tspan>\n          </text>\n          <text\n             style=\"font-style:normal;font-weight:normal;font-size:15.2656002px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.35694003px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n             x=\"783.24951\"\n             y=\"648.91632\"\n             id=\"text8913-3-6-7-8-3-9-0-1-2\">\n            <tspan\n               id=\"tspan8915-1-8-0-7-5-1-0-4-8\"\n               x=\"783.24951\"\n               y=\"648.91632\"\n               style=\"font-size:7.97118998px;line-height:0.17;stroke-width:1.35694003px\">o</tspan>\n          </text>\n          <text\n             varkey=\"tCo\"\n             styleplus=\"integer\"\n             class=\"key text_#n_#id_dat_tCo\"\n             id=\"text1937\"\n             y=\"659.41284\"\n             x=\"756.06476\"\n             style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33329964px;line-height:17.00000018%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\">\n            <tspan\n               y=\"659.41284\"\n               x=\"756.06476\"\n               id=\"tspan1935\">00</tspan>\n          </text>\n        </g>\n      </a>\n    </g>\n    <g\n       id=\"g1688-1\"\n       transform=\"matrix(0.25124354,0,0,0.23050164,-135.27584,-111.92046)\">\n      <path\n         inkscape:connector-curvature=\"0\"\n         id=\"rect1559-83-9-3-7\"\n         d=\"m 569.73756,645.73786 h 48.08576 V 673.076 h -17.86827 l -3.40632,11.08489 -5.61153,-11.08489 h -21.19964 z\"\n         style=\"opacity:0.5;fill:#333333;fill-opacity:0.99795903;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\" />\n      <a\n         transform=\"translate(-135.83512,5.7008399)\"\n         target=\"ibox\"\n         id=\"a6657-17\">\n        <g\n           id=\"g1949-5\"\n           transform=\"translate(-45.013065)\">\n          <path\n             vargroup=\"dat\"\n             varkey=\"tH\"\n             inkscape:connector-curvature=\"0\"\n             class=\"key col_#n_#id_dat_tH\"\n             id=\"rect1559-83-8\"\n             d=\"m 751.83608,638.32832 h 48.08576 v 27.33814 h -17.86827 l -4.73214,12.41071 -4.28571,-12.41071 h -21.19964 z\"\n             style=\"opacity:1;fill:#ececec;fill-opacity:0.99795903;stroke:#cccccc;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\" />\n          <rect\n             style=\"display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.01770997;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\"\n             id=\"rect8887-0-4-0-0-6-2-6-93-5-4\"\n             width=\"43.23428\"\n             height=\"21.807983\"\n             x=\"754.18677\"\n             y=\"641.06287\"\n             class=\"key col_#n_boilers_alarm_tOut\" />\n          <text\n             style=\"font-style:normal;font-weight:normal;font-size:15.2656002px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.35694003px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n             x=\"786.23059\"\n             y=\"658.604\"\n             id=\"text8913-7-5-4-2-7-9-8-74-3\">\n            <tspan\n               id=\"tspan8915-5-6-7-9-2-1-9-50-1\"\n               x=\"786.23059\"\n               y=\"658.604\"\n               style=\"font-size:13.74720001px;line-height:0.17;stroke-width:1.35694003px\">C</tspan>\n          </text>\n          <text\n             style=\"font-style:normal;font-weight:normal;font-size:15.2656002px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.35694003px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n             x=\"783.24951\"\n             y=\"648.91632\"\n             id=\"text8913-3-6-7-8-3-9-0-1-2-8\">\n            <tspan\n               id=\"tspan8915-1-8-0-7-5-1-0-4-8-5\"\n               x=\"783.24951\"\n               y=\"648.91632\"\n               style=\"font-size:7.97118998px;line-height:0.17;stroke-width:1.35694003px\">o</tspan>\n          </text>\n          <text\n             vargroup=\"dat\"\n             varkey=\"tH\"\n             styleplus=\"integer\"\n             class=\"key text_#n_#id_dat_tH\"\n             id=\"text1937-6\"\n             y=\"659.41284\"\n             x=\"756.06476\"\n             style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33329964px;line-height:17.00000018%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\">\n            <tspan\n               y=\"659.41284\"\n               x=\"756.06476\"\n               id=\"tspan1935-8\">00</tspan>\n          </text>\n        </g>\n      </a>\n    </g>\n    <polygon\n       style=\"fill:#000000;stroke:#000000\"\n       points=\"25.297,35.571 20.311,47.934 15.325,35.571 \"\n       class=\"id44key col_#n_tCo\"\n       id=\"svg_24-62-3\"\n       transform=\"matrix(0,-0.22074166,0.18579879,0,1.601746,50.36062)\" />\n    <polygon\n       style=\"fill:#000000;stroke:#000000\"\n       points=\"13.973,90.093 23.945,90.093 18.959,77.73 \"\n       class=\"id44key col_#n_tC\"\n       id=\"svg_24-1-5-0-4-8\"\n       transform=\"matrix(0,-0.22074166,0.18579879,0,-6.8196703,61.954679)\" />\n    <polygon\n       style=\"fill:#000000;stroke:#000000\"\n       points=\"473.814,77.485 468.828,89.848 478.8,89.848 \"\n       class=\"id44key col_#n_tC\"\n       id=\"svg_24-1-5-0-2\"\n       transform=\"matrix(0,-0.21376639,0.17992769,0,116.22233,159.15489)\" />\n    <g\n       id=\"g1688-7-3-1\"\n       transform=\"matrix(0.20454801,0,0,0.18766127,-82.555965,-70.153552)\"\n       class=\"led_#n_#id_dat_fHDHW\">\n      <path\n         inkscape:connector-curvature=\"0\"\n         id=\"rect1559-83-9-3-2-7-5\"\n         d=\"m 659.70459,640.03702 h 78.84865 v 27.33814 h -48.63116 l -4.14632,-0.0151 -4.87153,0.0151 h -25.0811 l 0.2844,-27.44482 z\"\n         style=\"opacity:0.5;fill:#333333;fill-opacity:0.99795903;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\" />\n      <a\n         id=\"a6657-1-1-0\"\n         transform=\"translate(-29.7995)\">\n        <g\n           id=\"g1949-7-3-6\"\n           transform=\"translate(-45.013065)\">\n          <path\n             varkey=\"xpV\"\n             inkscape:connector-curvature=\"0\"\n             id=\"rect1559-83-1-7-2\"\n             d=\"m 732.72204,638.32832 h 81.8941 v 27.33814 h -48.63116 c -3.15586,-0.0546 -6.01147,-0.0435 -9.01785,0 h -24.42424 l 0.16838,-12.99776 z\"\n             style=\"opacity:1;fill:#666666;fill-opacity:0.99795903;stroke:#cccccc;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\" />\n          <rect\n             style=\"display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.01770997;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\"\n             id=\"rect8887-0-4-0-0-6-2-6-93-5-0-3-6\"\n             width=\"75.477158\"\n             height=\"21.807983\"\n             x=\"735.79242\"\n             y=\"641.06287\"\n             class=\"key col_#n_boilers_alarm_tOut\"\n             rx=\"2.325717\"\n             ry=\"2.325717\" />\n          <text\n             style=\"font-style:normal;font-weight:normal;font-size:11.44680023px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.21752px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n             x=\"794.49854\"\n             y=\"659.2995\"\n             id=\"text8913-7-5-4-2-7-9-8-74-7-9-3\">\n            <tspan\n               id=\"tspan8915-5-6-7-9-2-1-9-50-8-1-5\"\n               x=\"794.49854\"\n               y=\"659.2995\"\n               style=\"font-size:11.44680023px;line-height:0.17;stroke-width:1.21752px\">%</tspan>\n          </text>\n          <text\n             varkey=\"xpV\"\n             class=\"key text_#n_#id_dat_xDHW\"\n             id=\"text1937-5-5-7\"\n             y=\"659.20142\"\n             x=\"739.9386\"\n             style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.13640022px;line-height:17.00000018%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\">\n            <tspan\n               y=\"659.20142\"\n               x=\"739.9386\"\n               id=\"tspan1935-2-3-6\">0.0</tspan>\n          </text>\n        </g>\n      </a>\n    </g>\n    <g\n       id=\"g1688-0-83-3\"\n       transform=\"matrix(0.25124354,0,0,0.23050164,-157.64691,-87.093077)\">\n      <path\n         inkscape:connector-curvature=\"0\"\n         id=\"rect1559-83-9-3-6-0-9\"\n         d=\"m 658.10058,670.60155 h 48.08576 v -27.33814 h -17.86827 l -3.40632,-13.69754 -6.16156,13.76629 -20.64961,-0.0688 z\"\n         style=\"opacity:0.5;fill:#333333;fill-opacity:0.99795903;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\" />\n      <a\n         transform=\"translate(-47.472104,3.4205039)\"\n         id=\"a6657-4-0-9\">\n        <g\n           id=\"g1949-3-8-2\"\n           transform=\"translate(-45.013065)\">\n          <path\n             varkey=\"tHo\"\n             inkscape:connector-curvature=\"0\"\n             class=\"key col_#n_#id_dat_tHo\"\n             id=\"rect1559-83-3-3-9\"\n             d=\"m 751.83608,665.91914 h 48.08576 V 638.581 h -17.86827 l -4.73214,-12.41071 -4.28571,12.41071 h -21.19964 z\"\n             style=\"opacity:1;fill:#ececec;fill-opacity:0.99795903;stroke:#cccccc;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\" />\n          <rect\n             style=\"display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.01770997;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\"\n             id=\"rect8887-0-4-0-0-6-2-6-93-5-5-14-1\"\n             width=\"43.23428\"\n             height=\"21.807983\"\n             x=\"754.18677\"\n             y=\"641.06287\" />\n          <text\n             style=\"font-style:normal;font-weight:normal;font-size:15.2656002px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.35694003px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n             x=\"786.23059\"\n             y=\"658.604\"\n             id=\"text8913-7-5-4-2-7-9-8-74-5-1-9\">\n            <tspan\n               id=\"tspan8915-5-6-7-9-2-1-9-50-7-3-2\"\n               x=\"786.23059\"\n               y=\"658.604\"\n               style=\"font-size:13.74720001px;line-height:0.17;stroke-width:1.35694003px\">C</tspan>\n          </text>\n          <text\n             style=\"font-style:normal;font-weight:normal;font-size:15.2656002px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.35694003px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n             x=\"783.24951\"\n             y=\"648.91632\"\n             id=\"text8913-3-6-7-8-3-9-0-1-2-0-8-6\">\n            <tspan\n               id=\"tspan8915-1-8-0-7-5-1-0-4-8-4-4-3\"\n               x=\"783.24951\"\n               y=\"648.91632\"\n               style=\"font-size:7.97118998px;line-height:0.17;stroke-width:1.35694003px\">o</tspan>\n          </text>\n          <text\n             styleplus=\"integer\"\n             class=\"key text_#n_#id_dat_tHo\"\n             id=\"text1937-8-5-1\"\n             y=\"659.41284\"\n             x=\"756.06476\"\n             style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33329964px;line-height:17.00000018%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n             varkey=\"tHo\">\n            <tspan\n               y=\"659.41284\"\n               x=\"756.06476\"\n               id=\"tspan1935-1-1-4\">00</tspan>\n          </text>\n        </g>\n      </a>\n    </g>\n    <g\n       transform=\"matrix(0.14740468,0,0,0.13523532,-33.070894,-46.294524)\"\n       id=\"g7488-2\">\n      <text\n         style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:17.00000018%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.70445001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n         x=\"377.98059\"\n         y=\"831.29352\"\n         id=\"text1937-8-5-8-0\"\n         class=\"key text_#n_#id_stat_vwatHo24\">\n        <tspan\n           id=\"tspan1935-1-1-7-7\"\n           x=\"377.98059\"\n           y=\"831.29352\"\n           style=\"font-size:22.5px;stroke-width:1.70445001px\">00</tspan>\n      </text>\n      <text\n         style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:17.00000018%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.70445001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n         x=\"378.90512\"\n         y=\"807.888\"\n         id=\"text1937-8-5-8-6-8\"\n         styleplus=\"integer\">\n        <tspan\n           id=\"tspan1935-1-1-7-5-68\"\n           x=\"378.90512\"\n           y=\"807.888\"\n           style=\"font-size:15px;stroke-width:1.70445001px\">AVG:</tspan>\n      </text>\n    </g>\n    <g\n       transform=\"matrix(0.28673601,0,0,0.28673601,-8.8025534,33.131708)\"\n       id=\"g239\">\n      <a\n         style=\"display:inline\"\n         transform=\"matrix(0.919846,0,0,0.725256,-74.30014,-582.84906)\"\n         id=\"a9886-9-8\"\n         target=\"ibox\">\n        <g\n           transform=\"matrix(0.65566554,0,0,0.65566554,96.047291,808.99922)\"\n           id=\"g6193-5-5-4\">\n          <g\n             id=\"g4199-5-9-6\"\n             transform=\"translate(51.181062,0.26937127)\">\n            <rect\n               y=\"66.226685\"\n               x=\"417.86374\"\n               height=\"120.00284\"\n               width=\"50.528942\"\n               id=\"rect4147-9-9-5\"\n               style=\"opacity:1;fill:#ff9955;fill-opacity:1;stroke:#000000;stroke-width:1.06666994;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n               rx=\"4.7948723\"\n               ry=\"4.7948723\" />\n            <g\n               id=\"g1591-9\">\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-48\"\n                 d=\"m 422.95841,66.237598 v 6.823463\"\n                 style=\"opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-3-3\"\n                 d=\"m 426.87728,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-6-5\"\n                 d=\"m 430.79623,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-0-6\"\n                 d=\"m 434.71512,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-68-0\"\n                 d=\"m 438.63397,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-8-5\"\n                 d=\"m 442.55293,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-9-4\"\n                 d=\"m 446.47171,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-81-66\"\n                 d=\"m 450.39065,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-4-7\"\n                 d=\"m 454.30955,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-82-5\"\n                 d=\"m 458.22838,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-00-8\"\n                 d=\"m 462.14728,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n            </g>\n            <g\n               transform=\"translate(0.10036012,113.15867)\"\n               style=\"display:inline\"\n               id=\"g1591-5-4\">\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-84-9\"\n                 d=\"m 422.95841,66.237598 v 6.823463\"\n                 style=\"opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-3-6-70\"\n                 d=\"m 426.87728,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-6-1-1\"\n                 d=\"m 430.79623,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-0-7-2\"\n                 d=\"m 434.71512,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-68-6-3\"\n                 d=\"m 438.63397,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-8-4-0\"\n                 d=\"m 442.55293,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-9-3-1\"\n                 d=\"m 446.47171,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-81-0-8\"\n                 d=\"m 450.39065,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-4-1-2\"\n                 d=\"m 454.30955,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-82-4-8\"\n                 d=\"m 458.22838,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n              <path\n                 inkscape:connector-curvature=\"0\"\n                 id=\"path1509-00-7-4\"\n                 d=\"m 462.14728,66.237601 v 6.82346\"\n                 style=\"display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.730259;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\" />\n            </g>\n          </g>\n        </g>\n      </a>\n    </g>\n    <g\n       style=\"opacity:0\"\n       transform=\"matrix(0.28673601,0,0,0.28673601,10.589483,33.72218)\"\n       id=\"g272\">\n      <g\n         id=\"g8935-1-9-9-2-0-6-7-7\"\n         transform=\"matrix(0.973118,0,0,0.89278,-507.68042,-618.82947)\">\n        <circle\n           transform=\"rotate(18.474354)\"\n           style=\"opacity:1;fill:#ececec;fill-opacity:1;stroke:#000000;stroke-width:0.800915;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n           id=\"path5069-2-2-9-6-3\"\n           cx=\"794.20184\"\n           cy=\"540.43048\"\n           r=\"15.303131\" />\n        <circle\n           transform=\"rotate(18.474354)\"\n           style=\"opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.71067202;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n           id=\"path5069-2-2-9-9\"\n           cx=\"794.08984\"\n           cy=\"540.48364\"\n           r=\"13.578859\" />\n        <text\n           id=\"svg_161-7-5-19-0-1-0-3-0\"\n           transform=\"scale(0.97055247,1.030341)\"\n           class=\"key text_#n_#id_dat_dpH\"\n           x=\"599.59222\"\n           y=\"744.12518\"\n           font-weight=\"normal\"\n           font-style=\"normal\"\n           font-size=\"5.75833px\"\n           style=\"font-style:normal;font-weight:normal;font-size:11.88630009px;line-height:0%;font-family:Verdana;text-align:center;text-anchor:middle;white-space:pre;fill:#000000;stroke-width:1.12537003\">0.00</text>\n        <text\n           id=\"text8913-7-5-4-7-3-0-4-4\"\n           y=\"774.55212\"\n           x=\"575.92224\"\n           style=\"font-style:normal;font-weight:normal;font-size:8.79897022px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.733248px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\">\n          <tspan\n             y=\"774.55212\"\n             x=\"575.92224\"\n             id=\"tspan8915-5-6-7-1-6-1-1-1\"\n             style=\"font-size:7.42853022px;line-height:0.17;stroke-width:0.733248px\">bar</tspan>\n        </text>\n      </g>\n      <path\n         inkscape:connector-curvature=\"0\"\n         style=\"fill:none;stroke:#000000;stroke-width:0.72000003px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10\"\n         d=\"m 66.978,52.056 3.28,-3.416 v -4.099\"\n         id=\"path268\" />\n      <path\n         inkscape:connector-curvature=\"0\"\n         style=\"fill:none;stroke:#000000;stroke-width:0.72000003px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10\"\n         d=\"m 47.711,72.963 -3.69,4.099 v 4.926\"\n         id=\"path270\" />\n    </g>\n    <g\n       id=\"g1688-7\"\n       transform=\"matrix(0.17841236,0,0,0.17841236,-18.288103,-58.718431)\"\n       class=\"led_#n_#id_dat_fC\">\n      <path\n         inkscape:connector-curvature=\"0\"\n         id=\"rect1559-83-9-3-2\"\n         d=\"m 659.70459,640.03702 h 78.84865 v 27.33814 h -48.63116 l -4.14632,-0.0151 -4.87153,0.0151 h -21.19964 l -15.54002,-14.00899 z\"\n         style=\"opacity:0.5;fill:#333333;fill-opacity:0.99795903;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\" />\n      <a\n         transform=\"translate(-29.7995)\"\n         target=\"ibox\"\n         id=\"a6657-1\">\n        <g\n           id=\"g1949-7\"\n           transform=\"translate(-45.013065)\">\n          <path\n             varkey=\"fC\"\n             inkscape:connector-curvature=\"0\"\n             id=\"rect1559-83-1\"\n             d=\"m 735.76749,638.32832 h 78.84865 v 27.33814 h -48.63116 c -3.15586,-0.0546 -6.01147,-0.0435 -9.01785,0 H 735.76749 L 719.27604,652.8376 Z\"\n             style=\"opacity:1;fill:#666666;fill-opacity:0.99795903;stroke:#cccccc;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\" />\n          <rect\n             style=\"display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.01770997;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\"\n             id=\"rect8887-0-4-0-0-6-2-6-93-5-0\"\n             width=\"75.477158\"\n             height=\"21.807983\"\n             x=\"735.79242\"\n             y=\"641.06287\"\n             class=\"col_boilers_alarm_tOut\"\n             rx=\"2.325717\"\n             ry=\"2.325717\" />\n          <text\n             style=\"font-style:normal;font-weight:normal;font-size:11.44680023px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.21752px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n             x=\"787.30548\"\n             y=\"659.2995\"\n             id=\"text8913-7-5-4-2-7-9-8-74-7\">\n            <tspan\n               id=\"tspan8915-5-6-7-9-2-1-9-50-8\"\n               x=\"787.30548\"\n               y=\"659.2995\"\n               style=\"font-size:11.44680023px;line-height:0.17;stroke-width:1.21752px\">lpm</tspan>\n          </text>\n          <text\n             varkey=\"fC\"\n             class=\"text_#n_#id_dat_fC\"\n             id=\"text1937-5\"\n             y=\"659.20142\"\n             x=\"739.9386\"\n             style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.13640022px;line-height:17.00000018%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\">\n            <tspan\n               y=\"659.20142\"\n               x=\"739.9386\"\n               id=\"tspan1935-2\">0.0</tspan>\n          </text>\n        </g>\n      </a>\n    </g>\n    <text\n       style=\"font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.24460912px;line-height:1.16999996;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.21873739px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n       x=\"85.003372\"\n       y=\"50.17939\"\n       id=\"text-3-0\"\n       transform=\"scale(0.94896837,1.0537759)\">DHW</text>\n    <text\n       xml:space=\"preserve\"\n       style=\"font-size:1.05833006px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start;stroke-width:0.166977\"\n       x=\"8.0777445\"\n       y=\"72.82048\"\n       id=\"text23351-2-8-1-2\"\n       class=\"timenow\"><tspan\n         sodipodi:role=\"line\"\n         id=\"tspan23349-0-0-6-6\"\n         style=\"font-size:1.05833006px;text-align:start;text-anchor:start;stroke-width:0.166977\"\n         x=\"8.0777445\"\n         y=\"72.82048\">#t</tspan></text>\n    <g\n       transform=\"translate(81.004155,2.75654)\"\n       id=\"g498\">\n      <g\n         transform=\"matrix(0.65493578,0,0,0.65493578,-24.896905,88.272966)\"\n         id=\"g47283-2-1-7\">\n        <path\n           sodipodi:nodetypes=\"cc\"\n           id=\"path16854-14-6-7\"\n           d=\"M 53.020495,-35.138626 H 93.284244\"\n           style=\"opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#808080;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\"\n           inkscape:connector-curvature=\"0\" />\n        <text\n           transform=\"scale(1.0440239,0.95783247)\"\n           id=\"text5449-5-3-8-3-4-2-8-4-2-8-0\"\n           y=\"-30.40452\"\n           x=\"35.984921\"\n           style=\"font-style:normal;font-weight:normal;font-size:1.77646005px;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.222057px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\">\n          <tspan\n             y=\"-30.40452\"\n             x=\"51.325974\"\n             id=\"tspan5451-9-2-0-3-7-8-4-0-57-2-6\"\n             style=\"font-size:1.77646005px;line-height:0.17;text-align:start;word-spacing:0px;text-anchor:start;stroke-width:0.222057px\">Device ID</tspan>\n        </text>\n        <path\n           sodipodi:nodetypes=\"cc\"\n           id=\"path16854-1-6-7-3\"\n           d=\"M 53.479591,-28.221009 H 93.448373\"\n           style=\"vector-effect:none;fill:none;fill-opacity:1;stroke:#808080;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\"\n           inkscape:connector-curvature=\"0\" />\n        <text\n           id=\"text23351-29-7-6\"\n           y=\"-29.108318\"\n           x=\"65.854416\"\n           style=\"font-size:2.23597002px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start;stroke-width:0.26458299\"\n           xml:space=\"preserve\"><tspan\n             y=\"-29.108318\"\n             x=\"65.854416\"\n             style=\"font-size:2.23597002px;text-align:start;text-anchor:start;stroke-width:0.26458299\"\n             id=\"tspan23349-02-6-6\"\n             sodipodi:role=\"line\">#id</tspan></text>\n        <text\n           transform=\"scale(1.0450594,0.95688341)\"\n           id=\"text5449-5-3-8-3-4-2-8-4-37-3-5-5\"\n           y=\"-34.147697\"\n           x=\"38.990284\"\n           style=\"font-style:normal;font-weight:normal;font-size:1.77822006px;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.222277px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\">\n          <tspan\n             y=\"-34.147697\"\n             x=\"51.346668\"\n             id=\"tspan5451-9-2-0-3-7-8-4-0-5-1-1-5\"\n             style=\"font-size:1.77822006px;line-height:0.17;text-align:start;word-spacing:0px;text-anchor:start;stroke-width:0.222277px\">Network ID</tspan>\n        </text>\n        <path\n           sodipodi:nodetypes=\"cc\"\n           id=\"path16854-1-820-2-5-0\"\n           d=\"M 53.071506,-31.61773 H 93.448671\"\n           style=\"vector-effect:none;fill:none;fill-opacity:1;stroke:#808080;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\"\n           inkscape:connector-curvature=\"0\" />\n        <text\n           id=\"text23351-32-0-6-9\"\n           y=\"-32.560471\"\n           x=\"66.13797\"\n           style=\"font-size:2.23597002px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start;stroke-width:0.26458299\"\n           xml:space=\"preserve\"><tspan\n             y=\"-32.560471\"\n             x=\"66.13797\"\n             style=\"font-size:2.23597002px;text-align:start;text-anchor:start;stroke-width:0.26458299\"\n             id=\"tspan23349-4-3-5-2\"\n             sodipodi:role=\"line\">#n</tspan></text>\n      </g>\n      <g\n         transform=\"matrix(0.75970648,0,0,0.75970648,-34.051862,101.6645)\"\n         class=\"key led_#n_#id_stat_state\"\n         id=\"g197584\">\n        <text\n           class=\"text_#n_#id_stat_state\"\n           id=\"text23351-29-7-6-1\"\n           y=\"-48.87611\"\n           x=\"69.088287\"\n           style=\"font-size:2.23597002px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start;fill:#666666;fill-opacity:1;stroke:#000000;stroke-width:0.0808119;stroke-miterlimit:4;stroke-dasharray:none\"\n           xml:space=\"preserve\"><tspan\n             y=\"-48.87611\"\n             x=\"69.088287\"\n             style=\"font-size:2.23597002px;text-align:start;text-anchor:start;fill:#666666;fill-opacity:1;stroke:#000000;stroke-width:0.0808119;stroke-miterlimit:4;stroke-dasharray:none\"\n             id=\"tspan23349-02-6-6-2\"\n             sodipodi:role=\"line\">ok</tspan></text>\n      </g>\n      <text\n         transform=\"scale(1.0450594,0.95688341)\"\n         id=\"text5449-5-3-8-3-4-2-8-4-37-3-5-5-6\"\n         y=\"67.372131\"\n         x=\"1.7126958\"\n         style=\"font-style:normal;font-weight:normal;font-size:1.16462004px;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.14557716px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\">\n        <tspan\n           y=\"67.372131\"\n           x=\"9.8053341\"\n           id=\"tspan5451-9-2-0-3-7-8-4-0-5-1-1-5-8\"\n           style=\"font-size:1.16462004px;line-height:0.17;text-align:start;word-spacing:0px;text-anchor:start;stroke-width:0.14557716px\">Status</tspan>\n      </text>\n    </g>\n    <g\n       transform=\"translate(101.97406,12.125556)\"\n       id=\"g2333\">\n      <rect\n         style=\"opacity:1;fill:#808080;fill-opacity:0.87058824;stroke:none;stroke-width:0.03;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n         id=\"rect1069-8\"\n         width=\"10.784375\"\n         height=\"11.086937\"\n         x=\"19.834204\"\n         y=\"50.8461\"\n         rx=\"0.14241832\"\n         ry=\"0.14241832\" />\n      <rect\n         style=\"opacity:1;fill:#f2f2f2;fill-opacity:0.97932817;stroke:#666666;stroke-width:0.03;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n         id=\"rect1069\"\n         width=\"10.767672\"\n         height=\"11.086937\"\n         x=\"19.96784\"\n         y=\"50.695759\"\n         rx=\"0.14241832\"\n         ry=\"0.14241832\" />\n      <g\n         transform=\"matrix(0.06221592,0,0,0.06221592,21.455466,53.381978)\"\n         id=\"layer1-2-6-7-4\"\n         class=\"led_#n_#id_stat_state\">\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 110.95511,50.523104 c -0.1048,0.574777 -3.72708,31.156193 -3.85274,31.722911 C 101.90421,105.69091 79.060586,122.08977 55.245854,119.11802 30.855472,116.07443 19.233286,93.433131 19.122792,69.511933 19.113633,67.529413 17.646588,47.036187 18.257414,45.135171 l 45.028066,29.88764 z\"\n           id=\"path11874-2-8-6-7-4-8\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.30493272;fill:#000000;fill-opacity:1;stroke:none;stroke-width:6.3499999;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 103.23536,79.786907 C 102.842,80.218897 83.569965,104.23833 83.16319,104.65244 66.334928,121.7841 38.272781,123.59229 19.648052,108.4565 0.57312615,92.954843 2.7091841,67.594618 15.287106,47.246845 16.329526,45.560484 25.940987,27.401615 27.466084,26.112801 L 49.82532,75.315056 Z\"\n           id=\"path11874-2-8-4-0-7\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.30493272;fill:#000000;fill-opacity:1;stroke:none;stroke-width:6.3499999;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 120.45925,69.89653 a 52.520233,52.520233 0 1 1 -105.040465,0 52.520233,52.520233 0 1 1 105.040465,0 z\"\n           transform=\"matrix(0.83287111,0,0,0.83287111,8.2036576,-4.7468624)\"\n           id=\"path11874-3-8-1\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:#666666;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 120.45925,69.89653 a 52.520233,52.520233 0 1 1 -105.040465,0 52.520233,52.520233 0 1 1 105.040465,0 z\"\n           transform=\"matrix(0.83287111,0,0,0.83287111,8.2036576,-4.7469026)\"\n           id=\"path11874-2-1-6-9\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#radialGradient12424-7-9-4);fill-opacity:1;stroke:#333333;stroke-width:6.3499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 119.95345,69.89653 a 52.014435,52.014435 0 1 1 -104.028867,0 52.014435,52.014435 0 1 1 104.028867,0 z\"\n           transform=\"matrix(0.79341369,0,0,0.79341369,10.703351,-2.1943128)\"\n           id=\"path11874-2-4-1-8-4\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#1a1a1a;stroke-width:1.54940331;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 113.09866,96.710363 A 52.520233,52.520233 0 0 1 17.403105,84.196754\"\n           transform=\"matrix(-0.80334173,-0.21980982,0.21980982,-0.80334173,103.75468,124.31462)\"\n           id=\"path11874-2-3-81-2-1\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#333333;stroke-width:3.6500001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 94.199133,115.38039 A 52.520233,52.520233 0 0 1 28.181462,104.21433\"\n           transform=\"matrix(-0.80334173,-0.21980982,0.21980982,-0.80334173,103.75468,124.31462)\"\n           id=\"path11874-2-3-8-8-6-5\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#666666;stroke-width:2.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 120.45925,69.89653 a 52.520233,52.520233 0 1 1 -105.040465,0 52.520233,52.520233 0 1 1 105.040465,0 z\"\n           id=\"path11874-2-42-27-3-5\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:#666666;fill-opacity:0.11229948;stroke:#333333;stroke-width:0.22692586;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\"\n           transform=\"matrix(0.87953711,0,0,0.87586449,5.0108721,-7.726596)\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 74.703391,121.97933 A 52.520233,52.520233 0 0 1 36.185332,111.73047\"\n           transform=\"matrix(-0.80334173,-0.21980982,0.21980982,-0.80334173,103.75468,124.31462)\"\n           id=\"path11874-2-3-8-5-8-9-1\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#cccccc;stroke-width:0.94999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 94.199133,115.38039 A 52.520233,52.520233 0 0 1 28.181462,104.21433\"\n           transform=\"matrix(0.79526143,0.24745409,-0.24745409,0.79526143,27.968643,-18.806835)\"\n           id=\"path11874-2-3-8-3-7-4-9\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#4d4d4d;stroke-width:1.45000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n      </g>\n      <g\n         aria-label=\"HEALTH\"\n         transform=\"matrix(1.0450594,0,0,0.95688341,8.69681,-7.4177827)\"\n         style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.16462004px;line-height:0%;font-family:Calibri;-inkscape-font-specification:Calibri;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;fill:#333333;fill-opacity:1;stroke:#000000;stroke-width:0.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1\"\n         id=\"text5449-5-3-8-3-4-2-8-4-37-3-5-5-6-9\">\n        <path\n           d=\"m 14.886016,62.971142 q 0,0.0046 -0.0023,0.008 -0.0023,0.0034 -0.008,0.0057 -0.0057,0.0017 -0.01535,0.0028 -0.0091,0.0017 -0.02275,0.0017 -0.01478,0 -0.02388,-0.0017 -0.0091,-0.0011 -0.01478,-0.0028 -0.0057,-0.0023 -0.008,-0.0057 -0.0023,-0.0034 -0.0023,-0.008 V 62.64473 h -0.334942 v 0.326412 q 0,0.0046 -0.0023,0.008 -0.0023,0.0034 -0.008,0.0057 -0.0057,0.0017 -0.01535,0.0028 -0.0091,0.0017 -0.02332,0.0017 -0.01365,0 -0.02332,-0.0017 -0.0097,-0.0011 -0.01535,-0.0028 -0.0057,-0.0023 -0.008,-0.0057 -0.0023,-0.0034 -0.0023,-0.008 v -0.706278 q 0,-0.0045 0.0023,-0.008 0.0023,-0.0034 0.008,-0.0051 0.0057,-0.0023 0.01535,-0.0034 0.0097,-0.0017 0.02332,-0.0017 0.01422,0 0.02332,0.0017 0.0097,0.0011 0.01535,0.0034 0.0057,0.0017 0.008,0.0051 0.0023,0.0034 0.0023,0.008 v 0.294567 h 0.334942 v -0.294567 q 0,-0.0045 0.0023,-0.008 0.0023,-0.0034 0.008,-0.0051 0.0057,-0.0023 0.01478,-0.0034 0.0091,-0.0017 0.02388,-0.0017 0.01365,0 0.02275,0.0017 0.0097,0.0011 0.01535,0.0034 0.0057,0.0017 0.008,0.0051 0.0023,0.0034 0.0023,0.008 z\"\n           style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.16462004px;line-height:0.17;font-family:Calibri;-inkscape-font-specification:Calibri;text-align:start;word-spacing:0px;text-anchor:start;fill:#333333;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none\"\n           id=\"path2269\"\n           inkscape:connector-curvature=\"0\" />\n        <path\n           d=\"m 15.491073,62.945553 q 0,0.01024 -0.0011,0.0182 -0.0011,0.0074 -0.004,0.01251 -0.0028,0.0051 -0.0068,0.0074 -0.0034,0.0023 -0.008,0.0023 H 15.11803 q -0.01308,0 -0.02502,-0.0085 -0.01137,-0.0091 -0.01137,-0.03128 v -0.656236 q 0,-0.02218 0.01137,-0.03071 0.01194,-0.0091 0.02502,-0.0091 h 0.349159 q 0.0045,0 0.008,0.0023 0.004,0.0023 0.0063,0.0074 0.0023,0.0051 0.0034,0.01308 0.0017,0.0074 0.0017,0.01877 0,0.01024 -0.0017,0.0182 -0.0011,0.0074 -0.0034,0.01251 -0.0023,0.0045 -0.0063,0.0068 -0.0034,0.0023 -0.008,0.0023 h -0.287743 v 0.230877 h 0.246799 q 0.0045,0 0.008,0.0028 0.004,0.0023 0.0063,0.0068 0.0028,0.0045 0.004,0.01251 0.0011,0.008 0.0011,0.01877 0,0.01024 -0.0011,0.01763 -0.0011,0.0074 -0.004,0.01194 -0.0023,0.0046 -0.0063,0.0068 -0.0034,0.0017 -0.008,0.0017 h -0.246799 v 0.263291 h 0.291723 q 0.0046,0 0.008,0.0023 0.004,0.0023 0.0068,0.0074 0.0028,0.0045 0.004,0.01251 0.0011,0.0074 0.0011,0.01877 z\"\n           style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.16462004px;line-height:0.17;font-family:Calibri;-inkscape-font-specification:Calibri;text-align:start;word-spacing:0px;text-anchor:start;fill:#333333;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none\"\n           id=\"path2271\"\n           inkscape:connector-curvature=\"0\" />\n        <path\n           d=\"m 16.189958,62.951239 q 0.0045,0.01251 0.0045,0.02047 5.68e-4,0.0074 -0.004,0.01137 -0.0045,0.004 -0.01535,0.0051 -0.01024,0.0011 -0.02786,0.0011 -0.01763,0 -0.02843,-0.0011 -0.01024,-5.68e-4 -0.01592,-0.0023 -0.0051,-0.0023 -0.008,-0.0057 -0.0023,-0.0034 -0.0046,-0.0085 l -0.06312,-0.179129 h -0.30594 l -0.06028,0.176854 q -0.0017,0.0051 -0.0046,0.0091 -0.0028,0.0034 -0.0085,0.0063 -0.0051,0.0023 -0.01535,0.0034 -0.0097,0.0011 -0.02559,0.0011 -0.01649,0 -0.0273,-0.0017 -0.01024,-0.0011 -0.01478,-0.0051 -0.004,-0.004 -0.004,-0.01137 5.69e-4,-0.008 0.0051,-0.02047 l 0.246799,-0.683532 q 0.0023,-0.0063 0.0057,-0.01024 0.004,-0.004 0.01081,-0.0063 0.0074,-0.0023 0.0182,-0.0028 0.01137,-0.0011 0.02843,-0.0011 0.0182,0 0.03014,0.0011 0.01194,5.69e-4 0.01933,0.0028 0.0074,0.0023 0.01137,0.0068 0.004,0.004 0.0063,0.01024 z m -0.316745,-0.60335 h -5.68e-4 l -0.126812,0.366787 h 0.255898 z\"\n           style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.16462004px;line-height:0.17;font-family:Calibri;-inkscape-font-specification:Calibri;text-align:start;word-spacing:0px;text-anchor:start;fill:#333333;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none\"\n           id=\"path2273\"\n           inkscape:connector-curvature=\"0\" />\n        <path\n           d=\"m 16.693793,62.943278 q 0,0.01137 -0.0011,0.01933 -0.0011,0.0074 -0.004,0.01308 -0.0023,0.0051 -0.0063,0.008 -0.0034,0.0023 -0.0085,0.0023 h -0.325275 q -0.01308,0 -0.02502,-0.0085 -0.01137,-0.0091 -0.01137,-0.03128 v -0.681257 q 0,-0.0045 0.0023,-0.008 0.0023,-0.0034 0.008,-0.0051 0.0057,-0.0023 0.01535,-0.0034 0.0097,-0.0017 0.02332,-0.0017 0.01422,0 0.02332,0.0017 0.0097,0.0011 0.01535,0.0034 0.0057,0.0017 0.008,0.0051 0.0023,0.0034 0.0023,0.008 v 0.636333 h 0.263859 q 0.0051,0 0.0085,0.0028 0.004,0.0023 0.0063,0.0074 0.0028,0.0045 0.004,0.01251 0.0011,0.008 0.0011,0.01933 z\"\n           style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.16462004px;line-height:0.17;font-family:Calibri;-inkscape-font-specification:Calibri;text-align:start;word-spacing:0px;text-anchor:start;fill:#333333;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none\"\n           id=\"path2275\"\n           inkscape:connector-curvature=\"0\" />\n        <path\n           d=\"m 17.178293,62.29216 q 0,0.0108 -0.0011,0.01877 -0.0011,0.008 -0.004,0.01308 -0.0023,0.0045 -0.0063,0.0068 -0.0034,0.0023 -0.008,0.0023 H 16.9519 v 0.638039 q 0,0.0046 -0.0023,0.008 -0.0023,0.0034 -0.008,0.0057 -0.0057,0.0017 -0.01535,0.0028 -0.0091,0.0017 -0.02332,0.0017 -0.01365,0 -0.02332,-0.0017 -0.0097,-0.0011 -0.01535,-0.0028 -0.0057,-0.0023 -0.008,-0.0057 -0.0023,-0.0034 -0.0023,-0.008 V 62.33311 h -0.206993 q -0.0045,0 -0.0085,-0.0023 -0.0034,-0.0023 -0.0057,-0.0068 -0.0023,-0.0051 -0.004,-0.01308 -0.0011,-0.008 -0.0011,-0.01877 0,-0.01081 0.0011,-0.01877 0.0017,-0.0085 0.004,-0.01365 0.0023,-0.0051 0.0057,-0.0074 0.004,-0.0023 0.0085,-0.0023 h 0.511796 q 0.0045,0 0.008,0.0023 0.004,0.0023 0.0063,0.0074 0.0028,0.0051 0.004,0.01365 0.0011,0.008 0.0011,0.01877 z\"\n           style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.16462004px;line-height:0.17;font-family:Calibri;-inkscape-font-specification:Calibri;text-align:start;word-spacing:0px;text-anchor:start;fill:#333333;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none\"\n           id=\"path2277\"\n           inkscape:connector-curvature=\"0\" />\n        <path\n           d=\"m 17.815763,62.971142 q 0,0.0046 -0.0023,0.008 -0.0023,0.0034 -0.008,0.0057 -0.0057,0.0017 -0.01535,0.0028 -0.0091,0.0017 -0.02275,0.0017 -0.01478,0 -0.02388,-0.0017 -0.0091,-0.0011 -0.01478,-0.0028 -0.0057,-0.0023 -0.008,-0.0057 -0.0023,-0.0034 -0.0023,-0.008 V 62.64473 H 17.38358 v 0.326412 q 0,0.0046 -0.0023,0.008 -0.0023,0.0034 -0.008,0.0057 -0.0057,0.0017 -0.01535,0.0028 -0.0091,0.0017 -0.02332,0.0017 -0.01365,0 -0.02332,-0.0017 -0.0097,-0.0011 -0.01535,-0.0028 -0.0057,-0.0023 -0.008,-0.0057 -0.0023,-0.0034 -0.0023,-0.008 v -0.706278 q 0,-0.0045 0.0023,-0.008 0.0023,-0.0034 0.008,-0.0051 0.0057,-0.0023 0.01535,-0.0034 0.0097,-0.0017 0.02332,-0.0017 0.01422,0 0.02332,0.0017 0.0097,0.0011 0.01535,0.0034 0.0057,0.0017 0.008,0.0051 0.0023,0.0034 0.0023,0.008 v 0.294567 h 0.334942 v -0.294567 q 0,-0.0045 0.0023,-0.008 0.0023,-0.0034 0.008,-0.0051 0.0057,-0.0023 0.01478,-0.0034 0.0091,-0.0017 0.02388,-0.0017 0.01365,0 0.02275,0.0017 0.0097,0.0011 0.01535,0.0034 0.0057,0.0017 0.008,0.0051 0.0023,0.0034 0.0023,0.008 z\"\n           style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.16462004px;line-height:0.17;font-family:Calibri;-inkscape-font-specification:Calibri;text-align:start;word-spacing:0px;text-anchor:start;fill:#333333;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none\"\n           id=\"path2279\"\n           inkscape:connector-curvature=\"0\" />\n      </g>\n    </g>\n    <text\n       id=\"text2355\"\n       y=\"6.5506186\"\n       x=\"37.232597\"\n       style=\"font-style:normal;font-weight:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332\"\n       xml:space=\"preserve\"><tspan\n         style=\"stroke-width:0.26458332\"\n         y=\"12.793132\"\n         x=\"37.232597\"\n         id=\"tspan2353\"\n         sodipodi:role=\"line\" /></text>\n    <g\n       transform=\"matrix(1.6792915,0,0,1.6792915,-31.364717,19.193306)\"\n       id=\"g2465-7\">\n      <path\n         inkscape:connector-curvature=\"0\"\n         style=\"opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#808080;stroke-width:0.04204326;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\"\n         d=\"M 71.401758,10.288022 H 86.336056\"\n         id=\"path16854-4\"\n         sodipodi:nodetypes=\"cc\" />\n      <g\n         id=\"g32348-48-4\"\n         transform=\"matrix(0.42043265,0,0,0.42043265,47.2265,13.406788)\">\n        <text\n           style=\"font-style:normal;font-weight:normal;font-size:1.77646005px;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.222057px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n           x=\"43.430058\"\n           y=\"-4.8824511\"\n           id=\"text5449-5-3-8-3-4-2-8-4-37-5\"\n           transform=\"scale(1.0440239,0.95783247)\">\n          <tspan\n             style=\"font-size:1.77646005px;line-height:0.17;text-align:start;word-spacing:0px;text-anchor:start;stroke-width:0.222057px\"\n             id=\"tspan5451-9-2-0-3-7-8-4-0-5-2\"\n             x=\"55.7742\"\n             y=\"-4.8824511\">DHW Setpoint</tspan>\n        </text>\n        <text\n           style=\"font-style:normal;font-weight:normal;font-size:2.23579001px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.198737px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n           x=\"85.228584\"\n           y=\"-4.7958479\"\n           id=\"text8913-7-5-4-2-7-9-8-74-5-3-3-4-9-1-7-7-97-5\"\n           transform=\"scale(1.0440239,0.95783247)\">\n          <tspan\n             id=\"tspan8915-5-6-7-9-2-1-9-50-5-0-6-6-3-4-2-8-68-2\"\n             x=\"85.228584\"\n             y=\"-4.7958479\"\n             style=\"font-size:2.00650001px;line-height:0.17;word-spacing:0px;stroke-width:0.198737px\">C</tspan>\n        </text>\n        <text\n           style=\"font-style:normal;font-weight:normal;font-size:2.23579001px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.198737px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\"\n           x=\"84.791992\"\n           y=\"-6.2146044\"\n           id=\"text8913-3-6-7-8-3-9-0-1-2-1-6-3-9-0-49-6-7-1-4\"\n           transform=\"scale(1.0440239,0.95783247)\">\n          <tspan\n             id=\"tspan8915-1-8-0-7-5-1-0-4-8-4-3-3-1-3-4-8-4-70-9\"\n             x=\"84.791992\"\n             y=\"-6.2146044\"\n             style=\"font-size:1.17167997px;line-height:0.17;word-spacing:0px;stroke-width:0.198737px\">o</tspan>\n        </text>\n        <path\n           inkscape:connector-curvature=\"0\"\n           style=\"vector-effect:none;fill:none;fill-opacity:1;stroke:#808080;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1\"\n           d=\"M 57.48104,-3.5460249 H 93.00231\"\n           id=\"path16854-1-820-9\"\n           sodipodi:nodetypes=\"cc\" />\n        <text\n           varkey=\"tSet\"\n           xml:space=\"preserve\"\n           style=\"font-size:2.66224003px;line-height:1.25;font-family:sans-serif;text-align:end;text-anchor:end;stroke-width:0.26458299\"\n           x=\"85.498421\"\n           y=\"-4.5960097\"\n           id=\"text23351-32-7\"\n           class=\"key text_#n_#id_settings_Setpoint\"><tspan\n             sodipodi:role=\"line\"\n             id=\"tspan23349-4-7\"\n             style=\"font-size:2.66224003px;text-align:end;text-anchor:end;stroke-width:0.26458299\"\n             x=\"85.498421\"\n             y=\"-4.5960097\">--</tspan></text>\n      </g>\n    </g>\n  </g>\n</svg>\n",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"thechantry\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"network\"] == \"thechantry\")\r\n  |> filter(fn: (r) => r[\"vargroup\"] == \"dat\") \r\n  |> last()\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "type": "marcuscalidus-svg-panel",
+      "useSVGBuilder": false
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tH"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tHo"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 6,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.2.7-0f96ed148c",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"thechantry\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"network\"] == \"thechantry\")\r\n  |> filter(fn: (r) => r[\"vargroup\"] == \"dat\") \r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "keepLabels": [
+              "varkey",
+              "device"
+            ],
+            "valueLabel": "varkey"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "doInit": {},
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Key"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 186
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 24,
+        "w": 8,
+        "x": 0,
+        "y": 12
+      },
+      "handleMetric": {},
+      "id": 3,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 9,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.2.7-0f96ed148c",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"thechantry\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"network\"] == \"thechantry\")\r\n  |> filter(fn: (r) => r[\"vargroup\"] == \"system\") \r\n  |> last()\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "title": "System Data",
+      "transformations": [
+        {
+          "id": "joinByLabels",
+          "options": {
+            "value": "network"
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "varkey",
+                "thechantry"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "device": "Device",
+              "thechantry": "Value",
+              "varkey": "Key"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "doInit": {},
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Device"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 121
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 7,
+        "x": 8,
+        "y": 12
+      },
+      "handleMetric": {},
+      "id": 4,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 9,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "Device"
+          }
+        ]
+      },
+      "pluginVersion": "9.2.7-0f96ed148c",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"thechantry\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"network\"] == \"thechantry\")\r\n  |> filter(fn: (r) => r[\"vargroup\"] == \"dat\") \r\n  |> last()\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Operational Data",
+      "transformations": [
+        {
+          "id": "joinByLabels",
+          "options": {
+            "value": "network"
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "device",
+                "varkey",
+                "thechantry"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "device": "Device",
+              "thechantry": "Value",
+              "varkey": "Key"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "doInit": {},
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Device"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 121
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 24,
+        "w": 9,
+        "x": 15,
+        "y": 12
+      },
+      "handleMetric": {},
+      "id": 7,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 9,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "Device"
+          }
+        ]
+      },
+      "pluginVersion": "9.2.7-0f96ed148c",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"thechantry\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"network\"] == \"thechantry\")\r\n  |> filter(fn: (r) => r[\"vargroup\"] == \"settings\") \r\n  |> last()\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Settings",
+      "transformations": [
+        {
+          "id": "joinByLabels",
+          "options": {
+            "value": "network"
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "device",
+                "varkey",
+                "thechantry"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "device": "Device",
+              "thechantry": "Value",
+              "varkey": "Key"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "doInit": {},
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Device"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 121
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 7,
+        "x": 15,
+        "y": 36
+      },
+      "handleMetric": {},
+      "id": 8,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 9,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "Device"
+          }
+        ]
+      },
+      "pluginVersion": "9.2.7-0f96ed148c",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"thechantry\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"network\"] == \"thechantry\")\r\n  |> filter(fn: (r) => r[\"vargroup\"] == \"dat\") \r\n  |> last()\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Operational Data",
+      "transformations": [
+        {
+          "id": "joinByLabels",
+          "options": {
+            "value": "network"
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "device",
+                "varkey",
+                "thechantry"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "device": "Device",
+              "thechantry": "Value",
+              "varkey": "Key"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "hiusqba1",
+  "uid": "pyqWzpF4k",
+  "version": 6,
+  "weekStart": ""
+}
