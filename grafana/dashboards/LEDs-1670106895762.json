@@ -1,0 +1,1614 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.2.7-8da65d62"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "marcuscalidus-svg-panel",
+      "name": "SVG",
+      "version": "0.3.4"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 7,
+      "title": "Row title",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "doInit": {},
+      "format": "short",
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 0,
+        "y": 1
+      },
+      "handleMetric": {},
+      "id": 3,
+      "js_code": "//console.log(ctrl.series);\r\n\r\n\r\n\r\n  \r\nfunction hexdec (hexv) {\r\n    \r\n    var hexString = (hexv + '').replace(/[^a-f0-9]/gi, '')\r\n    return parseInt(hexString, 16);\r\n    \r\n  }\r\n  \r\n  function dechex (number) {\r\n    \r\n    if (number < 0) {\r\n      number = 0xFFFFFFFF + number + 1\r\n    }\r\n    var hx =  parseInt(number, 10).toString(16);\r\n    \r\n    if (hx.length==1) { hx = \"0\" + hx; }\r\n    return hx;\r\n  }\r\n  \r\n  function color_avg(color1,color2,factor) {\r\n  \r\n          // extract RGB values for color1.\r\n          \r\n          var r1 = color1.substr(1,2);\r\n          var g1 = color1.substr(3,2);\r\n          var b1 = color1.substr(5,2);\r\n          \r\n          var r2 = color2.substr(1,2);\r\n          var g2 = color2.substr(3,2);\r\n          var b2 = color2.substr(5,2);\r\n  \r\n          // get the average RGB values.\r\n          var r_avg = (hexdec(r1)*(1-factor)+hexdec(r2)*factor);\r\n          var g_avg = (hexdec(g1)*(1-factor)+hexdec(g2)*factor);\r\n          var b_avg = (hexdec(b1)*(1-factor)+hexdec(b2)*factor);\r\n  \r\n          // construct the result color.    \r\n          var color_avg = '#' + dechex(r_avg) + dechex(g_avg)+ dechex(b_avg);\r\n  \r\n          // return it.\r\n          return color_avg;\r\n  }\r\n  \r\n  \r\n  function tempColour(temp) {\r\n      \r\n      var tempcolour = \"#ff6c6c\";\r\n      \r\n      if (temp==\"off\") { tempcolour = \"#336633\"; }   //  \"#336633\";\r\n      else if (temp==\"standby\") { tempcolour = \"#33aa33\"; }\r\n      else if (temp==\"warming\") { tempcolour = \"#00dd00\"; }\r\n      else if (temp==\"ok\") { tempcolour = \"#00dd00\"; }\r\n      else if (temp==\"on\") { tempcolour = \"#00ff00\"; }\r\n      else if (temp==\"run\") { tempcolour = \"#00ff00\"; }\r\n      \r\n      else if (isNaN(temp)) { \r\n          \r\n          if (temp.toLowerCase().indexOf(\"warning\">-1)) { tempcolour = \"#f7fe02\"; }\r\n          else  { tempcolour = \"#ff0000\"; }\r\n      }\r\n      \r\n     \r\n      else {\r\n          \r\n          \r\n          var values = parseFloat(temp);\r\n          \r\n          if(values===0) { return(\"#ffffff\"); }\r\n    \r\n          \r\n      \r\n          var tv = Math.ceil(values / 10);\r\n      \r\n          var factr = 1 - (tv - (values / 10));\r\n      \r\n      \r\n          //if ($tv<1) { $tempcolour = '#57007f'; }\r\n          //elseif ($tv==1) { $tempcolour = color_avg(\"#57007f\",\"#140af7\",$factr); }\r\n          //elseif ($tv==2) { $tempcolour = color_avg(\"#140af7\",\"#008ef9\",$factr); }\r\n          \r\n          if (tv<1) { tempcolour = '#ffffff'; }\r\n          else if (tv==1) { tempcolour = color_avg(\"#ffffff\",\"#ffffff\",factr); }\r\n          else if (tv==2) { tempcolour = color_avg(\"#ffffff\",\"#008ef9\",factr); }\r\n          else if (tv==3) { tempcolour = color_avg(\"#008ef9\",\"#14fffb\",factr); }\r\n          else if (tv==4) { tempcolour = color_avg(\"#14fffb\",\"#66fe00\",factr); }\r\n          else if (tv==5) { tempcolour = color_avg(\"#66fe00\",\"#f7fe02\",factr); }\r\n          else if (tv==6) { tempcolour = color_avg(\"#f7fe02\",\"#fdbe10\",factr); }\r\n          else if (tv==7) { tempcolour = color_avg(\"#fdbe10\",\"#f08e12\",factr); }\r\n          else if (tv==8) { tempcolour = color_avg(\"#f08e12\",\"#ff4f19\",factr); }\r\n          else if (tv==9) { tempcolour = color_avg(\"#ff4f19\",\"#c90504\",factr); }\r\n          else if (tv>9) { tempcolour = \"#c90504\";  }\r\n      }\r\n              \r\n      return(tempcolour);\r\n      \r\n  }\r\n  \r\n\r\n\r\n  console.log(\"ctrl...\",ctrl);\r\n  console.log(\"rows...\",ctrl.data[0].rows);\r\n  \r\n  for (var row in ctrl.data) {\r\n     \r\n     \r\n        var val = ctrl.data[row].datapoints.lastItem[0];\r\n        console.log(\"val...\",val);\r\n      \r\n        //\"{__name__=\"dat_tF_metric\", __proxy_source__=\"influx\", device=\"boilers\", network=\"putneyplaza\", node=\"zcccaef4ahl\", vargroup=\"dat\", varkey=\"tF\"}\"\r\n        var rinf = ctrl.data[row].alias;\r\n        \r\n        var dev = rinf.split(\"device=\")[1].split('\"')[1];\r\n        console.log(\"dev...\",dev);\r\n\r\n        var varkey = rinf.split(\"varkey=\")[1].split('\"')[1];\r\n        // var varkey = ctrl.data[0].rows[row].varkey;\r\n        \r\n        var vargroup = rinf.split(\"vargroup=\")[1].split('\"')[1];\r\n        // var vargroup = ctrl.data[0].rows[row].vargroup;\r\n         \r\n        \r\n        //$(svgnode).find(\"[device='\"+dev+\"']\").filter(\"[varkey='\"+varkey+\"']\").filter(\"text\").html(val);\r\n        \r\n        if (!isNaN(val)) { val = parseInt(10*parseFloat(val)) / 10; }\r\n        \r\n     \r\n        $(svgnode).find(\"[varkey='\"+varkey+\"']\")\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"device\" ) || $( this ).attr( \"device\" ) == dev;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"vargroup\" ) || $( this ).attr( \"vargroup\" ) == vargroup;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"styleplus\" );\r\n        })\r\n        .filter(\"text\").html(val);\r\n        \r\n        \r\n        $(svgnode).find(\"[varkey='\"+varkey+\"']\")\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"device\" ) || $( this ).attr( \"device\" ) == dev;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"vargroup\" ) || $( this ).attr( \"vargroup\" ) == vargroup;\r\n        })\r\n        .filter(function( index ) {\r\n            return $( this ).attr( \"styleplus\" ) == \"integer\";\r\n        })\r\n        .filter(\"text\").html(parseInt(val));\r\n        \r\n        \r\n        var valcol = tempColour(val) ;\r\n        console.log(\"colour...\",valcol);\r\n        \r\n        $(svgnode).find(\"[varkey='\"+varkey+\"']\")\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"device\" ) || $( this ).attr( \"device\" ) == dev;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"vargroup\" ) || $( this ).attr( \"vargroup\" ) == vargroup;\r\n        })\r\n        .filter(\"path\").css({ fill: valcol });\r\n        \r\n  }\r\n  \r\n \r\n  ",
+      "js_init_code": "",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "repeat": "device",
+      "repeatDirection": "h",
+      "repositories": {
+        "rtmaster": {
+          "description": "simple examples",
+          "items": [
+            {
+              "category": "arrows",
+              "description": "Arrow facing up",
+              "name": "arrow-up",
+              "path": "rtmaster/arrows/arrow-up.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down",
+              "name": "arrow-down",
+              "path": "rtmaster/arrows/arrow-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing right",
+              "name": "arrow-right",
+              "path": "rtmaster/arrows/arrow-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left",
+              "name": "arrow-left",
+              "path": "rtmaster/arrows/arrow-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up right",
+              "name": "arrow-up-right",
+              "path": "rtmaster/arrows/arrow-up-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up left",
+              "name": "arrow-up-left",
+              "path": "rtmaster/arrows/arrow-up-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down left",
+              "name": "arrow-down-left",
+              "path": "rtmaster/arrows/arrow-down-left.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing down right",
+              "name": "arrow-down-right",
+              "path": "rtmaster/arrows/arrow-down-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing left right",
+              "name": "arrow-left-right",
+              "path": "rtmaster/arrows/arrow-left-right.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down",
+              "name": "arrow-up-down",
+              "path": "rtmaster/arrows/arrow-up-down.svg"
+            },
+            {
+              "category": "arrows",
+              "description": "Arrow facing up down left right",
+              "name": "arrow-up-down-left-right",
+              "path": "rtmaster/arrows/arrow-up-down-left-right.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Factory",
+              "name": "factory",
+              "path": "rtmaster/facilities/factory.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Jackup",
+              "name": "jackup",
+              "path": "rtmaster/facilities/jackup.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Plant",
+              "name": "plant",
+              "path": "rtmaster/facilities/plant.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Semisub",
+              "name": "semisub",
+              "path": "rtmaster/facilities/semisub.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Ship",
+              "name": "ship",
+              "path": "rtmaster/facilities/ship.svg"
+            },
+            {
+              "category": "facilities",
+              "description": "Truck",
+              "name": "truck",
+              "path": "rtmaster/facilities/truck.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Light Bulb",
+              "name": "light-bulb",
+              "path": "rtmaster/indicators/light-bulb.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Green Light Indicator",
+              "name": "light-green",
+              "path": "rtmaster/indicators/light-green.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Orange Light Indicator",
+              "name": "light-orange",
+              "path": "rtmaster/indicators/light-orange.svg"
+            },
+            {
+              "category": "indicators",
+              "description": "Red Light Indicator",
+              "name": "light-red",
+              "path": "rtmaster/indicators/light-red.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Compressor",
+              "name": "compressor",
+              "path": "rtmaster/industrial/compressor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Derrick",
+              "name": "derrick",
+              "path": "rtmaster/industrial/derrick.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Heat Exchanger",
+              "name": "heatexchanger",
+              "path": "rtmaster/industrial/heatexchanger.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Motor",
+              "name": "motor",
+              "path": "rtmaster/industrial/motor.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Pump",
+              "name": "pump",
+              "path": "rtmaster/industrial/pump.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Tank",
+              "name": "tank-horizontal",
+              "path": "rtmaster/industrial/tank-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Tank",
+              "name": "tank-vertical",
+              "path": "rtmaster/industrial/tank-vertical.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Turbine",
+              "name": "turbine",
+              "path": "rtmaster/industrial/turbine.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Horizontal Vessel",
+              "name": "vessel-horizontal",
+              "path": "rtmaster/industrial/vessel-horizontal.svg"
+            },
+            {
+              "category": "industrial",
+              "description": "Vertical Vessel",
+              "name": "vessel-vertical",
+              "path": "rtmaster/industrial/vessel-vertical.svg"
+            },
+            {
+              "category": "letters",
+              "description": "A",
+              "name": "A",
+              "path": "rtmaster/letters/letter-a.svg"
+            },
+            {
+              "category": "letters",
+              "description": "B",
+              "name": "B",
+              "path": "rtmaster/letters/letter-b.svg"
+            },
+            {
+              "category": "letters",
+              "description": "C",
+              "name": "C",
+              "path": "rtmaster/letters/letter-c.svg"
+            },
+            {
+              "category": "letters",
+              "description": "D",
+              "name": "D",
+              "path": "rtmaster/letters/letter-d.svg"
+            },
+            {
+              "category": "letters",
+              "description": "E",
+              "name": "E",
+              "path": "rtmaster/letters/letter-e.svg"
+            },
+            {
+              "category": "letters",
+              "description": "F",
+              "name": "F",
+              "path": "rtmaster/letters/letter-f.svg"
+            },
+            {
+              "category": "letters",
+              "description": "G",
+              "name": "G",
+              "path": "rtmaster/letters/letter-g.svg"
+            },
+            {
+              "category": "letters",
+              "description": "H",
+              "name": "H",
+              "path": "rtmaster/letters/letter-h.svg"
+            },
+            {
+              "category": "letters",
+              "description": "I",
+              "name": "I",
+              "path": "rtmaster/letters/letter-i.svg"
+            },
+            {
+              "category": "letters",
+              "description": "J",
+              "name": "J",
+              "path": "rtmaster/letters/letter-j.svg"
+            },
+            {
+              "category": "letters",
+              "description": "K",
+              "name": "K",
+              "path": "rtmaster/letters/letter-k.svg"
+            },
+            {
+              "category": "letters",
+              "description": "L",
+              "name": "L",
+              "path": "rtmaster/letters/letter-l.svg"
+            },
+            {
+              "category": "letters",
+              "description": "M",
+              "name": "M",
+              "path": "rtmaster/letters/letter-m.svg"
+            },
+            {
+              "category": "letters",
+              "description": "N",
+              "name": "N",
+              "path": "rtmaster/letters/letter-n.svg"
+            },
+            {
+              "category": "letters",
+              "description": "O",
+              "name": "O",
+              "path": "rtmaster/letters/letter-o.svg"
+            },
+            {
+              "category": "letters",
+              "description": "P",
+              "name": "P",
+              "path": "rtmaster/letters/letter-p.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Q",
+              "name": "Q",
+              "path": "rtmaster/letters/letter-q.svg"
+            },
+            {
+              "category": "letters",
+              "description": "R",
+              "name": "R",
+              "path": "rtmaster/letters-letter-r.svg"
+            },
+            {
+              "category": "letters",
+              "description": "S",
+              "name": "S",
+              "path": "rtmaster/letters/letter-s.svg"
+            },
+            {
+              "category": "letters",
+              "description": "T",
+              "name": "T",
+              "path": "rtmaster/letters/letter-t.svg"
+            },
+            {
+              "category": "letters",
+              "description": "U",
+              "name": "U",
+              "path": "rtmaster/letters/letter-u.svg"
+            },
+            {
+              "category": "letters",
+              "description": "V",
+              "name": "V",
+              "path": "rtmaster/letters/letter-v.svg"
+            },
+            {
+              "category": "letters",
+              "description": "W",
+              "name": "W",
+              "path": "rtmaster/letters/letter-w.svg"
+            },
+            {
+              "category": "letters",
+              "description": "X",
+              "name": "X",
+              "path": "rtmaster/letters/letter-x.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Y",
+              "name": "Y",
+              "path": "rtmaster/letters/letter-y.svg"
+            },
+            {
+              "category": "letters",
+              "description": "Z",
+              "name": "Z",
+              "path": "rtmaster/letters/letter-z.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Laboratory Flask",
+              "name": "flask",
+              "path": "rtmaster/meters/flask.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Flowmeter",
+              "name": "flowmeter",
+              "path": "rtmaster/meters/flowmeter.svg"
+            },
+            {
+              "category": "meters",
+              "description": "Gauge",
+              "name": "gauge",
+              "path": "rtmaster/meters/gauge.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "0",
+              "name": "0",
+              "path": "rtmaster/numbers/number-0.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "1",
+              "name": "1",
+              "path": "rtmaster/numbers/number-1.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "2",
+              "name": "2",
+              "path": "rtmaster/numbers/number-2.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "3",
+              "name": "3",
+              "path": "rtmaster/numbers/number-3.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "4",
+              "name": "4",
+              "path": "rtmaster/numbers/number-4.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "5",
+              "name": "5",
+              "path": "rtmaster/numbers/number-5.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "6",
+              "name": "6",
+              "path": "rtmaster/numbers/number-6.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "7",
+              "name": "7",
+              "path": "rtmaster/numbers/number-7.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "8",
+              "name": "8",
+              "path": "rtmaster/numbers/number-8.svg"
+            },
+            {
+              "category": "numbers",
+              "description": "9",
+              "name": "9",
+              "path": "rtmaster/numbers/number-9.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down",
+              "name": "pipe-curve-down",
+              "path": "rtmaster/pipes/pipe-curve-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down left",
+              "name": "pipe-curve-down-left",
+              "path": "rtmaster/pipes/pipe-curve-down-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve down right",
+              "name": "pipe-curve-down-right",
+              "path": "rtmaster/pipes/pipe-curve-down-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve left",
+              "name": "pipe-curve-left",
+              "path": "rtmaster/pipes/pipe-curve-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve right",
+              "name": "pipe-curve-right",
+              "path": "rtmaster/pipes/pipe-curve-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up",
+              "name": "pipe-curve-up",
+              "path": "rtmaster/pipes/pipe-curve-up.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up left",
+              "name": "pipe-curve-up-left",
+              "path": "rtmaster/pipes/pipe-curve-up-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe curve up right",
+              "name": "pipe-curve-up-right",
+              "path": "rtmaster/pipes/pipe-curve-up-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal left",
+              "name": "pipe-diagonal-left",
+              "path": "rtmaster/pipes/pipe-diagonal-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe diagonal right",
+              "name": "pipe-diagonal-right",
+              "path": "rtmaster/pipes/pipe-diagonal-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange horizontal",
+              "name": "pipe-flange-horizontal",
+              "path": "rtmaster/pipes/pipe-flange-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange intersection",
+              "name": "pipe-flange-intersection",
+              "path": "rtmaster/pipes/pipe-flange-intersection.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe flange vertical",
+              "name": "pipe-flange-vertical",
+              "path": "rtmaster/pipes/pipe-flange-vertical.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe horizontal",
+              "name": "pipe-horizontal",
+              "path": "rtmaster/pipes/pipe-horizontal.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee down",
+              "name": "pipe-tee-down",
+              "path": "rtmaster/pipes/pipe-tee-down.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee left",
+              "name": "pipe-tee-left",
+              "path": "rtmaster/pipes/pipe-tee-left.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee right",
+              "name": "pipe-tee-right",
+              "path": "rtmaster/pipes/pipe-tee-right.svg"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe tee up",
+              "name": "pipe-tee-up",
+              "path": "rtmaster/pipes/pipe-tee-up"
+            },
+            {
+              "category": "pipes",
+              "description": "Pipe vertical",
+              "name": "pipe-vertical",
+              "path": "rtmaster/pipes/pipe-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Circle",
+              "name": "circle",
+              "path": "rtmaster/shapes/circle.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Gear",
+              "name": "gear",
+              "path": "rtmaster/shapes/gear.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal",
+              "name": "line-horizontal",
+              "path": "rtmaster/shapes/line-horizontal.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow left",
+              "name": "line-horizontal-arrow-left",
+              "path": "rtmaster/shapes/line-horizontal-arrow-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line horizontal arrow right",
+              "name": "line-horizontal-arrow-right",
+              "path": "rtmaster/shapes/line-horizontal-arrow-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical",
+              "name": "line-vertical",
+              "path": "rtmaster/shapes/line-vertical.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow down",
+              "name": "line-vertical-arrow-down",
+              "path": "rtmaster/shapes/line-vertical-arrow-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Line vertical arrow up",
+              "name": "line-vertical-arrow-up",
+              "path": "rtmaster/shapes/line-vertical-arrow-up.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Square",
+              "name": "square",
+              "path": "rtmaster/shapes/square.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle down",
+              "name": "triangle-down",
+              "path": "rtmaster/shapes/triangle-down.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle left",
+              "name": "triangle-left",
+              "path": "rtmaster/shapes/triangle-left.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle right",
+              "name": "triangle-right",
+              "path": "rtmaster/shapes/triangle-right.svg"
+            },
+            {
+              "category": "shapes",
+              "description": "Triangle-up",
+              "name": "triangle-up",
+              "path": "rtmaster/shapes/triangle-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve Horizontal",
+              "name": "valve-horizontal",
+              "path": "rtmaster/valves/valve-horizontal.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve left right",
+              "name": "valve-left-right",
+              "path": "rtmaster/valves/valve-left-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round down",
+              "name": "valve-round-down",
+              "path": "rtmaster/valves/valve-round-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round left",
+              "name": "valve-round-left",
+              "path": "rtmaster/valves/valve-round-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round right",
+              "name": "valve-round-right",
+              "path": "rtmaster/valves/valve-round-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve round up",
+              "name": "valve-round-up",
+              "path": "rtmaster/valves/valve-round-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square down",
+              "name": "valve-square-down",
+              "path": "rtmaster/valves/valve-square-down.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square left",
+              "name": "valve-square-left",
+              "path": "rtmaster/valves/valve-square-left.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square right",
+              "name": "valve-square-right",
+              "path": "rtmaster/valves/valve-square-right.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve square up",
+              "name": "valve-square-up",
+              "path": "rtmaster/valves/valve-square-up.svg"
+            },
+            {
+              "category": "valves",
+              "description": "Valve vertical",
+              "name": "valve-vertical",
+              "path": "rtmaster/valves/valve-vertical"
+            }
+          ],
+          "license": "Apache 2.0",
+          "url": "https://github.com/rtmaster"
+        }
+      },
+      "svgBuilderData": {
+        "elements": [],
+        "height": "100%",
+        "viewport": {
+          "height": 1000,
+          "width": 1000,
+          "x": 0,
+          "y": 0
+        },
+        "width": "100%"
+      },
+      "svg_data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\n\n<svg\n   xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n   xmlns:cc=\"http://creativecommons.org/ns#\"\n   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n   xmlns:svg=\"http://www.w3.org/2000/svg\"\n   xmlns=\"http://www.w3.org/2000/svg\"\n   xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n   xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n   xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n   width=\"100%\"\n   height=\"100%\"\n   viewBox=\"0 0 11.116309 11.452278\"\n   version=\"1.1\"\n   id=\"svg1170\"\n   inkscape:version=\"0.92.4 (5da689c313, 2019-01-14)\"\n   sodipodi:docname=\"led_state_2.svg\">\n  <defs\n     id=\"defs1164\">\n    <linearGradient\n       id=\"linearGradient1654\">\n      <stop\n         offset=\"0\"\n         style=\"stop-color:#ffffff;stop-opacity:0.26767677\"\n         id=\"stop1648\" />\n      <stop\n         offset=\"0.40932989\"\n         style=\"stop-color:#ffffff;stop-opacity:0.16666667\"\n         id=\"stop1650\" />\n      <stop\n         offset=\"1\"\n         style=\"stop-color:#ffffff;stop-opacity:0.03030303\"\n         id=\"stop1652\" />\n    </linearGradient>\n    <marker\n       inkscape:stockid=\"Arrow1Mstart\"\n       orient=\"auto\"\n       refY=\"0\"\n       refX=\"0\"\n       id=\"Arrow1Mstart\"\n       style=\"overflow:visible\"\n       inkscape:isstock=\"true\">\n      <path\n         id=\"path1897\"\n         d=\"M 0,0 5,-5 -12.5,0 5,5 Z\"\n         style=\"fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt\"\n         transform=\"matrix(0.4,0,0,0.4,4,0)\"\n         inkscape:connector-curvature=\"0\" />\n    </marker>\n    <marker\n       inkscape:stockid=\"Arrow1Lend\"\n       orient=\"auto\"\n       refY=\"0\"\n       refX=\"0\"\n       id=\"Arrow1Lend\"\n       style=\"overflow:visible\"\n       inkscape:isstock=\"true\">\n      <path\n         id=\"path1894\"\n         d=\"M 0,0 5,-5 -12.5,0 5,5 Z\"\n         style=\"fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt\"\n         transform=\"matrix(-0.8,0,0,-0.8,-10,0)\"\n         inkscape:connector-curvature=\"0\" />\n    </marker>\n    <marker\n       inkscape:stockid=\"Arrow1Lstart\"\n       orient=\"auto\"\n       refY=\"0\"\n       refX=\"0\"\n       id=\"Arrow1Lstart\"\n       style=\"overflow:visible\"\n       inkscape:isstock=\"true\">\n      <path\n         id=\"path1891\"\n         d=\"M 0,0 5,-5 -12.5,0 5,5 Z\"\n         style=\"fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt\"\n         transform=\"matrix(0.8,0,0,0.8,10,0)\"\n         inkscape:connector-curvature=\"0\" />\n    </marker>\n    <linearGradient\n       id=\"linearGradient5755-1\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(-0.04368338,0,0,0.02225559,101.72601,60.528209)\"\n       x1=\"-45.709404\"\n       y1=\"74.787079\"\n       x2=\"-28.789349\"\n       y2=\"74.787079\"\n       xlink:href=\"#linearGradient5755\" />\n    <linearGradient\n       id=\"linearGradient8535-0-4-9-7-7-4-2-3-8\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(-0.152347,0,0,0.077617,361.29663,168.99114)\"\n       x1=\"-45.709404\"\n       y1=\"74.787079\"\n       x2=\"-28.789349\"\n       y2=\"74.787079\"\n       xlink:href=\"#linearGradient5755\" />\n    <linearGradient\n       id=\"linearGradient8535-0-4-9-7-7-4-2-3\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(-0.04368338,0,0,0.04081143,25.134315,59.431991)\"\n       x1=\"-45.709404\"\n       y1=\"74.787079\"\n       x2=\"-28.789349\"\n       y2=\"74.787079\"\n       xlink:href=\"#linearGradient5755\" />\n    <radialGradient\n       cx=\"106.09412\"\n       cy=\"94.036751\"\n       r=\"52.895233\"\n       fx=\"106.09412\"\n       fy=\"94.036751\"\n       id=\"radialGradient12424-7-9-4\"\n       xlink:href=\"#linearGradient1654\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(0.02732782,-1.0657846,0.99967129,0.02563805,-10.431775,150.39216)\" />\n    <linearGradient\n       id=\"linearGradient12443\">\n      <stop\n         id=\"stop12445\"\n         style=\"stop-color:#ffffff;stop-opacity:0.80000001\"\n         offset=\"0\" />\n      <stop\n         id=\"stop12449\"\n         style=\"stop-color:#ffffff;stop-opacity:0.69999999\"\n         offset=\"0.40932989\" />\n      <stop\n         id=\"stop12447\"\n         style=\"stop-color:#ffffff;stop-opacity:0.322\"\n         offset=\"1\" />\n    </linearGradient>\n    <radialGradient\n       cx=\"70.596664\"\n       cy=\"76.948669\"\n       r=\"52.895233\"\n       fx=\"70.596664\"\n       fy=\"76.948669\"\n       id=\"radialGradient12424-7-9-4-1\"\n       xlink:href=\"#linearGradient12443\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(0.02732782,-1.0657846,0.99967129,0.02563805,-10.431775,150.39216)\" />\n  </defs>\n  <sodipodi:namedview\n     id=\"base\"\n     pagecolor=\"#ffffff\"\n     bordercolor=\"#666666\"\n     borderopacity=\"1.0\"\n     inkscape:pageopacity=\"0.0\"\n     inkscape:pageshadow=\"2\"\n     inkscape:zoom=\"5.6\"\n     inkscape:cx=\"-50.829494\"\n     inkscape:cy=\"52.128626\"\n     inkscape:document-units=\"mm\"\n     inkscape:current-layer=\"g2333\"\n     showgrid=\"false\"\n     fit-margin-left=\"0.1\"\n     fit-margin-top=\"0.1\"\n     fit-margin-bottom=\"0.1\"\n     fit-margin-right=\"0.1\"\n     inkscape:window-width=\"1920\"\n     inkscape:window-height=\"1017\"\n     inkscape:window-x=\"-8\"\n     inkscape:window-y=\"-8\"\n     inkscape:window-maximized=\"1\"\n     inkscape:pagecheckerboard=\"0\"\n     height=\"58.24484mm\"\n     inkscape:snap-global=\"false\" />\n  <metadata\n     id=\"metadata1167\">\n    <rdf:RDF>\n      <cc:Work\n         rdf:about=\"\">\n        <dc:format>image/svg+xml</dc:format>\n        <dc:type\n           rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\" />\n        <dc:title></dc:title>\n      </cc:Work>\n    </rdf:RDF>\n  </metadata>\n  <g\n     inkscape:label=\"Layer 1\"\n     inkscape:groupmode=\"layer\"\n     id=\"layer1\"\n     transform=\"translate(-95.722401,-62.706315)\">\n    <g\n       transform=\"translate(75.988197,12.125556)\"\n       id=\"g2333\">\n      <g\n         transform=\"matrix(0.08132424,0,0,0.08132424,20.073115,51.514961)\"\n         id=\"layer1-2-6-7-4\"\n         class=\"led_#n_#id_stat_state\">\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 110.95511,50.523104 c -0.1048,0.574777 -3.72708,31.156193 -3.85274,31.722911 C 101.90421,105.69091 79.060586,122.08977 55.245854,119.11802 30.855472,116.07443 19.233286,93.433131 19.122792,69.511933 19.113633,67.529413 17.646588,47.036187 18.257414,45.135171 l 45.028066,29.88764 z\"\n           id=\"path11874-2-8-6-7-4-8\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.30493272;fill:#000000;fill-opacity:1;stroke:none;stroke-width:6.3499999;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 103.23536,79.786907 C 102.842,80.218897 83.569965,104.23833 83.16319,104.65244 66.334928,121.7841 38.272781,123.59229 19.648052,108.4565 0.57312615,92.954843 2.7091841,67.594618 15.287106,47.246845 16.329526,45.560484 25.940987,27.401615 27.466084,26.112801 L 49.82532,75.315056 Z\"\n           id=\"path11874-2-8-4-0-7\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.30493272;fill:#000000;fill-opacity:1;stroke:none;stroke-width:6.3499999;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 120.45925,69.89653 a 52.520233,52.520233 0 1 1 -105.040465,0 52.520233,52.520233 0 1 1 105.040465,0 z\"\n           transform=\"matrix(0.83287111,0,0,0.83287111,8.2036576,-4.7468624)\"\n           id=\"path11874-3-8-1\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:#666666;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\"\n           varkey=\"state\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 120.45925,69.89653 a 52.520233,52.520233 0 1 1 -105.040465,0 52.520233,52.520233 0 1 1 105.040465,0 z\"\n           id=\"path11874-2-1-6-9\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#radialGradient12424-7-9-4);fill-opacity:1;stroke:#333333;stroke-width:6.3499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\"\n           transform=\"matrix(0.83287111,0,0,0.83287111,8.2036576,-4.7469026)\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 119.95345,69.89653 a 52.014435,52.014435 0 1 1 -104.028867,0 52.014435,52.014435 0 1 1 104.028867,0 z\"\n           transform=\"matrix(0.79341369,0,0,0.79341369,10.703351,-2.1943128)\"\n           id=\"path11874-2-4-1-8-4\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#1a1a1a;stroke-width:1.54940331;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 113.09866,96.710363 A 52.520233,52.520233 0 0 1 17.403105,84.196754\"\n           transform=\"matrix(-0.80334173,-0.21980982,0.21980982,-0.80334173,103.75468,124.31462)\"\n           id=\"path11874-2-3-81-2-1\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#333333;stroke-width:3.6500001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 94.199133,115.38039 A 52.520233,52.520233 0 0 1 28.181462,104.21433\"\n           transform=\"matrix(-0.80334173,-0.21980982,0.21980982,-0.80334173,103.75468,124.31462)\"\n           id=\"path11874-2-3-8-8-6-5\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#666666;stroke-width:2.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 74.703391,121.97933 A 52.520233,52.520233 0 0 1 36.185332,111.73047\"\n           transform=\"matrix(-0.80334173,-0.21980982,0.21980982,-0.80334173,103.75468,124.31462)\"\n           id=\"path11874-2-3-8-5-8-9-1\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#cccccc;stroke-width:0.94999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 94.199133,115.38039 A 52.520233,52.520233 0 0 1 28.181462,104.21433\"\n           transform=\"matrix(0.79526143,0.24745409,-0.24745409,0.79526143,27.968643,-18.806835)\"\n           id=\"path11874-2-3-8-3-7-4-9\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#4d4d4d;stroke-width:1.45000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n      </g>\n    </g>\n    <text\n       id=\"text2355\"\n       y=\"6.5506186\"\n       x=\"37.232597\"\n       style=\"font-style:normal;font-weight:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332\"\n       xml:space=\"preserve\"><tspan\n         style=\"stroke-width:0.26458332\"\n         y=\"12.793132\"\n         x=\"37.232597\"\n         id=\"tspan2353\"\n         sodipodi:role=\"line\" /></text>\n  </g>\n</svg>\n",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"thechantry\")\r\n  |> range(start: -48h, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"network\"] == \"thechantry\")\r\n  |> filter(fn: (r) => r[\"varkey\"] == \"state\") \r\n  |> filter(fn: (r) => r[\"device\"] == \"$device\") \r\n  |> last()\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "title": "$device",
+      "type": "marcuscalidus-svg-panel",
+      "useSVGBuilder": false
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
+      "id": 5,
+      "panels": [
+        {
+          "aliasColors": {},
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "description": "",
+          "doInit": {},
+          "format": "short",
+          "gridPos": {
+            "h": 6,
+            "w": 3,
+            "x": 0,
+            "y": 12
+          },
+          "handleMetric": {},
+          "id": 2,
+          "js_code": "//console.log(ctrl.series);\r\n\r\n\r\n\r\n  \r\nfunction hexdec (hexv) {\r\n    \r\n    var hexString = (hexv + '').replace(/[^a-f0-9]/gi, '')\r\n    return parseInt(hexString, 16);\r\n    \r\n  }\r\n  \r\n  function dechex (number) {\r\n    \r\n    if (number < 0) {\r\n      number = 0xFFFFFFFF + number + 1\r\n    }\r\n    var hx =  parseInt(number, 10).toString(16);\r\n    \r\n    if (hx.length==1) { hx = \"0\" + hx; }\r\n    return hx;\r\n  }\r\n  \r\n  function color_avg(color1,color2,factor) {\r\n  \r\n          // extract RGB values for color1.\r\n          \r\n          var r1 = color1.substr(1,2);\r\n          var g1 = color1.substr(3,2);\r\n          var b1 = color1.substr(5,2);\r\n          \r\n          var r2 = color2.substr(1,2);\r\n          var g2 = color2.substr(3,2);\r\n          var b2 = color2.substr(5,2);\r\n  \r\n          // get the average RGB values.\r\n          var r_avg = (hexdec(r1)*(1-factor)+hexdec(r2)*factor);\r\n          var g_avg = (hexdec(g1)*(1-factor)+hexdec(g2)*factor);\r\n          var b_avg = (hexdec(b1)*(1-factor)+hexdec(b2)*factor);\r\n  \r\n          // construct the result color.    \r\n          var color_avg = '#' + dechex(r_avg) + dechex(g_avg)+ dechex(b_avg);\r\n  \r\n          // return it.\r\n          return color_avg;\r\n  }\r\n  \r\n  \r\n  function tempColour(temp) {\r\n      \r\n      var tempcolour = \"#ff6c6c\";\r\n      \r\n      if (temp==\"off\") { tempcolour = \"#336633\"; }   //  \"#336633\";\r\n      else if (temp==\"standby\") { tempcolour = \"#33aa33\"; }\r\n      else if (temp==\"warming\") { tempcolour = \"#00dd00\"; }\r\n      else if (temp==\"ok\") { tempcolour = \"#00dd00\"; }\r\n      else if (temp==\"on\") { tempcolour = \"#00ff00\"; }\r\n      else if (temp==\"run\") { tempcolour = \"#00ff00\"; }\r\n      \r\n      else if (isNaN(temp)) { \r\n          \r\n          if (temp.toLowerCase().indexOf(\"warning\">-1)) { tempcolour = \"#f7fe02\"; }\r\n          else  { tempcolour = \"#ff0000\"; }\r\n      }\r\n      \r\n     \r\n      else {\r\n          \r\n          \r\n          var values = parseFloat(temp);\r\n          \r\n          if(values===0) { return(\"#ffffff\"); }\r\n    \r\n          \r\n      \r\n          var tv = Math.ceil(values / 10);\r\n      \r\n          var factr = 1 - (tv - (values / 10));\r\n      \r\n      \r\n          //if ($tv<1) { $tempcolour = '#57007f'; }\r\n          //elseif ($tv==1) { $tempcolour = color_avg(\"#57007f\",\"#140af7\",$factr); }\r\n          //elseif ($tv==2) { $tempcolour = color_avg(\"#140af7\",\"#008ef9\",$factr); }\r\n          \r\n          if (tv<1) { tempcolour = '#ffffff'; }\r\n          else if (tv==1) { tempcolour = color_avg(\"#ffffff\",\"#ffffff\",factr); }\r\n          else if (tv==2) { tempcolour = color_avg(\"#ffffff\",\"#008ef9\",factr); }\r\n          else if (tv==3) { tempcolour = color_avg(\"#008ef9\",\"#14fffb\",factr); }\r\n          else if (tv==4) { tempcolour = color_avg(\"#14fffb\",\"#66fe00\",factr); }\r\n          else if (tv==5) { tempcolour = color_avg(\"#66fe00\",\"#f7fe02\",factr); }\r\n          else if (tv==6) { tempcolour = color_avg(\"#f7fe02\",\"#fdbe10\",factr); }\r\n          else if (tv==7) { tempcolour = color_avg(\"#fdbe10\",\"#f08e12\",factr); }\r\n          else if (tv==8) { tempcolour = color_avg(\"#f08e12\",\"#ff4f19\",factr); }\r\n          else if (tv==9) { tempcolour = color_avg(\"#ff4f19\",\"#c90504\",factr); }\r\n          else if (tv>9) { tempcolour = \"#c90504\";  }\r\n      }\r\n              \r\n      return(tempcolour);\r\n      \r\n  }\r\n  \r\n\r\n\r\n  console.log(\"ctrl...\",ctrl);\r\n  console.log(\"rows...\",ctrl.data[0].rows);\r\n  \r\n  for (var row in ctrl.data) {\r\n     \r\n     \r\n        var val = ctrl.data[row].datapoints.lastItem[0];\r\n        console.log(\"val...\",val);\r\n      \r\n        //\"{__name__=\"dat_tF_metric\", __proxy_source__=\"influx\", device=\"boilers\", network=\"putneyplaza\", node=\"zcccaef4ahl\", vargroup=\"dat\", varkey=\"tF\"}\"\r\n        var rinf = ctrl.data[row].alias;\r\n        \r\n        var dev = rinf.split(\"device=\")[1].split('\"')[1];\r\n        console.log(\"dev...\",dev);\r\n\r\n        var varkey = rinf.split(\"varkey=\")[1].split('\"')[1];\r\n        // var varkey = ctrl.data[0].rows[row].varkey;\r\n        \r\n        var vargroup = rinf.split(\"vargroup=\")[1].split('\"')[1];\r\n        // var vargroup = ctrl.data[0].rows[row].vargroup;\r\n         \r\n        \r\n        //$(svgnode).find(\"[device='\"+dev+\"']\").filter(\"[varkey='\"+varkey+\"']\").filter(\"text\").html(val);\r\n        \r\n        if (!isNaN(val)) { val = parseInt(10*parseFloat(val)) / 10; }\r\n        \r\n     \r\n        $(svgnode).find(\"[varkey='\"+varkey+\"']\")\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"device\" ) || $( this ).attr( \"device\" ) == dev;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"vargroup\" ) || $( this ).attr( \"vargroup\" ) == vargroup;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"styleplus\" );\r\n        })\r\n        .filter(\"text\").html(val);\r\n        \r\n        \r\n        $(svgnode).find(\"[varkey='\"+varkey+\"']\")\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"device\" ) || $( this ).attr( \"device\" ) == dev;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"vargroup\" ) || $( this ).attr( \"vargroup\" ) == vargroup;\r\n        })\r\n        .filter(function( index ) {\r\n            return $( this ).attr( \"styleplus\" ) == \"integer\";\r\n        })\r\n        .filter(\"text\").html(parseInt(val));\r\n        \r\n        \r\n        var valcol = tempColour(val) ;\r\n        console.log(\"colour...\",valcol);\r\n        \r\n        $(svgnode).find(\"[varkey='\"+varkey+\"']\")\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"device\" ) || $( this ).attr( \"device\" ) == dev;\r\n        })\r\n        .filter(function( index ) {\r\n            return !$( this ).attr( \"vargroup\" ) || $( this ).attr( \"vargroup\" ) == vargroup;\r\n        })\r\n        .filter(\"path\").css({ fill: valcol });\r\n        \r\n  }\r\n  \r\n \r\n  ",
+          "js_init_code": "",
+          "links": [],
+          "maxDataPoints": 3,
+          "nullPointMode": "connected",
+          "repositories": {
+            "rtmaster": {
+              "description": "simple examples",
+              "items": [
+                {
+                  "category": "arrows",
+                  "description": "Arrow facing up",
+                  "name": "arrow-up",
+                  "path": "rtmaster/arrows/arrow-up.svg"
+                },
+                {
+                  "category": "arrows",
+                  "description": "Arrow facing down",
+                  "name": "arrow-down",
+                  "path": "rtmaster/arrows/arrow-down.svg"
+                },
+                {
+                  "category": "arrows",
+                  "description": "Arrow facing right",
+                  "name": "arrow-right",
+                  "path": "rtmaster/arrows/arrow-right.svg"
+                },
+                {
+                  "category": "arrows",
+                  "description": "Arrow facing left",
+                  "name": "arrow-left",
+                  "path": "rtmaster/arrows/arrow-left.svg"
+                },
+                {
+                  "category": "arrows",
+                  "description": "Arrow facing up right",
+                  "name": "arrow-up-right",
+                  "path": "rtmaster/arrows/arrow-up-right.svg"
+                },
+                {
+                  "category": "arrows",
+                  "description": "Arrow facing up left",
+                  "name": "arrow-up-left",
+                  "path": "rtmaster/arrows/arrow-up-left.svg"
+                },
+                {
+                  "category": "arrows",
+                  "description": "Arrow facing down left",
+                  "name": "arrow-down-left",
+                  "path": "rtmaster/arrows/arrow-down-left.svg"
+                },
+                {
+                  "category": "arrows",
+                  "description": "Arrow facing down right",
+                  "name": "arrow-down-right",
+                  "path": "rtmaster/arrows/arrow-down-right.svg"
+                },
+                {
+                  "category": "arrows",
+                  "description": "Arrow facing left right",
+                  "name": "arrow-left-right",
+                  "path": "rtmaster/arrows/arrow-left-right.svg"
+                },
+                {
+                  "category": "arrows",
+                  "description": "Arrow facing up down",
+                  "name": "arrow-up-down",
+                  "path": "rtmaster/arrows/arrow-up-down.svg"
+                },
+                {
+                  "category": "arrows",
+                  "description": "Arrow facing up down left right",
+                  "name": "arrow-up-down-left-right",
+                  "path": "rtmaster/arrows/arrow-up-down-left-right.svg"
+                },
+                {
+                  "category": "facilities",
+                  "description": "Factory",
+                  "name": "factory",
+                  "path": "rtmaster/facilities/factory.svg"
+                },
+                {
+                  "category": "facilities",
+                  "description": "Jackup",
+                  "name": "jackup",
+                  "path": "rtmaster/facilities/jackup.svg"
+                },
+                {
+                  "category": "facilities",
+                  "description": "Plant",
+                  "name": "plant",
+                  "path": "rtmaster/facilities/plant.svg"
+                },
+                {
+                  "category": "facilities",
+                  "description": "Semisub",
+                  "name": "semisub",
+                  "path": "rtmaster/facilities/semisub.svg"
+                },
+                {
+                  "category": "facilities",
+                  "description": "Ship",
+                  "name": "ship",
+                  "path": "rtmaster/facilities/ship.svg"
+                },
+                {
+                  "category": "facilities",
+                  "description": "Truck",
+                  "name": "truck",
+                  "path": "rtmaster/facilities/truck.svg"
+                },
+                {
+                  "category": "indicators",
+                  "description": "Light Bulb",
+                  "name": "light-bulb",
+                  "path": "rtmaster/indicators/light-bulb.svg"
+                },
+                {
+                  "category": "indicators",
+                  "description": "Green Light Indicator",
+                  "name": "light-green",
+                  "path": "rtmaster/indicators/light-green.svg"
+                },
+                {
+                  "category": "indicators",
+                  "description": "Orange Light Indicator",
+                  "name": "light-orange",
+                  "path": "rtmaster/indicators/light-orange.svg"
+                },
+                {
+                  "category": "indicators",
+                  "description": "Red Light Indicator",
+                  "name": "light-red",
+                  "path": "rtmaster/indicators/light-red.svg"
+                },
+                {
+                  "category": "industrial",
+                  "description": "Compressor",
+                  "name": "compressor",
+                  "path": "rtmaster/industrial/compressor.svg"
+                },
+                {
+                  "category": "industrial",
+                  "description": "Derrick",
+                  "name": "derrick",
+                  "path": "rtmaster/industrial/derrick.svg"
+                },
+                {
+                  "category": "industrial",
+                  "description": "Heat Exchanger",
+                  "name": "heatexchanger",
+                  "path": "rtmaster/industrial/heatexchanger.svg"
+                },
+                {
+                  "category": "industrial",
+                  "description": "Motor",
+                  "name": "motor",
+                  "path": "rtmaster/industrial/motor.svg"
+                },
+                {
+                  "category": "industrial",
+                  "description": "Pump",
+                  "name": "pump",
+                  "path": "rtmaster/industrial/pump.svg"
+                },
+                {
+                  "category": "industrial",
+                  "description": "Horizontal Tank",
+                  "name": "tank-horizontal",
+                  "path": "rtmaster/industrial/tank-horizontal.svg"
+                },
+                {
+                  "category": "industrial",
+                  "description": "Vertical Tank",
+                  "name": "tank-vertical",
+                  "path": "rtmaster/industrial/tank-vertical.svg"
+                },
+                {
+                  "category": "industrial",
+                  "description": "Turbine",
+                  "name": "turbine",
+                  "path": "rtmaster/industrial/turbine.svg"
+                },
+                {
+                  "category": "industrial",
+                  "description": "Horizontal Vessel",
+                  "name": "vessel-horizontal",
+                  "path": "rtmaster/industrial/vessel-horizontal.svg"
+                },
+                {
+                  "category": "industrial",
+                  "description": "Vertical Vessel",
+                  "name": "vessel-vertical",
+                  "path": "rtmaster/industrial/vessel-vertical.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "A",
+                  "name": "A",
+                  "path": "rtmaster/letters/letter-a.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "B",
+                  "name": "B",
+                  "path": "rtmaster/letters/letter-b.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "C",
+                  "name": "C",
+                  "path": "rtmaster/letters/letter-c.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "D",
+                  "name": "D",
+                  "path": "rtmaster/letters/letter-d.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "E",
+                  "name": "E",
+                  "path": "rtmaster/letters/letter-e.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "F",
+                  "name": "F",
+                  "path": "rtmaster/letters/letter-f.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "G",
+                  "name": "G",
+                  "path": "rtmaster/letters/letter-g.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "H",
+                  "name": "H",
+                  "path": "rtmaster/letters/letter-h.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "I",
+                  "name": "I",
+                  "path": "rtmaster/letters/letter-i.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "J",
+                  "name": "J",
+                  "path": "rtmaster/letters/letter-j.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "K",
+                  "name": "K",
+                  "path": "rtmaster/letters/letter-k.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "L",
+                  "name": "L",
+                  "path": "rtmaster/letters/letter-l.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "M",
+                  "name": "M",
+                  "path": "rtmaster/letters/letter-m.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "N",
+                  "name": "N",
+                  "path": "rtmaster/letters/letter-n.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "O",
+                  "name": "O",
+                  "path": "rtmaster/letters/letter-o.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "P",
+                  "name": "P",
+                  "path": "rtmaster/letters/letter-p.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "Q",
+                  "name": "Q",
+                  "path": "rtmaster/letters/letter-q.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "R",
+                  "name": "R",
+                  "path": "rtmaster/letters-letter-r.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "S",
+                  "name": "S",
+                  "path": "rtmaster/letters/letter-s.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "T",
+                  "name": "T",
+                  "path": "rtmaster/letters/letter-t.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "U",
+                  "name": "U",
+                  "path": "rtmaster/letters/letter-u.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "V",
+                  "name": "V",
+                  "path": "rtmaster/letters/letter-v.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "W",
+                  "name": "W",
+                  "path": "rtmaster/letters/letter-w.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "X",
+                  "name": "X",
+                  "path": "rtmaster/letters/letter-x.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "Y",
+                  "name": "Y",
+                  "path": "rtmaster/letters/letter-y.svg"
+                },
+                {
+                  "category": "letters",
+                  "description": "Z",
+                  "name": "Z",
+                  "path": "rtmaster/letters/letter-z.svg"
+                },
+                {
+                  "category": "meters",
+                  "description": "Laboratory Flask",
+                  "name": "flask",
+                  "path": "rtmaster/meters/flask.svg"
+                },
+                {
+                  "category": "meters",
+                  "description": "Flowmeter",
+                  "name": "flowmeter",
+                  "path": "rtmaster/meters/flowmeter.svg"
+                },
+                {
+                  "category": "meters",
+                  "description": "Gauge",
+                  "name": "gauge",
+                  "path": "rtmaster/meters/gauge.svg"
+                },
+                {
+                  "category": "numbers",
+                  "description": "0",
+                  "name": "0",
+                  "path": "rtmaster/numbers/number-0.svg"
+                },
+                {
+                  "category": "numbers",
+                  "description": "1",
+                  "name": "1",
+                  "path": "rtmaster/numbers/number-1.svg"
+                },
+                {
+                  "category": "numbers",
+                  "description": "2",
+                  "name": "2",
+                  "path": "rtmaster/numbers/number-2.svg"
+                },
+                {
+                  "category": "numbers",
+                  "description": "3",
+                  "name": "3",
+                  "path": "rtmaster/numbers/number-3.svg"
+                },
+                {
+                  "category": "numbers",
+                  "description": "4",
+                  "name": "4",
+                  "path": "rtmaster/numbers/number-4.svg"
+                },
+                {
+                  "category": "numbers",
+                  "description": "5",
+                  "name": "5",
+                  "path": "rtmaster/numbers/number-5.svg"
+                },
+                {
+                  "category": "numbers",
+                  "description": "6",
+                  "name": "6",
+                  "path": "rtmaster/numbers/number-6.svg"
+                },
+                {
+                  "category": "numbers",
+                  "description": "7",
+                  "name": "7",
+                  "path": "rtmaster/numbers/number-7.svg"
+                },
+                {
+                  "category": "numbers",
+                  "description": "8",
+                  "name": "8",
+                  "path": "rtmaster/numbers/number-8.svg"
+                },
+                {
+                  "category": "numbers",
+                  "description": "9",
+                  "name": "9",
+                  "path": "rtmaster/numbers/number-9.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe curve down",
+                  "name": "pipe-curve-down",
+                  "path": "rtmaster/pipes/pipe-curve-down.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe curve down left",
+                  "name": "pipe-curve-down-left",
+                  "path": "rtmaster/pipes/pipe-curve-down-left.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe curve down right",
+                  "name": "pipe-curve-down-right",
+                  "path": "rtmaster/pipes/pipe-curve-down-right.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe curve left",
+                  "name": "pipe-curve-left",
+                  "path": "rtmaster/pipes/pipe-curve-left.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe curve right",
+                  "name": "pipe-curve-right",
+                  "path": "rtmaster/pipes/pipe-curve-right.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe curve up",
+                  "name": "pipe-curve-up",
+                  "path": "rtmaster/pipes/pipe-curve-up.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe curve up left",
+                  "name": "pipe-curve-up-left",
+                  "path": "rtmaster/pipes/pipe-curve-up-left.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe curve up right",
+                  "name": "pipe-curve-up-right",
+                  "path": "rtmaster/pipes/pipe-curve-up-right.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe diagonal left",
+                  "name": "pipe-diagonal-left",
+                  "path": "rtmaster/pipes/pipe-diagonal-left.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe diagonal right",
+                  "name": "pipe-diagonal-right",
+                  "path": "rtmaster/pipes/pipe-diagonal-right.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe flange horizontal",
+                  "name": "pipe-flange-horizontal",
+                  "path": "rtmaster/pipes/pipe-flange-horizontal.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe flange intersection",
+                  "name": "pipe-flange-intersection",
+                  "path": "rtmaster/pipes/pipe-flange-intersection.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe flange vertical",
+                  "name": "pipe-flange-vertical",
+                  "path": "rtmaster/pipes/pipe-flange-vertical.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe horizontal",
+                  "name": "pipe-horizontal",
+                  "path": "rtmaster/pipes/pipe-horizontal.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe tee down",
+                  "name": "pipe-tee-down",
+                  "path": "rtmaster/pipes/pipe-tee-down.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe tee left",
+                  "name": "pipe-tee-left",
+                  "path": "rtmaster/pipes/pipe-tee-left.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe tee right",
+                  "name": "pipe-tee-right",
+                  "path": "rtmaster/pipes/pipe-tee-right.svg"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe tee up",
+                  "name": "pipe-tee-up",
+                  "path": "rtmaster/pipes/pipe-tee-up"
+                },
+                {
+                  "category": "pipes",
+                  "description": "Pipe vertical",
+                  "name": "pipe-vertical",
+                  "path": "rtmaster/pipes/pipe-vertical.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Circle",
+                  "name": "circle",
+                  "path": "rtmaster/shapes/circle.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Gear",
+                  "name": "gear",
+                  "path": "rtmaster/shapes/gear.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Line horizontal",
+                  "name": "line-horizontal",
+                  "path": "rtmaster/shapes/line-horizontal.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Line horizontal arrow left",
+                  "name": "line-horizontal-arrow-left",
+                  "path": "rtmaster/shapes/line-horizontal-arrow-left.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Line horizontal arrow right",
+                  "name": "line-horizontal-arrow-right",
+                  "path": "rtmaster/shapes/line-horizontal-arrow-right.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Line vertical",
+                  "name": "line-vertical",
+                  "path": "rtmaster/shapes/line-vertical.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Line vertical arrow down",
+                  "name": "line-vertical-arrow-down",
+                  "path": "rtmaster/shapes/line-vertical-arrow-down.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Line vertical arrow up",
+                  "name": "line-vertical-arrow-up",
+                  "path": "rtmaster/shapes/line-vertical-arrow-up.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Square",
+                  "name": "square",
+                  "path": "rtmaster/shapes/square.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Triangle down",
+                  "name": "triangle-down",
+                  "path": "rtmaster/shapes/triangle-down.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Triangle left",
+                  "name": "triangle-left",
+                  "path": "rtmaster/shapes/triangle-left.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Triangle right",
+                  "name": "triangle-right",
+                  "path": "rtmaster/shapes/triangle-right.svg"
+                },
+                {
+                  "category": "shapes",
+                  "description": "Triangle-up",
+                  "name": "triangle-up",
+                  "path": "rtmaster/shapes/triangle-up.svg"
+                },
+                {
+                  "category": "valves",
+                  "description": "Valve Horizontal",
+                  "name": "valve-horizontal",
+                  "path": "rtmaster/valves/valve-horizontal.svg"
+                },
+                {
+                  "category": "valves",
+                  "description": "Valve left right",
+                  "name": "valve-left-right",
+                  "path": "rtmaster/valves/valve-left-right.svg"
+                },
+                {
+                  "category": "valves",
+                  "description": "Valve round down",
+                  "name": "valve-round-down",
+                  "path": "rtmaster/valves/valve-round-down.svg"
+                },
+                {
+                  "category": "valves",
+                  "description": "Valve round left",
+                  "name": "valve-round-left",
+                  "path": "rtmaster/valves/valve-round-left.svg"
+                },
+                {
+                  "category": "valves",
+                  "description": "Valve round right",
+                  "name": "valve-round-right",
+                  "path": "rtmaster/valves/valve-round-right.svg"
+                },
+                {
+                  "category": "valves",
+                  "description": "Valve round up",
+                  "name": "valve-round-up",
+                  "path": "rtmaster/valves/valve-round-up.svg"
+                },
+                {
+                  "category": "valves",
+                  "description": "Valve square down",
+                  "name": "valve-square-down",
+                  "path": "rtmaster/valves/valve-square-down.svg"
+                },
+                {
+                  "category": "valves",
+                  "description": "Valve square left",
+                  "name": "valve-square-left",
+                  "path": "rtmaster/valves/valve-square-left.svg"
+                },
+                {
+                  "category": "valves",
+                  "description": "Valve square right",
+                  "name": "valve-square-right",
+                  "path": "rtmaster/valves/valve-square-right.svg"
+                },
+                {
+                  "category": "valves",
+                  "description": "Valve square up",
+                  "name": "valve-square-up",
+                  "path": "rtmaster/valves/valve-square-up.svg"
+                },
+                {
+                  "category": "valves",
+                  "description": "Valve vertical",
+                  "name": "valve-vertical",
+                  "path": "rtmaster/valves/valve-vertical"
+                }
+              ],
+              "license": "Apache 2.0",
+              "url": "https://github.com/rtmaster"
+            }
+          },
+          "svgBuilderData": {
+            "elements": [],
+            "height": "100%",
+            "viewport": {
+              "height": 1000,
+              "width": 1000,
+              "x": 0,
+              "y": 0
+            },
+            "width": "100%"
+          },
+          "svg_data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\n\n<svg\n   xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n   xmlns:cc=\"http://creativecommons.org/ns#\"\n   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n   xmlns:svg=\"http://www.w3.org/2000/svg\"\n   xmlns=\"http://www.w3.org/2000/svg\"\n   xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n   xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n   xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n   width=\"100%\"\n   height=\"100%\"\n   viewBox=\"0 0 11.116309 11.452278\"\n   version=\"1.1\"\n   id=\"svg1170\"\n   inkscape:version=\"0.92.4 (5da689c313, 2019-01-14)\"\n   sodipodi:docname=\"led_state.svg\">\n  <defs\n     id=\"defs1164\">\n    <linearGradient\n       id=\"linearGradient1654\">\n      <stop\n         offset=\"0\"\n         style=\"stop-color:#ffffff;stop-opacity:0.26767677\"\n         id=\"stop1648\" />\n      <stop\n         offset=\"0.40932989\"\n         style=\"stop-color:#ffffff;stop-opacity:0.16666667\"\n         id=\"stop1650\" />\n      <stop\n         offset=\"1\"\n         style=\"stop-color:#ffffff;stop-opacity:0.03030303\"\n         id=\"stop1652\" />\n    </linearGradient>\n    <marker\n       inkscape:stockid=\"Arrow1Mstart\"\n       orient=\"auto\"\n       refY=\"0\"\n       refX=\"0\"\n       id=\"Arrow1Mstart\"\n       style=\"overflow:visible\"\n       inkscape:isstock=\"true\">\n      <path\n         id=\"path1897\"\n         d=\"M 0,0 5,-5 -12.5,0 5,5 Z\"\n         style=\"fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt\"\n         transform=\"matrix(0.4,0,0,0.4,4,0)\"\n         inkscape:connector-curvature=\"0\" />\n    </marker>\n    <marker\n       inkscape:stockid=\"Arrow1Lend\"\n       orient=\"auto\"\n       refY=\"0\"\n       refX=\"0\"\n       id=\"Arrow1Lend\"\n       style=\"overflow:visible\"\n       inkscape:isstock=\"true\">\n      <path\n         id=\"path1894\"\n         d=\"M 0,0 5,-5 -12.5,0 5,5 Z\"\n         style=\"fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt\"\n         transform=\"matrix(-0.8,0,0,-0.8,-10,0)\"\n         inkscape:connector-curvature=\"0\" />\n    </marker>\n    <marker\n       inkscape:stockid=\"Arrow1Lstart\"\n       orient=\"auto\"\n       refY=\"0\"\n       refX=\"0\"\n       id=\"Arrow1Lstart\"\n       style=\"overflow:visible\"\n       inkscape:isstock=\"true\">\n      <path\n         id=\"path1891\"\n         d=\"M 0,0 5,-5 -12.5,0 5,5 Z\"\n         style=\"fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt\"\n         transform=\"matrix(0.8,0,0,0.8,10,0)\"\n         inkscape:connector-curvature=\"0\" />\n    </marker>\n    <linearGradient\n       id=\"linearGradient5755-1\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(-0.04368338,0,0,0.02225559,101.72601,60.528209)\"\n       x1=\"-45.709404\"\n       y1=\"74.787079\"\n       x2=\"-28.789349\"\n       y2=\"74.787079\"\n       xlink:href=\"#linearGradient5755\" />\n    <linearGradient\n       id=\"linearGradient8535-0-4-9-7-7-4-2-3-8\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(-0.152347,0,0,0.077617,361.29663,168.99114)\"\n       x1=\"-45.709404\"\n       y1=\"74.787079\"\n       x2=\"-28.789349\"\n       y2=\"74.787079\"\n       xlink:href=\"#linearGradient5755\" />\n    <linearGradient\n       id=\"linearGradient8535-0-4-9-7-7-4-2-3\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(-0.04368338,0,0,0.04081143,25.134315,59.431991)\"\n       x1=\"-45.709404\"\n       y1=\"74.787079\"\n       x2=\"-28.789349\"\n       y2=\"74.787079\"\n       xlink:href=\"#linearGradient5755\" />\n    <radialGradient\n       cx=\"106.09412\"\n       cy=\"94.036751\"\n       r=\"52.895233\"\n       fx=\"106.09412\"\n       fy=\"94.036751\"\n       id=\"radialGradient12424-7-9-4\"\n       xlink:href=\"#linearGradient1654\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(0.02732782,-1.0657846,0.99967129,0.02563805,-10.431775,150.39216)\" />\n    <linearGradient\n       id=\"linearGradient12443\">\n      <stop\n         id=\"stop12445\"\n         style=\"stop-color:#ffffff;stop-opacity:0.80000001\"\n         offset=\"0\" />\n      <stop\n         id=\"stop12449\"\n         style=\"stop-color:#ffffff;stop-opacity:0.69999999\"\n         offset=\"0.40932989\" />\n      <stop\n         id=\"stop12447\"\n         style=\"stop-color:#ffffff;stop-opacity:0.322\"\n         offset=\"1\" />\n    </linearGradient>\n    <radialGradient\n       cx=\"70.596664\"\n       cy=\"76.948669\"\n       r=\"52.895233\"\n       fx=\"70.596664\"\n       fy=\"76.948669\"\n       id=\"radialGradient12424-7-9-4-1\"\n       xlink:href=\"#linearGradient12443\"\n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"matrix(0.02732782,-1.0657846,0.99967129,0.02563805,-10.431775,150.39216)\" />\n  </defs>\n  <sodipodi:namedview\n     id=\"base\"\n     pagecolor=\"#ffffff\"\n     bordercolor=\"#666666\"\n     borderopacity=\"1.0\"\n     inkscape:pageopacity=\"0.0\"\n     inkscape:pageshadow=\"2\"\n     inkscape:zoom=\"5.6\"\n     inkscape:cx=\"-50.829494\"\n     inkscape:cy=\"52.128626\"\n     inkscape:document-units=\"mm\"\n     inkscape:current-layer=\"g2333\"\n     showgrid=\"false\"\n     fit-margin-left=\"0.1\"\n     fit-margin-top=\"0.1\"\n     fit-margin-bottom=\"0.1\"\n     fit-margin-right=\"0.1\"\n     inkscape:window-width=\"1920\"\n     inkscape:window-height=\"1017\"\n     inkscape:window-x=\"-8\"\n     inkscape:window-y=\"-8\"\n     inkscape:window-maximized=\"1\"\n     inkscape:pagecheckerboard=\"0\"\n     height=\"58.24484mm\"\n     inkscape:snap-global=\"false\" />\n  <metadata\n     id=\"metadata1167\">\n    <rdf:RDF>\n      <cc:Work\n         rdf:about=\"\">\n        <dc:format>image/svg+xml</dc:format>\n        <dc:type\n           rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\" />\n        <dc:title></dc:title>\n      </cc:Work>\n    </rdf:RDF>\n  </metadata>\n  <g\n     inkscape:label=\"Layer 1\"\n     inkscape:groupmode=\"layer\"\n     id=\"layer1\"\n     transform=\"translate(-95.722401,-62.706315)\">\n    <g\n       transform=\"translate(75.988197,12.125556)\"\n       id=\"g2333\">\n      <rect\n         style=\"opacity:1;fill:#808080;fill-opacity:0.87058824;stroke:none;stroke-width:0.03;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n         id=\"rect1069-8\"\n         width=\"10.784375\"\n         height=\"11.086937\"\n         x=\"19.834204\"\n         y=\"50.8461\"\n         rx=\"0.14241832\"\n         ry=\"0.14241832\" />\n      <rect\n         style=\"opacity:1;fill:#f2f2f2;fill-opacity:0.97932817;stroke:#666666;stroke-width:0.03;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0\"\n         id=\"rect1069\"\n         width=\"10.767672\"\n         height=\"11.086937\"\n         x=\"19.96784\"\n         y=\"50.695759\"\n         rx=\"0.14241832\"\n         ry=\"0.14241832\" />\n      <g\n         transform=\"matrix(0.07314584,0,0,0.07314584,20.685739,52.217968)\"\n         id=\"layer1-2-6-7-4\"\n         class=\"led_#n_#id_stat_state\">\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 110.95511,50.523104 c -0.1048,0.574777 -3.72708,31.156193 -3.85274,31.722911 C 101.90421,105.69091 79.060586,122.08977 55.245854,119.11802 30.855472,116.07443 19.233286,93.433131 19.122792,69.511933 19.113633,67.529413 17.646588,47.036187 18.257414,45.135171 l 45.028066,29.88764 z\"\n           id=\"path11874-2-8-6-7-4-8\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.30493272;fill:#000000;fill-opacity:1;stroke:none;stroke-width:6.3499999;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 103.23536,79.786907 C 102.842,80.218897 83.569965,104.23833 83.16319,104.65244 66.334928,121.7841 38.272781,123.59229 19.648052,108.4565 0.57312615,92.954843 2.7091841,67.594618 15.287106,47.246845 16.329526,45.560484 25.940987,27.401615 27.466084,26.112801 L 49.82532,75.315056 Z\"\n           id=\"path11874-2-8-4-0-7\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.30493272;fill:#000000;fill-opacity:1;stroke:none;stroke-width:6.3499999;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 120.45925,69.89653 a 52.520233,52.520233 0 1 1 -105.040465,0 52.520233,52.520233 0 1 1 105.040465,0 z\"\n           transform=\"matrix(0.83287111,0,0,0.83287111,8.2036576,-4.7468624)\"\n           id=\"path11874-3-8-1\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:#666666;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\"\n           varkey=\"state\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 120.45925,69.89653 a 52.520233,52.520233 0 1 1 -105.040465,0 52.520233,52.520233 0 1 1 105.040465,0 z\"\n           id=\"path11874-2-1-6-9\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#radialGradient12424-7-9-4);fill-opacity:1;stroke:#333333;stroke-width:6.3499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\"\n           transform=\"matrix(0.83287111,0,0,0.83287111,8.2036576,-4.7469026)\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"m 119.95345,69.89653 a 52.014435,52.014435 0 1 1 -104.028867,0 52.014435,52.014435 0 1 1 104.028867,0 z\"\n           transform=\"matrix(0.79341369,0,0,0.79341369,10.703351,-2.1943128)\"\n           id=\"path11874-2-4-1-8-4\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#1a1a1a;stroke-width:1.54940331;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 113.09866,96.710363 A 52.520233,52.520233 0 0 1 17.403105,84.196754\"\n           transform=\"matrix(-0.80334173,-0.21980982,0.21980982,-0.80334173,103.75468,124.31462)\"\n           id=\"path11874-2-3-81-2-1\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#333333;stroke-width:3.6500001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 94.199133,115.38039 A 52.520233,52.520233 0 0 1 28.181462,104.21433\"\n           transform=\"matrix(-0.80334173,-0.21980982,0.21980982,-0.80334173,103.75468,124.31462)\"\n           id=\"path11874-2-3-8-8-6-5\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#666666;stroke-width:2.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 74.703391,121.97933 A 52.520233,52.520233 0 0 1 36.185332,111.73047\"\n           transform=\"matrix(-0.80334173,-0.21980982,0.21980982,-0.80334173,103.75468,124.31462)\"\n           id=\"path11874-2-3-8-5-8-9-1\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#cccccc;stroke-width:0.94999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n        <path\n           inkscape:connector-curvature=\"0\"\n           d=\"M 94.199133,115.38039 A 52.520233,52.520233 0 0 1 28.181462,104.21433\"\n           transform=\"matrix(0.79526143,0.24745409,-0.24745409,0.79526143,27.968643,-18.806835)\"\n           id=\"path11874-2-3-8-3-7-4-9\"\n           style=\"color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#4d4d4d;stroke-width:1.45000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate\" />\n      </g>\n    </g>\n    <text\n       id=\"text2355\"\n       y=\"6.5506186\"\n       x=\"37.232597\"\n       style=\"font-style:normal;font-weight:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332\"\n       xml:space=\"preserve\"><tspan\n         style=\"stroke-width:0.26458332\"\n         y=\"12.793132\"\n         x=\"37.232597\"\n         id=\"tspan2353\"\n         sodipodi:role=\"line\" /></text>\n  </g>\n</svg>\n",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"thechantry\")\r\n  |> range(start: -48h, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"network\"] == \"thechantry\")\r\n  |> filter(fn: (r) => r[\"varkey\"] == \"state\") \r\n  |> filter(fn: (r) => r[\"device\"] == \"$device\") \r\n  |> last()\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+              "refId": "A"
+            }
+          ],
+          "title": "$device",
+          "type": "marcuscalidus-svg-panel",
+          "useSVGBuilder": false
+        }
+      ],
+      "title": "Row title",
+      "type": "row"
+    }
+  ],
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "hide": 0,
+        "includeAll": true,
+        "multi": false,
+        "name": "device",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "hiusqba1",
+            "value": "hiusqba1"
+          },
+          {
+            "selected": false,
+            "text": "dhw",
+            "value": "dhw"
+          },
+          {
+            "selected": false,
+            "text": "novocon1",
+            "value": "novocon1"
+          }
+        ],
+        "query": "hiusqba1,dhw,novocon1",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "LEDs",
+  "uid": "LFZ1QTF4z",
+  "version": 3,
+  "weekStart": ""
+}
