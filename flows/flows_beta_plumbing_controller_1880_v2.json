@@ -59,6 +59,14 @@
         "info": ""
     },
     {
+        "id": "ac900a3fdc09a7bf",
+        "type": "tab",
+        "label": "Software 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "f0a27113.452c7",
         "type": "tab",
         "label": "WIFI Management",
@@ -71,6 +79,14 @@
         "label": "Sequent TI",
         "disabled": false,
         "info": ""
+    },
+    {
+        "id": "5eef512bbec6c00c",
+        "type": "tab",
+        "label": "Operation",
+        "disabled": false,
+        "info": "",
+        "env": []
     },
     {
         "id": "d1f3d002.63ee48",
@@ -3764,7 +3780,7 @@
         "type": "function",
         "z": "580bb6a3.5dc1d",
         "name": "Metrics",
-        "func": "\nvar metrics = global.get(\"readings.local\") || {};\n\n\nvar net = global.get(\"networkId\") || \"local\";\n\nvar oot = { readings: [] };\n//oot = 'stat_state {network=\"local\", node=\"mynodered1\", device=\"prometheus\", vargroup=\"stat\", varkey=\"state\"} 1\\n';\n\nfor (var dev in metrics) {\n    for (var grp in metrics[dev]) {\n\n        if (msg.req.params.vargroup && grp != msg.req.params.vargroup) { continue; }\n\n        for (var m in metrics[dev][grp]) {\n\n            var tline = {};\n            if (metrics[dev][grp][m].topic) {\n\n                tline.value = metrics[dev][grp][m].value;\n                tline.time = metrics[dev][grp][m].timestamp;\n                tline.title = metrics[dev][grp][m].title || \"\";\n                tline.units = metrics[dev][grp][m].units || \"\";\n                tline.network = net;\n                tline.node = metrics[dev][grp][m].topic.split(\"/\")[1];\n                tline.device = dev;\n                tline.vargroup = grp;\n                tline.varkey = m;\n\n                if (msg.payload.select) {\n\n                    tline = tline[msg.payload.select];\n\n                    if (oot.readings.indexOf(tline) < 0) { oot.readings.push(tline); }\n\n                } else {\n\n                    oot.readings.push(tline);\n                }\n\n\n\n            }\n            //oot += tops[3] + '_' + tops[4] + '{network=\"' + net + '\",node=\"' + tops[1] + '\",device=\"' + tops[2] + '\",vargroup=\"' + tops[3] + '\",varkey=\"' + tops[4] + '\"} ' + metrics[m].payload + \"\\n\";\n        }\n    }\n}\n\nmsg.payload = oot;\n\nreturn msg;\n\n",
+        "func": "\nvar metrics = global.get(\"readings.local\")||{};\n\n\nvar net = global.get(\"config.networkId\") || \"local\";\n\nvar oot = {readings:[]};\n//oot = 'stat_state {network=\"local\", node=\"mynodered1\", device=\"prometheus\", vargroup=\"stat\", varkey=\"state\"} 1\\n';\n\nfor (var dev in metrics) {\nfor (var grp in metrics[dev]) {\n\n    if (msg.req.params.vargroup && grp != msg.req.params.vargroup) { continue; }    \n    \n    for (var m in metrics[dev][grp]) {\n\n        var tline = {};\n        if (metrics[dev][grp][m].topic) {\n\n            tline.value = metrics[dev][grp][m].value;\n            tline.time = metrics[dev][grp][m].timestamp;\n            tline.title = metrics[dev][grp][m].title || \"\";\n            tline.units = metrics[dev][grp][m].units || \"\";\n            tline.network = net;\n            tline.node = metrics[dev][grp][m].topic.split(\"/\")[1];\n            tline.device = dev;\n            tline.vargroup = grp;\n            tline.varkey = m;\n\n            if (msg.payload.select) {\n\n                tline = tline[msg.payload.select];\n\n            }         \n     \n\n            oot.readings.push(tline);\n        }  \n        //oot += tops[3] + '_' + tops[4] + '{network=\"' + net + '\",node=\"' + tops[1] + '\",device=\"' + tops[2] + '\",vargroup=\"' + tops[3] + '\",varkey=\"' + tops[4] + '\"} ' + metrics[m].payload + \"\\n\";\n    }\n}\n}\n\nmsg.payload = oot;\n\nreturn msg;\n\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -9657,6 +9673,1147 @@
         "wires": []
     },
     {
+        "id": "97d4f0dbe521c35a",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1250,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "83b384b84b66bf57",
+        "type": "function",
+        "z": "ac900a3fdc09a7bf",
+        "name": "flows",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url=\"http://localhost:\" + msg.port + \"/flows\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n\nif (msg.mqttpass) {\n\n   var cfrom = '\"broker\": \"mqtt\"';\n   var cto = '\"broker\": \"mqtt\", \"credentials\":{\"user\":\"admin\", \"password\":\"' + msg.mqttpass + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\nif (msg.mysqlpass) {\n\n   var cfrom = '\"type\": \"MySQLdatabase\"';\n   var cto = '\"type\": \"MySQLdatabase\", \"credentials\":{\"user\":\"root\", \"password\":\"' + msg.mysqlpass + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\nif (msg.influxdbpass) {\n\n   var cfrom = '\"type\": \"influxdb\"';\n   var cto = '\"type\": \"influxdb\", \"credentials\":{\"token\":\"' + msg.influxdbpass + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\n\n// if (global.get(\"settings.flow\")==\"flows_ihiu_setup\") {\n    \n//    var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n//    var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"setup\",\"password\":\"setup\"}';\n//    msg.payload = msg.payload.replace(cfrom, cto);\n\n// } else {\n\n//    var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n//    var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n//    msg.payload = msg.payload.replace(cfrom, cto);\n\n// }\n\n\n// var cfrom = '\"broker\":\"192.168.0.3\"';\n// var cto = '\"broker\":\"192.168.0.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n// msg.payload = msg.payload.replace(cfrom, cto);\n\n// var cfrom = '\"broker\":\"192.168.1.3\"';\n// var cto = '\"broker\":\"192.168.1.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n// msg.payload = msg.payload.replace(cfrom, cto);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 940,
+        "wires": [
+            [
+                "09c4bf47696ba509"
+            ]
+        ]
+    },
+    {
+        "id": "09c4bf47696ba509",
+        "type": "http request",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1070,
+        "y": 940,
+        "wires": [
+            [
+                "97d4f0dbe521c35a"
+            ]
+        ]
+    },
+    {
+        "id": "77f11d734a52178e",
+        "type": "function",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "func": "//var cmd = \"curl http://localhost:5002/auth/token --data 'client_id=node-red-admin&grant_type=password&scope=*&username=admin&password=Duu1cahe'\";\n\nmsg.payload={};\nmsg.payload['client_id']=\"node-red-admin\";\nmsg.payload['grant_type']=\"password\";\nmsg.payload['scope']=\"*\";\nmsg.payload['username']=\"admin\";\nmsg.payload['password']=\"admin\";\n\n\nmsg.url = \"http://localhost:\" + msg.port + \"/auth/token\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 200,
+        "wires": [
+            [
+                "e6bc002c7392e0dc"
+            ]
+        ]
+    },
+    {
+        "id": "e6bc002c7392e0dc",
+        "type": "http request",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 530,
+        "y": 200,
+        "wires": [
+            [
+                "7901b3b9835df8ba",
+                "1461b78dcaf19c57"
+            ]
+        ]
+    },
+    {
+        "id": "d5f3e40036a26a89",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1250,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "8a6e146d074ff03f",
+        "type": "change",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "auth",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1050,
+        "y": 200,
+        "wires": [
+            [
+                "d5f3e40036a26a89"
+            ]
+        ]
+    },
+    {
+        "id": "c197dad2e2a88b90",
+        "type": "json",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "pretty": false,
+        "x": 870,
+        "y": 200,
+        "wires": [
+            [
+                "8a6e146d074ff03f"
+            ]
+        ]
+    },
+    {
+        "id": "8796446282db9c4e",
+        "type": "file in",
+        "z": "ac900a3fdc09a7bf",
+        "name": "flow_mysql_influxdb.json",
+        "filename": "/home/pi/plumbing-controller/flows/flow_mysql_influxdb.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 390,
+        "y": 940,
+        "wires": [
+            [
+                "d99fe9fa0d42f1cf"
+            ]
+        ]
+    },
+    {
+        "id": "7901b3b9835df8ba",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "2833d5e736c34b2a",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1070,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "bc2f0f01a91c72e4",
+        "type": "http request",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 870,
+        "y": 360,
+        "wires": [
+            [
+                "2833d5e736c34b2a",
+                "fba270245f716790"
+            ]
+        ]
+    },
+    {
+        "id": "1c52a518306f8854",
+        "type": "inject",
+        "z": "ac900a3fdc09a7bf",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "5002",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 350,
+        "y": 360,
+        "wires": [
+            [
+                "aea492096a0be938"
+            ]
+        ]
+    },
+    {
+        "id": "139f657b2eac6bf4",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1070,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "fba270245f716790",
+        "type": "function",
+        "z": "ac900a3fdc09a7bf",
+        "name": "node-red-node-mysql ",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url=\"http://localhost:\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-node-mysql\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 420,
+        "wires": [
+            [
+                "0d62659052a95287"
+            ]
+        ]
+    },
+    {
+        "id": "0d62659052a95287",
+        "type": "http request",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 870,
+        "y": 420,
+        "wires": [
+            [
+                "139f657b2eac6bf4",
+                "0d3fd0022e222db3"
+            ]
+        ]
+    },
+    {
+        "id": "aea492096a0be938",
+        "type": "function",
+        "z": "ac900a3fdc09a7bf",
+        "name": "node-red-contrib-influxdb",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://localhost:\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-influxdb\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 360,
+        "wires": [
+            [
+                "bc2f0f01a91c72e4"
+            ]
+        ]
+    },
+    {
+        "id": "384a352230451649",
+        "type": "change",
+        "z": "ac900a3fdc09a7bf",
+        "name": "email",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\"type\":\"e-mail\"",
+                "fromt": "str",
+                "to": "\"type\":\"e-mail\", \"credentials\":{\"userid\":\"nodered@heatweb.com\", \"password\":\"nodered@heatweb.com\"}",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 1420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1461b78dcaf19c57",
+        "type": "switch",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "access_token",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 710,
+        "y": 200,
+        "wires": [
+            [
+                "c197dad2e2a88b90"
+            ]
+        ]
+    },
+    {
+        "id": "288eaef20e642ecb",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1110,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "15de0fd6f58a78be",
+        "type": "function",
+        "z": "ac900a3fdc09a7bf",
+        "name": "flow",
+        "func": "\nmsg.payload = JSON.stringify({\n   \"id\": \"91ad452.0000111\",\n   \"label\": \"Public MQTT\",\n   \"nodes\": JSON.parse(msg.payload),\n   \"configs\": []\n});\n\n\n\n\nmsg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://localhost:\" + msg.port + \"/flow\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n\nif (global.get(\"noderedmqttpass\")) {\n\n   var cfrom = '\"broker\":\"localhost\"';\n   var cto = '\"broker\":\"localhost\", \"credentials\":{\"user\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n\n}\n\nif (global.get(\"settings.flow\")==\"flows_ihiu_setup\") {\n    \n   var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n   var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"setup\",\"password\":\"setup\"}';\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n} else {\n\n   var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n   var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\nvar cfrom = '\"broker\":\"192.168.0.3\"';\nvar cto = '\"broker\":\"192.168.0.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\nmsg.payload = msg.payload.replace(cfrom, cto);\n\nvar cfrom = '\"broker\":\"192.168.1.3\"';\nvar cto = '\"broker\":\"192.168.1.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\nmsg.payload = msg.payload.replace(cfrom, cto);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 1320,
+        "wires": [
+            [
+                "032c14af78649f3b"
+            ]
+        ]
+    },
+    {
+        "id": "b7bed141afd0d73b",
+        "type": "http request",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 930,
+        "y": 1320,
+        "wires": [
+            [
+                "288eaef20e642ecb"
+            ]
+        ]
+    },
+    {
+        "id": "0fc04fa639364717",
+        "type": "file in",
+        "z": "ac900a3fdc09a7bf",
+        "name": "nodes_public_mqtt.json",
+        "filename": "/home/pi/plumbing-controller/flows/nodes_public_mqtt.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 410,
+        "y": 1320,
+        "wires": [
+            [
+                "15de0fd6f58a78be"
+            ]
+        ]
+    },
+    {
+        "id": "032c14af78649f3b",
+        "type": "change",
+        "z": "ac900a3fdc09a7bf",
+        "name": "Credentials",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\"type\": \"MySQLdatabase\"",
+                "fromt": "str",
+                "to": "\"type\": \"MySQLdatabase\", \"credentials\":{\"user\":\"root\", \"password\":\"zccamei4ies@\"}",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\"type\": \"influxdb\"",
+                "fromt": "str",
+                "to": "\"type\": \"influxdb\", \"credentials\":{\"token\":\"oHyHPxoTEHQysurXl_4Kxbmj5EnpWtsg3RnSXoMnLeO01ICmIBUXIo3yXNEsLxMtPzTb9lwgzHDX5tL4ipOzjw==\"}",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 1320,
+        "wires": [
+            [
+                "b7bed141afd0d73b"
+            ]
+        ]
+    },
+    {
+        "id": "67c009f0411c8299",
+        "type": "inject",
+        "z": "ac900a3fdc09a7bf",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "5002",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 190,
+        "y": 940,
+        "wires": [
+            [
+                "8796446282db9c4e"
+            ]
+        ]
+    },
+    {
+        "id": "85f6f1001955c4ee",
+        "type": "inject",
+        "z": "ac900a3fdc09a7bf",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "5002",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 190,
+        "y": 1320,
+        "wires": [
+            [
+                "0fc04fa639364717"
+            ]
+        ]
+    },
+    {
+        "id": "f6e133436ac4793a",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1070,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "0d3fd0022e222db3",
+        "type": "function",
+        "z": "ac900a3fdc09a7bf",
+        "name": "node-red-contrib-crypto-js",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url=\"http://localhost:\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-crypto-js\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 480,
+        "wires": [
+            [
+                "9c0b93ed15db32a2"
+            ]
+        ]
+    },
+    {
+        "id": "9c0b93ed15db32a2",
+        "type": "http request",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 870,
+        "y": 480,
+        "wires": [
+            [
+                "f6e133436ac4793a",
+                "980f0f34f77b13b7"
+            ]
+        ]
+    },
+    {
+        "id": "021aa70716465253",
+        "type": "comment",
+        "z": "ac900a3fdc09a7bf",
+        "name": "Request for Authorisation where password is set",
+        "info": "",
+        "x": 220,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "2c426c02c64b266c",
+        "type": "comment",
+        "z": "ac900a3fdc09a7bf",
+        "name": "Install Nodes required for Flows",
+        "info": "",
+        "x": 170,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "775445f28c7e016c",
+        "type": "comment",
+        "z": "ac900a3fdc09a7bf",
+        "name": "Deploy Complete Flows",
+        "info": "",
+        "x": 140,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "753c89bda373e552",
+        "type": "comment",
+        "z": "ac900a3fdc09a7bf",
+        "name": "Deploy Individual Tab",
+        "info": "",
+        "x": 140,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "7db1854d246ef6bc",
+        "type": "inject",
+        "z": "ac900a3fdc09a7bf",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "5002",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 190,
+        "y": 200,
+        "wires": [
+            [
+                "77f11d734a52178e"
+            ]
+        ]
+    },
+    {
+        "id": "cd85c4a980403ed1",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1190,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "d0d5d4dda1d26f70",
+        "type": "function",
+        "z": "ac900a3fdc09a7bf",
+        "name": "flow",
+        "func": "\n\nmsg.headers = {};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://localhost:\" + msg.port + \"/flow\";\n\n\n// {\n//    \"id\": \"e090c99b.574098\",\n//       \"type\": \"tab\",\n//          \"label\": \"HIU\",\n//             \"disabled\": false,\n//                \"info\": \"\"\n// },\n\n\nfunction checkTab(nodeitem) {\n   return nodeitem.type == \"tab\";\n}\n\nfunction filterTab(nodeitem) {\n   return nodeitem.type != \"tab\";\n}\n\nmsg.payload = JSON.parse(msg.payload);\n\nvar tabf = msg.payload.filter(checkTab)[0];\n\ntabf.nodes = msg.payload.filter(filterTab);\n\n// msg.payload = JSON.stringify({\n//    \"id\": \"91ad452.0000112\",\n//    \"label\": \"HIU\",\n//    \"nodes\": JSON.parse(msg.payload),\n//    \"configs\": []\n// });\n\nmsg.payload = tabf;\nreturn msg;\n\n\n\n\n\n\nmsg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://localhost:\" + msg.port + \"/flow\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n\nif (global.get(\"noderedmqttpass\")) {\n\n   var cfrom = '\"broker\":\"localhost\"';\n   var cto = '\"broker\":\"localhost\", \"credentials\":{\"user\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n\n}\n\nif (global.get(\"settings.flow\")==\"flows_ihiu_setup\") {\n    \n   var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n   var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"setup\",\"password\":\"setup\"}';\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n} else {\n\n   var cfrom = '\"broker\":\"mqtt.heatweb.com\"';\n   var cto = '\"broker\":\"mqtt.heatweb.com\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n   msg.payload = msg.payload.replace(cfrom, cto);\n\n}\n\n\nvar cfrom = '\"broker\":\"192.168.0.3\"';\nvar cto = '\"broker\":\"192.168.0.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\nmsg.payload = msg.payload.replace(cfrom, cto);\n\nvar cfrom = '\"broker\":\"192.168.1.3\"';\nvar cto = '\"broker\":\"192.168.1.3\",\"credentials\":{\"user\":\"' + global.get(\"settings.node\") + '\",\"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\nmsg.payload = msg.payload.replace(cfrom, cto);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 1120,
+        "wires": [
+            [
+                "cf586d4bd7f24034",
+                "aca36bf3864cc267"
+            ]
+        ]
+    },
+    {
+        "id": "be86f14993865fe2",
+        "type": "http request",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1010,
+        "y": 1120,
+        "wires": [
+            [
+                "cd85c4a980403ed1"
+            ]
+        ]
+    },
+    {
+        "id": "aca36bf3864cc267",
+        "type": "change",
+        "z": "ac900a3fdc09a7bf",
+        "name": "Credentials",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\"type\": \"MySQLdatabase\"",
+                "fromt": "str",
+                "to": "\"type\": \"MySQLdatabase\", \"credentials\":{\"user\":\"root\", \"password\":\"zccamei4ies@\"}",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\"type\": \"influxdb\"",
+                "fromt": "str",
+                "to": "\"type\": \"influxdb\", \"credentials\":{\"token\":\"oHyHPxoTEHQysurXl_4Kxbmj5EnpWtsg3RnSXoMnLeO01ICmIBUXIo3yXNEsLxMtPzTb9lwgzHDX5tL4ipOzjw==\"}",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 1120,
+        "wires": [
+            [
+                "be86f14993865fe2"
+            ]
+        ]
+    },
+    {
+        "id": "429afe0f293b591a",
+        "type": "inject",
+        "z": "ac900a3fdc09a7bf",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "5002",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 190,
+        "y": 1120,
+        "wires": [
+            [
+                "fd0ab91fb5e3b28c"
+            ]
+        ]
+    },
+    {
+        "id": "53e684ac2805fd16",
+        "type": "comment",
+        "z": "ac900a3fdc09a7bf",
+        "name": "Deploy Individual Tab",
+        "info": "",
+        "x": 140,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "cf586d4bd7f24034",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "debug 19",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "fd0ab91fb5e3b28c",
+        "type": "file in",
+        "z": "ac900a3fdc09a7bf",
+        "name": "flow_public_mqtt.json",
+        "filename": "/home/pi/plumbing-controller/flows/flow_public_mqtt.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 400,
+        "y": 1120,
+        "wires": [
+            [
+                "d0d5d4dda1d26f70"
+            ]
+        ]
+    },
+    {
+        "id": "d99fe9fa0d42f1cf",
+        "type": "credentials",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "props": [
+            {
+                "value": "mqttpass",
+                "type": "msg"
+            },
+            {
+                "value": "mysqlpass",
+                "type": "msg"
+            },
+            {
+                "value": "influxdbpass",
+                "type": "msg"
+            }
+        ],
+        "x": 690,
+        "y": 940,
+        "wires": [
+            [
+                "83b384b84b66bf57"
+            ]
+        ]
+    },
+    {
+        "id": "b25ce75334084ab2",
+        "type": "file in",
+        "z": "ac900a3fdc09a7bf",
+        "name": "flow_hiu.json",
+        "filename": "/home/pi/plumbing-controller/flows/flow_hiu.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 390,
+        "y": 1180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ec78d36e0893ad3e",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1070,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "980f0f34f77b13b7",
+        "type": "function",
+        "z": "ac900a3fdc09a7bf",
+        "name": "node-red-contrib-heatweb",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url=\"http://localhost:\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-heatweb\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 540,
+        "wires": [
+            [
+                "91719cf724984c02"
+            ]
+        ]
+    },
+    {
+        "id": "91719cf724984c02",
+        "type": "http request",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 870,
+        "y": 540,
+        "wires": [
+            [
+                "ec78d36e0893ad3e",
+                "9004c86aa9528228"
+            ]
+        ]
+    },
+    {
+        "id": "0253cc725be8d6da",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1070,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "9004c86aa9528228",
+        "type": "function",
+        "z": "ac900a3fdc09a7bf",
+        "name": "node-red-node-email",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url=\"http://localhost:\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-node-email\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 600,
+        "wires": [
+            [
+                "87c8ca5dbc0f0e54"
+            ]
+        ]
+    },
+    {
+        "id": "87c8ca5dbc0f0e54",
+        "type": "http request",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 870,
+        "y": 600,
+        "wires": [
+            [
+                "0253cc725be8d6da",
+                "5affa22be9a8ea42"
+            ]
+        ]
+    },
+    {
+        "id": "745d17b668022a10",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1070,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "5affa22be9a8ea42",
+        "type": "function",
+        "z": "ac900a3fdc09a7bf",
+        "name": "node-red-contrib-credentials",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url=\"http://localhost:\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-credentials\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 660,
+        "wires": [
+            [
+                "5a15e7560b6938c7"
+            ]
+        ]
+    },
+    {
+        "id": "5a15e7560b6938c7",
+        "type": "http request",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 870,
+        "y": 660,
+        "wires": [
+            [
+                "745d17b668022a10",
+                "e55559ebb19b655d"
+            ]
+        ]
+    },
+    {
+        "id": "d174518f0ceca3be",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1070,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "e55559ebb19b655d",
+        "type": "function",
+        "z": "ac900a3fdc09a7bf",
+        "name": "node-red-contrib-m-bus",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url=\"http://localhost:\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-m-bus\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 720,
+        "wires": [
+            [
+                "b0b26977e57af52c"
+            ]
+        ]
+    },
+    {
+        "id": "b0b26977e57af52c",
+        "type": "http request",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 870,
+        "y": 720,
+        "wires": [
+            [
+                "d174518f0ceca3be",
+                "a2ab75a409af4b07"
+            ]
+        ]
+    },
+    {
+        "id": "79df35ef89cb3231",
+        "type": "debug",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1070,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "a2ab75a409af4b07",
+        "type": "function",
+        "z": "ac900a3fdc09a7bf",
+        "name": "node-red-node-ui-table",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url=\"http://localhost:\" + msg.port + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-node-ui-table\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 780,
+        "wires": [
+            [
+                "3c3483790635f883"
+            ]
+        ]
+    },
+    {
+        "id": "3c3483790635f883",
+        "type": "http request",
+        "z": "ac900a3fdc09a7bf",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 870,
+        "y": 780,
+        "wires": [
+            [
+                "79df35ef89cb3231"
+            ]
+        ]
+    },
+    {
+        "id": "bfe7b40b9bc0ae5d",
+        "type": "file in",
+        "z": "ac900a3fdc09a7bf",
+        "name": "flows_original.json",
+        "filename": "/home/pi/plumbing-controller/flows/flows_original.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 410,
+        "y": 880,
+        "wires": [
+            [
+                "d99fe9fa0d42f1cf"
+            ]
+        ]
+    },
+    {
+        "id": "3f0777a813e5c8b4",
+        "type": "inject",
+        "z": "ac900a3fdc09a7bf",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "5002",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 190,
+        "y": 880,
+        "wires": [
+            [
+                "bfe7b40b9bc0ae5d"
+            ]
+        ]
+    },
+    {
         "id": "ec32ffa8.3f6f6",
         "type": "exec",
         "z": "f0a27113.452c7",
@@ -11973,5 +13130,1929 @@
         "x": 780,
         "y": 180,
         "wires": []
+    },
+    {
+        "id": "6c36270af81fc46c",
+        "type": "template",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "ti odwr 2 0\nti odwr 1 100",
+        "output": "str",
+        "x": 320,
+        "y": 120,
+        "wires": [
+            [
+                "b2e994295cd1398d"
+            ]
+        ]
+    },
+    {
+        "id": "e47e8085d368995a",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 120,
+        "wires": [
+            [
+                "6c36270af81fc46c"
+            ]
+        ]
+    },
+    {
+        "id": "b2e994295cd1398d",
+        "type": "file",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "filename": "/home/pi/node-hiu/sq_all_on.sh",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 530,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c717f8a0094aa5bd",
+        "type": "template",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "ti odwr 2 100\nti odwr 1 0",
+        "output": "str",
+        "x": 320,
+        "y": 180,
+        "wires": [
+            [
+                "f92dc105e70eb3fb"
+            ]
+        ]
+    },
+    {
+        "id": "0562a4da791ebbbd",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 180,
+        "wires": [
+            [
+                "c717f8a0094aa5bd"
+            ]
+        ]
+    },
+    {
+        "id": "f92dc105e70eb3fb",
+        "type": "file",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "filename": "/home/pi/node-hiu/sq_all_off.sh",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 530,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4121c19663f1164e",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "bash /home/pi/node-hiu/sq_all_off.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 430,
+        "y": 300,
+        "wires": [
+            [
+                "4bdb5e10c16c899a"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4bdb5e10c16c899a",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "94c25b7568ce6a5e",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 300,
+        "wires": [
+            [
+                "4121c19663f1164e"
+            ]
+        ]
+    },
+    {
+        "id": "97d500fbc9c0da7d",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "bash /home/pi/node-hiu/sq_all_on.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 430,
+        "y": 380,
+        "wires": [
+            [
+                "354ca28ec0a5d815"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "354ca28ec0a5d815",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "cde671c10eb717c7",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 380,
+        "wires": [
+            [
+                "97d500fbc9c0da7d"
+            ]
+        ]
+    },
+    {
+        "id": "1ee195a3fe6483eb",
+        "type": "ui_button",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "group": "960bf2f131a4aebe",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "All On",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 190,
+        "y": 420,
+        "wires": [
+            [
+                "97d500fbc9c0da7d"
+            ]
+        ]
+    },
+    {
+        "id": "3b7677740e91cce5",
+        "type": "ui_button",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "group": "960bf2f131a4aebe",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "All Off",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 190,
+        "y": 260,
+        "wires": [
+            [
+                "4121c19663f1164e"
+            ]
+        ]
+    },
+    {
+        "id": "befba9c426ed58f3",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti countrst 8",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 410,
+        "y": 1020,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "0620891086d58d6a",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 1020,
+        "wires": [
+            [
+                "befba9c426ed58f3"
+            ]
+        ]
+    },
+    {
+        "id": "8b6c268c196a9752",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti rs485wr 0 9600 1 0 1",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Release RS485",
+        "x": 420,
+        "y": 1100,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9b33ebd219203484",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 1100,
+        "wires": [
+            [
+                "8b6c268c196a9752"
+            ]
+        ]
+    },
+    {
+        "id": "45aeb26391bf6dd0",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "d57c2c85cfbb6cf1",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 800,
+        "wires": [
+            [
+                "7ccee24d2c7f52af"
+            ]
+        ]
+    },
+    {
+        "id": "7ccee24d2c7f52af",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti wdtprd",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 400,
+        "y": 800,
+        "wires": [
+            [
+                "45aeb26391bf6dd0"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e54ddc2827ad544e",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "28429ca653d800ae",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 940,
+        "wires": [
+            [
+                "85365c915677953c"
+            ]
+        ]
+    },
+    {
+        "id": "85365c915677953c",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti wdtoprd",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 400,
+        "y": 940,
+        "wires": [
+            [
+                "e54ddc2827ad544e"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9afa9defeddd25dc",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "5445cbd954ac0899",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "5",
+        "topic": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 720,
+        "wires": [
+            [
+                "654e1534305d9cab"
+            ]
+        ]
+    },
+    {
+        "id": "654e1534305d9cab",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti wdtpwr 30",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 410,
+        "y": 720,
+        "wires": [
+            [
+                "9afa9defeddd25dc"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4c93a113c1d8d6f2",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "f48394e54bb4bd15",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti wdtiprd",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 400,
+        "y": 880,
+        "wires": [
+            [
+                "4c93a113c1d8d6f2"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "3f19bd3a744fb60a",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 880,
+        "wires": [
+            [
+                "f48394e54bb4bd15"
+            ]
+        ]
+    },
+    {
+        "id": "43c0c35d97a89b16",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 580,
+        "wires": [
+            [
+                "c4774092582c3453"
+            ]
+        ]
+    },
+    {
+        "id": "c4774092582c3453",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti rtcrd",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 390,
+        "y": 580,
+        "wires": [
+            [
+                "d475a0bb44112fb5"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d475a0bb44112fb5",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "20e7a936344041ac",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti odwr 1",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1180,
+        "y": 300,
+        "wires": [
+            [
+                "73a4155cd9585c77"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f54344fd4563477c",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 990,
+        "y": 180,
+        "wires": [
+            [
+                "20e7a936344041ac"
+            ]
+        ]
+    },
+    {
+        "id": "73a4155cd9585c77",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1370,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "cec0ba924d538fda",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "100",
+        "payloadType": "str",
+        "x": 990,
+        "y": 460,
+        "wires": [
+            [
+                "20e7a936344041ac"
+            ]
+        ]
+    },
+    {
+        "id": "8d17071e3fef3bac",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "30",
+        "payloadType": "str",
+        "x": 990,
+        "y": 240,
+        "wires": [
+            [
+                "20e7a936344041ac"
+            ]
+        ]
+    },
+    {
+        "id": "53380128c91d95fd",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti relwr 1",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1360,
+        "y": 580,
+        "wires": [
+            [
+                "28b48e15c925b75b"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "3d8d855c2222c22d",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 1170,
+        "y": 580,
+        "wires": [
+            [
+                "53380128c91d95fd"
+            ]
+        ]
+    },
+    {
+        "id": "28b48e15c925b75b",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1590,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "b3259be3a655fe32",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "str",
+        "x": 1170,
+        "y": 520,
+        "wires": [
+            [
+                "53380128c91d95fd"
+            ]
+        ]
+    },
+    {
+        "id": "cc631e5ba0df074e",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti relwr 2",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1360,
+        "y": 740,
+        "wires": [
+            [
+                "82833c788a8a38f5"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a28d9f22b9d5ffea",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 1170,
+        "y": 740,
+        "wires": [
+            [
+                "cc631e5ba0df074e"
+            ]
+        ]
+    },
+    {
+        "id": "82833c788a8a38f5",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1590,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "1d7985bb32440167",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "str",
+        "x": 1170,
+        "y": 680,
+        "wires": [
+            [
+                "cc631e5ba0df074e"
+            ]
+        ]
+    },
+    {
+        "id": "03b9b577db929930",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "50",
+        "payloadType": "num",
+        "x": 990,
+        "y": 300,
+        "wires": [
+            [
+                "20e7a936344041ac"
+            ]
+        ]
+    },
+    {
+        "id": "29ac7b8a2b208f71",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "75",
+        "payloadType": "str",
+        "x": 990,
+        "y": 400,
+        "wires": [
+            [
+                "20e7a936344041ac"
+            ]
+        ]
+    },
+    {
+        "id": "b0c886fcb29a170f",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "55",
+        "payloadType": "num",
+        "x": 990,
+        "y": 340,
+        "wires": [
+            [
+                "20e7a936344041ac"
+            ]
+        ]
+    },
+    {
+        "id": "6fba205a5876480c",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti odwr 2",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1880,
+        "y": 360,
+        "wires": [
+            [
+                "9b882e8fdf11d67c"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6dcf7ab124f719b7",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 1690,
+        "y": 140,
+        "wires": [
+            [
+                "6fba205a5876480c"
+            ]
+        ]
+    },
+    {
+        "id": "f1e656d81c8590d4",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "100",
+        "payloadType": "str",
+        "x": 1690,
+        "y": 560,
+        "wires": [
+            [
+                "6fba205a5876480c"
+            ]
+        ]
+    },
+    {
+        "id": "2720ab89119117b2",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "30",
+        "payloadType": "str",
+        "x": 1690,
+        "y": 300,
+        "wires": [
+            [
+                "6fba205a5876480c"
+            ]
+        ]
+    },
+    {
+        "id": "df7bde2200def451",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "50",
+        "payloadType": "num",
+        "x": 1690,
+        "y": 440,
+        "wires": [
+            [
+                "6fba205a5876480c"
+            ]
+        ]
+    },
+    {
+        "id": "74fb74b1e7a67de9",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "75",
+        "payloadType": "str",
+        "x": 1690,
+        "y": 520,
+        "wires": [
+            [
+                "6fba205a5876480c"
+            ]
+        ]
+    },
+    {
+        "id": "5f66323756321ccc",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "55",
+        "payloadType": "num",
+        "x": 1690,
+        "y": 480,
+        "wires": [
+            [
+                "6fba205a5876480c"
+            ]
+        ]
+    },
+    {
+        "id": "9b882e8fdf11d67c",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2090,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "73c722ef5fec12bc",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "20",
+        "payloadType": "str",
+        "x": 1690,
+        "y": 260,
+        "wires": [
+            [
+                "6fba205a5876480c"
+            ]
+        ]
+    },
+    {
+        "id": "76b2c07fabff05f2",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "10",
+        "payloadType": "str",
+        "x": 1690,
+        "y": 220,
+        "wires": [
+            [
+                "6fba205a5876480c"
+            ]
+        ]
+    },
+    {
+        "id": "1a705fc93004e444",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "3",
+        "payloadType": "str",
+        "x": 1690,
+        "y": 180,
+        "wires": [
+            [
+                "6fba205a5876480c"
+            ]
+        ]
+    },
+    {
+        "id": "54513d54eb39e3ae",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "45",
+        "payloadType": "num",
+        "x": 1690,
+        "y": 400,
+        "wires": [
+            [
+                "6fba205a5876480c"
+            ]
+        ]
+    },
+    {
+        "id": "1d727db50c467a2a",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "40",
+        "payloadType": "num",
+        "x": 1690,
+        "y": 360,
+        "wires": [
+            [
+                "6fba205a5876480c"
+            ]
+        ]
+    },
+    {
+        "id": "fe7c5a31d84c4467",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1990,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "d3dbf6661af5fc09",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 1170,
+        "y": 880,
+        "wires": [
+            [
+                "7e0b322bcb64bede"
+            ]
+        ]
+    },
+    {
+        "id": "d39ff6cf98f8ac35",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "100",
+        "payloadType": "str",
+        "x": 1170,
+        "y": 1020,
+        "wires": [
+            [
+                "7e0b322bcb64bede"
+            ]
+        ]
+    },
+    {
+        "id": "7e0b322bcb64bede",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti odwr 3",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1360,
+        "y": 1060,
+        "wires": [
+            [
+                "b0e7ef67fe909c8b"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b0e7ef67fe909c8b",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1550,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "1a1f1edcb1c9b6d8",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 1170,
+        "y": 1260,
+        "wires": [
+            [
+                "1b8d5c070935985a"
+            ]
+        ]
+    },
+    {
+        "id": "5252c8c9abee3857",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "100",
+        "payloadType": "str",
+        "x": 1170,
+        "y": 1340,
+        "wires": [
+            [
+                "1b8d5c070935985a"
+            ]
+        ]
+    },
+    {
+        "id": "1b8d5c070935985a",
+        "type": "exec",
+        "z": "5eef512bbec6c00c",
+        "command": "ti odwr 4",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1360,
+        "y": 1200,
+        "wires": [
+            [
+                "cbf3f4aa8e9b72bb"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "cbf3f4aa8e9b72bb",
+        "type": "debug",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1550,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "3a976892be4cdd5a",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "50",
+        "payloadType": "str",
+        "x": 1170,
+        "y": 980,
+        "wires": [
+            [
+                "7e0b322bcb64bede"
+            ]
+        ]
+    },
+    {
+        "id": "32ec604d736e99c8",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "10",
+        "payloadType": "str",
+        "x": 970,
+        "y": 1200,
+        "wires": [
+            [
+                "07708e5c8366a626"
+            ]
+        ]
+    },
+    {
+        "id": "7e6a8bcf68f766f7",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "10",
+        "payloadType": "str",
+        "x": 1170,
+        "y": 920,
+        "wires": [
+            [
+                "7e0b322bcb64bede"
+            ]
+        ]
+    },
+    {
+        "id": "366b8144fe2f34b0",
+        "type": "function",
+        "z": "5eef512bbec6c00c",
+        "name": "Red/Green Neon",
+        "func": "\nvar msg1={}; msg1.payload = 0;\nvar msg2={}; msg2.payload = 0;\n\nvar node = global.get(\"node\");\nvar net = global.get(\"localNetworkId\");\n\nvar state = global.get(\"readings.\"+net+\".\"+node+\".stat.state.value\");\n\nif (state==\"ok\") {  msg1.payload = 100;  }\n    \nelse if (state==\"starting\") {  msg1.payload = 100; msg2.payload = 100; }\n    \nelse {  msg2.payload = 100;  }    \n\n\nreturn [msg1,msg2];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 1120,
+        "wires": [
+            [
+                "b6d3558fa1fbf4dd"
+            ],
+            [
+                "c1092df3301790c8"
+            ]
+        ]
+    },
+    {
+        "id": "e2efccc626f74849",
+        "type": "inject",
+        "z": "5eef512bbec6c00c",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 730,
+        "y": 1140,
+        "wires": [
+            [
+                "366b8144fe2f34b0"
+            ]
+        ]
+    },
+    {
+        "id": "38851676a0d913c9",
+        "type": "link in",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "links": [
+            "6a7990ce2d387426"
+        ],
+        "x": 795,
+        "y": 1080,
+        "wires": [
+            [
+                "366b8144fe2f34b0"
+            ]
+        ]
+    },
+    {
+        "id": "07708e5c8366a626",
+        "type": "delay",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "50",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1170,
+        "y": 1200,
+        "wires": [
+            [
+                "1b8d5c070935985a"
+            ]
+        ]
+    },
+    {
+        "id": "b6d3558fa1fbf4dd",
+        "type": "subflow:d1f3d002.63ee48",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "x": 1180,
+        "y": 1100,
+        "wires": [
+            [
+                "7e0b322bcb64bede"
+            ]
+        ]
+    },
+    {
+        "id": "c1092df3301790c8",
+        "type": "subflow:d1f3d002.63ee48",
+        "z": "5eef512bbec6c00c",
+        "name": "",
+        "x": 1180,
+        "y": 1140,
+        "wires": [
+            [
+                "07708e5c8366a626"
+            ]
+        ]
     }
 ]
