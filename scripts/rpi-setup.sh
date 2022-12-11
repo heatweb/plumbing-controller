@@ -11,6 +11,7 @@ sudo apt-get -y install pwgen
 sudo apt-get -y install wget
 sudo apt-get -y install zip
 sudo apt-get -y install git
+sudo apt-get -y install xdotool
 sudo apt-get -y install build-essential cmake
 echo "Installing M-Bus Libraries..."
 sudo apt-get -y install git libtool libltdl-dev autoconf automake
