@@ -15,7 +15,7 @@ fi
 
 read -p "Do you want to install InfluxDB database? (y/n) " goinflux
 read -p "Do you want to install MySQL database? (y/n) " gomysql
-read -p "Do you want to install MySQL database? (y/n) " goprom
+read -p "Do you want to install Prometheus? (y/n) " goprom
 
 # For 64-bit OS (can be changed via comments)
 
