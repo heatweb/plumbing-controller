@@ -20,6 +20,8 @@ read -p "Do you want to install Prometheus? (y/n) " goprom
 
 read -p "Do you want to overwrite existing setup? (y/n) " gorenew
 
+echo $password > /home/pi/adminPassword.txt
+sudo mv /home/pi/adminPassword.txt /boot/heatweb/adminPassword.txt
 
 
 # For 64-bit OS (can be changed via comments)
@@ -172,11 +174,12 @@ case $goinflux in
      
     sudo docker exec influxdb influx auth list \
           --user admin \
-          --hide-headers | cut -f 3 > /home/pi/influxdbtoken.txt
+          --hide-headers | cut -f 3 > /home/pi/localInfluxToken.txt
           
     echo -n "Your InfluxDB access token is: "
-    cat /home/pi/influxdbtoken.txt
-    echo "This is saved to /home/pi/influxdbtoken.txt"
+    cat /home/pi/localInfluxToken.txt
+    echo "This is saved to /boot/heatweb/localInfluxToken.txt"
+    sudo mv /home/pi/localInfluxToken.txt /boot/heatweb/localInfluxToken.txt
  ;;
 esac
 
