@@ -1,7 +1,7 @@
 {
     "name": "plumbing-controller",
     "description": "node-red with serial port and permissions",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "dependencies": {
 	"node-red": "latest",
     "node-red-dashboard": "latest",
