@@ -17,6 +17,8 @@ read -p "Do you want to install InfluxDB database? (y/n) " goinflux
 read -p "Do you want to install MySQL database? (y/n) " gomysql
 read -p "Do you want to install Prometheus? (y/n) " goprom
 
+
+
 # For 64-bit OS (can be changed via comments)
 
 sudo apt-get -y update
@@ -63,6 +65,7 @@ then
 
 fi
 
+# docker rm -f $(docker ps -aq)
 
 sudo docker volume create portainer_data
 sudo docker run -d -p 9000:9000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
