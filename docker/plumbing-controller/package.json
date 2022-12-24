@@ -4,13 +4,14 @@
     "version": "0.1.1",
     "dependencies": {
 	"node-red": "latest",
-    "node-red-dashboard": "3.1.7",
+    "node-red-dashboard": "latest",
     "node-red-node-serialport": "latest",
     "node-red-contrib-m-bus": "latest",
     "node-red-node-ui-table": "latest",
     "node-red-contrib-ui-level": "latest",
     "node-red-contrib-uibuilder": "latest",
-    "node-red-contrib-ui-svg": "latest" 
+    "node-red-contrib-ui-svg": "latest",
+    "node-red-contrib-fs": "latest"
     },
     "scripts": {
 		"start": "node /usr/src/node-red/node_modules/node-red/red.js"
