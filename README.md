@@ -8,3 +8,9 @@ See https://hwwiki.ddns.net/
 
  bash <(curl -sL https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/rpi-setup.sh)
 
+
+
+## Docker Setup
+
+ bash <(curl -sL https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/docker-setup.sh)
+
