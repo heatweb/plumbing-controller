@@ -158,7 +158,7 @@ case $goinflux in
       influxdb:2.0
       
     echo $password > /home/pi/localInfluxPassword.txt
-    sudo mv /home/pi/adminPassword.txt /boot/heatweb/credentials/localInfluxPassword.txt
+    sudo mv /home/pi/localInfluxPassword.txt /boot/heatweb/credentials/localInfluxPassword.txt
   ;;
 
 esac
@@ -174,7 +174,7 @@ sudo docker exec -ti grafana grafana-cli admin reset-admin-password $password
 sudo docker exec -ti mqtt mosquitto_passwd -b /mosquitto/config/passwordfile admin $password
 sudo docker restart mqtt
 echo $password > /home/pi/localMqttPassword.txt
-sudo mv /home/pi/adminPassword.txt /boot/heatweb/credentials/localMqttPassword.txt
+sudo mv /home/pi/localMqttPassword.txt /boot/heatweb/credentials/localMqttPassword.txt
 
 case $goinflux in
   [Yy]* ) 
