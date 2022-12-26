@@ -20,8 +20,11 @@ read -p "Do you want to install Prometheus? (y/n) " goprom
 
 read -p "Do you want to overwrite existing setup? (y/n) " gorenew
 
+
+[ ! -d "/boot/heatweb/credentials" ] && sudo mkdir /boot/heatweb/credentials
+
 echo $password > /home/pi/adminPassword.txt
-sudo mv /home/pi/adminPassword.txt /boot/heatweb/adminPassword.txt
+sudo mv /home/pi/adminPassword.txt /boot/heatweb/credentials/adminPassword.txt
 
 
 # For 64-bit OS (can be changed via comments)
@@ -153,6 +156,9 @@ case $goinflux in
       -e DOCKER_INFLUXDB_INIT_BUCKET=heatweb \
       -e DOCKER_INFLUXDB_INIT_RETENTION=53w \
       influxdb:2.0
+      
+    echo $password > /home/pi/localInfluxPassword.txt
+    sudo mv /home/pi/adminPassword.txt /boot/heatweb/credentials/localInfluxPassword.txt
   ;;
 
 esac
@@ -167,7 +173,8 @@ sudo docker exec -ti grafana grafana-cli admin reset-admin-password $password
 ## The following lines add the admin user to the MQTT service and restarts it.
 sudo docker exec -ti mqtt mosquitto_passwd -b /mosquitto/config/passwordfile admin $password
 sudo docker restart mqtt
-
+echo $password > /home/pi/localMqttPassword.txt
+sudo mv /home/pi/adminPassword.txt /boot/heatweb/credentials/localMqttPassword.txt
 
 case $goinflux in
   [Yy]* ) 
@@ -178,8 +185,8 @@ case $goinflux in
           
     echo -n "Your InfluxDB access token is: "
     cat /home/pi/localInfluxToken.txt
-    echo "This is saved to /boot/heatweb/localInfluxToken.txt"
-    sudo mv /home/pi/localInfluxToken.txt /boot/heatweb/localInfluxToken.txt
+    echo "This is saved to /boot/heatweb/credentials/localInfluxToken.txt"
+    sudo mv /home/pi/localInfluxToken.txt /boot/heatweb/credentials/localInfluxToken.txt
  ;;
 esac
 
