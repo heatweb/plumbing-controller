@@ -18,7 +18,7 @@
         "action": "flow"
     },
     {
-        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/4b6cd4a366e082fe15963598baf85b3893d58d19/flows/mods/flow_dhw_dashboard.json",
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_dhw_dashboard.json",
         "targetHost": "localhost",
         "targetPort": 1880,
         "action": "flow"
@@ -27,12 +27,12 @@
         "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_modbus_novocon.json",
         "targetHost": "localhost",
         "targetPort": 1880,
-        "action": "flow",
-        "replacements": [
-            [
-                "ttyS0",
-                "ttyAMA4"
-            ]
-        ]
+        "action": "flow"
+    },
+    {
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_m_bus.json",
+        "targetHost": "localhost",
+        "targetPort": 1880,
+        "action": "flow"
     }
 ]
