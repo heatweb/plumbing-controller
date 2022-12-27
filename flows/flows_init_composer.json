@@ -1,0 +1,1997 @@
+[
+    {
+        "id": "7b2fdb7c9fb3c336",
+        "type": "tab",
+        "label": "Setup 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d45724a5b9c70467",
+        "type": "tab",
+        "label": "Composer",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c982fbb8.1deb38",
+        "type": "ui_group",
+        "name": "hidden_group",
+        "tab": "7c447e96.4b96a",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "3d9e45e.bcd50ba",
+        "type": "ui_group",
+        "name": "Radial Gauges",
+        "tab": "e625ce36.34cf3",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "e95263f22f094b62",
+        "type": "ui_group",
+        "name": "Target",
+        "tab": "5d24c14b70500a20",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "0347db0b04908947",
+        "type": "ui_group",
+        "name": "Target View",
+        "tab": "5d24c14b70500a20",
+        "order": 3,
+        "disp": true,
+        "width": "13",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "cb203bcb.f1ec68",
+        "type": "ui_group",
+        "name": "Configuration Settings",
+        "tab": "888f4ceb.4b158",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "36b47e47.04f1c2",
+        "type": "ui_group",
+        "name": "Select Mods",
+        "tab": "5d24c14b70500a20",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "23eed81a7ee85c56",
+        "type": "ui_group",
+        "name": "Select Base Flow",
+        "tab": "5d24c14b70500a20",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "61c70212c61507f5",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "7c447e96.4b96a",
+        "type": "ui_tab",
+        "name": "Zooland Sys",
+        "icon": "home",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e625ce36.34cf3",
+        "type": "ui_tab",
+        "name": "Widgets",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": true
+    },
+    {
+        "id": "5d24c14b70500a20",
+        "type": "ui_tab",
+        "name": "Mods",
+        "icon": "dashboard",
+        "order": 8,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "888f4ceb.4b158",
+        "type": "ui_tab",
+        "name": "Setup",
+        "icon": "fa-cog",
+        "order": 6,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "b353535cd8eed077",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "f577692b9357a7ef",
+        "type": "function",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "func": "//var cmd = \"curl http://localhost:5002/auth/token --data 'client_id=node-red-admin&grant_type=password&scope=*&username=admin&password=Duu1cahe'\";\n\nmsg.payload={};\nmsg.payload['client_id']=\"node-red-admin\";\nmsg.payload['grant_type']=\"password\";\nmsg.payload['scope']=\"*\";\nmsg.payload['username']=\"admin\";\nmsg.payload['password']=\"admin\";\n\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\") + \"/auth/token\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 280,
+        "wires": [
+            [
+                "b81174c82640bd62"
+            ]
+        ]
+    },
+    {
+        "id": "b81174c82640bd62",
+        "type": "http request",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 560,
+        "y": 280,
+        "wires": [
+            [
+                "860cf58e8448c295",
+                "923be63513b069af"
+            ]
+        ]
+    },
+    {
+        "id": "04d7b2859669c79c",
+        "type": "debug",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1280,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "0f36a514d2352bf3",
+        "type": "change",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "auth",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 280,
+        "wires": [
+            [
+                "04d7b2859669c79c",
+                "36833ea5dda46a5d"
+            ]
+        ]
+    },
+    {
+        "id": "dab262188d0131f6",
+        "type": "json",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "pretty": false,
+        "x": 900,
+        "y": 280,
+        "wires": [
+            [
+                "0f36a514d2352bf3"
+            ]
+        ]
+    },
+    {
+        "id": "860cf58e8448c295",
+        "type": "debug",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "b21caca4c34108cc",
+        "type": "debug",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "a7af7538eff8c473",
+        "type": "http request",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 730,
+        "y": 420,
+        "wires": [
+            [
+                "b21caca4c34108cc",
+                "72a952a77b8623e5"
+            ]
+        ]
+    },
+    {
+        "id": "05c415c4fa8a787e",
+        "type": "inject",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "targetport",
+                "vt": "global"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 400,
+        "wires": [
+            [
+                "36833ea5dda46a5d"
+            ]
+        ]
+    },
+    {
+        "id": "a2a4c0839cfd2f0c",
+        "type": "debug",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 930,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "72a952a77b8623e5",
+        "type": "function",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "node-red-node-mysql ",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\") + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-node-mysql\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 480,
+        "wires": [
+            [
+                "7c081a93eb4433e5"
+            ]
+        ]
+    },
+    {
+        "id": "7c081a93eb4433e5",
+        "type": "http request",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 730,
+        "y": 480,
+        "wires": [
+            [
+                "a2a4c0839cfd2f0c",
+                "62e176450d63003d"
+            ]
+        ]
+    },
+    {
+        "id": "36833ea5dda46a5d",
+        "type": "function",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "node-red-contrib-influxdb",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\") + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-influxdb\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 420,
+        "wires": [
+            [
+                "a7af7538eff8c473"
+            ]
+        ]
+    },
+    {
+        "id": "923be63513b069af",
+        "type": "switch",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "access_token",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 740,
+        "y": 280,
+        "wires": [
+            [
+                "dab262188d0131f6"
+            ],
+            [
+                "36833ea5dda46a5d"
+            ]
+        ]
+    },
+    {
+        "id": "00d558de92d4f2d9",
+        "type": "debug",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 930,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "62e176450d63003d",
+        "type": "function",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "node-red-contrib-crypto-js",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\") + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-crypto-js\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 540,
+        "wires": [
+            [
+                "80bf7bc59f92332a"
+            ]
+        ]
+    },
+    {
+        "id": "80bf7bc59f92332a",
+        "type": "http request",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 730,
+        "y": 540,
+        "wires": [
+            [
+                "00d558de92d4f2d9",
+                "0e9162479a56550f"
+            ]
+        ]
+    },
+    {
+        "id": "107b54e0285396ab",
+        "type": "comment",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "Request for Authorisation where password is set",
+        "info": "",
+        "x": 250,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "89332ed62c4dea9c",
+        "type": "comment",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "Install Nodes required for Flows",
+        "info": "",
+        "x": 200,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "0b66b613d7024aa0",
+        "type": "inject",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "5002",
+        "props": [
+            {
+                "p": "port",
+                "v": "targetport",
+                "vt": "global"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 280,
+        "wires": [
+            [
+                "f577692b9357a7ef"
+            ]
+        ]
+    },
+    {
+        "id": "f3b0f0fba2991abb",
+        "type": "debug",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 930,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "0e9162479a56550f",
+        "type": "function",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "node-red-contrib-fs",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\") + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-contrib-fs\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 600,
+        "wires": [
+            [
+                "85c02ecce6191ce6"
+            ]
+        ]
+    },
+    {
+        "id": "85c02ecce6191ce6",
+        "type": "http request",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 730,
+        "y": 600,
+        "wires": [
+            [
+                "f3b0f0fba2991abb",
+                "2fec15cb03c3bb2e"
+            ]
+        ]
+    },
+    {
+        "id": "a2071d05e2433fbc",
+        "type": "debug",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 930,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "2fec15cb03c3bb2e",
+        "type": "function",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "node-red-node-ui-iframe",
+        "func": "msg.headers={};\n\nmsg.headers.Authorization = \"Bearer \" + flow.get(\"auth.access_token\");\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\nmsg.url = \"http://\" + flow.get(\"targethost\") + \":\" + flow.get(\"targetport\") + \"/nodes\";\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nmsg.payload = { \"module\": \"node-red-node-ui-iframe\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 660,
+        "wires": [
+            [
+                "d0dc25e3cfd97dda"
+            ]
+        ]
+    },
+    {
+        "id": "d0dc25e3cfd97dda",
+        "type": "http request",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 730,
+        "y": 660,
+        "wires": [
+            [
+                "a2071d05e2433fbc",
+                "3526cc6264047d71"
+            ]
+        ]
+    },
+    {
+        "id": "d8f5d36fb5552dc0",
+        "type": "inject",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "Start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "3",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 630,
+        "y": 80,
+        "wires": [
+            [
+                "5db60751793ec972"
+            ]
+        ]
+    },
+    {
+        "id": "5db60751793ec972",
+        "type": "function",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "localhost:1880",
+        "func": "flow.set(\"targethost\",\"localhost\");\nflow.set(\"targetport\", \"1880\");\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 80,
+        "wires": [
+            [
+                "f36dce9ceb2a72f9"
+            ]
+        ]
+    },
+    {
+        "id": "3e7ccd639a8bc2eb",
+        "type": "link in",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "link in 1",
+        "links": [
+            "f36dce9ceb2a72f9"
+        ],
+        "x": 295,
+        "y": 240,
+        "wires": [
+            [
+                "f577692b9357a7ef"
+            ]
+        ]
+    },
+    {
+        "id": "f36dce9ceb2a72f9",
+        "type": "link out",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "3e7ccd639a8bc2eb"
+        ],
+        "x": 1005,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "3526cc6264047d71",
+        "type": "link out",
+        "z": "7b2fdb7c9fb3c336",
+        "name": "link out 9",
+        "mode": "link",
+        "links": [
+            "1b25e41aa8ec9c86"
+        ],
+        "x": 835,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "5c0a883d29582acd",
+        "type": "inject",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[{\"dataSource\":\"https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/flows_composer.json\",\"targetHost\":\"localhost\",\"targetPort\":1880,\"action\":\"flows\"}]",
+        "payloadType": "json",
+        "x": 170,
+        "y": 140,
+        "wires": [
+            [
+                "a66678b2ea23686e"
+            ]
+        ]
+    },
+    {
+        "id": "a66678b2ea23686e",
+        "type": "change",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "composer.default",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c333189a999e8742",
+        "type": "inject",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "default",
+        "payloadType": "str",
+        "x": 190,
+        "y": 600,
+        "wires": [
+            [
+                "72309de8a79eeadc"
+            ]
+        ]
+    },
+    {
+        "id": "72309de8a79eeadc",
+        "type": "function",
+        "z": "d45724a5b9c70467",
+        "name": "Composer",
+        "func": "\nvar composition = global.get(\"composer.\" + msg.payload);\n\nif (!composition) { return null; }\n\nflow.set(\"composition\",composition);\nflow.set(\"fetched\", 0);\n\n//var auth = flow.get(\"auth\") || {};\nvar auth = {};\nflow.set(\"auth\", auth);\n\nfor (var item in composition) {\n\n    var msg1={};\n    msg1.url = composition[item].dataSource;\n    msg1.index = item;\n    //node.send([msg1,null]);\n\n    var msg2 = null;\n\n    var targetPort = msg.payload.targetPort || 1880;\n    var targetHost = msg.payload.targetHost || \"localhost\";\n    //targetHost = targetHost.replace(\"localhost\", \"host.docker.internal\")\n\n    var targ = targetHost + \":\" + targetPort;\n    if (!auth[targ]) {         \n\n        auth[targ]=\"waiting\";\n        flow.set(\"auth\",auth);\n\n        msg2 = {}\n        msg2.targ = targ;\n        msg2.payload = {};\n        msg2.payload['client_id'] = \"node-red-admin\";\n        msg2.payload['grant_type'] = \"password\";\n        msg2.payload['scope'] = \"*\";\n        msg2.payload['username'] = \"admin\";\n        msg2.payload['password'] = global.get(\"credentials.adminPassword\") || \"admin\";\n        msg2.url = \"http://\" + targ + \"/auth/token\";\n        \n    }\n\n    node.send([msg1, msg2]);\n\n}\n\nreturn null;",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 600,
+        "wires": [
+            [
+                "986cee236e456e68"
+            ],
+            [
+                "824ea4cdf5383c85"
+            ]
+        ]
+    },
+    {
+        "id": "5daabdcf26ba0523",
+        "type": "function",
+        "z": "d45724a5b9c70467",
+        "name": "flows",
+        "func": "\n\nif (msg.payload.config) { \n   \n   for (var cf in msg.payload.config) {  global.set(\"config.\" + cf, msg.payload.config[cf]);     }\n   \n   node.send([null, null, msg, null]);\n\n}\nif (msg.payload.credentials) {\n\n   for (var cf in msg.payload.credentials) { global.set(\"credentials.\" + cf, msg.payload.credentials[cf]); }\n\n   node.send([null, null, null, msg]);\n\n}\n\nif (!msg.payload.action) { return [msg,null,null,null]; }\n\n\n\nvar targetPort = msg.payload.targetPort || 1880;\nvar targetHost = msg.payload.targetHost || \"localhost\";\n//targetHost = targetHost.replace(\"localhost\",\"host.docker.internal\")\nvar targ = targetHost + \":\" + targetPort;\n\nvar auth = flow.get(\"auth\") || {};\n\n\nmsg.headers = {};\nmsg.headers.Authorization = \"Bearer \" + auth[targ];\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\n\nmsg.url = \"http://\" + targ + \"/\" + (msg.payload.action||\"flow\");\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nvar credentials = global.get(\"credentials\")||{};\nvar config = global.get(\"config\") || {};\n\n//var ff = msg.payload;\nvar ff = msg.payload.data;\n\nif (msg.payload.replacements) {\n\n   var ffstr = JSON.stringify(ff);\n\n   var reps = msg.payload.replacements;\n   for (var rep in reps) {\n\n      ffstr = ffstr.replaceAll(reps[rep][0], reps[rep][1]);\n   }\n\n   ff = JSON.parse(ffstr);\n}\n\n\nfunction checkTab(nodeitem) {\n   return nodeitem.type == \"tab\";\n}\n\nfunction filterTab(nodeitem) {\n   return nodeitem.type != \"tab\";\n}\n\nfunction filterMqttBroker(nodeitem) {\n   return nodeitem.type != \"mqtt-broker\";\n}\n\nif (msg.payload.action == \"flow\") {   // individual flows can't contain tabs, and do not want to overwrite mqtt broker\n\n   var tabf = ff.filter(checkTab)[0];\n   tabf.nodes = ff.filter(filterTab).filter(filterMqttBroker);\n   ff = tabf;\n\n}\n\n\nfor (var part in ff) {\n\n   if (ff[part].type == \"heatwebConfig\") { \n      \n      ff[part].name = config.name ; \n      ff[part].description = config.description;\n      ff[part].nodeId = config.nodeId;\n      ff[part].networkId = config.networkId; \n\n   }\n   \n\n   if (credentials.localMqttPassword) {\n\n      if (ff[part].type == \"mqtt-broker\" && (ff[part].broker == \"mqtt\" || ff[part].broker == \"localhost\")) { ff[part].credentials = { \"user\": \"admin\", \"password\": credentials.localMqttPassword }; }\n    \n   }\n\n   if (credentials.adminPassword) {\n\n      if (ff[part].type == \"MySQLdatabase\" && ff[part].host == \"mysql\") { ff[part].credentials = { \"user\": \"root\", \"password\": credentials.adminPassword }; }\n\n   }\n\n   if (credentials.localInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"local\") { ff[part].credentials = { \"token\": credentials.localInfluxToken }; }\n\n   }\n   if (credentials.remoteInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"heatweb\") { ff[part].credentials = { \"token\": credentials.remoteInfluxToken }; }\n\n   }\n\n   if (credentials.emailPassword && credentials.emailUser) {\n\n      if (ff[part].type == \"e-mail\") { ff[part].credentials = { \"userid\": credentials.emailUser, \"password\": credentials.emailPassword }; }\n\n   }\n\n   \n\n\n}\n\nmsg.payload = JSON.stringify(ff);\n\nreturn [null, msg, null, null];",
+        "outputs": 4,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 472,
+        "y": 806,
+        "wires": [
+            [
+                "df5cf78bb5e02533"
+            ],
+            [
+                "c80016af5fd0c71d"
+            ],
+            [
+                "0ac93462eb366e2e"
+            ],
+            [
+                "a05d78c74f90b1fb"
+            ]
+        ]
+    },
+    {
+        "id": "f4bdd8a482d1cebf",
+        "type": "http request",
+        "z": "d45724a5b9c70467",
+        "name": "post flow",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 840,
+        "y": 800,
+        "wires": [
+            [
+                "df5cf78bb5e02533",
+                "7af6011b014b1971",
+                "24d72b1de9de0132"
+            ]
+        ]
+    },
+    {
+        "id": "24d72b1de9de0132",
+        "type": "function",
+        "z": "d45724a5b9c70467",
+        "name": "save results",
+        "func": "var composition = flow.get(\"composition\");\n\nif (!composition) { return null; }\n\n\ncomposition[msg.index].deployed = msg.payload;\n\n\n\n\n// if (msg.filename) {\n\n//     var fn = msg.filename.replace(/\\//g, \"_\").replace(/\\./g, \"_\");\n//     global.set(\"results.\"+fn, JSON.parse(msg.payload));\n\n// }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "986cee236e456e68",
+        "type": "http request",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 650,
+        "y": 580,
+        "wires": [
+            [
+                "14b1e8754eecdaaf"
+            ]
+        ]
+    },
+    {
+        "id": "14b1e8754eecdaaf",
+        "type": "function",
+        "z": "d45724a5b9c70467",
+        "name": "compile",
+        "func": "\nvar composition = flow.get(\"composition\");\n\nif (!composition) { return null; }\n\ntry {\n\n    composition[msg.index].data = JSON.parse(msg.payload);\n\n} \ncatch (err) {\n\n    if (msg.payload[0]) { composition[msg.index].data = msg.payload; }\n\n}\n\nflow.set(\"composition\", composition);\n\nvar fetched = flow.get(\"fetched\");\nfetched++;\nflow.set(\"fetched\", fetched);\n\nif (fetched < composition.length) { return null; }\n\nflow.set(\"posted\", 0);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 580,
+        "wires": [
+            [
+                "3f74b3674bd337f4",
+                "4c65e48178c25e22"
+            ]
+        ]
+    },
+    {
+        "id": "df5cf78bb5e02533",
+        "type": "function",
+        "z": "d45724a5b9c70467",
+        "name": "shift",
+        "func": "var posted = flow.get(\"posted\") || 0;\nvar composition = flow.get(\"composition\");\n\n//if (posted = composition.length) { return null; }\n\nvar msg1 = {};\nmsg1.payload = composition[posted]; //.data;\nmsg1.index = 1*posted;\n\nposted++;\nflow.set(\"posted\", posted);\n\n\nif (!msg1.payload) { return null; }\n\nreturn msg1;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 720,
+        "wires": [
+            [
+                "5daabdcf26ba0523",
+                "9fcd3db98350446e"
+            ]
+        ]
+    },
+    {
+        "id": "9fcd3db98350446e",
+        "type": "debug",
+        "z": "d45724a5b9c70467",
+        "name": "debug 30",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "3f74b3674bd337f4",
+        "type": "debug",
+        "z": "d45724a5b9c70467",
+        "name": "debug 31",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "7af6011b014b1971",
+        "type": "debug",
+        "z": "d45724a5b9c70467",
+        "name": "debug 32",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "916f81d06dcecf50",
+        "type": "http request",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 400,
+        "y": 1040,
+        "wires": [
+            [
+                "ca67a6abcd19c97b",
+                "f6720a2a1363cb64"
+            ]
+        ]
+    },
+    {
+        "id": "46a3af1257eda101",
+        "type": "json",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "pretty": false,
+        "x": 750,
+        "y": 1020,
+        "wires": [
+            [
+                "4616f775197c9bee"
+            ]
+        ]
+    },
+    {
+        "id": "ca67a6abcd19c97b",
+        "type": "debug",
+        "z": "d45724a5b9c70467",
+        "name": "debug 33",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "f6720a2a1363cb64",
+        "type": "switch",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "access_token",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 580,
+        "y": 1040,
+        "wires": [
+            [
+                "46a3af1257eda101"
+            ],
+            [
+                "69729a475a7416e4"
+            ]
+        ]
+    },
+    {
+        "id": "097f147bfa40c445",
+        "type": "comment",
+        "z": "d45724a5b9c70467",
+        "name": "Node-RED authentication",
+        "info": "",
+        "x": 290,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "01e6f04422e315bb",
+        "type": "inject",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 410,
+        "y": 240,
+        "wires": [
+            [
+                "5da31f3d874fcd4c"
+            ]
+        ]
+    },
+    {
+        "id": "5da31f3d874fcd4c",
+        "type": "file in",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "filename": "/boot/heatweb/config.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 630,
+        "y": 240,
+        "wires": [
+            [
+                "03689db0a1229d7d"
+            ]
+        ]
+    },
+    {
+        "id": "60014b30ddf0f588",
+        "type": "change",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "config",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1020,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "03689db0a1229d7d",
+        "type": "json",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 830,
+        "y": 240,
+        "wires": [
+            [
+                "60014b30ddf0f588"
+            ]
+        ]
+    },
+    {
+        "id": "307de46a7f2b649a",
+        "type": "inject",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 380,
+        "wires": [
+            [
+                "c38ffe5bfd0dd27d",
+                "1d3bfec916ba0477"
+            ]
+        ]
+    },
+    {
+        "id": "c38ffe5bfd0dd27d",
+        "type": "file in",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "filename": "/boot/heatweb/credentials.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 490,
+        "y": 320,
+        "wires": [
+            [
+                "ad93699b4f67b45e"
+            ]
+        ]
+    },
+    {
+        "id": "fe3ce37e31818309",
+        "type": "change",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "credentials",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 900,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ad93699b4f67b45e",
+        "type": "json",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 710,
+        "y": 320,
+        "wires": [
+            [
+                "fe3ce37e31818309"
+            ]
+        ]
+    },
+    {
+        "id": "68123565cd072358",
+        "type": "fs-file-lister",
+        "z": "d45724a5b9c70467",
+        "name": "New Credentials",
+        "start": "/boot/heatweb/credentials",
+        "pattern": "*.txt",
+        "folders": "*",
+        "hidden": true,
+        "lstype": "files",
+        "path": true,
+        "single": false,
+        "depth": "1",
+        "stat": false,
+        "showWarnings": true,
+        "x": 580,
+        "y": 380,
+        "wires": [
+            [
+                "7d19b9387d19b985",
+                "51f46724bf3c8081"
+            ]
+        ]
+    },
+    {
+        "id": "7d19b9387d19b985",
+        "type": "debug",
+        "z": "d45724a5b9c70467",
+        "name": "debug 34",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "1d3bfec916ba0477",
+        "type": "delay",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 420,
+        "y": 380,
+        "wires": [
+            [
+                "68123565cd072358"
+            ]
+        ]
+    },
+    {
+        "id": "f651936739ae9faf",
+        "type": "file in",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 960,
+        "y": 420,
+        "wires": [
+            [
+                "d3a616ac9f624f5f"
+            ]
+        ]
+    },
+    {
+        "id": "51f46724bf3c8081",
+        "type": "change",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 420,
+        "wires": [
+            [
+                "f651936739ae9faf"
+            ]
+        ]
+    },
+    {
+        "id": "d3a616ac9f624f5f",
+        "type": "function",
+        "z": "d45724a5b9c70467",
+        "name": "store creds",
+        "func": "\nvar fn = msg.filename.substr(msg.filename.lastIndexOf(\"/\")+1);\nfn = fn.substr(0,fn.lastIndexOf(\".\"));\n\nglobal.set(\"credentials.\" + fn, msg.payload.trim());\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1130,
+        "y": 420,
+        "wires": [
+            [
+                "373d7ae5fa6b6648"
+            ]
+        ]
+    },
+    {
+        "id": "824ea4cdf5383c85",
+        "type": "link out",
+        "z": "d45724a5b9c70467",
+        "name": "link out 5",
+        "mode": "link",
+        "links": [
+            "bdcf1ddb23718ba9"
+        ],
+        "x": 535,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "bdcf1ddb23718ba9",
+        "type": "link in",
+        "z": "d45724a5b9c70467",
+        "name": "link in 5",
+        "links": [
+            "824ea4cdf5383c85"
+        ],
+        "x": 235,
+        "y": 1040,
+        "wires": [
+            [
+                "7b9a3510ab4a4db7",
+                "916f81d06dcecf50"
+            ]
+        ]
+    },
+    {
+        "id": "7b9a3510ab4a4db7",
+        "type": "debug",
+        "z": "d45724a5b9c70467",
+        "name": "debug 35",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "4616f775197c9bee",
+        "type": "function",
+        "z": "d45724a5b9c70467",
+        "name": "store auth",
+        "func": "\n\n\nif (msg.targ) {\n\n    var auth = flow.get(\"auth\") || {};\n    auth[msg.targ] = msg.payload.access_token;\n    flow.set(\"auth\", auth);\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "69729a475a7416e4",
+        "type": "function",
+        "z": "d45724a5b9c70467",
+        "name": "store auth",
+        "func": "\n\n\nif (msg.targ) {\n\n    var auth = flow.get(\"auth\") || {};\n    auth[msg.targ] =  \"\";\n    flow.set(\"auth\", auth);\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 1080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4c65e48178c25e22",
+        "type": "delay",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 820,
+        "y": 640,
+        "wires": [
+            [
+                "df5cf78bb5e02533"
+            ]
+        ]
+    },
+    {
+        "id": "8f4761e8bbf1c25e",
+        "type": "function",
+        "z": "d45724a5b9c70467",
+        "name": "Save Credentials",
+        "func": "var credentials = global.get(\"credentials\")||{};\n\n// credentials[msg.topic] = msg.payload;\n\n// flow.set(\"credentials\", credentials) || {};\n\nmsg.payload = JSON.stringify(credentials);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 1340,
+        "wires": [
+            [
+                "3afe877aa42a27b6"
+            ]
+        ]
+    },
+    {
+        "id": "3afe877aa42a27b6",
+        "type": "file",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "filename": "/data/credentials.json",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 640,
+        "y": 1340,
+        "wires": [
+            [
+                "c74d59824e3eb207"
+            ]
+        ]
+    },
+    {
+        "id": "c74d59824e3eb207",
+        "type": "exec",
+        "z": "d45724a5b9c70467",
+        "command": "sudo mv /data/credentials.json /boot/heatweb/credentials.json",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1060,
+        "y": 1340,
+        "wires": [
+            [
+                "08990be77f2da38b"
+            ],
+            [
+                "08990be77f2da38b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f7b22618409dca7f",
+        "type": "link in",
+        "z": "d45724a5b9c70467",
+        "name": "link in 6",
+        "links": [
+            "a05d78c74f90b1fb",
+            "da933dfab46e29b5"
+        ],
+        "x": 245,
+        "y": 1340,
+        "wires": [
+            [
+                "8f4761e8bbf1c25e"
+            ]
+        ]
+    },
+    {
+        "id": "a05d78c74f90b1fb",
+        "type": "link out",
+        "z": "d45724a5b9c70467",
+        "name": "link out 6",
+        "mode": "link",
+        "links": [
+            "f7b22618409dca7f"
+        ],
+        "x": 585,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "0ac93462eb366e2e",
+        "type": "link out",
+        "z": "d45724a5b9c70467",
+        "name": "link out 7",
+        "mode": "link",
+        "links": [
+            "a8aa406333da0583"
+        ],
+        "x": 635,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "27b89804e5b4427b",
+        "type": "function",
+        "z": "d45724a5b9c70467",
+        "name": "Save config",
+        "func": "var config = global.get(\"config\")||{};\n\n// credentials[msg.topic] = msg.payload;\n\n// flow.set(\"credentials\", credentials) || {};\n\nmsg.payload = JSON.stringify(config);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 1260,
+        "wires": [
+            [
+                "f4dcfe02b18d8c57"
+            ]
+        ]
+    },
+    {
+        "id": "f4dcfe02b18d8c57",
+        "type": "file",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "filename": "/data/config.json",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 620,
+        "y": 1260,
+        "wires": [
+            [
+                "79af6b0a3a958ecb"
+            ]
+        ]
+    },
+    {
+        "id": "79af6b0a3a958ecb",
+        "type": "exec",
+        "z": "d45724a5b9c70467",
+        "command": "sudo mv /data/config.json /boot/heatweb/config.json",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1030,
+        "y": 1260,
+        "wires": [
+            [
+                "61bdb9532553a113"
+            ],
+            [
+                "61bdb9532553a113"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a8aa406333da0583",
+        "type": "link in",
+        "z": "d45724a5b9c70467",
+        "name": "link in 7",
+        "links": [
+            "0ac93462eb366e2e"
+        ],
+        "x": 245,
+        "y": 1260,
+        "wires": [
+            [
+                "27b89804e5b4427b"
+            ]
+        ]
+    },
+    {
+        "id": "c80016af5fd0c71d",
+        "type": "delay",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "500",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 670,
+        "y": 800,
+        "wires": [
+            [
+                "f4bdd8a482d1cebf"
+            ]
+        ]
+    },
+    {
+        "id": "61bdb9532553a113",
+        "type": "debug",
+        "z": "d45724a5b9c70467",
+        "name": "debug 36",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1420,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "08990be77f2da38b",
+        "type": "debug",
+        "z": "d45724a5b9c70467",
+        "name": "debug 37",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1420,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "373d7ae5fa6b6648",
+        "type": "trigger",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "250",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1320,
+        "y": 420,
+        "wires": [
+            [
+                "da933dfab46e29b5"
+            ]
+        ]
+    },
+    {
+        "id": "da933dfab46e29b5",
+        "type": "link out",
+        "z": "d45724a5b9c70467",
+        "name": "link out 8",
+        "mode": "link",
+        "links": [
+            "f7b22618409dca7f"
+        ],
+        "x": 1445,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "5f7327eb04273955",
+        "type": "comment",
+        "z": "d45724a5b9c70467",
+        "name": "Fetch flow data and authorisation tokens",
+        "info": "",
+        "x": 560,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "439eeadff46bbb20",
+        "type": "comment",
+        "z": "d45724a5b9c70467",
+        "name": "Continue once all loaded",
+        "info": "",
+        "x": 870,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "3cd71f149a03cdca",
+        "type": "comment",
+        "z": "d45724a5b9c70467",
+        "name": "Run through instructions",
+        "info": "",
+        "x": 410,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "5af43d7ed41bede6",
+        "type": "comment",
+        "z": "d45724a5b9c70467",
+        "name": "Store new config and credentials",
+        "info": "",
+        "x": 754,
+        "y": 908,
+        "wires": []
+    },
+    {
+        "id": "9ed5603e16e26596",
+        "type": "comment",
+        "z": "d45724a5b9c70467",
+        "name": "Sqave cofig and credentials to file.",
+        "info": "",
+        "x": 320,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "d8f0fc1fbf0fecef",
+        "type": "comment",
+        "z": "d45724a5b9c70467",
+        "name": "Load config",
+        "info": "",
+        "x": 170,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "e04657e108d6393a",
+        "type": "comment",
+        "z": "d45724a5b9c70467",
+        "name": "Load credentials",
+        "info": "",
+        "x": 180,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "1b25e41aa8ec9c86",
+        "type": "link in",
+        "z": "d45724a5b9c70467",
+        "name": "link in 8",
+        "links": [
+            "3526cc6264047d71"
+        ],
+        "x": 155,
+        "y": 520,
+        "wires": [
+            [
+                "20d9bbb6359fdf07"
+            ]
+        ]
+    },
+    {
+        "id": "20d9bbb6359fdf07",
+        "type": "change",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "default",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 520,
+        "wires": [
+            [
+                "72309de8a79eeadc"
+            ]
+        ]
+    }
+]
