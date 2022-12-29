@@ -164,6 +164,14 @@ case $goinflux in
 esac
 
 
+docker stop portainer
+docker pull portainer/helper-reset-password
+docker run --rm -v portainer_data:/data portainer/helper-reset-password > /home/pi/portainerPassword.txt
+echo "A new password has been given to Portainer:"
+cat /home/pi/portainerPassword.txt
+sudo mv /home/pi/portainerPassword.txt /boot/heatweb/credentials/portainerPassword.txt
+docker start portainer
+
 echo "Please wait 1 minute to complete..."
 sleep 1m
 
