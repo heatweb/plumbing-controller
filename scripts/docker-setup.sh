@@ -23,7 +23,20 @@ read -p "Do you want to install Prometheus? (y/n) " goprom
 
 read -p "Do you want to overwrite existing setup? (y/n) " gorenew
 
+# Thanks to Peter Scargill for the Script. https://bitbucket.org/scargill/workspace/snippets/kAR5qG/the-script 
+MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
+        "\n   Make selections (UP, DOWN, SPACE) as required then TAB to OK/Cancel" 29 73 20 \
+        "gopipass" "Update Pi user password " ON \
+        "goinflux" "Install InfluxDB database " ON \
+        "gomysql" "Install MySQL database " OFF \
+        "goprom" "Install Prometheus " OFF \
+        "gorenew" "Remove all existing Docker containers" OFF 3>&1 1>&2 2>&3)
 
+
+# Create heatweb folder if doesn't exist
+[ ! -d "/boot/heatweb" ] && sudo mkdir /boot/heatweb
+
+# Create credentials folder if doesn't exist
 [ ! -d "/boot/heatweb/credentials" ] && sudo mkdir /boot/heatweb/credentials
 
 echo $password > /home/pi/adminPassword.txt
