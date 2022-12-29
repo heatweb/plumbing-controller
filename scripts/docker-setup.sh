@@ -33,6 +33,10 @@ MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
         "gorenew" "Remove all existing Docker containers" OFF 3>&1 1>&2 2>&3)
 
 
+cd ~/.node-red/
+sudo npm install bcryptjs
+bcryptadminpass=$(node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 8));" $password)
+
 # Create heatweb folder if doesn't exist
 [ ! -d "/boot/heatweb" ] && sudo mkdir /boot/heatweb
 
