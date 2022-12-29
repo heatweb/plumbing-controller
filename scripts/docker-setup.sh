@@ -177,6 +177,8 @@ sleep 1m
 
 
 sudo docker exec -ti grafana grafana-cli admin reset-admin-password $password
+echo $password > /home/pi/grafanaPassword.txt
+sudo mv /home/pi/grafanaPassword.txt /boot/heatweb/credentials/grafanaPassword.txt
 
 ## The following lines add the admin user to the MQTT service and restarts it.
 sudo docker exec -ti mqtt mosquitto_passwd -b /mosquitto/config/passwordfile admin $password
