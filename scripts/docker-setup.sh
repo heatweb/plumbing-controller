@@ -171,6 +171,7 @@ echo "A new password has been given to Portainer:"
 cat /home/pi/portainerPassword.txt
 sudo mv /home/pi/portainerPassword.txt /boot/heatweb/credentials/portainerPassword.txt
 docker start portainer
+echo "Portainer has been started on port 9000."
 
 echo "Please wait 1 minute to complete..."
 sleep 1m
@@ -201,4 +202,4 @@ case $goinflux in
 esac
 
 echo "Finished."
-echo "IMPORTANT: You should go to Portainer on port 9000, set the admin password, and click on Get Started."
+
