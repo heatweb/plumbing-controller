@@ -22,12 +22,17 @@ fi
 
 # Thanks to Peter Scargill for the Script. https://bitbucket.org/scargill/workspace/snippets/kAR5qG/the-script 
 MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
-        "\n   Make selections (UP, DOWN, SPACE) as required then TAB to OK/Cancel" 19 73 10 \
+        "\n   Make selections (UP, DOWN, SPACE) then TAB to OK/Cancel" 19 73 10 \
         "gopipass" "Update Pi user password " ON \
         "goinflux" "Install InfluxDB database " ON \
         "gomysql" "Install MySQL database " OFF \
         "goprom" "Install Prometheus " OFF \
-        "gorenew" "Remove all existing Docker containers" OFF 3>&1 1>&2 2>&3)
+        "gorenew" "Remove existing containers" OFF 3>&1 1>&2 2>&3)
+        
+ if [[ $MYMENU == "" ]]; then
+    whiptail --title "Installation Aborted" --msgbox "Cancelled as requested." 8 78
+    exit
+fi
 
 
 cd ~/.node-red/
