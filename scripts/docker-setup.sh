@@ -93,14 +93,10 @@ then
 
 fi
 
-case $gorenew in
-  [Yy]* ) 
-  
-     docker rm -f $(docker ps -aq)
-  ;;
-
-esac
-
+if [[ $MYMENU == *"gorenew"* ]]; then
+ docker rm -f $(docker ps -aq)
+fi 
+ 
 
 
 sudo docker volume create portainer_data
@@ -130,20 +126,15 @@ sudo docker run -d \
 
 sudo docker run -d -p 3000:3000 --name=grafana --restart=always --net mqtt --add-host=host.docker.internal:host-gateway -v grafana-storage:/var/lib/grafana grafana/grafana-oss
 
-
-case $gomysql in
-  [Yy]* ) 
+if [[ $MYMENU == *"gomysql"* ]]; then
 
      sudo docker run -d --name mysql --restart=always --net mqtt -p 3306:3306 -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=$password -d mysql:latest
      #sudo docker run --name phpmyadmin -d --restart=always --net mqtt --link mysql:db -p 8081:80 phpmyadmin:latest
      sudo docker run --name phpmyadmin -d --restart=always --net mqtt --link mysql:db -p 8081:80 arm64v8/phpmyadmin
-  ;;
+  
+fi
 
-esac
-
-
-case $goprom in
-  [Yy]* ) 
+if [[ $MYMENU == *"goprom"* ]]; then
 
     cp -r /home/pi/plumbing-controller/prometheus /home/pi/prometheus
     
@@ -159,12 +150,9 @@ case $goprom in
     --web.console.libraries=/usr/share/prometheus/console_libraries \
     --web.console.templates=/usr/share/prometheus/consoles
 
-  ;;
+fi
 
-esac
-
-case $goinflux in
-  [Yy]* ) 
+if [[ $MYMENU == *"goinflux"* ]]; then
 
     sudo docker run -d -p 8086:8086 --name influxdb --restart=always --net mqtt \
       -v influx_data:/var/lib/influxdb2 \
@@ -179,10 +167,8 @@ case $goinflux in
       
     echo $password > /home/pi/localInfluxPassword.txt
     sudo mv /home/pi/localInfluxPassword.txt /boot/heatweb/credentials/localInfluxPassword.txt
-  ;;
 
-esac
-
+fi
 
 docker stop portainer
 docker pull portainer/helper-reset-password
@@ -207,9 +193,8 @@ sudo docker restart mqtt
 echo $password > /home/pi/localMqttPassword.txt
 sudo mv /home/pi/localMqttPassword.txt /boot/heatweb/credentials/localMqttPassword.txt
 
-case $goinflux in
-  [Yy]* ) 
-     
+if [[ $MYMENU == *"goinflux"* ]]; then
+
     sudo docker exec influxdb influx auth list \
           --user admin \
           --hide-headers | cut -f 3 > /home/pi/localInfluxToken.txt
@@ -218,17 +203,12 @@ case $goinflux in
     cat /home/pi/localInfluxToken.txt
     echo "This is saved to /boot/heatweb/credentials/localInfluxToken.txt"
     sudo mv /home/pi/localInfluxToken.txt /boot/heatweb/credentials/localInfluxToken.txt
- ;;
-esac
+fi
 
-case $gopipass in
-  [Yy]* ) 
+if [[ $MYMENU == *"gopipass"* ]]; then
   
      echo "pi:$password" | sudo chpasswd
-  ;;
-
-esac
-
+fi
 
 
 
