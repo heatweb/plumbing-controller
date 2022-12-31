@@ -177,6 +177,11 @@ docker stop portainer
 docker pull portainer/helper-reset-password
 #docker run --rm -v portainer_data:/data portainer/helper-reset-password > /home/pi/portainerPassword.txt
 docker run --rm -v portainer_data:/data portainer/helper-reset-password 2>&1 | tee -a /home/pi/portainerPassword.txt
+
+SED_ARG="s/(.|\n)*login: //g"
+echo $SED_ARG
+sudo sed -i -e $SED_ARG /home/pi/portainerPassword.txt
+
 echo "A new password has been given to Portainer:"
 cat /home/pi/portainerPassword.txt
 sudo mv /home/pi/portainerPassword.txt /boot/heatweb/credentials/portainerPassword.txt
