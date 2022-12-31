@@ -27,7 +27,7 @@ MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
         "goinflux" "Install InfluxDB database   " ON \
         "gomysql" "Install MySQL database   " OFF \
         "goprom" "Install Prometheus " OFF \
-        "gorenew" "Remove existing containers   " OFF 3>&1 1>&2 2>&3)
+        "gorenew" "Remove all existing containers   " OFF 3>&1 1>&2 2>&3)
         
  if [[ $MYMENU == "" ]]; then
     whiptail --title "Installation Aborted" --msgbox "Cancelled as requested." 8 78
