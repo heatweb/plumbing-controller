@@ -23,7 +23,6 @@ else
  exit 1
 fi
 
-
 #read -p "Do you want to update the pi user password? (y/n) " gopipass
 #read -p "Do you want to install InfluxDB database? (y/n) " goinflux
 #read -p "Do you want to install MySQL database? (y/n) " gomysql
