@@ -14,14 +14,11 @@ else
 fi
 
 
-read -p "Do you want to update the pi user password? (y/n) " gopipass
-
-read -p "Do you want to install InfluxDB database? (y/n) " goinflux
-read -p "Do you want to install MySQL database? (y/n) " gomysql
-read -p "Do you want to install Prometheus? (y/n) " goprom
-
-
-read -p "Do you want to overwrite existing setup? (y/n) " gorenew
+#read -p "Do you want to update the pi user password? (y/n) " gopipass
+#read -p "Do you want to install InfluxDB database? (y/n) " goinflux
+#read -p "Do you want to install MySQL database? (y/n) " gomysql
+#read -p "Do you want to install Prometheus? (y/n) " goprom
+#read -p "Do you want to overwrite existing setup? (y/n) " gorenew
 
 # Thanks to Peter Scargill for the Script. https://bitbucket.org/scargill/workspace/snippets/kAR5qG/the-script 
 MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
