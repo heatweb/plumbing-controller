@@ -14,10 +14,7 @@ password2=$(whiptail --passwordbox "Repeat admin password" 8 60 3>&1 1>&2 2>&3)
 #echo -n "Repeat password:"
 #read -s password2
 #echo
-if [[ "$password" == "$password2" ]]; then
- #echo "ok"
- #whiptail --title "Admin Password" --msgbox "OK" 8 78
-else
+if [[ "$password" != "$password2" ]]; then
  #echo "Passwords do not match."
  whiptail --title "Admin Password" --msgbox "Passwords do not match." 8 78
  exit 1
