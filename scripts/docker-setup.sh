@@ -1,15 +1,25 @@
 #!/bin/bash
 # Read Password
-echo -n "Admin password:"
-read -s password
-echo
-echo -n "Repeat password:"
-read -s password2
-echo
+
+password=$(whiptail --passwordbox "Enter admin password" 8 60 3>&1 1>&2 2>&3)
+  if [[ -z "${userpass// }" ]]; then
+      printf "No user password given - aborting\r\n"; exit
+  fi
+password2=$(whiptail --passwordbox "Repeat admin password" 8 60 3>&1 1>&2 2>&3)
+
+
+#echo -n "Admin password:"
+#read -s password
+#echo
+#echo -n "Repeat password:"
+#read -s password2
+#echo
 if [[ "$password" == "$password2" ]]; then
- echo "ok"
+ #echo "ok"
+ whiptail --title "Admin Password" --msgbox "OK" 8 78
 else
- echo "Passwords do not match."
+ #echo "Passwords do not match."
+ whiptail --title "Admin Password" --msgbox "Passwords do not match." 8 78
  exit 1
 fi
 
