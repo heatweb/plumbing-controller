@@ -94,7 +94,7 @@ then
       DOCKER_COMPOSE_ARCH="aarch64"
     else    
       # For 32-bit OS use:
-      #DOCKER_COMPOSE_ARCH="armv7"
+      DOCKER_COMPOSE_ARCH="armv7"
     fi
     
     sudo curl -L "https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-linux-${DOCKER_COMPOSE_ARCH}" -o /usr/bin/docker-compose
