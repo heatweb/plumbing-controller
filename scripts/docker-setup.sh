@@ -1,6 +1,8 @@
 #!/bin/bash
 # Read Password
 
+CHECK64=$(uname -m)
+
 password=$(whiptail --passwordbox "Enter admin password" 8 60 3>&1 1>&2 2>&3)
   if [[ -z "${password// }" ]]; then
       printf "No password given - aborting\r\n"; exit
@@ -50,7 +52,7 @@ echo $password > /home/pi/adminPassword.txt
 sudo mv /home/pi/adminPassword.txt /boot/heatweb/credentials/adminPassword.txt
 
 
-# For 64-bit OS (can be changed via comments)
+
 
 sudo apt-get -y update
 
@@ -86,11 +88,15 @@ then
 
     # Replace with the latest version from https://github.com/docker/compose/releases/latest
     DOCKER_COMPOSE_VERSION="2.10.2"
-    # For 64-bit OS use:
-    DOCKER_COMPOSE_ARCH="aarch64"
-    # For 32-bit OS use:
-    #DOCKER_COMPOSE_ARCH="armv7"
-
+    
+    if [[ $CHECK64 == *"aarch64"* ]]; then
+      # For 64-bit OS use:
+      DOCKER_COMPOSE_ARCH="aarch64"
+    else    
+      # For 32-bit OS use:
+      #DOCKER_COMPOSE_ARCH="armv7"
+    fi
+    
     sudo curl -L "https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-linux-${DOCKER_COMPOSE_ARCH}" -o /usr/bin/docker-compose
     sudo chmod +x /usr/bin/docker-compose
 
