@@ -177,10 +177,12 @@ docker stop portainer
 docker pull portainer/helper-reset-password
 #docker run --rm -v portainer_data:/data portainer/helper-reset-password > /home/pi/portainerPassword.txt
 docker run --rm -v portainer_data:/data portainer/helper-reset-password 2>&1 | tee -a /home/pi/portainerPassword.txt
+sudo cp /home/pi/portainerPassword.txt /home/pi/portainerPassword2.txt
 sudo grep login /home/pi/portainerPassword.txt | sed 's/.*login:\s//g' > /home/pi/portainerPassword.txt
 echo "A new password has been given to Portainer:"
 cat /home/pi/portainerPassword.txt
 sudo mv /home/pi/portainerPassword.txt /boot/heatweb/credentials/portainerPassword.txt
+sudo cp /home/pi/portainerPassword.txt /boot/heatweb/credentials/portainerPassword.txt
 docker start portainer
 echo "Portainer has been started on port 9000."
 
