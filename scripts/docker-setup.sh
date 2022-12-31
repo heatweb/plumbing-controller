@@ -3,7 +3,7 @@
 
 password=$(whiptail --passwordbox "Enter admin password" 8 60 3>&1 1>&2 2>&3)
   if [[ -z "${password// }" ]]; then
-      printf "No user password given - aborting\r\n"; exit
+      printf "No password given - aborting\r\n"; exit
   fi
 password2=$(whiptail --passwordbox "Repeat admin password" 8 60 3>&1 1>&2 2>&3)
 
