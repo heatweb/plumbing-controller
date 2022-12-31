@@ -1,7 +1,5 @@
 #!/bin/bash
-# Read Password
-echo -n Password: 
-read -s password
-echo
-# Run Command
-echo $password
+
+
+whiptail --title "Admin Password" --msgbox "\/\\\/\\\/\\\/\\\n\\\ \\\ \\\ \\\/\n\ \\\/\\\/\\\/" 15 78
+
