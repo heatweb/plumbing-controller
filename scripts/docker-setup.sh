@@ -249,6 +249,8 @@ if [[ $MYMENU == *"gocomposer"* ]]; then
   sudo docker run -d -it -p 5099:1880 --net mqtt -v /boot/heatweb/:/boot/heatweb/ -v /home/pi/:/home/pi/ --add-host=host.docker.internal:host-gateway --privileged --name noderedsetup heatweb/nodered-composer-init:latest
   echo "Node-RED Composer has been started on port 5099."
   echo "Node-RED Composer can be found at http://localhost:5099/ui"
+  sleep 3s
+  sudo docker exec noderedsetup node /home/pi/plumbing-controller/scripts/updateNodeRedPassword.js '$bcryptadminpass' /data/
 fi
 
 
