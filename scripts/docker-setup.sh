@@ -198,10 +198,6 @@ sudo rm /home/pi/portainerPassword.txt
 docker start portainer
 echo "Portainer has been started on port 9000."
 
-if [[ $MYMENU == *"gocomposer"* ]]; then
-  sudo docker run -d -it -p 5099:1880 --net mqtt -v /boot/heatweb/:/boot/heatweb/ -v /home/pi/:/home/pi/ --add-host=host.docker.internal:host-gateway --privileged --name noderedsetup heatweb/nodered-composer-init:latest
-fi
-
 echo "Please wait 1 minute to complete..."
 sleep 1m
 
@@ -240,7 +236,17 @@ if [[ $MYMENU == *"gonrpass"* ]]; then
     sudo npm install bcryptjs
     bcryptadminpass=$(node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 8));" $password)
     node /home/pi/plumbing-controller/scripts/updateNodeRedPassword.js $bcryptadminpass
+    node-red-restart
+    sleep 5s
     
+fi
+
+
+
+if [[ $MYMENU == *"gocomposer"* ]]; then
+  sudo docker run -d -it -p 5099:1880 --net mqtt -v /boot/heatweb/:/boot/heatweb/ -v /home/pi/:/home/pi/ --add-host=host.docker.internal:host-gateway --privileged --name noderedsetup heatweb/nodered-composer-init:latest
+  echo "Node-RED Composer has been started on port 5099."
+  echo "Node-RED Composer can be found at http://localhost:5099/ui"
 fi
 
 
