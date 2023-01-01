@@ -1,3 +1,6 @@
+const myArgs = process.argv.slice(2);
+if (!myArgs[0]) { console.log("require a password. Quitting.");  process.exit(1); }
+
 fs = require('fs')
 fs.readFile('/home/pi/.node-red/settings.js', 'utf8', function (err,data) {
   if (err) {
@@ -16,7 +19,7 @@ var str3 =  'adminAuth: {\n';
 str3 +=  '     type: "credentials",\n';
 str3 +=  '         users: [{\n';
 str3 +=  '             username: "admin",\n';
-str3 +=  '             password: "xxxxx",\n';
+str3 +=  '             password: "' + myArgs[0] + '",\n';
 str3 +=  '             permissions: "*"\n';
 str3 +=  '         }]\n';
 str3 +=  ' },\n';
