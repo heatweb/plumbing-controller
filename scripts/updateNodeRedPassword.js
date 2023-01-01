@@ -1,15 +1,17 @@
 const myArgs = process.argv.slice(2);
 if (!myArgs[0]) { console.log("require a password. Quitting.");  process.exit(1); }
 
+var nrpath = myArgs[1] || "/home/pi/.node-red/"; 
+
 fs = require('fs')
-fs.readFile('/home/pi/.node-red/settings.js', 'utf8', function (err,data) {
+fs.readFile(nrpath + 'settings.js', 'utf8', function (err,data) {
   if (err) {
     return console.log(err);
   }
 
-  
+ 
   var timenow = new Date().getTime();
-  fs.writeFile('/home/pi/.node-red/settings_'+timenow+'.js', data, err => {
+  fs.writeFile(nrpath + 'settings_'+timenow+'.js', data, err => {
       if (err) {
         console.error(err);
       }
@@ -36,7 +38,7 @@ fs.readFile('/home/pi/.node-red/settings.js', 'utf8', function (err,data) {
 
       console.log(payload);
 
-    fs.writeFile('/home/pi/.node-red/settings.js', payload, err => {
+    fs.writeFile(nrpath + 'settings.js', payload, err => {
       if (err) {
         console.error(err);
       }
