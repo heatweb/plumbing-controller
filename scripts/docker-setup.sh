@@ -236,8 +236,10 @@ if [[ $MYMENU == *"gonrpass"* ]]; then
     sudo npm install bcryptjs
     bcryptadminpass=$(node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 8));" $password)
     node /home/pi/plumbing-controller/scripts/updateNodeRedPassword.js $bcryptadminpass
-    node-red-restart
+    echo "Restarting Node-RED, please wait."
     sleep 5s
+    node-red-restart
+    sleep 10s
     
 fi
 
