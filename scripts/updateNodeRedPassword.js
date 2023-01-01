@@ -9,7 +9,7 @@ fs.readFile('/home/pi/.node-red/settings.js', 'utf8', function (err,data) {
 
   
   var timenow = new Date().getTime();
-  fs.writeFile('/home/pi/.node-red/settings_'+timenow+'.js', payload, err => {
+  fs.writeFile('/home/pi/.node-red/settings_'+timenow+'.js', data, err => {
       if (err) {
         console.error(err);
       }
