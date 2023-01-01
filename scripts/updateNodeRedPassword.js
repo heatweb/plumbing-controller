@@ -36,7 +36,7 @@ fs.readFile(nrpath + 'settings.js', 'utf8', function (err,data) {
 
     var payload = str1 + "\n" + str3 + "\n" + str2;
 
-      console.log(payload);
+      //console.log(payload);
 
     fs.writeFile(nrpath + 'settings.js', payload, err => {
       if (err) {
