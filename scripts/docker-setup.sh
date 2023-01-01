@@ -34,6 +34,7 @@ fi
 MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
         "\n   Make selections (UP, DOWN, SPACE) then TAB to OK/Cancel " 19 73 10 \
         "gopipass" "Update Pi user password                         " ON \
+        "gonrpass" "Update Node-RED admin password   " ON \
         "goinflux" "Install InfluxDB database   " ON \
         "gomysql" "Install MySQL database   " OFF \
         "goprom" "Install Prometheus " OFF \
@@ -45,9 +46,6 @@ MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
 fi
 
 
-cd ~/.node-red/
-sudo npm install bcryptjs
-bcryptadminpass=$(node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 8));" $password)
 
 # Create heatweb folder if doesn't exist
 [ ! -d "/boot/heatweb" ] && sudo mkdir /boot/heatweb
@@ -230,6 +228,15 @@ if [[ $MYMENU == *"gopipass"* ]]; then
      echo "pi:$password" | sudo chpasswd
 fi
 
+
+if [[ $MYMENU == *"gonrpass"* ]]; then
+  
+    cd ~/.node-red/
+    sudo npm install bcryptjs
+    bcryptadminpass=$(node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 8));" $password)
+    node /home/pi/plumbing-controller/scripts/updateNodeRedPassword.js $bcryptadminpass
+    
+fi
 
 
 echo "Finished."
