@@ -10,10 +10,10 @@ node-red-stop
 
 CHECK64=$(uname -m)
 
-password=$(whiptail --passwordbox "Enter admin password" 8 60 3>&1 1>&2 2>&3)
-  if [[ -z "${password// }" ]]; then
-      printf "No password given - aborting\r\n"; exit
-  fi
+#password=$(whiptail --passwordbox "Enter admin password" 8 60 3>&1 1>&2 2>&3)
+#  if [[ -z "${password// }" ]]; then
+#      printf "No password given - aborting\r\n"; exit
+#  fi
 
 if [ "/home/pi/plumbing-controller" ]; then
     echo "plumbing-controller installed. Updating."
