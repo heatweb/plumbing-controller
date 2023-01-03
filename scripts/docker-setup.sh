@@ -117,7 +117,7 @@ fi
 sudo docker volume create portainer_data
 sudo docker run -d -p 9000:9000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
 
-cd ~
+cd /home/pi
 git clone https://github.com/heatweb/plumbing-controller.git
 cd /home/pi/plumbing-controller
 git pull
