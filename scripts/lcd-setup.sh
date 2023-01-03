@@ -1,7 +1,7 @@
 sudo apt-get install -y --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox
 sudo apt-get install --no-install-recommends chromium-browser
 
-cd ~
+cd /home/pi
 wget https://www.waveshare.com/w/upload/7/75/CM4_dt_blob_Source.zip
 unzip -o  CM4_dt_blob_Source.zip -d ./CM4_dt_blob_Source
 sudo chmod 777 -R CM4_dt_blob_Source
@@ -18,8 +18,8 @@ xset -dpms
 # Allow quitting the X server with CTRL-ATL-Backspace
 setxkbmap -option terminate:ctrl_alt_bksp
 # Start Chromium in kiosk mode
-sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Local State'
-sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' /home/pi/.config/chromium/'Local State'
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' /home/pi/.config/chromium/Default/Preferences
 chromium-browser --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/dev/null  --password-store=basic --disable-pinch --overscroll-history-navigation=disabled --disable-features=TouchpadOverscrollHistoryNavigation 'http://localhost:1880/ui'
 EOF
 
