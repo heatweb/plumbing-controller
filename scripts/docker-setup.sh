@@ -235,7 +235,7 @@ if [[ $MYMENU == *"gonrpass"* ]]; then
     cd /home/pi/.node-red/
     sudo npm install bcryptjs
     bcryptadminpass=$(node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 8));" $password)
-    node /home/pi/plumbing-controller/scripts/updateNodeRedPassword.js '$bcryptadminpass'
+    node /home/pi/plumbing-controller/scripts/updateNodeRedPassword.js $bcryptadminpass
     echo "Restarting Node-RED, please wait."
     sleep 5s
     node-red-restart
@@ -250,7 +250,7 @@ if [[ $MYMENU == *"gocomposer"* ]]; then
   echo "Node-RED Composer has been started on port 5099."
   echo "Node-RED Composer can be found at http://localhost:5099/ui"
   sleep 3s
-  sudo docker exec noderedsetup node /home/pi/plumbing-controller/scripts/updateNodeRedPassword.js '$bcryptadminpass' /data/
+  sudo docker exec noderedsetup node /home/pi/plumbing-controller/scripts/updateNodeRedPassword.js $bcryptadminpass /data/
 fi
 
 
