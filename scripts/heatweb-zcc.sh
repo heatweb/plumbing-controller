@@ -1,12 +1,12 @@
 #!/bin/bash
 
 
-whiptail --title "Heatweb Plumbing Controller" --msgbox "/\/\/\/\    Heatweb Open-Source Plumbing Controller\n\ \ \ \/    Richard Hanson-Graville, Heatweb\n \/\/\/     03/01/2023\n\n            Apache 2.0 License" 15 78
+whiptail --title "Heatweb Plumbing Controller" --msgbox "/\/\/\/\    Heatweb Open-Source Plumbing Controller\n\ \ \ \/    Richard Hanson-Graville, Heatweb\n \/\/\/     03/01/2023\n\n            Apache 2.0 License" 15 73
 
 mainmenu() {
 
         MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --menu \
-                "\n   Make selections (UP, DOWN, SPACE) then TAB to OK/Cancel " 19 73 10 \
+                "\n   Move to selection (UP, DOWN) then press ENTER  " 19 73 10 \
                 "gopipass" "Update Pi user password                         " \
                 "gonrpass" "Update Node-RED admin password   " \
                 "gocomposer" "Start Node-RED Composer   " \
