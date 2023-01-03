@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # For 64-bit OS (can be changed via comments)
-
 #read -p "Network Identity: " netname
 
 if [ "/home/pi/plumbing-controller" ]; then
@@ -12,7 +11,6 @@ else
     cd /home/pi
     git clone https://github.com/heatweb/plumbing-controller.git
 fi
-
 
 sudo apt-get -y update
 sudo apt-get -y upgrade
@@ -40,9 +38,6 @@ make
 sudo make install
 sudo ln -s /usr/local/lib/libmbus.so.0 /usr/lib/libmbus.so.0
 
-
-
-
 if [ "/home/pi/ti-rpi" ]; then
     echo "ti-rpi installed. Updating."
     cd /home/pi/ti-rpi
@@ -66,8 +61,6 @@ else
     cd ti-rpi/
     sudo make install
 fi
-
-
 
 cd /home/pi
 mkdir /home/pi/node-hiu
