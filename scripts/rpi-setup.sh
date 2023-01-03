@@ -76,7 +76,6 @@ mkdir /home/pi/node-hiu/logs
 mkdir /home/pi/node-hiu/flows
 mkdir /home/pi/node-hiu/vpn
 sudo chmod -R 775 /home/pi/node-hiu
-sudo mkdir /boot/heatweb
 
 
 
@@ -86,6 +85,8 @@ if [ -f "$CFILE" ]; then
     echo "heatweb configuration file detected"
 else
 
+    sudo mkdir /boot/heatweb
+    
     echo '{' > config.json
     echo '  "nodeId":"newnode",' >> config.json
     echo '  "networkId":"newnode",' >> config.json
