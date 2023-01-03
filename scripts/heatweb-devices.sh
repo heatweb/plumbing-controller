@@ -30,7 +30,7 @@ do
          if [[ $MYMENU == "BOARD" ]]; then
          
             BOARD=$(ti board)
-            whiptail --title "Heatweb Plumbing Controller - Devicesr" --msgbox "$BOARD" 15 73
+            whiptail --title "Heatweb Plumbing Controller - Devicesr" --msgbox "$BOARD" 19 73
 
         fi
         
