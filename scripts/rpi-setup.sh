@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # For 64-bit OS (can be changed via comments)
 
 read -p "Network Identity: " netname
@@ -24,7 +26,7 @@ make
 sudo make install
 sudo ln -s /usr/local/lib/libmbus.so.0 /usr/lib/libmbus.so.0
 
-cd ~
+cd /home/pi
 mkdir /home/pi/node-hiu
 mkdir /home/pi/node-hiu/logs
 #mkdir /home/pi/node-hiu/iHIU
@@ -33,28 +35,33 @@ mkdir /home/pi/node-hiu/vpn
 sudo chmod -R 775 /home/pi/node-hiu
 sudo mkdir /boot/heatweb
 
-sudo cat <<EOF > config.json
-{
- "nodeId":"newnode",
- "networkId":"$netname",
- "name": "Zero Carbon Controller newnode",
- "description": "Heatweb Zero Carbon Controller Controller"
-}
-EOF
 
-sudo mv config.json /boot/heatweb/config.json
+CFILE=/boot/heatweb/config.json
+if [ -f "$CFILE" ]; then
+    echo "heatweb configuration file detected"
+else
+    sudo cat <<EOF > config.json
+    {
+     "nodeId":"newnode",
+     "networkId":"$netname",
+     "name": "Zero Carbon Controller newnode",
+     "description": "Heatweb Zero Carbon Controller Controller"
+    }
+    EOF
+    sudo mv config.json /boot/heatweb/config.json
+fi
 
-cd ~
+cd /home/pi
 git clone https://github.com/SequentMicrosystems/ti-rpi.git
 cd ti-rpi/
 sudo make install
 
-cd ~
+cd /home/pi
 git clone https://github.com/SequentMicrosystems/megabas-rpi.git
 cd /home/pi/megabas-rpi
 sudo make install
 
-cd ~
+cd /home/pi
 git clone https://github.com/heatweb/plumbing-controller.git
 cd /home/pi/plumbing-controller
 
