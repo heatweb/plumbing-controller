@@ -5,12 +5,12 @@ whiptail --title "Heatweb Plumbing Controller" --msgbox "/\/\/\/\    Heatweb Ope
 
 mainmenu() {
 
-        MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --menu \
+        MYMENU=$(whiptail --title "Heatweb Plumbing Controller" --menu \
                 "\n   Move to selection (UP, DOWN) then press ENTER  " 19 73 10 \
-                "install" "First installation                         " \
-                "setup" "Software setup   " \
-                "devices" "Connected devices   " \
-                "exit" "Quit   " 3>&1 1>&2 2>&3)
+                "INSTALL" "First installation                         " \
+                "SETUP" "Software setup   " \
+                "DEVICES" "Connected devices   " \
+                "EXIT" "Quit   " 3>&1 1>&2 2>&3)
 }
 
 while [[ $MYMENU != "exit" ]]
@@ -20,16 +20,16 @@ do
         if [[ $MYMENU == "" ]]; then
             exit
         fi
-        if [[ $MYMENU == "exit" ]]; then
-            whiptail --title "Heatweb Plumbing Controller" --msgbox "Happy Days." 8 78
+        if [[ $MYMENU == "EXIT" ]]; then
+            # whiptail --title "Heatweb Plumbing Controller" --msgbox "Happy Days." 8 78
             exit
         fi
         
-        if [[ $MYMENU == "install" ]]; then
+        if [[ $MYMENU == "INSTALL" ]]; then
             bash ~/plumbing-controller/scripts/rpi-setup.sh
         fi
         
-        if [[ $MYMENU == "setup" ]]; then
+        if [[ $MYMENU == "SETUP" ]]; then
             # bash <(curl -sL https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/docker-setup.sh)
             bash ~/plumbing-controller/scripts/docker-setup.sh
         fi
