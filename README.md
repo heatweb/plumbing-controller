@@ -6,7 +6,7 @@ See https://hwwiki.ddns.net/
 
 ## Standard Installation for Raspberry Pi
 
-    https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/start.sh
+    bash <(curl -sL https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/start.sh)
 
 Warning, this script will remove certain software (Mosquitto), install new software, and change hostname.
 
