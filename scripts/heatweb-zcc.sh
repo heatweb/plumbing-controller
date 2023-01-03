@@ -32,7 +32,7 @@ do
             sudo cp plumbing-controller/scripts/heatweb-zcc.sh /usr/local/bin/heatweb-zcc
             sudo chmod +x /usr/local/bin/heatweb-zcc
             whiptail --title "Heatweb Plumbing Controller" --msgbox "Update complete. Restarting." 8 78
-            exec bash /home/pi/plumbing-controller/scripts/heatweb-zcc.sh
+            exec heatweb-zcc
         fi
         
         if [[ $MYMENU == "INSTALL" ]]; then
