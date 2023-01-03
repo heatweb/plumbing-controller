@@ -44,6 +44,10 @@ do
             bash /home/pi/plumbing-controller/scripts/docker-setup.sh
         fi
   
+  
+        if [[ $MYMENU == "DEVICES" ]]; then
+            bash /home/pi/plumbing-controller/scripts/heatweb-devices.sh
+        fi
 done
 
 
