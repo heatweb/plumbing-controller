@@ -10,8 +10,9 @@ mainmenu() {
 
         MYMENU=$(whiptail --title "Heatweb Plumbing Controller - Devices" --menu \
                 "\n   Move to selection (UP, DOWN) then press ENTER" 19 73 10 \
-                "BOARD" "Board information                   " \
-                "TH1" "10K Resistance Sensor                   " \
+                "BOARD" "I/O Board information                   " \
+                "TH1" "10K Resistance Sensor " \
+                "ADD" "Add new device  " \
                 "EXIT" "Finished   " 3>&1 1>&2 2>&3)
 }
 
