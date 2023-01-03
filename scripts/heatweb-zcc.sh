@@ -26,12 +26,12 @@ do
         fi
         
         if [[ $MYMENU == "install" ]]; then
-            bash ~/plumbing-controller/scripts/rpi-setup.sh)
+            bash ~/plumbing-controller/scripts/rpi-setup.sh
         fi
         
         if [[ $MYMENU == "setup" ]]; then
             # bash <(curl -sL https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/docker-setup.sh)
-            bash ~/plumbing-controller/scripts/docker-setup.sh)
+            bash ~/plumbing-controller/scripts/docker-setup.sh
         fi
   
 done
