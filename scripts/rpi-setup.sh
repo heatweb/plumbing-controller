@@ -4,7 +4,7 @@
 # whiptail --title "Heatweb Plumbing Controller Setup" --msgbox "/\/\/\/\    Open-Source Plumbing Controller\n\ \ \ \/    Richard Hanson-Graville, Heatweb\n \/\/\/     31/12/2022\n\n            Apache 2.0 License" 15 78
 
 
-
+node-red-stop
 
 # Read Password
 
@@ -26,6 +26,35 @@ fi
 
 sudo apt-get -y update
 sudo apt-get -y upgrade
+
+
+if [ "/home/pi/ti-rpi" ]; then
+    echo "ti-rpi installed. Updating."
+    cd /home/pi/ti-rpi
+    git pull
+    sudo make install
+else
+    cd /home/pi
+    git clone https://github.com/SequentMicrosystems/ti-rpi.git
+    cd /home/pi/ti-rpi
+    sudo make install
+fi
+
+if [ "/home/pi/megabas-rpi" ]; then
+    echo "megabas-rpi installed. Updating."
+    cd /home/pi/megabas-rpi
+    git pull
+    sudo make install
+else
+    cd /home/pi
+    git clone https://github.com/SequentMicrosystems/megabas-rpi.git
+    cd /home/pi/megabas-rpi
+    sudo make install
+fi
+
+echo "I/O board watchdog set to 1 hour to prevent reboot during update."
+ti wdtpwr 3600
+# megabas 1 wdtpwr 3600
 
 
 bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
@@ -57,29 +86,8 @@ then
 
 fi
 
-if [ "/home/pi/ti-rpi" ]; then
-    echo "ti-rpi installed. Updating."
-    cd /home/pi/ti-rpi
-    git pull
-    sudo make install
-else
-    cd /home/pi
-    git clone https://github.com/SequentMicrosystems/ti-rpi.git
-    cd /home/pi/ti-rpi
-    sudo make install
-fi
 
-if [ "/home/pi/megabas-rpi" ]; then
-    echo "megabas-rpi installed. Updating."
-    cd /home/pi/megabas-rpi
-    git pull
-    sudo make install
-else
-    cd /home/pi
-    git clone https://github.com/SequentMicrosystems/megabas-rpi.git
-    cd /home/pi/megabas-rpi
-    sudo make install
-fi
+
 
 cd /home/pi
 mkdir /home/pi/node-hiu
@@ -131,6 +139,9 @@ else
     node-red-restart
 
 fi
+
+echo "IO board watchdog set to 60 secoonds to prevent reboot during update."
+ti wdtpwr 60
 
 echo "Finished."
 
