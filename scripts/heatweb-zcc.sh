@@ -29,7 +29,7 @@ do
         if [[ $MYMENU == "UPDATE" ]]; then
             cd /home/pi/plumbing-controller
             git pull
-            sudo cp plumbing-controller/scripts/heatweb-zcc.sh /usr/local/bin/heatweb-zcc
+            sudo cp /home/pi/plumbing-controller/scripts/heatweb-zcc.sh /usr/local/bin/heatweb-zcc
             sudo chmod +x /usr/local/bin/heatweb-zcc
             whiptail --title "Heatweb Plumbing Controller" --msgbox "Update complete. Restarting." 8 78
             exec heatweb-zcc
