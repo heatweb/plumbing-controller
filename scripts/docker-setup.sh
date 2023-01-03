@@ -241,7 +241,7 @@ if [[ $MYMENU == *"gonrpass"* ]]; then
     node-red-restart
     
     sudo docker exec mynodered1 node /home/pi/plumbing-controller/scripts/updateNodeRedPassword.js $bcryptadminpass /data/
-    
+    sudo docker restart mynodered1
     sleep 10s
     
 fi
