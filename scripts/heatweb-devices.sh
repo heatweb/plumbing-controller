@@ -9,7 +9,7 @@ echo $BOARD
 mainmenu() {
 
         MYMENU=$(whiptail --title "Heatweb Plumbing Controller - Devices" --menu \
-                "\n   Move to selection (UP, DOWN) then press ENTER  \n\n$BOARD" 19 73 10 \
+                "\n   Move to selection (UP, DOWN) then press ENTER  \n\n $BOARD" 19 73 10 \
                 "TH1" "10K Resistance Sensor                   " \
                 "EXIT" "Finished   " 3>&1 1>&2 2>&3)
 }
