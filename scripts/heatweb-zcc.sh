@@ -1,4 +1,4 @@
-#!/bin/bash
+K#!/bin/bash
 
 
 whiptail --title "Heatweb Plumbing Controller" --msgbox "/\/\/\/\    Heatweb Open-Source Plumbing Controller\n\ \ \ \/    Richard Hanson-Graville, Heatweb\n \/\/\/     03/01/2023\n\n            Apache 2.0 License" 15 73
@@ -31,7 +31,7 @@ do
             git pull
             sudo cp /home/pi/plumbing-controller/scripts/heatweb-zcc.sh /usr/local/bin/heatweb
             sudo chmod +x /usr/local/bin/heatweb
-            whiptail --title "Heatweb Plumbing Controller" --msgbox "Update complete. Restarting." 8 78
+            whiptail --title "Heatweb Plumbing Controller" --msgbox "Update complete. Press OK to restart." 8 78
             exec heatweb
         fi
         
