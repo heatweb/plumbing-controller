@@ -7,12 +7,9 @@ mainmenu() {
 
         MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --menu \
                 "\n   Move to selection (UP, DOWN) then press ENTER  " 19 73 10 \
-                "gopipass" "Update Pi user password                         " \
-                "gonrpass" "Update Node-RED admin password   " \
-                "gocomposer" "Start Node-RED Composer   " \
-                "goinflux" "Install InfluxDB database   " \
-                "gomysql" "Install MySQL database   " \
-                "goprom" "Install Prometheus " \
+                "install" "First installation                         " \
+                "setup" "Software setup   " \
+                "devices" "Connected devices   " \
                 "exit" "Quit   " 3>&1 1>&2 2>&3)
 }
 
@@ -26,6 +23,15 @@ do
         if [[ $MYMENU == "exit" ]]; then
             whiptail --title "Heatweb Plumbing Controller" --msgbox "Happy Days." 8 78
             exit
+        fi
+        
+        if [[ $MYMENU == "install" ]]; then
+            bash ~/plumbing-controller/scripts/rpi-setup.sh)
+        fi
+        
+        if [[ $MYMENU == "setup" ]]; then
+            # bash <(curl -sL https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/docker-setup.sh)
+            bash ~/plumbing-controller/scripts/docker-setup.sh)
         fi
   
 done
