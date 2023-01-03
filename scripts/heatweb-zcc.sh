@@ -10,6 +10,7 @@ mainmenu() {
                 "UPDATE_GIT" "   Update files from GitHub                    " \
                 "UPDATE_BOARD" "   Update I/O board                    " \
                 "INSTALL" "   First installation                         " \
+                "KIOSK" "   Activate Kiosk Browser   " \
                 "SETUP" "   Software setup   " \
                 "DEVICES" "   Connected devices   " \
                 "EXIT" "   Quit   " 3>&1 1>&2 2>&3)
@@ -48,6 +49,10 @@ do
         if [[ $MYMENU == "SETUP" ]]; then
             # bash <(curl -sL https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/docker-setup.sh)
             bash /home/pi/plumbing-controller/scripts/docker-setup.sh
+        fi
+  
+        if [[ $MYMENU == "KIOSK" ]]; then
+            bash /home/pi/plumbing-controller/scripts/lcd-setup.sh
         fi
   
   
