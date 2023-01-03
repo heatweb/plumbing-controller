@@ -7,6 +7,7 @@ mainmenu() {
 
         MYMENU=$(whiptail --title "Heatweb Plumbing Controller" --menu \
                 "\n   Move to selection (UP, DOWN) then press ENTER  " 19 73 10 \
+                "UPDATE" "Update files from GitHub                    " \
                 "INSTALL" "First installation                         " \
                 "SETUP" "Software setup   " \
                 "DEVICES" "Connected devices   " \
@@ -25,13 +26,20 @@ do
             exit
         fi
         
+        if [[ $MYMENU == "UPDATE" ]]; then
+            cd /home/pi/plumbing-controller
+            git pull
+            # whiptail --title "Heatweb Plumbing Controller" --msgbox "Update complete. Restarting." 8 78
+            exec bash /home/p/heatweb-zcc.sh
+        fi
+        
         if [[ $MYMENU == "INSTALL" ]]; then
-            bash ~/plumbing-controller/scripts/rpi-setup.sh
+            bash /home/pi/plumbing-controller/scripts/rpi-setup.sh
         fi
         
         if [[ $MYMENU == "SETUP" ]]; then
             # bash <(curl -sL https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/docker-setup.sh)
-            bash ~/plumbing-controller/scripts/docker-setup.sh
+            bash /home/pi/plumbing-controller/scripts/docker-setup.sh
         fi
   
 done
