@@ -4,7 +4,7 @@
 # whiptail --title "Heatweb Plumbing Controller Setup" --msgbox "/\/\/\/\    Open-Source Plumbing Controller\n\ \ \ \/    Richard Hanson-Graville, Heatweb\n \/\/\/     31/12/2022\n\n            Apache 2.0 License" 15 78
 
 
-node-red-stop
+
 
 # Read Password
 
@@ -55,6 +55,17 @@ fi
 echo "I/O board watchdog set to 1 hour to prevent reboot during update."
 ti wdtpwr 3600
 # megabas 1 wdtpwr 3600
+
+node-red-stop
+
+cd /home/pi/ti-rpi/update/
+if [[ $CHECK64 == *"aarch64"* ]]; then
+  # For 64-bit OS use:
+  ./update64
+else    
+  # For 32-bit OS use:
+  ./update
+fi
 
 
 bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
