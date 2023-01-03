@@ -9,7 +9,8 @@ echo $BOARD
 mainmenu() {
 
         MYMENU=$(whiptail --title "Heatweb Plumbing Controller - Devices" --menu \
-                "\n   Move to selection (UP, DOWN) then press ENTER  \n\n $BOARD" 19 73 10 \
+                "\n   Move to selection (UP, DOWN) then press ENTER" 19 73 10 \
+                "BOARD" "Board information                   " \
                 "TH1" "10K Resistance Sensor                   " \
                 "EXIT" "Finished   " 3>&1 1>&2 2>&3)
 }
@@ -23,6 +24,13 @@ do
         fi
         if [[ $MYMENU == "EXIT" ]]; then
             exit
+        fi
+        
+         if [[ $MYMENU == "BOARD" ]]; then
+         
+            BOARD=$(ti board)
+            whiptail --title "Heatweb Plumbing Controller - Devicesr" --msgbox "$BOARD" 15 73
+
         fi
         
         
