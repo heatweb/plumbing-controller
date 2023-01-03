@@ -131,7 +131,7 @@ sudo docker run -d -it -p 1883:1883 --name=mqtt --restart=always -v /home/pi/mqt
 
 #sudo docker run -d -it -p 5001:1880 -p 8001:8000 --net mqtt --restart=always -v node_red_data_1:/data -v /boot/heatweb/:/boot/heatweb/ --name mynodered1 heatweb/controller-setup
 #sudo docker run -d -it -p 5001:1880 -p 8001:8000 --net mqtt --restart=always -v node_red_data_1:/data -v /boot/heatweb/:/boot/heatweb/ --device /dev/ttyUSB0 --device /dev/ttyUSB1 --device /dev/ttyUSB2 --device /dev/ttyUSB3 --device /dev/ttyUSB4 --device /dev/ttyAMA1 --device /dev/ttyAMA2 --device /dev/ttyAMA3 --device /dev/ttyAMA4 --name mynodered1 heatweb/plumbing-controller:latest
-sudo docker run -d -it -p 5001:1880 -p 8001:8000 --net mqtt --restart=always --add-host=host.docker.internal:host-gateway -v node_red_data_1:/data -v /boot/heatweb/:/boot/heatweb/ --privileged --device /dev/ttyAMA1 --device /dev/ttyAMA2 --device /dev/ttyAMA3 --device /dev/ttyAMA4 --name mynodered1 heatweb/plumbing-controller:latest
+sudo docker run -d -it -p 5001:1880 -p 8001:8000 --net mqtt --restart=always --add-host=host.docker.internal:host-gateway -v node_red_data_1:/data -v /home/pi/:/home/pi/ -v /boot/heatweb/:/boot/heatweb/ --privileged --device /dev/ttyAMA1 --device /dev/ttyAMA2 --device /dev/ttyAMA3 --device /dev/ttyAMA4 --name mynodered1 heatweb/plumbing-controller:latest
 
 sudo docker run -d \
     -v /home/pi:/srv \
@@ -239,6 +239,9 @@ if [[ $MYMENU == *"gonrpass"* ]]; then
     echo "Restarting Node-RED, please wait."
     sleep 5s
     node-red-restart
+    
+    sudo docker exec mynodered1 node /home/pi/plumbing-controller/scripts/updateNodeRedPassword.js $bcryptadminpass /data/
+    
     sleep 10s
     
 fi
@@ -252,6 +255,7 @@ if [[ $MYMENU == *"gocomposer"* ]]; then
   sleep 3s
   sudo docker exec noderedsetup node /home/pi/plumbing-controller/scripts/updateNodeRedPassword.js $bcryptadminpass /data/
 fi
+
 
 
 echo "Finished."
