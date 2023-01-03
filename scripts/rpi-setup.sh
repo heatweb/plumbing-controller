@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # For 64-bit OS (can be changed via comments)
 #read -p "Network Identity: " netname
 
