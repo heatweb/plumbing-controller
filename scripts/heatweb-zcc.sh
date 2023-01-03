@@ -20,6 +20,9 @@ while [[ $MYMENU != "exit" ]]
 do
         mainmenu
 
+        if [[ $MYMENU == "" ]]; then
+            exit
+        fi
         if [[ $MYMENU == "exit" ]]; then
             whiptail --title "Heatweb Plumbing Controller" --msgbox "Happy Days." 8 78
             exit
