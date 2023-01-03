@@ -7,7 +7,7 @@ mainmenu() {
 
         MYMENU=$(whiptail --title "Heatweb Plumbing Controller" --menu \
                 "\n   Move to selection (UP, DOWN) then press ENTER  " 19 73 10 \
-                "UPDATE" "   Update files from GitHub                    " \
+                "UPDATE_GIT" "   Update files from GitHub                    " \
                 "UPDATE_BOARD" "   Update I/O board                    " \
                 "INSTALL" "   First installation                         " \
                 "SETUP" "   Software setup   " \
@@ -27,7 +27,7 @@ do
             exit
         fi
         
-        if [[ $MYMENU == "UPDATE" ]]; then
+        if [[ $MYMENU == "UPDATE_GIT" ]]; then
             cd /home/pi/plumbing-controller
             git pull
             sudo cp /home/pi/plumbing-controller/scripts/heatweb-zcc.sh /usr/local/bin/heatweb
@@ -41,7 +41,7 @@ do
         fi
         
         
-        if [[ $MYMENU == "UPDATE_TI" ]]; then
+        if [[ $MYMENU == "UPDATE_BOARD" ]]; then
             bash /home/pi/plumbing-controller/scripts/update-ti-rpi.sh
         fi
         
