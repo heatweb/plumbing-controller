@@ -30,7 +30,7 @@ do
             cd /home/pi/plumbing-controller
             git pull
             # whiptail --title "Heatweb Plumbing Controller" --msgbox "Update complete. Restarting." 8 78
-            exec bash /home/pi/heatweb-zcc.sh
+            exec bash /home/pi/plumbing-controller/scripts/heatweb-zcc.sh
         fi
         
         if [[ $MYMENU == "INSTALL" ]]; then
