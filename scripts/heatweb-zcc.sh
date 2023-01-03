@@ -16,11 +16,15 @@ mainmenu() {
                 "exit" "Quit   " 3>&1 1>&2 2>&3)
 }
 
-mainmenu
+while [[ $MYMENU != "exit" ]]
+do
+        mainmenu
 
-if [[ $MYMENU == "exit" ]]; then
-    whiptail --title "Heatweb Plumbing Controller" --msgbox "Happy Days." 8 78
-    exit
-else
-    mainmenu
-fi
+        if [[ $MYMENU == "exit" ]]; then
+            whiptail --title "Heatweb Plumbing Controller" --msgbox "Happy Days." 8 78
+            exit
+        fi
+  
+done
+
+
