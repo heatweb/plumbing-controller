@@ -8,6 +8,7 @@ mainmenu() {
         MYMENU=$(whiptail --title "Heatweb Plumbing Controller" --menu \
                 "\n   Move to selection (UP, DOWN) then press ENTER  " 19 73 10 \
                 "UPDATE" "Update files from GitHub                    " \
+                "UPDATE_TI" "Update I/O board                    " \
                 "INSTALL" "First installation                         " \
                 "SETUP" "Software setup   " \
                 "DEVICES" "Connected devices   " \
@@ -37,6 +38,11 @@ do
         
         if [[ $MYMENU == "INSTALL" ]]; then
             bash /home/pi/plumbing-controller/scripts/rpi-setup.sh
+        fi
+        
+        
+        if [[ $MYMENU == "UPDATE_TI" ]]; then
+            bash /home/pi/plumbing-controller/scripts/update-ti-rpi.sh
         fi
         
         if [[ $MYMENU == "SETUP" ]]; then
