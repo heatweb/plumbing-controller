@@ -65,7 +65,7 @@ if [ "/home/pi/ti-rpi" ]; then
 else
     cd /home/pi
     git clone https://github.com/SequentMicrosystems/ti-rpi.git
-    cd ti-rpi/
+    cd /home/pi/ti-rpi
     sudo make install
 fi
 
@@ -77,7 +77,7 @@ if [ "/home/pi/megabas-rpi" ]; then
 else
     cd /home/pi
     git clone https://github.com/SequentMicrosystems/megabas-rpi.git
-    cd ti-rpi/
+    cd /home/pi/megabas-rpi
     sudo make install
 fi
 
