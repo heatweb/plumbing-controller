@@ -8,10 +8,10 @@ if [ "/home/pi/plumbing-controller" ]; then
     echo "plumbing-controller installed. Updating."
     cd /home/pi/plumbing-controller
     git pull
-else    
+else
     cd /home/pi
     git clone https://github.com/heatweb/plumbing-controller.git
-fi    
+fi
 
 
 sudo apt-get -y update
