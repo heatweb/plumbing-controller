@@ -23,14 +23,14 @@ function Filebrowser()
 # otherwise current folder is selected
 
     if [ -z $2 ] ; then
-        dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } ')
+        dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 " " $5 " " } ')
     else
         cd "$2"
-        dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } ')
+        dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 " " $5 " " } ')
     fi
 
     curdir=$(pwd)
-    if [ "$curdir" == startdir ] ; then  # Check if you are at root folder
+    if [ "$curdir" == "$startdir$ ] ; then  # Check if you are at root folder
         selection=$(whiptail --title "$1" \
                               --menu "PgUp/PgDn/Arrow Enter Selects File/Folder\nor Tab Key\n$curdir" 0 73 0 \
                               --cancel-button Cancel \
