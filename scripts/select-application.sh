@@ -30,7 +30,7 @@ function Filebrowser()
     fi
 
     curdir=$(pwd)
-    if [ "$curdir" == "$startdir$ ] ; then  # Check if you are at root folder
+    if [ "$curdir" == "$startdir" ] ; then  # Check if you are at root folder
         selection=$(whiptail --title "$1" \
                               --menu "PgUp/PgDn/Arrow Enter Selects File/Folder\nor Tab Key\n$curdir" 0 73 0 \
                               --cancel-button Cancel \
