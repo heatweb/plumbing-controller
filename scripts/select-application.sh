@@ -12,7 +12,7 @@ requires selecting a file.
 '
 
 startdir="/home/pi/plumbing-controller/applications"
-filext='json'
+filext='composer.json'
 menutitle="$filext File Selection Menu"
 
 #------------------------------------------------------------------------------
@@ -32,12 +32,12 @@ function Filebrowser()
     curdir=$(pwd)
     if [ "$curdir" == "$startdir" ] ; then  # Check if you are at root folder
         selection=$(whiptail --title "$1" \
-                              --menu "PgUp/PgDn/Arrow Enter Selects File/Folder\nor Tab Key\n$curdir" 0 73 0 \
+                              --menu "\n PgUp/PgDn/Arrow Enter Selects File/Folder or Tab Key\n $curdir" 0 73 0 \
                               --cancel-button Cancel \
                               --ok-button Select $dir_list 3>&1 1>&2 2>&3)
     else   # Not Root Dir so show ../ BACK Selection in Menu
         selection=$(whiptail --title "$1" \
-                              --menu "PgUp/PgDn/Arrow Enter Selects File/Folder\nor Tab Key\n$curdir" 0 73 0 \
+                              --menu "\n PgUp/PgDn/Arrow Enter Selects File/Folder or Tab Key\n $curdir" 0 73 0 \
                               --cancel-button Cancel \
                               --ok-button Select ../ BACK $dir_list 3>&1 1>&2 2>&3)
     fi
