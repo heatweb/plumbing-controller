@@ -11,8 +11,8 @@ mainmenu() {
                 "UPDATE_BOARD" "   Update I/O board                    " \
                 "INSTALL" "   First installation                         " \
                 "KIOSK" "   Activate Kiosk Browser   " \
-                "SETUP" "   Docker setup / update passwords   " \
                 "APP" "   Select application   " \
+                "SETUP" "   Setup application and passwords   " \
                 "DEVICES" "   Connected devices   " \
                 "EXIT" "   Quit   " 3>&1 1>&2 2>&3)
 }
