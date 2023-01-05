@@ -6,7 +6,6 @@ Adapted from filebrowse.sh written by Claude Pageau
 This is a whiptail file browser that allows navigating through a directory
 structure and select a specified file type per filext variable.
 It Returns a filename path if selected.  Esc key exits.
-
 '
 
 startdir="/home/pi/plumbing-controller/applications"
