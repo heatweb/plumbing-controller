@@ -11,7 +11,8 @@ mainmenu() {
                 "UPDATE_BOARD" "   Update I/O board                    " \
                 "INSTALL" "   First installation                         " \
                 "KIOSK" "   Activate Kiosk Browser   " \
-                "SETUP" "   Software setup   " \
+                "SETUP" "   Docker setup / update passwords   " \
+                "APP" "   Select application   " \
                 "DEVICES" "   Connected devices   " \
                 "EXIT" "   Quit   " 3>&1 1>&2 2>&3)
 }
@@ -55,6 +56,10 @@ do
             bash /home/pi/plumbing-controller/scripts/lcd-setup.sh
         fi
   
+  
+        if [[ $MYMENU == "KIOSK" ]]; then
+            bash /home/pi/plumbing-controller/scripts/select-application.sh
+        fi
   
         if [[ $MYMENU == "DEVICES" ]]; then
             bash /home/pi/plumbing-controller/scripts/heatweb-devices.sh
