@@ -1,19 +1,17 @@
 #!/bin/bash
 
 : '
-                   filebrowse.sh written by Claude Pageau
+Adapted from filebrowse.sh written by Claude Pageau
 
-This is a whiptail file browser demo that allows navigating through a directory
+This is a whiptail file browser that allows navigating through a directory
 structure and select a specified file type per filext variable.
 It Returns a filename path if selected.  Esc key exits.
-This sample code can be used in a script menu to perform an operation that
-requires selecting a file.
 
 '
 
 startdir="/home/pi/plumbing-controller/applications"
 filext='composer.json'
-menutitle="$filext File Selection Menu"
+menutitle="$filext Application File Selection Menu"
 
 #------------------------------------------------------------------------------
 function Filebrowser()
@@ -23,21 +21,21 @@ function Filebrowser()
 # otherwise current folder is selected
 
     if [ -z $2 ] ; then
-        dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } ')
+        dir_list=$(ls -lhp  | awk -F '  ' ' { print $9 " " $5 } ')
     else
         cd "$2"
-        dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } ')
+        dir_list=$(ls -lhp  | awk -F '  ' ' { print $9 " " $5 } ')
     fi
 
     curdir=$(pwd)
     if [ "$curdir" == "$startdir" ] ; then  # Check if you are at root folder
         selection=$(whiptail --title "$1" \
-                              --menu "\n PgUp/PgDn/Arrow Enter Selects File/Folder or Tab Key\n $curdir" 0 73 0 \
+                              --menu "\n Move to selection (UP, DOWN) then press ENTER \n $curdir" 0 73 0 \
                               --cancel-button Cancel \
                               --ok-button Select $dir_list 3>&1 1>&2 2>&3)
     else   # Not Root Dir so show ../ BACK Selection in Menu
         selection=$(whiptail --title "$1" \
-                              --menu "\n PgUp/PgDn/Arrow Enter Selects File/Folder or Tab Key\n $curdir" 0 73 0 \
+                              --menu "\n Move to selection (UP, DOWN) then press ENTER \n $curdir" 0 73 0 \
                               --cancel-button Cancel \
                               --ok-button Select ../ BACK $dir_list 3>&1 1>&2 2>&3)
     fi
