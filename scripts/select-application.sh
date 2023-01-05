@@ -26,7 +26,7 @@ function Filebrowser()
         dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 } ')
     else
         cd "$2"
-        dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } ')
+        dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 } ')
     fi
 
     curdir=$(pwd)
