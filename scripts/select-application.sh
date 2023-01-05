@@ -23,10 +23,10 @@ function Filebrowser()
 # otherwise current folder is selected
 
     if [ -z $2 ] ; then
-        dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } ')
+        dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 "   " $5 } ')
     else
         cd "$2"
-        dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } ')
+        dir_list=$(ls -lhp  | awk -F ' ' ' { print $9 "   " $5 } ')
     fi
 
     curdir=$(pwd)
