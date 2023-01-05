@@ -57,7 +57,7 @@ do
         fi
   
   
-        if [[ $MYMENU == "KIOSK" ]]; then
+        if [[ $MYMENU == "APP" ]]; then
             bash /home/pi/plumbing-controller/scripts/select-application.sh
         fi
   
