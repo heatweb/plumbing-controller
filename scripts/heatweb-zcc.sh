@@ -34,7 +34,7 @@ do
             sudo git pull
             sudo cp /home/pi/plumbing-controller/scripts/heatweb-zcc.sh /usr/local/bin/heatweb
             sudo chmod +x /usr/local/bin/heatweb
-            whiptail --title "Heatweb Plumbing Controller" --msgbox "Update complete. Press OK to restart." 8 78
+            #whiptail --title "Heatweb Plumbing Controller" --msgbox "Update complete. Press OK to restart." 8 78
             exec heatweb
         fi
         
