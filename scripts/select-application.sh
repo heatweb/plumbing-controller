@@ -89,8 +89,8 @@ if [ $exitstatus -eq 0 ]; then
         echo "Result is"
         echo "$filepath/$filename"
         
-        sudo rm -r /home/pi/node-hiu/composer
-        #sudo mv /home/pi/node-hiu/composer /home/pi/node-hiu/composer_bak
+        sudo rm -r /home/pi/node-hiu/composer_bak
+        sudo mv /home/pi/node-hiu/composer /home/pi/node-hiu/composer_bak
         mkdir /home/pi/node-hiu/composer
         sudo cp -r $filepath/* /home/pi/node-hiu/composer
         sudo chown -R pi:pi /home/pi/node-hiu/composer
