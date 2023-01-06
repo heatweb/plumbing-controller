@@ -90,7 +90,8 @@ if [ $exitstatus -eq 0 ]; then
         echo "$filepath/$filename"
         echo "Copied to /home/pi/node-hiu/composer.json"
         
-        cp $filepath/$filename /home/pi/node-hiu/composer.json
+        sudo cp $filepath/$filename /home/pi/node-hiu/composer.json
+        sudo chown pi:pi /home/pi/node-hiu/composer.json
                 
     fi
 else
