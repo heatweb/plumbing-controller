@@ -37,7 +37,7 @@ function Filebrowser()
         selection=$(whiptail --title "$1" \
                               --menu "\n Please select an application composer.json file. \n $curdir" 0 73 0 \
                               --cancel-button Cancel \
-                              --ok-button Select ../ BACK $dir_list 3>&1 1>&2 2>&3)
+                              --ok-button Select "../                                " BACK $dir_list 3>&1 1>&2 2>&3)
     fi
 
     RET=$?
