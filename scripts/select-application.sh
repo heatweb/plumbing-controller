@@ -24,7 +24,7 @@ function Filebrowser()
     else
         cd "$2"
         etxt = "...SELECT"
-        dir_list=$(ls -lhp -I "*.md"  | awk -F ' ' ' { print $9 " " $etxt } ')
+        dir_list=$(ls -lhp -I "*.md"  | awk -F ' ' ' { print $9 " " $5 } ')
     fi
 
     curdir=$(pwd)
