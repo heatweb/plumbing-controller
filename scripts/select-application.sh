@@ -86,21 +86,13 @@ if [ $exitstatus -eq 0 ]; then
 
         \
         " 0 0 0
-        echo ""
-        echo "---- $0 variable output values -----"
-        echo ""
-        echo '$filename = '$filename
-        echo '$filepath = '$filepath
-        echo ""
-        echo "You can combine variables per"
-        echo 'echo $filepath/$filename'
-        echo "result is"
+        echo "Result is"
         echo "$filepath/$filename"
-        echo ""
-        echo "Variables can be used in command execution"
+        echo "Copied to /home/pi/node-hiu/composer.json"
+        
+        cp $filepath/$filename /home/pi/node-hiu/composer.json
+                
     fi
 else
     echo "User Pressed Cancel. with No File Selected."
 fi
-echo ""
-echo "This is demo code that can be used in your own projects"
