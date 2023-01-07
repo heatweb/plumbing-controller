@@ -13,7 +13,7 @@ CHECK64=$(uname -m)
 # Thanks to Peter Scargill for the Script. https://bitbucket.org/scargill/workspace/snippets/kAR5qG/the-script 
 MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
         "\n   Make selections (UP, DOWN, SPACE) then TAB to OK/Cancel " 19 73 10 \
-        "idaspass" "Use Node ID as password                         " ON \
+        "idaspass" "Use Node ID as password                         " OFF \
         "gopipass" "Update Pi user password                         " ON \
         "gonrpass" "Update Node-RED admin password   " ON \
         "gocomposer" "Start Node-RED Composer   " ON \
