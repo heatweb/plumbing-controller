@@ -15,7 +15,7 @@ if (fs.existsSync(SETTINGS)) {
         return console.log(err);
         data = "{}";
       }
-    );
+    });
         
 } 
                 
