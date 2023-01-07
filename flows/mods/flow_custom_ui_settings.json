@@ -1,0 +1,665 @@
+[
+    {
+        "id": "4b06df1842fffcc3",
+        "type": "tab",
+        "label": "Custom",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8f286d54970f8289",
+        "type": "inject",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 200,
+        "wires": [
+            [
+                "4bd9b75e2d21ced9"
+            ]
+        ]
+    },
+    {
+        "id": "4bd9b75e2d21ced9",
+        "type": "function",
+        "z": "4b06df1842fffcc3",
+        "name": "customerCode",
+        "func": "msg.payload = (global.get(\"settings.customerCode.value\") || \"\");\nmsg.topic = \"set/customerCode\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 200,
+        "wires": [
+            [
+                "c1ee2789316ea580"
+            ]
+        ]
+    },
+    {
+        "id": "c1ee2789316ea580",
+        "type": "ui_text_input",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "label": "Customer Code",
+        "tooltip": "",
+        "group": "cb203bcb.f1ec68",
+        "order": 10,
+        "width": "8",
+        "height": "1",
+        "passthru": false,
+        "mode": "text",
+        "delay": "10000",
+        "topic": "set/customerCode",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 560,
+        "y": 200,
+        "wires": [
+            [
+                "d67f19132c83345d"
+            ]
+        ]
+    },
+    {
+        "id": "d67f19132c83345d",
+        "type": "change",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "set/customerCode",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "title",
+                "pt": "msg",
+                "to": "Customer Code",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 200,
+        "wires": [
+            [
+                "b83d0ee513ac196a"
+            ]
+        ]
+    },
+    {
+        "id": "a70869c7c01cbeaf",
+        "type": "link out",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 1065,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "1311d355aa67b402",
+        "type": "trigger",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "30",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 730,
+        "y": 140,
+        "wires": [
+            [
+                "181346a0ca3a95ca"
+            ]
+        ]
+    },
+    {
+        "id": "181346a0ca3a95ca",
+        "type": "change",
+        "z": "4b06df1842fffcc3",
+        "name": "post changes",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "cmd/request",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "local/+/+/settings/#",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 890,
+        "y": 140,
+        "wires": [
+            [
+                "a70869c7c01cbeaf"
+            ]
+        ]
+    },
+    {
+        "id": "dbc3fc97a4ee6d02",
+        "type": "link in",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "links": [
+            "b83d0ee513ac196a",
+            "51cce9e3aa172d7d",
+            "906eab4b14a3d44a"
+        ],
+        "x": 555,
+        "y": 100,
+        "wires": [
+            [
+                "1311d355aa67b402",
+                "a70869c7c01cbeaf"
+            ]
+        ]
+    },
+    {
+        "id": "b83d0ee513ac196a",
+        "type": "link out",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "dbc3fc97a4ee6d02"
+        ],
+        "x": 915,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "9d4afe45dfb97666",
+        "type": "change",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "set/customerLogo",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "title",
+                "pt": "msg",
+                "to": "Customer Logo",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 440,
+        "wires": [
+            [
+                "51cce9e3aa172d7d"
+            ]
+        ]
+    },
+    {
+        "id": "51cce9e3aa172d7d",
+        "type": "link out",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "dbc3fc97a4ee6d02",
+            "2e0e5e775942b580"
+        ],
+        "x": 1225,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "1ddeea5e8cf38853",
+        "type": "ui_template",
+        "z": "4b06df1842fffcc3",
+        "group": "36b47e47.04f1c2",
+        "name": "Logo",
+        "order": 5,
+        "width": "3",
+        "height": "1",
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 630,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ea00c822d21d8ec7",
+        "type": "function",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "func": "//msg.payload = '<img src=\"/node_modules/node-red-contrib-heatweb/public/files/images/heatweb.png\">';\n\nif (msg.payload.indexOf(\"http\")<0) { \n    \n    msg.payload = \"/files/images/\" + msg.payload;\n    \n}\n\nmsg.payload = '<table width=\"100%\" height=\"95%\"><tr><td align=\"center\" valign=\"middle\" width=\"100%\" height=\"100%\"><img src=\"' + msg.payload + '\" height=\"40px\"></td></tr></table>';\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 540,
+        "wires": [
+            [
+                "1ddeea5e8cf38853",
+                "be08e2373620c747"
+            ]
+        ]
+    },
+    {
+        "id": "2da7cfae9e2999c8",
+        "type": "inject",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "http://heatweb.co.uk/w/images/thumb/3/3f/G12749.png/120px-G12749.png",
+        "payloadType": "str",
+        "x": 240,
+        "y": 540,
+        "wires": [
+            [
+                "ea00c822d21d8ec7"
+            ]
+        ]
+    },
+    {
+        "id": "7c20992e729fa762",
+        "type": "trigger",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "3",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 860,
+        "y": 440,
+        "wires": [
+            [
+                "9d4afe45dfb97666"
+            ]
+        ]
+    },
+    {
+        "id": "f9ec234135732e43",
+        "type": "inject",
+        "z": "4b06df1842fffcc3",
+        "name": "LCH",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "https://londonclimatehire.co.uk/wp-content/uploads/2021/08/logo-boiler-chiller-hire-1.png",
+        "payloadType": "str",
+        "x": 870,
+        "y": 500,
+        "wires": [
+            [
+                "9d4afe45dfb97666"
+            ]
+        ]
+    },
+    {
+        "id": "f0704133457a069b",
+        "type": "inject",
+        "z": "4b06df1842fffcc3",
+        "name": "Heatweb",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "http://heatweb.co.uk/w/images/thumb/3/3f/G12749.png/120px-G12749.png",
+        "payloadType": "str",
+        "x": 880,
+        "y": 540,
+        "wires": [
+            [
+                "9d4afe45dfb97666"
+            ]
+        ]
+    },
+    {
+        "id": "900c16ab8e61bf63",
+        "type": "inject",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 380,
+        "wires": [
+            [
+                "63896fc306345bdd"
+            ]
+        ]
+    },
+    {
+        "id": "320d99bc3f900145",
+        "type": "function",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "func": "\n//msg.options = [ \"Choice 1\", \"Choice 2\", {\"Choice 3\":\"3\"} ]\n\n\nmsg.options = msg.payload.split(\", \");\n\nmsg.options.push({\"None\":\"\"});\n\nmsg.payload = (global.get(\"settings.customerLogo.value\") || \"\");\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 380,
+        "wires": [
+            [
+                "89f0fe6ecdda4e2e"
+            ]
+        ]
+    },
+    {
+        "id": "63896fc306345bdd",
+        "type": "template",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "heatwebb.png, heatweb.png, heatwebsl.png, Ability.png, Alphamech.png, Aqua.png, Artic.jpg, CMMchugh.jpg, Elemc.png, FDHs.png, Gem.jpg, Key.png, LCH.png, Mulalleys.jpg, OCO.png, Pumpsandmotors.jpg, SJP.png, SmithByford.png, Southwark.jpg, Southwark.png, Southwark2.png, TBrown.jpg, TIL.jpg",
+        "output": "str",
+        "x": 320,
+        "y": 380,
+        "wires": [
+            [
+                "320d99bc3f900145"
+            ]
+        ]
+    },
+    {
+        "id": "89f0fe6ecdda4e2e",
+        "type": "ui_dropdown",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "label": "Logo",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "cb203bcb.f1ec68",
+        "order": 9,
+        "width": "8",
+        "height": "1",
+        "passthru": false,
+        "multiple": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "set/customerLogo",
+        "topicType": "str",
+        "className": "",
+        "x": 630,
+        "y": 380,
+        "wires": [
+            [
+                "7c20992e729fa762",
+                "ea00c822d21d8ec7",
+                "79ca83cfa39e3f4d"
+            ]
+        ]
+    },
+    {
+        "id": "79ca83cfa39e3f4d",
+        "type": "debug",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "be08e2373620c747",
+        "type": "debug",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "fd559471853f32a7",
+        "type": "ui_ui_control",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "events": "all",
+        "x": 140,
+        "y": 440,
+        "wires": [
+            [
+                "63896fc306345bdd"
+            ]
+        ]
+    },
+    {
+        "id": "367e26156cba3412",
+        "type": "function",
+        "z": "4b06df1842fffcc3",
+        "name": "Simplify readingsHistory",
+        "func": "\n\nvar timin = new Date().getTime();\n\nvar otot = 0\nvar ntot=0;\n\nfor (var net in global.get(\"readingsHistory\")) {\n    \n    for (var dev in global.get(\"readingsHistory.\"+net)) {\n    \n        for (var grp in global.get(\"readingsHistory.\"+net+\".\"+dev)) {\n            \n            for (var key in global.get(\"readingsHistory.\"+net+\".\"+dev+\".\"+grp)) {\n                \n                //if (key==\"fC\") { continue; }\n                if (key.indexOf(\"24\")>-1) { continue; }\n                \n                var opoints = global.get(\"readingsHistory.\"+net+\".\"+dev+\".\"+grp+\".\"+key);\n                \n                 \n                if (opoints.length<1) { continue; }\n                if (isNaN(opoints[0].value)) { continue; }\n                \n                var npoints = simplify(opoints, 0.15, true);\n                \n                otot = otot + opoints.length;\n                ntot = ntot + npoints.length;\n                \n                global.set(\"readingsHistory.\"+net+\".\"+dev+\".\"+grp+\".\"+key, npoints);\n                \n            }\n        }\n    }\n    \n}\nmsg.payload = otot + \", \" + ntot;\n\n\nreturn msg;\n\n\n\n/*\n (c) 2013, Vladimir Agafonkin\n Simplify.js, a high-performance JS polyline simplification library\n mourner.github.io/simplify-js\n*/\n\n\n\n// to suit your point format, run search/replace for '.x' and '.y';\n// for 3D version, see 3d branch (configurability would draw significant performance overhead)\n\nfunction scaleTime(p,direc) {\n\n    if(direc==1) {\n        \n        p.timestamp = (timin - p.timestamp) / 10000;\n        \n    } else {\n        \n        p.timestamp = timin - (10000 * p.timestamp)  ;\n    }\n    \n}\nfunction scaleT(t) {\n\n    \n    return ((timin - t) / 10000)\n    \n}\n\n// square distance between 2 points\nfunction getSqDist(p1, p2) {\n\n    \n\n    var dx = scaleT(p1.timestamp) - scaleT(p2.timestamp),\n        dy = p1.value - p2.value;\n\n    return dx * dx + dy * dy;\n}\n\n// square distance from a point to a segment\nfunction getSqSegDist(p, p1, p2) {\n\n    var x = scaleT(p1.timestamp),\n        y = p1.value,\n        dx = scaleT(p2.timestamp) - x,\n        dy = p2.value - y;\n\n    if (dx !== 0 || dy !== 0) {\n\n        var t = ((scaleT(p.timestamp) - x) * dx + (p.value - y) * dy) / (dx * dx + dy * dy);\n\n        if (t > 1) {\n            x = scaleT(p2.timestamp);\n            y = p2.value;\n\n        } else if (t > 0) {\n            x += dx * t;\n            y += dy * t;\n        }\n    }\n\n    dx = scaleT(p.timestamp) - x;\n    dy = p.value - y;\n\n    return dx * dx + dy * dy;\n}\n// rest of the code doesn't care about point format\n\n\n\n// simplification using optimized Douglas-Peucker algorithm with recursion elimination\nfunction simplifyDouglasPeucker(points, sqTolerance) {\n\n    var len = points.length,\n        MarkerArray = typeof Uint8Array !== 'undefined' ? Uint8Array : Array,\n        markers = new MarkerArray(len),\n        first = 0,\n        last = len - 1,\n        stack = [],\n        newPoints = [],\n        i, maxSqDist, sqDist, index;\n\n    markers[first] = markers[last] = 1;\n\n    while (last) {\n\n        maxSqDist = 0;\n\n        for (i = first + 1; i < last; i++) {\n            sqDist = getSqSegDist(points[i], points[first], points[last]);\n\n            if (sqDist > maxSqDist) {\n                index = i;\n                maxSqDist = sqDist;\n            }\n        }\n\n        if (maxSqDist > sqTolerance) {\n            markers[index] = 1;\n            stack.push(first, index, index, last);\n        }\n\n        last = stack.pop();\n        first = stack.pop();\n    }\n\n    for (i = 0; i < len; i++) {\n        if (markers[i]) {\n            newPoints.push(points[i]);\n        }\n    }\n\n    return newPoints;\n}\n\n// both algorithms combined for awesome performance\nfunction simplify(points, tolerance, highestQuality) {\n\n    var sqTolerance = tolerance !== undefined ? tolerance * tolerance : 1;\n\n    //points = highestQuality ? points : simplifyRadialDist(points, sqTolerance);\n    points = simplifyDouglasPeucker(points, sqTolerance);\n\n    return points;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 280,
+        "wires": [
+            [
+                "438482958cc1219e"
+            ]
+        ]
+    },
+    {
+        "id": "d174dd0ba750fa79",
+        "type": "inject",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10800",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 280,
+        "wires": [
+            [
+                "367e26156cba3412"
+            ]
+        ]
+    },
+    {
+        "id": "438482958cc1219e",
+        "type": "debug",
+        "z": "4b06df1842fffcc3",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "cb203bcb.f1ec68",
+        "type": "ui_group",
+        "name": "DefaultSetup",
+        "tab": "888f4ceb.4b158",
+        "order": 1,
+        "disp": false,
+        "width": "9",
+        "collapse": false
+    },
+    {
+        "id": "36b47e47.04f1c2",
+        "type": "ui_group",
+        "name": "Buttons",
+        "tab": "888f4ceb.4b158",
+        "order": 2,
+        "disp": false,
+        "width": "3",
+        "collapse": false
+    },
+    {
+        "id": "888f4ceb.4b158",
+        "type": "ui_tab",
+        "name": "Setup",
+        "icon": "fa-cog",
+        "order": 23,
+        "disabled": false,
+        "hidden": false
+    }
+]
