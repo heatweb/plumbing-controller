@@ -6,17 +6,18 @@ var SETTINGS = "/home/pi/node-hiu/settings.json";
 var SETTING = myArgs[0]; 
 
 fs = require('fs');
-var data = "{}";
+var sdata = "{}";
 
 if (fs.existsSync(SETTINGS)) {
     
-    fs.readFile(SETTINGS, 'utf8', function (err,sdata) {
+    sdata = fs.readFile(SETTINGS, 'utf8', function (err,data) {
       if (err) {
-        return console.log(err);
+        //return console.log(err);
         data = "{}";
       }
-      
-      data = sdata;
+         
+      return data;  
+        
     });
         
 } 
