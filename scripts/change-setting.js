@@ -22,10 +22,10 @@ if (fs.existsSync(SETTINGS)) {
         
 } 
 
-console.log(data);
+console.log(sdata);
                 
   var timenow = new Date().getTime();
-  fs.writeFile(SETTINGS.replace(".json","_"+timenow+".json"), data, err => {
+  fs.writeFile(SETTINGS.replace(".json","_"+timenow+".json"), sdata, err => {
       if (err) {
         console.error(err);
       }
@@ -34,7 +34,7 @@ console.log(data);
 
     try {  
                
-      var SETTINGS_DATA = JSON.parse(data);
+      var SETTINGS_DATA = JSON.parse(sdata);
 
       SETTINGS_DATA[SETTING] = { "value":myArgs[1], "timestamp":timenow };
 
