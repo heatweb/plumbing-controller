@@ -12,7 +12,7 @@ if (fs.existsSync(SETTINGS)) {
     
     console.log("loading existing settings.");
     
-    const sdata = fs.readFileSync(SETTINGS,
+    sdata = fs.readFileSync(SETTINGS,
             {encoding:'utf8', flag:'r'});
     
 //     fs.readFileSync(SETTINGS, 'utf8', function (err,sdata) {
