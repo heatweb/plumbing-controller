@@ -33,6 +33,9 @@ if (fs.existsSync(SETTINGS)) {
 
       SETTINGS_DATA[SETTING] = { "value":myArgs[1], "timestamp":timenow };
 
+      if (myArgs[2]) { SETTINGS_DATA[SETTING].title = myArgs[2];
+      if (myArgs[3]) { SETTINGS_DATA[SETTING].units = myArgs[3];                      
+        
       var payload = JSON.stringify(SETTINGS_DATA);
         
         //console.log(payload);
