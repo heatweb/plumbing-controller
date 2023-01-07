@@ -1,0 +1,618 @@
+[
+    {
+        "id": "2ff57d3a99a7d895",
+        "type": "tab",
+        "label": "Display 4L",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "db03b2d3cac8446d",
+        "type": "rpi-gpio in",
+        "z": "2ff57d3a99a7d895",
+        "name": "",
+        "pin": "26",
+        "intype": "up",
+        "debounce": "25",
+        "read": true,
+        "bcm": true,
+        "x": 160,
+        "y": 440,
+        "wires": [
+            [
+                "71327611457a161a"
+            ]
+        ]
+    },
+    {
+        "id": "7b298b7b79d0701d",
+        "type": "debug",
+        "z": "2ff57d3a99a7d895",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d755205d309f3e33",
+        "type": "exec",
+        "z": "2ff57d3a99a7d895",
+        "command": "tidisp swird",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 470,
+        "y": 440,
+        "wires": [
+            [
+                "d54e852823c05580",
+                "c59fc3fbcacc1d53",
+                "2fd6c33a4a0d5445"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "71327611457a161a",
+        "type": "switch",
+        "z": "2ff57d3a99a7d895",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 310,
+        "y": 440,
+        "wires": [
+            [
+                "d755205d309f3e33"
+            ]
+        ]
+    },
+    {
+        "id": "97f92f316646b2f0",
+        "type": "ui_slider",
+        "z": "2ff57d3a99a7d895",
+        "name": "",
+        "label": "slider",
+        "tooltip": "",
+        "group": "714ff50cbc5838ad",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "100",
+        "step": 1,
+        "className": "",
+        "x": 670,
+        "y": 240,
+        "wires": [
+            [
+                "5119bbac0ce28898"
+            ]
+        ]
+    },
+    {
+        "id": "5119bbac0ce28898",
+        "type": "exec",
+        "z": "2ff57d3a99a7d895",
+        "command": "tidisp blwr ",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 820,
+        "y": 240,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2fd6c33a4a0d5445",
+        "type": "exec",
+        "z": "2ff57d3a99a7d895",
+        "command": "tidisp txtwrat 4 1 ",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 720,
+        "y": 560,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e84a9225c31e27fc",
+        "type": "inject",
+        "z": "2ff57d3a99a7d895",
+        "name": "Init Display",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "99d3faf064de54c9",
+                "133c96b0dd4f2463",
+                "3529251b5268a6ae",
+                "107c8369b43cfc99",
+                "1a3cc4de5b844828",
+                "eb34c9420576c40c"
+            ]
+        ]
+    },
+    {
+        "id": "99d3faf064de54c9",
+        "type": "delay",
+        "z": "2ff57d3a99a7d895",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 310,
+        "y": 120,
+        "wires": [
+            [
+                "8377f933a2e0f925"
+            ]
+        ]
+    },
+    {
+        "id": "133c96b0dd4f2463",
+        "type": "delay",
+        "z": "2ff57d3a99a7d895",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "20",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "919cbd3475a3a33c"
+            ]
+        ]
+    },
+    {
+        "id": "3529251b5268a6ae",
+        "type": "exec",
+        "z": "2ff57d3a99a7d895",
+        "command": "tidisp cmdwr 60",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 540,
+        "y": 60,
+        "wires": [
+            [
+                "7b298b7b79d0701d"
+            ],
+            [
+                "7b298b7b79d0701d"
+            ],
+            [
+                "7b298b7b79d0701d"
+            ]
+        ]
+    },
+    {
+        "id": "8377f933a2e0f925",
+        "type": "exec",
+        "z": "2ff57d3a99a7d895",
+        "command": "tidisp cmdwr 12",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 540,
+        "y": 120,
+        "wires": [
+            [
+                "7b298b7b79d0701d"
+            ],
+            [
+                "7b298b7b79d0701d"
+            ],
+            [
+                "7b298b7b79d0701d"
+            ]
+        ]
+    },
+    {
+        "id": "919cbd3475a3a33c",
+        "type": "exec",
+        "z": "2ff57d3a99a7d895",
+        "command": "tidisp cmdwr 6",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 540,
+        "y": 180,
+        "wires": [
+            [
+                "7b298b7b79d0701d"
+            ],
+            [
+                "7b298b7b79d0701d"
+            ],
+            [
+                "7b298b7b79d0701d"
+            ]
+        ]
+    },
+    {
+        "id": "0e2e7beba7d2ea84",
+        "type": "change",
+        "z": "2ff57d3a99a7d895",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "50",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 240,
+        "wires": [
+            [
+                "97f92f316646b2f0"
+            ]
+        ]
+    },
+    {
+        "id": "107c8369b43cfc99",
+        "type": "delay",
+        "z": "2ff57d3a99a7d895",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "30",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 310,
+        "y": 240,
+        "wires": [
+            [
+                "0e2e7beba7d2ea84"
+            ]
+        ]
+    },
+    {
+        "id": "80995579f3f479d8",
+        "type": "inject",
+        "z": "2ff57d3a99a7d895",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 580,
+        "wires": [
+            [
+                "b059b8712e50c2c6"
+            ]
+        ]
+    },
+    {
+        "id": "b059b8712e50c2c6",
+        "type": "exec",
+        "z": "2ff57d3a99a7d895",
+        "command": "ti bckbrd",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 420,
+        "y": 580,
+        "wires": [
+            [
+                "37be625c4eaeb83e"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "37be625c4eaeb83e",
+        "type": "exec",
+        "z": "2ff57d3a99a7d895",
+        "command": "tidisp txtwrat 2 1 Battery: ",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 710,
+        "y": 660,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d54e852823c05580",
+        "type": "exec",
+        "z": "2ff57d3a99a7d895",
+        "command": "tidisp red ",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 720,
+        "y": 460,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c59fc3fbcacc1d53",
+        "type": "delay",
+        "z": "2ff57d3a99a7d895",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "250",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 710,
+        "y": 400,
+        "wires": [
+            [
+                "d3b3d70d14561b80"
+            ]
+        ]
+    },
+    {
+        "id": "d3b3d70d14561b80",
+        "type": "exec",
+        "z": "2ff57d3a99a7d895",
+        "command": "tidisp red 0",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 890,
+        "y": 400,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1a3cc4de5b844828",
+        "type": "delay",
+        "z": "2ff57d3a99a7d895",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "22",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 310,
+        "y": 300,
+        "wires": [
+            [
+                "f6e680740f03c44d"
+            ]
+        ]
+    },
+    {
+        "id": "f6e680740f03c44d",
+        "type": "exec",
+        "z": "2ff57d3a99a7d895",
+        "command": "tidisp cmdwr 1",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Clear Display",
+        "x": 490,
+        "y": 300,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "eb34c9420576c40c",
+        "type": "delay",
+        "z": "2ff57d3a99a7d895",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "26",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 310,
+        "y": 360,
+        "wires": [
+            [
+                "372bdd68a16f488e"
+            ]
+        ]
+    },
+    {
+        "id": "372bdd68a16f488e",
+        "type": "exec",
+        "z": "2ff57d3a99a7d895",
+        "command": "tidisp txtwrat 1 1 Plumbing Controller",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Write Header",
+        "x": 490,
+        "y": 360,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "714ff50cbc5838ad",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "03215892b50ac02a",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "03215892b50ac02a",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
