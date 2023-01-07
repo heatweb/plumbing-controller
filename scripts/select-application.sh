@@ -97,6 +97,10 @@ if [ $exitstatus -eq 0 ]; then
         sudo cp -r $filepath/* /home/pi/node-hiu/composer
         sudo chown -R pi:pi /home/pi/node-hiu/composer
         echo "Copied to /home/pi/node-hiu/composer/"
+        
+        if [ -f "/home/pi/node-hiu/composer/install.sh" ]; then
+            bash /home/pi/node-hiu/composer/install.sh
+        fi
                 
     fi
 else
