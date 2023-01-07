@@ -10,29 +10,10 @@ whiptail --title "Heatweb Plumbing Controller Setup" --msgbox "/\/\/\/\    Open-
 
 CHECK64=$(uname -m)
 
-password=$(whiptail --passwordbox "Enter admin password" 8 60 3>&1 1>&2 2>&3)
-  if [[ -z "${password// }" ]]; then
-      printf "No password given - aborting\r\n"; exit
-  fi
-password2=$(whiptail --passwordbox "Repeat admin password" 8 60 3>&1 1>&2 2>&3)
-
-
-#echo -n "Admin password:"
-#read -s password
-#echo
-#echo -n "Repeat password:"
-#read -s password2
-#echo
-if [[ "$password" != "$password2" ]]; then
- #echo "Passwords do not match."
- whiptail --title "Admin Password" --msgbox "Passwords do not match." 8 78
- exit 1
-fi
-
-
 # Thanks to Peter Scargill for the Script. https://bitbucket.org/scargill/workspace/snippets/kAR5qG/the-script 
 MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
         "\n   Make selections (UP, DOWN, SPACE) then TAB to OK/Cancel " 19 73 10 \
+        "idaspass" "Use Node ID as password                         " ON \
         "gopipass" "Update Pi user password                         " ON \
         "gonrpass" "Update Node-RED admin password   " ON \
         "gocomposer" "Start Node-RED Composer   " ON \
@@ -47,6 +28,26 @@ MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
 fi
 
 
+if [[ $MYMENU == *"idaspass"* ]]; then
+
+    password="NodeID"
+    
+else
+
+    password=$(whiptail --passwordbox "Enter admin password" 8 60 3>&1 1>&2 2>&3)
+      if [[ -z "${password// }" ]]; then
+          printf "No password given - aborting\r\n"; exit
+      fi
+    password2=$(whiptail --passwordbox "Repeat admin password" 8 60 3>&1 1>&2 2>&3)
+
+
+    if [[ "$password" != "$password2" ]]; then
+     echo "Passwords do not match."
+     whiptail --title "Admin Password" --msgbox "Passwords do not match." 8 78
+     exit 1
+    fi
+
+fi 
 
 # Create heatweb folder if doesn't exist
 [ ! -d "/boot/heatweb" ] && sudo mkdir /boot/heatweb
