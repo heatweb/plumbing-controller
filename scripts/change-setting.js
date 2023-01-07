@@ -6,11 +6,16 @@ var SETTINGS = "/home/pi/node-hiu/settings.json";
 var SETTING = myArgs[1]; 
 
 fs = require('fs')
-fs.readFile(SETTINGS, 'utf8', function (err,data) {
-  if (err) {
-    return console.log(err);
-  }
 
+if [ -f "$SETTINGS" ]; then
+
+    fs.readFile(SETTINGS, 'utf8', function (err,data) {
+      if (err) {
+        return console.log(err);
+      }
+else      
+    data = "{}";
+fi
  
   var timenow = new Date().getTime();
   fs.writeFile(SETTINGS.replace(".json","_"+timenow+".json"), data, err => {
@@ -24,7 +29,7 @@ fs.readFile(SETTINGS, 'utf8', function (err,data) {
                
       var SETTINGS_DATA = JSON.parse(data);
 
-      SETTINGS_DATA[SETTING] = myArgs[1];
+      SETTINGS_DATA[SETTING] = { "value":myArgs[1]; "timestamp":timenow };
 
       var payload = JSON.stringify(SETTINGS_DATA);
         
