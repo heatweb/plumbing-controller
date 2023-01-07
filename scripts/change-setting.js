@@ -12,8 +12,7 @@ if (fs.existsSync(SETTINGS)) {
     
     console.log("loading existing settings.");
     
-    sdata = fs.readFileSync(SETTINGS,
-            {encoding:'utf8', flag:'r'});
+    sdata = fs.readFileSync(SETTINGS, {encoding:'utf8', flag:'r'});
     
 //     fs.readFileSync(SETTINGS, 'utf8', function (err,sdata) {
 //       if (err) {
@@ -24,7 +23,7 @@ if (fs.existsSync(SETTINGS)) {
       console.log("Found existing settings.");
       console.log(sdata);
         
-    });
+    //});
         
 } 
 
