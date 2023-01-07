@@ -68,10 +68,10 @@ do
         
         
         if [[ $MYMENU == "SETTINGS" ]]; then
-            cursettings = $(node /home/pi/plumbing-controller/scripts/list-settings.js)
+            C_SET=$(node /home/pi/plumbing-controller/scripts/list-settings.js)
             SETMENU=$(whiptail --title "Heatweb Plumbing Controller - Settings" --menu \
                 "\n   Move to selection (UP, DOWN) then press ENTER  " 19 73 10 \
-                '$cursettings' 3>&1 1>&2 2>&3)
+                '$C_SET' 3>&1 1>&2 2>&3)
             
         fi
 done
