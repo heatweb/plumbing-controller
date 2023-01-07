@@ -31,7 +31,7 @@ if (fs.existsSync(SETTINGS)) {
                
       var SETTINGS_DATA = JSON.parse(data);
 
-      SETTINGS_DATA[SETTING] = { "value":myArgs[1]; "timestamp":timenow };
+      SETTINGS_DATA[SETTING] = { "value":myArgs[1], "timestamp":timenow };
 
       var payload = JSON.stringify(SETTINGS_DATA);
         
