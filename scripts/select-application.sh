@@ -91,15 +91,15 @@ if [ $exitstatus -eq 0 ]; then
         echo "Result is"
         echo "$filepath/$filename"
         
-        sudo rm -r /home/pi/node-hiu/composer_bak
-        sudo mv /home/pi/node-hiu/composer /home/pi/node-hiu/composer_bak
-        mkdir /home/pi/node-hiu/composer
-        sudo cp -r $filepath/* /home/pi/node-hiu/composer
-        sudo chown -R pi:pi /home/pi/node-hiu/composer
-        echo "Copied to /home/pi/node-hiu/composer/"
+        sudo rm -r /boot/heatweb/composer        
+        sudo mkdir /boot/heatweb/composer
+        sudo cp -r $filepath/* /boot/heatweb/composer
+        #sudo chown -R pi:pi /home/pi/node-hiu/composer
+        echo "Copied to /boot/heatweb/composer/"
         
-        if [ -f "/home/pi/node-hiu/composer/install.sh" ]; then
-            bash /home/pi/node-hiu/composer/install.sh
+        
+        if [ -f "/boot/heatweb/composer/install.sh" ]; then
+            bash /boot/heatweb/composer/install.sh
         fi
                 
     fi
