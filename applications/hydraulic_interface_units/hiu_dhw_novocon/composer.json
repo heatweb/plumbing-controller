@@ -1,0 +1,38 @@
+[
+    {
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/flows_beta_plumbing_controller_1880.json",
+        "targetHost": "localhost",
+        "targetPort": 1880,
+        "action": "flows",
+        "config": {
+            "description": "Docker Development Controller v2"
+        },
+        "credentials": {
+            "remoteInfluxServer": "https://europe-west1-1.gcp.cloud2.influxdata.com"
+        }
+    },
+    {
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_dhw_control.json",
+        "targetHost": "localhost",
+        "targetPort": 1880,
+        "action": "flow"
+    },
+    {
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_dhw_dashboard.json",
+        "targetHost": "localhost",
+        "targetPort": 1880,
+        "action": "flow"
+    },
+    {
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_modbus_novocon.json",
+        "targetHost": "localhost",
+        "targetPort": 1880,
+        "action": "flow"
+    },
+    {
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_m_bus.json",
+        "targetHost": "localhost",
+        "targetPort": 1880,
+        "action": "flow"
+    }
+]
