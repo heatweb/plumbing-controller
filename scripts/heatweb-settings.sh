@@ -29,6 +29,7 @@ do
         if [[ $MYMENU == "SETTINGS" ]]; then
         
                 C_LIST=$(jq 'keys|.[]' /home/pi/node-hiu/settings.json)
+                echo $C_LIST
                 C_SET=$(node /home/pi/plumbing-controller/scripts/list-settings.js)
                 echo $C_SET
                 SETMENU=$(whiptail --title "Heatweb Plumbing Controller - Settings" --menu \
