@@ -14,6 +14,7 @@ mainmenu() {
                 "APP" "   Select application   " \
                 "SETUP" "   Setup application and passwords   " \
                 "DEVICES" "   Connected devices   " \
+                "SETTINGS" "   Settings   " \
                 "EXIT" "   Quit   " 3>&1 1>&2 2>&3)
 }
 
@@ -63,6 +64,15 @@ do
   
         if [[ $MYMENU == "DEVICES" ]]; then
             bash /home/pi/plumbing-controller/scripts/heatweb-devices.sh
+        fi
+        
+        
+        if [[ $MYMENU == "SETTINGS" ]]; then
+            cursettings = $(node /home/pi/plumbing-controller/scripts/list-settings.js)
+            SETMENU=$(whiptail --title "Heatweb Plumbing Controller - Settings" --menu \
+                "\n   Move to selection (UP, DOWN) then press ENTER  " 19 73 10 \
+                $cursettings 3>&1 1>&2 2>&3)
+            
         fi
 done
 
