@@ -10,11 +10,13 @@ var data = "{}";
 
 if (fs.existsSync(SETTINGS)) {
     
-    fs.readFile(SETTINGS, 'utf8', function (err,data) {
+    fs.readFile(SETTINGS, 'utf8', function (err,sdata) {
       if (err) {
         return console.log(err);
         data = "{}";
       }
+      
+      data = sdata;
     });
         
 } 
