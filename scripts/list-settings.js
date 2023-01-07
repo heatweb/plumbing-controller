@@ -14,7 +14,7 @@ if (fs.existsSync(SETTINGS)) {
     for (var s in sdat) {
      
          // oot += '"' + (sdat[s].title || s) + '" "' + sdat[s].value + (sdat[s].units || "") + '"'
-         oot += '"' + s + '" "' + sdat[s].value + (sdat[s].units || "") + " " + (sdat[s].title || "") '" ';
+         oot += '"' + s + '" "' + sdat[s].value + (sdat[s].units || "") + " " + (sdat[s].title || "") +  '" ';
     }
     
     console.log(oot);
