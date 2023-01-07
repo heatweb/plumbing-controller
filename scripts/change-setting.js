@@ -5,18 +5,20 @@ if (!myArgs[1]) { console.log("require a setting value.");  process.exit(1); }
 var SETTINGS = "/home/pi/node-hiu/settings.json"; 
 var SETTING = myArgs[1]; 
 
-fs = require('fs')
+fs = require('fs');
+var data = "{}";
 
-if [ -f "$SETTINGS" ]; then
-
+if (fs.existsSync(SETTINGS)) {
+    
     fs.readFile(SETTINGS, 'utf8', function (err,data) {
       if (err) {
         return console.log(err);
+        data = "{}";
       }
-else      
-    data = "{}";
-fi
- 
+    );
+        
+} 
+                
   var timenow = new Date().getTime();
   fs.writeFile(SETTINGS.replace(".json","_"+timenow+".json"), data, err => {
       if (err) {
@@ -44,4 +46,4 @@ fi
   
   } catch { console.log("Failed to update settings."); }
 
-});
+
