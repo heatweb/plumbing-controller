@@ -1,6 +1,6 @@
 [
     {
-        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/flows_beta_plumbing_controller_1880.json",
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/flows_standard_plumbing_controller.json",
         "targetHost": "localhost",
         "targetPort": 1880,
         "action": "flows",
