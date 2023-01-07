@@ -18,6 +18,8 @@ if (fs.existsSync(SETTINGS)) {
     });
         
 } 
+
+console.log(data);
                 
   var timenow = new Date().getTime();
   fs.writeFile(SETTINGS.replace(".json","_"+timenow+".json"), data, err => {
