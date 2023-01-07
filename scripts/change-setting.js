@@ -12,17 +12,20 @@ if (fs.existsSync(SETTINGS)) {
     
     console.log("loading existing settings.");
     
-    fs.readFileSync(SETTINGS, 'utf8', function (err,sdata) {
+    fs.readFile(SETTINGS, 'utf8', function (err,sdata) {
       if (err) {
         console.log(err);
         //data = "{}";
       }
+      
+      console.log("Found existing settings.");
       console.log(sdata);
         
     });
         
 } 
 
+ console.log("loaded existing settings.");
 console.log(sdata);
                 
   var timenow = new Date().getTime();
