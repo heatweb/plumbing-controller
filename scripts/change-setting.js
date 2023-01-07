@@ -13,7 +13,7 @@ fs.readFile(SETTINGS, 'utf8', function (err,data) {
 
  
   var timenow = new Date().getTime();
-  fs.writeFile(SETTINGS,replace(".json","_"+timenow+".json", data, err => {
+  fs.writeFile(SETTINGS.replace(".json","_"+timenow+".json"), data, err => {
       if (err) {
         console.error(err);
       }
