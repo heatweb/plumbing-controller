@@ -211,7 +211,7 @@ sudo docker exec -ti grafana grafana-cli plugins install aceiot-svg-panel
 sudo docker exec -ti grafana grafana-cli plugins install marcuscalidus-svg-panel
 sudo docker exec -ti grafana grafana-cli plugins install marcusolsson-static-datasource
 sudo docker exec -ti grafana grafana-cli plugins install volkovlabs-image-panel
-
+sudo docker restart grafana
 
 ## The following lines add the admin user to the MQTT service and restarts it.
 sudo docker exec -ti mqtt mosquitto_passwd -b /mosquitto/config/passwordfile admin $password
