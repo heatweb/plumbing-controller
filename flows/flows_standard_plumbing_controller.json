@@ -11180,7 +11180,7 @@
         "payload": "ti",
         "payloadType": "str",
         "x": 830,
-        "y": 80,
+        "y": 120,
         "wires": [
             [
                 "0607bca7108e1f7c"
@@ -11238,7 +11238,7 @@
         "payload": "megabas 1",
         "payloadType": "str",
         "x": 840,
-        "y": 120,
+        "y": 160,
         "wires": [
             [
                 "0607bca7108e1f7c"
@@ -11508,7 +11508,7 @@
         "expiry": "",
         "broker": "7ad2997b.42a908",
         "x": 1070,
-        "y": 80,
+        "y": 120,
         "wires": []
     },
     {
@@ -11634,6 +11634,54 @@
         "wires": [
             [
                 "7006906bf1072ded"
+            ]
+        ]
+    },
+    {
+        "id": "ffd2523f080ae774",
+        "type": "inject",
+        "z": "03f09d0d134d2f90",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 830,
+        "y": 60,
+        "wires": [
+            [
+                "6693dcc1e7730c30"
+            ]
+        ]
+    },
+    {
+        "id": "6693dcc1e7730c30",
+        "type": "function",
+        "z": "03f09d0d134d2f90",
+        "name": "new",
+        "func": "if (!global.get(\"settings.ioCommand\")) { msg.payload = \"ti\"; return msg; }\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 60,
+        "wires": [
+            [
+                "0607bca7108e1f7c"
             ]
         ]
     }
