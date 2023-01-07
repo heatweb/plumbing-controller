@@ -7,7 +7,7 @@ fi
 
 mainmenu() {
 
-        MYMENU=$(whiptail --title "Heatweb Plumbing Controller" --menu \
+        MYMENU=$(whiptail --title "Heatweb Plumbing Controller - Settings" --menu \
                 "\n   Move to selection (UP, DOWN) then press ENTER  " 19 73 10 \
                 "SETTINGS" "   Settings   " \
                 "EXIT" "   Quit   " 3>&1 1>&2 2>&3)
