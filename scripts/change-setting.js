@@ -12,15 +12,14 @@ if (fs.existsSync(SETTINGS)) {
     
     console.log("loading existing settings.");
     
-//     sdata = fs.readFile(SETTINGS, 'utf8', function (err,data) {
-//       if (err) {
-//         //return console.log(err);
-//         data = "{}";
-//       }
-         
-//       return data;  
+    fs.readFile(SETTINGS, 'utf8', function (err,sdata) {
+      if (err) {
+        console.log(err);
+        //data = "{}";
+      }
+      
         
-//     });
+    });
         
 } 
 
