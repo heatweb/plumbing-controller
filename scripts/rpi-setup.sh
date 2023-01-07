@@ -79,7 +79,7 @@ sudo apt-get -y install git
 sudo apt-get -y install whiptail
 sudo apt-get -y install xdotool
 sudo apt-get -y install build-essential cmake
-
+sudo apt-get -y install jq
 
 if ! command -v mbus-serial-scan &> /dev/null
 then
