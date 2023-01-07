@@ -21,7 +21,7 @@
                 "vt": "str"
             }
         ],
-        "repeat": "10",
+        "repeat": "1",
         "crontab": "",
         "once": true,
         "onceDelay": "1",
@@ -144,7 +144,7 @@
         "type": "debug",
         "z": "03f09d0d134d2f90",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -499,7 +499,7 @@
         "type": "debug",
         "z": "03f09d0d134d2f90",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -547,8 +547,8 @@
         "topic": "",
         "payload": "ti",
         "payloadType": "str",
-        "x": 1030,
-        "y": 80,
+        "x": 830,
+        "y": 120,
         "wires": [
             [
                 "0607bca7108e1f7c"
@@ -605,8 +605,8 @@
         "topic": "",
         "payload": "megabas 1",
         "payloadType": "str",
-        "x": 1040,
-        "y": 120,
+        "x": 840,
+        "y": 160,
         "wires": [
             [
                 "0607bca7108e1f7c"
@@ -770,53 +770,6 @@
         "wires": []
     },
     {
-        "id": "ae2a41ec80dbaa23",
-        "type": "inject",
-        "z": "03f09d0d134d2f90",
-        "name": "PORT SETUP - SIMPLE DHW HIU",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "1",
-        "topic": "set/io",
-        "payload": "[{\"portId\":\"IN1\",\"block\":\"IN1\",\"channel\":\"1\",\"name\":\"IN1 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr23\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"dhw\",\"topicKey\":\"tH\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.650,0],[25.390,5],[19.900,10],[15.710,15],[12.490,20],[10,25],[8.057,30],[6.531,35],[5.327,40],[4.369,45],[3.603,50],[2.986,55],[2.488,60],[2.083,65],[1.752,70],[1.258,80],[0.918,90],[0.678,100],[0.51,110],[0.388,120]]\"},{\"portId\":\"IN2\",\"block\":\"IN2\",\"channel\":\"2\",\"name\":\"IN2 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr23\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"dhw\",\"topicKey\":\"tHo\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.324,40],[4.365,45],[3.599,50],[2.982,55],[2.483,60],[2.079,65],[1.738,70],[1.476,75],[1.252,80],[0.912,90],[0.678,100],[0.51,110],[0.388,120]]\"},{\"portId\":\"IN3\",\"block\":\"IN3\",\"channel\":\"3\",\"name\":\"IN3 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr23\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"dhw\",\"topicKey\":\"tCo\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.324,40],[4.365,45],[3.599,50],[2.982,55],[2.483,60],[2.079,65],[1.738,70],[1.476,75],[1.252,80],[0.912,90],[0.678,100],[0.51,110],[0.388,120]]\"},{\"portId\":\"IN8\",\"block\":\"IN8\",\"channel\":\"8\",\"name\":\"IN8 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ffff\",\"wiredTo\":\"FS\",\"wiredToPort\":\"pulse\",\"signalType\":\"PULSE\",\"topicDevice\":\"dhw\",\"topicKey\":\"fC\",\"mapUnits\":\"pulse/s to ltr/min\",\"map\":\"[[0,0],[59.5,30]]\"}]",
-        "payloadType": "json",
-        "x": 500,
-        "y": 120,
-        "wires": [
-            [
-                "b9839bfd176c7dbb"
-            ]
-        ]
-    },
-    {
-        "id": "0c41b183b899ccad",
-        "type": "mqtt out",
-        "z": "03f09d0d134d2f90",
-        "name": "",
-        "topic": "_/set/io",
-        "qos": "0",
-        "retain": "false",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "7ad2997b.42a908",
-        "x": 840,
-        "y": 120,
-        "wires": []
-    },
-    {
         "id": "12b1b35f41010d30",
         "type": "mqtt in",
         "z": "03f09d0d134d2f90",
@@ -853,22 +806,6 @@
         "x": 770,
         "y": 260,
         "wires": []
-    },
-    {
-        "id": "b9839bfd176c7dbb",
-        "type": "json",
-        "z": "03f09d0d134d2f90",
-        "name": "",
-        "property": "payload",
-        "action": "str",
-        "pretty": false,
-        "x": 710,
-        "y": 120,
-        "wires": [
-            [
-                "0c41b183b899ccad"
-            ]
-        ]
     },
     {
         "id": "7006906bf1072ded",
@@ -938,8 +875,8 @@
         "correl": "",
         "expiry": "",
         "broker": "7ad2997b.42a908",
-        "x": 1270,
-        "y": 80,
+        "x": 1070,
+        "y": 120,
         "wires": []
     },
     {
@@ -1065,6 +1002,54 @@
         "wires": [
             [
                 "7006906bf1072ded"
+            ]
+        ]
+    },
+    {
+        "id": "ffd2523f080ae774",
+        "type": "inject",
+        "z": "03f09d0d134d2f90",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 830,
+        "y": 60,
+        "wires": [
+            [
+                "6693dcc1e7730c30"
+            ]
+        ]
+    },
+    {
+        "id": "6693dcc1e7730c30",
+        "type": "function",
+        "z": "03f09d0d134d2f90",
+        "name": "new",
+        "func": "if (!global.get(\"settings.ioCommand\")) { msg.payload = \"ti\"; return msg; }\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 60,
+        "wires": [
+            [
+                "0607bca7108e1f7c"
             ]
         ]
     },
