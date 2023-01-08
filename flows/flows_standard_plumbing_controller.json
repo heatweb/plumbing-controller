@@ -668,26 +668,6 @@
         "className": ""
     },
     {
-        "id": "4d0f060d.dee7e8",
-        "type": "ui_group",
-        "name": "Update",
-        "tab": "907bbe60.b555f",
-        "order": 2,
-        "disp": false,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "a1e7431b.229d5",
-        "type": "ui_group",
-        "name": "Settings",
-        "tab": "907bbe60.b555f",
-        "order": 1,
-        "disp": false,
-        "width": "6",
-        "collapse": false
-    },
-    {
         "id": "907bbe60.b555f",
         "type": "ui_tab",
         "name": "Wifi",
@@ -697,17 +677,6 @@
         "hidden": false
     },
     {
-        "id": "f405b29b0175ff69",
-        "type": "ui_group",
-        "name": "Default",
-        "tab": "7700440dec525a5e",
-        "order": 1,
-        "disp": false,
-        "width": "12",
-        "collapse": false,
-        "className": ""
-    },
-    {
         "id": "7700440dec525a5e",
         "type": "ui_tab",
         "name": "Network",
@@ -715,54 +684,6 @@
         "order": 30,
         "disabled": false,
         "hidden": false
-    },
-    {
-        "id": "4b943d8a3af36042",
-        "type": "mqtt-broker",
-        "name": "",
-        "broker": "broker.hivemq.com\t",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "sessionExpiry": ""
-    },
-    {
-        "id": "960bf2f131a4aebe",
-        "type": "ui_group",
-        "name": "Control",
-        "tab": "d81a7cb4.620e68",
-        "order": 5,
-        "disp": true,
-        "width": "4",
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "714ff50cbc5838ad",
-        "type": "ui_group",
-        "name": "Default",
-        "tab": "03215892b50ac02a",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": false,
-        "className": ""
     },
     {
         "id": "03215892b50ac02a",
@@ -7772,7 +7693,7 @@
             "4bf50365.a06d4c",
             "a1744584.91173"
         ],
-        "x": 815,
+        "x": 795,
         "y": 100,
         "wires": []
     },
