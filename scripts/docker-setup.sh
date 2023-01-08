@@ -38,7 +38,7 @@ fi
 [ ! -d "/boot/heatweb/ports" ] && sudo mkdir /boot/heatweb/ports
 
 
-if [ -d "/boot/heatweb/credentials/adminPassword.txt" ]; then
+if [ -f "/boot/heatweb/credentials/adminPassword.txt" ]; then
 
         password=$(cat /boot/heatweb/credentials/adminPassword.txt)
 
