@@ -65,6 +65,8 @@ do
   
         if [[ $MYMENU == "COMPOSER" ]]; then
             docker exec restart noderedsetup
+            whiptail --title "Heatweb Plumbing Controller" --msgbox "Composer has been started. Please wait 1 minute for application to update." 8 78
+            
         fi
   
         if [[ $MYMENU == "DEVICES" ]]; then
