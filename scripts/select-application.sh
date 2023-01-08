@@ -27,8 +27,9 @@ function Filebrowser()
     fi
 
     curdir=$(pwd)
-    basedir="/home/pi/plumbing-controller/"
-    secondString="> "
+    basedir="/home/pi/plumbing-controller/applications"
+    #secondString="> "
+    secondString=" "
     curdirtxt="${curdir/"$basedir"/"$secondString"}" 
     curdirtxt="${curdirtxt//\// "\n"   \+ }" 
     
