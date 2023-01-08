@@ -31,7 +31,7 @@ function Filebrowser()
         selection=$(whiptail --title "$1" \
                               --menu "\n Please select an application directory. \n $curdir" 0 73 0 \
                               --cancel-button Cancel \
-                              --ok-button Select $dir_list 3>&1 1>&2 2>&3)
+                              --ok-button Select "../                         " BACK $dir_list 3>&1 1>&2 2>&3)
     else   # Not Root Dir so show ../ BACK Selection in Menu
         selection=$(whiptail --title "$1" \
                               --menu "\n Please select an application composer.json file. \n $curdir" 0 73 0 \
@@ -46,7 +46,9 @@ function Filebrowser()
        if [[ -d "$selection" ]]; then  # Check if Directory Selected
           Filebrowser "$1" "$selection"
        elif [[ "$selection" == "../                         " ]]; then  # Check if BACK with spaces
-          Filebrowser "$1" "../"
+          if [ "$curdir" != "$startdir" ] ; then 
+            Filebrowser "$1" "../"
+          fi
        elif [[ -f "$selection" ]]; then  # Check if File Selected
           if [[ $selection == *$filext ]]; then   # Check if selected File has .jpg extension
             if (whiptail --title "Confirm Selection" --yesno "DirPath : $curdir\nFileName: $selection" 0 0 \
