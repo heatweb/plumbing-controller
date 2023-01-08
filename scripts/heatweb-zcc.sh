@@ -57,7 +57,7 @@ do
             bash /home/pi/plumbing-controller/scripts/docker-setup.sh
         fi
   
-        if [[ $MYMENU == "DEVICES" ]]; then
+        if [[ $MYMENU == "PASSWORD" ]]; then
             bash /home/pi/plumbing-controller/scripts/change-password.sh
         fi
         
