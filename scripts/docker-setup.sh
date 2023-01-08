@@ -63,7 +63,7 @@ else
 
 fi 
 
-echo "Password is currently $password."
+#echo "Password is currently $password."
 
 exit 0
 
