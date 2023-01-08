@@ -27,3 +27,4 @@ echo $password > /home/pi/adminPassword.txt
 sudo mv /home/pi/adminPassword.txt /boot/heatweb/credentials/adminPassword.txt
 
 echo "Password will not be applied until Composer is run."
+whiptail --title "Admin Password" --msgbox "Password will not be applied until Composer is run." 8 78
