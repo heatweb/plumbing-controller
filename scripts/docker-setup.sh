@@ -65,8 +65,6 @@ fi
 
 #echo "Password is currently $password."
 
-exit 0
-
 
 if [[ $MYMENU == *"gorenew"* ]]; then
  docker rm -f $(docker ps -aq)
