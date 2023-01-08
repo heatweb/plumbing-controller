@@ -10,7 +10,7 @@ mainmenu() {
                 "UPDATE_GIT" "   Update files from GitHub                    " \
                 "UPDATE_BOARD" "   Update I/O board                    " \
                 "INSTALL" "   First installation                         " \
-                "PASSWORD" "   Set admin password                         " \
+                "PASSWORD" "   Set master password                         " \
                 "KIOSK" "   Activate kiosk browser   " \
                 "APP" "   Select application   " \
                 "SETUP" "   Setup services and passwords   " \
