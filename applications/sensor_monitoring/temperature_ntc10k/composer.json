@@ -16,11 +16,13 @@
         "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_heatweb_io.json",
         "targetHost": "localhost",
         "targetPort": 1880,
-        "action": "flow",
-	"wiring": {
-		"cid": "QmVhPqdxmDUDsC2CCVUF7XZqRdD5dgxk3dfg37Uwgbm9yn",
-		"terminals": [{"portId":"IN1","block":"IN1","channel":"1","name":"IN1 Signal","figure":"Input","portColor":"#fffffe","wiredTo":"t9","wiredToPort":"temperature","signalType":"NTC10K","topicDevice":"t9","topicKey":"temperature","mapUnits":"kΩ to °C","map":"[[42.739,-10],[27.396,0],[17.999,10],[12.099,20],[10,25],[8.308,30],[5.819,40],[4.151,50],[3.012,60],[2.221,70],[1.663,80],[1.262,90],[0.97,100],[0.755,110]]"}]
-	}
+        "action": "flow"
+    },
+    {
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_wifi_management.json",
+        "targetHost": "localhost",
+        "targetPort": 1880,
+        "action": "flow"
     }
 
 ]
