@@ -91,6 +91,9 @@ if [ $exitstatus -eq 0 ]; then
         echo "Result is"
         echo "$filepath/$filename"
         
+        node /home/pi/plumbing-controller/scripts/change-setting.js appFile "$filename" "Application Composer JSON file"
+        node /home/pi/plumbing-controller/scripts/change-setting.js appPath "$filepath" "Application Composer path"
+        
         sudo rm -r /boot/heatweb/composer        
         sudo mkdir /boot/heatweb/composer
         sudo cp -r $filepath/* /boot/heatweb/composer
