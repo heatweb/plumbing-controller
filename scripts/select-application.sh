@@ -48,6 +48,8 @@ function Filebrowser()
        elif [[ "$selection" == "../                                   " ]]; then  # Check if BACK with spaces
           if [ "$curdir" != "$startdir" ] ; then 
             Filebrowser "$1" "../"
+          else
+            Filebrowser "$1" "./"
           fi
        elif [[ -f "$selection" ]]; then  # Check if File Selected
           if [[ $selection == *$filext ]]; then   # Check if selected File has .jpg extension
