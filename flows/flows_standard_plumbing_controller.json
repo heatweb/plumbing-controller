@@ -668,24 +668,6 @@
         "className": ""
     },
     {
-        "id": "907bbe60.b555f",
-        "type": "ui_tab",
-        "name": "Wifi",
-        "icon": "wifi",
-        "order": 21,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "7700440dec525a5e",
-        "type": "ui_tab",
-        "name": "Network",
-        "icon": "dashboard",
-        "order": 30,
-        "disabled": false,
-        "hidden": false
-    },
-    {
         "id": "03215892b50ac02a",
         "type": "ui_tab",
         "name": "Home",
