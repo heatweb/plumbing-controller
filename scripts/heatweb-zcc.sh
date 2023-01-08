@@ -10,7 +10,8 @@ mainmenu() {
                 "UPDATE_GIT" "   Update files from GitHub                    " \
                 "UPDATE_BOARD" "   Update I/O board                    " \
                 "INSTALL" "   First installation                         " \
-                "KIOSK" "   Activate Kiosk Browser   " \
+                "PASSWORD" "   Change password                         " \
+                "KIOSK" "   Activate kiosk browser   " \
                 "APP" "   Select application   " \
                 "SETUP" "   Setup services and passwords   " \
                 "COMPOSER" "   Compose Application   " \
@@ -56,6 +57,10 @@ do
             bash /home/pi/plumbing-controller/scripts/docker-setup.sh
         fi
   
+        if [[ $MYMENU == "DEVICES" ]]; then
+            bash /home/pi/plumbing-controller/scripts/change-password.sh
+        fi
+        
         if [[ $MYMENU == "KIOSK" ]]; then
             bash /home/pi/plumbing-controller/scripts/lcd-setup.sh
         fi
