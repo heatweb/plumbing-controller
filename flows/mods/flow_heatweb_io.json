@@ -1,6 +1,6 @@
 [
     {
-        "id": "03f09d0d134d2f90",
+        "id": "0f89c0fc2bb2f034",
         "type": "tab",
         "label": "Sequent IO",
         "disabled": false,
@@ -10,7 +10,7 @@
     {
         "id": "5ecd5bf0795bd642",
         "type": "inject",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "props": [
             {
@@ -39,7 +39,7 @@
     {
         "id": "7fc27ff1e4cf8c1a",
         "type": "comment",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "TI COMMANDS",
         "info": "        -v              Display the ti command version number\n        -h              Display the list of command options or one command option details\n        -warranty       Display the warranty\n        -list:          List all ti boards connected\n                        return the # of boards and stack level for every board\n        board           Display the board status and firmware version number\n        rtcbrd          Display the RTC backup battery voltage\n        relwr:          Set relays (AC switch) On/Off\n        relrd:          Read relays  status\n        reltest:                Turn ON and OFF the relays until press a key\n        contactrd:      Read dry contact status\n                        Warning: For this measurements to be valid place the jumper in position \"1K\"\n        countrd:        Read dry contact transitions count\n                        Warning: For this measurements to be valid place the jumper in position \"1K\"\n        countrst:       Reset dry contact transitions count\n        edgerd:         Read dry contact transitions type, ret 0 - disable, 1 - rising, 2 - falling, 3 - both\n        edgewr:         Write dry contact transitions type: 0 - disable, 1 - rising, 2 - falling, 3 - both\n        dacrd:          Read DAC voltage value (0 - 10V)\n        dacwr:          Write DAC output voltage value (0..10V)\n        odrd:           Read open drain pwm value (0 - 100%)\n        odwr:           Write the open drain output pwm value (0..100%)\n        adcrd:          Read ADC input voltage value (0 - 10V)\n                        Warning: For this measurements to be valid place the jumper in position \"0-10V\"\n        r1krd:          Read resistor input  value (1k) in kiloOhms, Warning: You must palce the jumper in position \"1K\".\n                        Return 30kOhm for resistor out of range\n        r10krd:         Read resistor input  value (10k) in kiloOhms, Warning: You must palce the jumper in position \"10K                                                                                                                    \".\n                        Return 30kOhm for resistor out of range\n        rthrd:          Read thermistor input  resistance value in kiloOhms, Return 60kOhm for resistor out of range\n        pwmrd:          Read PWM input\n        adccal:         Calibrate one ADC channel, the calibration must be done in 2 points at min 5V apart\n        adccalrst:      Reset the calibration for one ADC channel\n        daccal:         Calibrate one DAC channel, the calibration must be done in 2 points at min 5V apart\n        daccalrst:      Reset calibration for one DAC channel\n        wdtr:           Reload the watchdog timer and enable the watchdog if is disabled\n        wdtpwr:         Set the watchdog period in seconds,\n                        reload command must be issue in this interval to prevent Raspberry Pi power off\n        wdtprd:         Get the watchdog period in seconds,\n                        reload command must be issue in this interval to prevent Raspberry Pi power off\n        wdtipwr:        Set the watchdog initial period in seconds,\n                        This period is loaded after power cycle, giving Raspberry time to boot\n        wdtiprd:        Get the watchdog initial period in seconds.\n                        This period is loaded after power cycle, giving Raspberry time to boot\n        wdtopwr:        Set the watchdog off period in seconds (max 48 days).\n                        This is the time that watchdog mantain Raspberry turned off\n        wdtoprd:        Get the watchdog off period in seconds (max 48 days)\n                        This is the time that watchdog mantain Raspberry turned off\n        rtcrd:          Get the internal RTC  date and time(mm/dd/yy hh:mm:ss)\ntcbrd:          Get the internal RTC backup battery voltage\n        rtcwr:          Set the internal RTC  date and time(mm/dd/yy hh:mm:ss)\n        bckbrd:         Get the backup battery voltage\n        pwrsrd:         Get the power supply status\n",
         "x": 100,
@@ -49,7 +49,7 @@
     {
         "id": "73eb8679965c1672",
         "type": "trigger",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "op1": "",
         "op2": "",
@@ -74,7 +74,7 @@
     {
         "id": "3e140d99885b1dcf",
         "type": "function",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "func": "\nvar msg1 = {};\nmsg1.topic = \"system/firmwareHat\",\nmsg1.payload = msg.payload.split(\",\")[0].trim().split(\" \")[2];\nmsg1.title = \"IO Hat Firmware Version\";\n\nvar msg2 = {};\nmsg2.topic = \"system/tCpuHat\",\nmsg2.payload = msg.payload.split(\",\")[1].trim().split(\" \")[2];\nmsg2.units=\"°C\";\nmsg2.title = \"IO Hat CPU Temperature\";\n\nvar msg3 = {};\nmsg3.topic = \"system/vPowerHat\",\nmsg3.payload = msg.payload.split(\",\")[2].trim().split(\" \")[2];\nmsg3.units=\"volts\";\nmsg3.title = \"IO Hat Power Supply Voltage\";\n\n\nvar msg4 = {};\nmsg4.topic = \"system/vBatteryHat\",\nmsg4.payload = msg.payload.split(\",\")[3].trim().split(\" \")[1];\nmsg4.units=\"volts\";\nmsg4.title = \"IO Hat Battery Voltage\";\n\nreturn [msg1, msg2,msg3,msg4];",
         "outputs": 4,
@@ -102,7 +102,7 @@
     {
         "id": "3fdcb94d47bf9bff",
         "type": "link in",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "links": [
             "c52dea4958c2f7ea",
@@ -119,7 +119,7 @@
     {
         "id": "b5726b628ee3e61b",
         "type": "exec",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "command": "bash /home/pi/node-hiu/sq2.sh",
         "addpay": "",
         "append": "",
@@ -142,7 +142,7 @@
     {
         "id": "1a5f38473038651a",
         "type": "debug",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -158,7 +158,7 @@
     {
         "id": "301ee1a1ec6f3074",
         "type": "template",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "field": "payload",
         "fieldType": "msg",
@@ -177,7 +177,7 @@
     {
         "id": "69e19411dbc48dd4",
         "type": "file",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "filename": "/home/pi/node-hiu/sq2.sh",
         "filenameType": "str",
@@ -194,7 +194,7 @@
     {
         "id": "f80e2139d14010f2",
         "type": "exec",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "command": "bash /home/pi/node-hiu/sq.sh",
         "addpay": "",
         "append": "",
@@ -220,7 +220,7 @@
     {
         "id": "0fbb5027b2e50745",
         "type": "debug",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -236,7 +236,7 @@
     {
         "id": "a9c8363a03750511",
         "type": "debug",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -253,7 +253,7 @@
     {
         "id": "722ebfebdf90d15a",
         "type": "change",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "portSetup",
         "rules": [
             {
@@ -280,9 +280,9 @@
     {
         "id": "c470f5c039353850",
         "type": "function",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
-        "func": "//[{\"portId\":\"TH8\",\"block\":\"TH8\",\"channel\":\"8\",\"name\":\"TH8 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr23\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"DHW\",\"topicKey\":\"tCo\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},\n//{\"portId\":\"D1\",\"block\":\"\",\"channel\":\"1\",\"name\":\"Digital Input D1\",\"figure\":\"Input\",\"portColor\":\"#00ffff\",\"wiredTo\":\"FS\",\"wiredToPort\":\"pulse\",\"signalType\":\"PULSE\",\"topicDevice\":\"FS\",\"topicKey\":\"pulse\",\"mapUnits\":\"pulse/s to ltr/min\",\"map\":\"[[0,0],[265,30]]\"},{\"portId\":\"P1\",\"block\":\"\",\"channel\":\"1\",\"name\":\"PWM Input P1\",\"figure\":\"Input\",\"portColor\":\"#40aceb\",\"wiredTo\":\"pump\",\"wiredToPort\":\"speed\",\"signalType\":\"PWM\",\"topicDevice\":\"pump\",\"topicKey\":\"speed\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"P2\",\"block\":\"\",\"channel\":\"2\",\"name\":\"PWM Input P2\",\"figure\":\"Input\",\"portColor\":\"#40aceb\",\"wiredTo\":\"valve4\",\"wiredToPort\":\"position\",\"signalType\":\"PWM\",\"topicDevice\":\"valve4\",\"topicKey\":\"position\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"OD2\",\"block\":\"OD2\",\"channel\":\"2\",\"name\":\"PWM Output OD2\",\"figure\":\"Output\",\"portColor\":\"#40aceb\",\"wiredTo\":\"valve4\",\"wiredToPort\":\"setpoint\",\"signalType\":\"PWM\",\"topicDevice\":\"valve4\",\"topicKey\":\"setpoint\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"OD1\",\"block\":\"OD1\",\"channel\":\"1\",\"name\":\"PWM Output OD1\",\"figure\":\"Output\",\"portColor\":\"#40aceb\",\"wiredTo\":\"pump\",\"wiredToPort\":\"setpoint\",\"signalType\":\"PWM\",\"topicDevice\":\"pump\",\"topicKey\":\"setpoint\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"}]\n\n\n// echo \"rthrd1\",$(ti rthrd 1)\n// echo \"countrd1\",$(ti countrd 1)\n// echo \"pwmrd1\",$(ti pwmrd 1)\n// echo \"pwmrd2\",$(ti pwmrd 2)\n\n\nvar oot=\"\";\nvar pL = msg.payload;\nvar cmdprefix = flow.get(\"cmdprefix\") || \"ti\";\n\nfor (var p in pL) {\n    \n    \n    if (pL[p].portId.substr(0,2)==\"TH\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',rthrd' + pL[p].channel + '\",$('+cmdprefix+' rthrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].signalType.substr(0,5)==\"PULSE\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',countrd' + pL[p].channel + '\",$('+cmdprefix+' countrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"D\" && pL[p].signalType.substr(0,3)==\"DRY\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',contactrd' + pL[p].channel + '\",$('+cmdprefix+' contactrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"P\" && pL[p].signalType.substr(0,3)==\"PWM\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',pwmrd' + pL[p].channel + '\",$('+cmdprefix+' pwmrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,5)==\"NTC1K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',r1krd' + pL[p].channel + '\",$('+cmdprefix+' r1krd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,6)==\"NTC10K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',r10krd' + pL[p].channel + '\",$('+cmdprefix+' r10krd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,5)==\"0-10V\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',adcrd' + pL[p].channel + '\",$('+cmdprefix+' adcrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,3)==\"DRY\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',contactrd' + pL[p].channel + '\",$('+cmdprefix+' contactrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"IN\" && pL[p].signalType.substr(0,5)==\"PULSE\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',countrd' + pL[p].channel + '\",$('+cmdprefix+' countrd ' + pL[p].channel + ')\\n';\n        \n    }\n    \n    \n    \n}\n\n\nmsg.payload=oot;\n\n\nreturn msg;",
+        "func": "//[{\"portId\":\"TH8\",\"block\":\"TH8\",\"channel\":\"8\",\"name\":\"TH8 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr23\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"DHW\",\"topicKey\":\"tCo\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},\n//{\"portId\":\"D1\",\"block\":\"\",\"channel\":\"1\",\"name\":\"Digital Input D1\",\"figure\":\"Input\",\"portColor\":\"#00ffff\",\"wiredTo\":\"FS\",\"wiredToPort\":\"pulse\",\"signalType\":\"PULSE\",\"topicDevice\":\"FS\",\"topicKey\":\"pulse\",\"mapUnits\":\"pulse/s to ltr/min\",\"map\":\"[[0,0],[265,30]]\"},{\"portId\":\"P1\",\"block\":\"\",\"channel\":\"1\",\"name\":\"PWM Input P1\",\"figure\":\"Input\",\"portColor\":\"#40aceb\",\"wiredTo\":\"pump\",\"wiredToPort\":\"speed\",\"signalType\":\"PWM\",\"topicDevice\":\"pump\",\"topicKey\":\"speed\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"P2\",\"block\":\"\",\"channel\":\"2\",\"name\":\"PWM Input P2\",\"figure\":\"Input\",\"portColor\":\"#40aceb\",\"wiredTo\":\"valve4\",\"wiredToPort\":\"position\",\"signalType\":\"PWM\",\"topicDevice\":\"valve4\",\"topicKey\":\"position\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"OD2\",\"block\":\"OD2\",\"channel\":\"2\",\"name\":\"PWM Output OD2\",\"figure\":\"Output\",\"portColor\":\"#40aceb\",\"wiredTo\":\"valve4\",\"wiredToPort\":\"setpoint\",\"signalType\":\"PWM\",\"topicDevice\":\"valve4\",\"topicKey\":\"setpoint\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"OD1\",\"block\":\"OD1\",\"channel\":\"1\",\"name\":\"PWM Output OD1\",\"figure\":\"Output\",\"portColor\":\"#40aceb\",\"wiredTo\":\"pump\",\"wiredToPort\":\"setpoint\",\"signalType\":\"PWM\",\"topicDevice\":\"pump\",\"topicKey\":\"setpoint\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"}]\n\n\n// echo \"rthrd1\",$(ti rthrd 1)\n// echo \"countrd1\",$(ti countrd 1)\n// echo \"pwmrd1\",$(ti pwmrd 1)\n// echo \"pwmrd2\",$(ti pwmrd 2)\n\n\nvar oot=\"\";\nvar pL = msg.payload;\nvar cmdprefix = flow.get(\"cmdprefix\") || \"ti\";\n\nfor (var p in pL) {\n    \n    \n    if (pL[p].portId.substr(0, 2) == \"TH\" && pL[p].signalType.substr(0, 6) == \"NTC10K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',rthrd' + pL[p].channel + '\",$('+cmdprefix+' rthrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].signalType.substr(0,5)==\"PULSE\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',countrd' + pL[p].channel + '\",$('+cmdprefix+' countrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"D\" && pL[p].signalType.substr(0,3)==\"DRY\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',contactrd' + pL[p].channel + '\",$('+cmdprefix+' contactrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"P\" && pL[p].signalType.substr(0,3)==\"PWM\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',pwmrd' + pL[p].channel + '\",$('+cmdprefix+' pwmrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,5)==\"NTC1K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',r1krd' + pL[p].channel + '\",$('+cmdprefix+' r1krd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,6)==\"NTC10K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',r10krd' + pL[p].channel + '\",$('+cmdprefix+' r10krd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,5)==\"0-10V\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',adcrd' + pL[p].channel + '\",$('+cmdprefix+' adcrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,3)==\"DRY\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',contactrd' + pL[p].channel + '\",$('+cmdprefix+' contactrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"IN\" && pL[p].signalType.substr(0,5)==\"PULSE\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',countrd' + pL[p].channel + '\",$('+cmdprefix+' countrd ' + pL[p].channel + ')\\n';\n        \n    }\n    \n    \n    \n}\n\n\nmsg.payload=oot;\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -300,7 +300,7 @@
     {
         "id": "11c03d3cbc04923d",
         "type": "file",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "filename": "/home/pi/node-hiu/sq.sh",
         "filenameType": "str",
@@ -317,7 +317,7 @@
     {
         "id": "99f19987a9d79c31",
         "type": "function",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "func": "\n\nfunction uniq(a) {\n    var seen = {};\n    return a.filter(function(item) {\n        return seen.hasOwnProperty(item) ? false : (seen[item] = true);\n    });\n}\n\nif (msg.payload.indexOf(\",\")<1) { return null; }\n\nvar invar = msg.payload.split(\",\");\n\nvar presult = global.get(\"portSetup\").filter(port => port.portId == invar[0]);\nif (presult.length>0) { \n    \n    var msg1 = {};\n    \n    var readin = parseFloat(invar[2].split(\" \")[0]);\n    \n    if (presult[0].signalType && presult[0].signalType.indexOf(\"PULSE\") == 0) {\n        \n        var p1 = flow.get(\"c\" + invar[0] + \"last\") || 0;\n        flow.set(\"c\" + invar[0] + \"last\",readin);\n        readin = readin - p1;\n    }\n    \n    msg1.topic = (presult[0].topicDevice?presult[0].topicDevice + \"/\":\"\") + \"dat/\" + (presult[0].topicKey || \"value\"),\n    msg1.payload = readin;\n    msg1.points = 1000;\n    msg1.units = presult[0].mapUnits;\n    msg1.title = (presult[0].topicDevice?presult[0].topicDevice + \" \":\"\") + presult[0].wiredToPort;\n    \n    var msg2 = {};\n    msg2.topic = \"raw/\" + invar[0],\n    msg2.payload = readin;\n    msg2.title = presult[0].name || (\"Raw \" + invar[0]);\n    if (presult[0].mapUnits) { msg2.units = presult[0].mapUnits.split(\" to \")[0];  }\n    \n    var msg3 = { \"payload\":\"ok\"};  // alarm\n    msg3.topic=\"alarm/terminal\" + presult[0].portId;\n    \n    \n    \n    if (invar[1].substr(0, 5) == \"rthrd\" && readin==60) {  // sensor not connected\n\n        msg1 = null;\n        msg3.payload = \"Sensor Disconnected\"\n\n    }\n\n    else if (invar[1].substr(0, 5) == \"rthrd\" && readin == 30) {  // sensor not connected\n\n        msg1 = null;\n        msg3.payload = \"Sensor Short-circuit\"\n\n    }\n\n    else if(presult[0][\"map\"]) {\n     \n        msg1.units = presult[0].mapUnits.split(\" to \")[1];   \n        msg1.payload = \"\";\n        \n        var ntc = JSON.parse(presult[0][\"map\"]);\n        \n        var temp = -999;\n        for (var i = 1; i < ntc.length; i++) { \n            \n            if  (ntc[i][0]==readin) { \n                \n                temp = ntc[i][1];\n                \n                break;\n            }\n            else if  (ntc[i-1][0]==readin) { \n                \n                temp = ntc[i-1][1];\n                \n                break;\n            }\n            else if  ((ntc[i-1][0]<=readin) && (ntc[i][0]>readin)) { \n                \n                temp = ntc[i-1][1] - ((ntc[i][1] - ntc[i-1][1]) * ((readin - ntc[i-1][0]) / (ntc[i-1][0] - ntc[i][0])));\n                \n                break;\n            }\n            else if  ((ntc[i-1][0]>=readin) && (ntc[i][0]<readin)) { \n                \n                temp = ntc[i-1][1] - ((ntc[i][1] - ntc[i-1][1]) * ((readin - ntc[i-1][0]) / (ntc[i-1][0] - ntc[i][0])));\n                \n                break;\n            }\n            \n        }\n        \n\n        if (presult[0].signalType && presult[0].signalType.indexOf(\"PULSE\") == 0) {\n\n            //temp = 1.111;\n            if (temp == -999) { //} && (ntc[ntc.length -1][0] > readin)) {\n\n                temp = ((ntc[1][1]) * ((readin) / (ntc[1][0])));\n                //temp = ntc.length;\n\n            }\n        }\n\n        if (temp != -999) {\n            \n            msg1.payload =  temp; //parseInt(temp*100)/100; \n            \n            // if (temp <10) { msg1.payload =  parseInt(temp*100)/100; }\n            // else { msg1.payload =  parseInt(temp*10)/10; }\n            \n            if (presult[0].signalType && (presult[0].signalType.indexOf(\"NTC\")==0) && readin==60) {\n                \n                msg3.payload = \"Out of range\"\n                \n            }\n            \n            \n        } else {\n            \n            //msg1.payload = 0;\n            msg1 = null;\n            msg3.payload = \"Out of range\"\n        }\n    }\n    \n    if (msg1) {\n\n        \n        var readout = parseInt(parseFloat(msg1.payload)*100)/100; \n\n        //var readout = 50;\n        \n        var history = context.get(invar[0]) || [];\n        \n        // if (history.length>5 && history.indexOf(msg1.payload)<0) {  history = [];  }\n        // else if (history.length>1) {\n        //     var uniqh = uniq(history);\n        //     if ((uniqh.length<4) && (history.length<10)) {  \n        //         // slow mode\n        //         msg1=null; \n                \n        //     } else {\n        //     // else if (uniqh.length>0) {   readin = history.reduce((a, b) => a + b, 0) / history.length;  }\n        //         msg1.payload = history.reduce((a, b) => a + b, 0) / history.length; \n        //         msg1.payload =  parseInt(msg1.payload*100)/100; \n        //     }\n        //     if (history.length>9) { history=[msg1.payload]; }\n            \n        // }\n        \n        if (invar[1].substr(0, 5) == \"rthrd\" && history.indexOf(readout)>-1) {  \n            \n            msg1.payload =  parseInt((history.reduce((a, b) => a + b, 0) / history.length)*100)/100; \n            \n        } //msg1=null;\n        \n        history.push(readout);\n        if (history.length>20) { history.shift(); }\n        context.set(invar[0],history);\n        \n    }   \n    \n    if (msg1) { msg1.payload = parseInt(msg1.payload * 100) / 100;  }\n    \n    return [msg1, msg2, msg3];\n      \n}\n\nreturn null;",
         "outputs": 3,
@@ -343,7 +343,7 @@
     {
         "id": "92d71bc19a90ebb7",
         "type": "split",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "splt": "\\n",
         "spltType": "str",
@@ -363,7 +363,7 @@
     {
         "id": "26f1ad336f82aeeb",
         "type": "link out",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "links": [
             "72fc070f.39dd8",
@@ -376,7 +376,7 @@
     {
         "id": "0b9b33794e321921",
         "type": "template",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "BOARD SETUP",
         "field": "payload",
         "fieldType": "msg",
@@ -395,7 +395,7 @@
     {
         "id": "5fb83c77f77d7cdb",
         "type": "file",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "filename": "/home/pi/node-hiu/sqsetup.sh",
         "appendNewline": false,
@@ -413,7 +413,7 @@
     {
         "id": "62339bb059d4a43b",
         "type": "exec",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "command": "bash /home/pi/node-hiu/sqsetup.sh",
         "addpay": "",
         "append": "",
@@ -433,7 +433,7 @@
     {
         "id": "d76edb39ad2c4601",
         "type": "trigger",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "op1": "",
         "op2": "1",
@@ -458,7 +458,7 @@
     {
         "id": "5225132d4929334b",
         "type": "link out",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "mode": "link",
         "links": [
@@ -472,7 +472,7 @@
     {
         "id": "119c833c97aaa8ef",
         "type": "delay",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "pauseType": "delay",
         "timeout": "100",
@@ -497,7 +497,7 @@
     {
         "id": "2e988386940749d8",
         "type": "debug",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -513,7 +513,7 @@
     {
         "id": "f63e5d3839a91cd1",
         "type": "debug",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "debug 1",
         "active": true,
         "tosidebar": true,
@@ -529,7 +529,7 @@
     {
         "id": "f0671ce68e136d63",
         "type": "inject",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "props": [
             {
@@ -558,7 +558,7 @@
     {
         "id": "f7757b4ca8561b28",
         "type": "change",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "rules": [
             {
@@ -587,7 +587,7 @@
     {
         "id": "bf7eb1cb4b51e1dd",
         "type": "inject",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "props": [
             {
@@ -616,7 +616,7 @@
     {
         "id": "570aa45dabac319e",
         "type": "change",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "rules": [
             {
@@ -643,7 +643,7 @@
     {
         "id": "a225e75c1489d1ba",
         "type": "change",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "rules": [
             {
@@ -670,7 +670,7 @@
     {
         "id": "da443342a3ee7581",
         "type": "rbe",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -688,7 +688,7 @@
     {
         "id": "95e237adbbb4b523",
         "type": "inject",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "props": [
             {
@@ -713,7 +713,7 @@
     {
         "id": "11ef8c40cb8707eb",
         "type": "switch",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "property": "reset",
         "propertyType": "msg",
@@ -736,7 +736,7 @@
     {
         "id": "4dc151ca46e90967",
         "type": "comment",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "Building Automation Hat Commands",
         "info": "     -v              Display the megabas command version number\n        -h              Display the list of command options or one command option details\n        -warranty       Display the warranty\n        -list:          List all megabas boards connected\n                        return the # of boards and stack level for every board\n        board           Display the board status and firmware version number\n        trwr:           Set triacs (AC switch) On/Off\n        trrd:           Read triacs (AC switch) status\n        trtest:         Turn ON and OFF the triacs until press a key\n        contactrd:      Read dry contact status\n                        Warning: For this measurements to be valid place the jumper in position \"1K\"\n        countrd:        Read dry contact transitions count\n                        Warning: For this measurements to be valid place the jumper in position \"1K\"\n        countrst:       Reset dry contact transitions count\n        edgerd:         Read dry contact transitions type, ret 0 - disable, 1 - rising, 2 - falling, 3 -both\n        edgewr:         Write dry contact transitions type: 0 - disable, 1 - rising, 2 - falling, 3 - bot                                  h\n        dacrd:          Read DAC voltage value (0 - 10V)\n        dacwr:          Write DAC output voltage value (0..10V)\n        adcrd:          Read ADC input voltage value (0 - 10V)\n                        Warning: For this measurements to be valid place the jumper in position \"0-10V\"\n        r1krd:          Read resistor input  value (1k) in kiloOhms, Warning: You must palce the jumper in position \"1K\".\n                        Return 30kOhm for resistor out of range\n        r10krd:         Read resistor input  value (10k) in kiloOhms, Warning: You must palce the jumper in position \"10K\".\n                        Return 30kOhm for resistor out of range\n        adccal:         Calibrate one ADC channel, the calibration must be done in 2 points at min 5V apart\n        adccalrst:      Reset the calibration for one ADC channel\n        daccal:         Calibrate one DAC channel, the calibration must be done in 2 points at min 5V apart\n        daccalrst:      Reset calibration for one DAC channel\n        wdtr:           Reload the watchdog timer and enable the watchdog if is disabled\n        wdtpwr:         Set the watchdog period in seconds,\n                        reload command must be issue in this interval to prevent Raspberry Pi power off\n        wdtprd:         Get the watchdog period in seconds,\n                        reload command must be issue in this interval to prevent Raspberry Pi power off\n        wdtipwr:        Set the watchdog initial period in seconds,\n                        This period is loaded after power cycle, giving Raspberry time to boot\n        wdtiprd:        Get the watchdog initial period in seconds.\n                        This period is loaded after power cycle, giving Raspberry time to boot\n        wdtopwr:        Set the watchdog off period in seconds (max 48 days).\n                        This is the time that watchdog mantain Raspberry turned off\n        wdtoprd:        Get the watchdog off period in seconds (max 48 days)\n                        This is the time that watchdog mantain Raspberry turned off\n        rs485rd:        Read the RS485 communication settings\n        rs485wr:        Write the RS485 communication settings\n        rtcrd:          Get the internal RTC  date and time(mm/dd/yy hh:mm:ss)\n        rtcwr:          Set the internal RTC  date and time(mm/dd/yy hh:mm:ss)\n",
         "x": 340,
@@ -746,7 +746,7 @@
     {
         "id": "8920b47930855b75",
         "type": "comment",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "Building Automation Hat ",
         "info": "https://sequentmicrosystems.com/collections/industrial-automation/products/raspberry-pi-building-automation",
         "x": 600,
@@ -756,7 +756,7 @@
     {
         "id": "c77d99f6194079d7",
         "type": "debug",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -772,7 +772,7 @@
     {
         "id": "12b1b35f41010d30",
         "type": "mqtt in",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "topic": "_/set/io",
         "qos": "0",
@@ -794,7 +794,7 @@
     {
         "id": "e4ac7c2a2adbf210",
         "type": "debug",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -810,7 +810,7 @@
     {
         "id": "7006906bf1072ded",
         "type": "json",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "property": "payload",
         "action": "obj",
@@ -826,7 +826,7 @@
     {
         "id": "199b0695bf091c2f",
         "type": "function",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "func": "\n\nfunction uniq(a) {\n    var seen = {};\n    return a.filter(function(item) {\n        return seen.hasOwnProperty(item) ? false : (seen[item] = true);\n    });\n}\n\nif (msg.payload.indexOf(\",\")<1) { return null; }\n\nvar invar = msg.payload.split(\",\");\n\nvar presult = global.get(\"portSetup\").filter(port => port.portId == invar[0]);\nif (presult.length>0) { \n    \n    var msg1 = {};\n    \n    var readin = parseFloat(invar[2].split(\" \")[0]);\n    \n    \n    \n    msg1.topic = (presult[0].topicDevice?presult[0].topicDevice + \"/\":\"\") + \"dat/\" + (presult[0].topicKey || \"value\"),\n    msg1.payload = readin;\n    msg1.points = 1000;\n    msg1.units = presult[0].mapUnits;\n    msg1.title = (presult[0].topicDevice?presult[0].topicDevice + \" \":\"\") + presult[0].wiredToPort;\n    \n    var msg2 = {};\n    msg2.topic = \"raw/\" + invar[0],\n    msg2.payload = readin;\n    msg2.title = presult[0].name || (\"Raw \" + invar[0]);\n    if (presult[0].mapUnits) { msg2.units = presult[0].mapUnits.split(\" to \")[0];  }\n    \n    var msg3 = { \"payload\":\"ok\"};  // alarm\n    msg3.topic=\"alarm/terminal\" + presult[0].portId;\n    \n    if (invar[1].substr(0, 5) == \"rthrd\" && readin==60) {  // sensor not connected\n\n        msg1 = null;\n        msg3.payload = \"Sensor Disconnected\"\n\n    }\n\n    else if (invar[1].substr(0, 5) == \"rthrd\" && readin == 30) {  // sensor not connected\n\n        msg1 = null;\n        msg3.payload = \"Sensor Short-circuit\"\n\n    }\n\n    else if(presult[0][\"map\"]) {\n     \n        msg1.units = presult[0].mapUnits.split(\" to \")[1];   \n        msg1.payload = \"\";\n        \n        var ntc = JSON.parse(presult[0][\"map\"]);\n        \n        var temp = -999;\n        for (var i = 1; i < ntc.length; i++) { \n            \n            if  (ntc[i][0]==readin) { \n                \n                temp = ntc[i][1];\n                \n                break;\n            }\n            else if  (ntc[i-1][0]==readin) { \n                \n                temp = ntc[i-1][1];\n                \n                break;\n            }\n            else if  ((ntc[i-1][0]<=readin) && (ntc[i][0]>readin)) { \n                \n                temp = ntc[i-1][1] - ((ntc[i][1] - ntc[i-1][1]) * ((readin - ntc[i-1][0]) / (ntc[i-1][0] - ntc[i][0])));\n                \n                break;\n            }\n            else if  ((ntc[i-1][0]>=readin) && (ntc[i][0]<readin)) { \n                \n                temp = ntc[i-1][1] - ((ntc[i][1] - ntc[i-1][1]) * ((readin - ntc[i-1][0]) / (ntc[i-1][0] - ntc[i][0])));\n                \n                break;\n            }\n            \n        }\n        \n\n        if (presult[0].signalType && presult[0].signalType.indexOf(\"PULSE\") == 0) {\n\n            //temp = 1.111;\n            if (temp == -999) { //} && (ntc[ntc.length -1][0] > readin)) {\n\n                temp = ((ntc[1][1]) * ((readin) / (ntc[1][0])));\n                //temp = ntc.length;\n\n            }\n        }\n\n        if (temp != -999) {\n            \n            msg1.payload =  temp; //parseInt(temp*100)/100; \n            \n            // if (temp <10) { msg1.payload =  parseInt(temp*100)/100; }\n            // else { msg1.payload =  parseInt(temp*10)/10; }\n            \n            if (presult[0].signalType && (presult[0].signalType.indexOf(\"NTC\")==0) && readin==60) {\n                \n                msg3.payload = \"Out of range\"\n                \n            }\n            \n            \n        } else {\n            \n            //msg1.payload = 0;\n            msg1 = null;\n            msg3.payload = \"Out of range\"\n        }\n    }\n    \n    if (msg1) {\n\n        \n        var readout = parseInt(parseFloat(msg1.payload)*100)/100; \n\n        //var readout = 50;\n        \n        var history = context.get(invar[0]) || [];\n        \n        // if (history.length>5 && history.indexOf(msg1.payload)<0) {  history = [];  }\n        // else if (history.length>1) {\n        //     var uniqh = uniq(history);\n        //     if ((uniqh.length<4) && (history.length<10)) {  \n        //         // slow mode\n        //         msg1=null; \n                \n        //     } else {\n        //     // else if (uniqh.length>0) {   readin = history.reduce((a, b) => a + b, 0) / history.length;  }\n        //         msg1.payload = history.reduce((a, b) => a + b, 0) / history.length; \n        //         msg1.payload =  parseInt(msg1.payload*100)/100; \n        //     }\n        //     if (history.length>9) { history=[msg1.payload]; }\n            \n        // }\n        \n        if (invar[1].substr(0, 5) == \"rthrd\" && history.indexOf(readout)>-1) {  \n            \n            msg1.payload =  parseInt((history.reduce((a, b) => a + b, 0) / history.length)*100)/100; \n            \n        } //msg1=null;\n        \n        history.push(readout);\n        if (history.length>20) { history.shift(); }\n        context.set(invar[0],history);\n        \n    }   \n    \n    \n    return [msg1, msg2, msg3];\n      \n}\n\nreturn null;",
         "outputs": 3,
@@ -845,7 +845,7 @@
     {
         "id": "2569825f9a52410c",
         "type": "function",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "func": "\n\nfunction uniq(a) {\n    var seen = {};\n    return a.filter(function(item) {\n        return seen.hasOwnProperty(item) ? false : (seen[item] = true);\n    });\n}\n\n\nvar invar = msg.payload.split(\",\");\n\nvar presult = global.get(\"portSetup\").filter(port => port.portId == invar[0]);\nif (presult.length>0) { \n    \n    var msg1 = {};\n    \n    var readin = parseFloat(invar[2].split(\" \")[0]);\n    \n    \n    \n    msg1.topic = (presult[0].topicDevice?presult[0].topicDevice + \"/\":\"\") + \"dat/\" + (presult[0].topicKey || \"value\"),\n    msg1.payload = readin;\n    msg1.points = 1000;\n    msg1.units = presult[0].mapUnits;\n    msg1.title = (presult[0].topicDevice?presult[0].topicDevice + \" \":\"\") + presult[0].wiredToPort;\n    \n    var msg2 = {};\n    msg2.topic = \"raw/\" + invar[0],\n    msg2.payload = readin;\n    msg2.title = presult[0].name || (\"Raw \" + invar[0]);\n    if (presult[0].mapUnits) { msg2.units = presult[0].mapUnits.split(\" to \")[0];  }\n    \n    var msg3 = { \"payload\":\"ok\"};  // alarm\n    msg3.topic=\"alarm/terminal\" + presult[0].portId;\n    \n    \n    if(presult[0][\"map\"]) {\n     \n        if (presult[0].mapUnits) { msg1.units = presult[0].mapUnits.split(\" to \")[1];  }\n        msg1.payload = \"\";\n        \n        var ntc = JSON.parse(presult[0][\"map\"]);\n        \n        var temp = -999;\n        for (var i = 1; i < ntc.length; i++) { \n            \n            if  (ntc[i][0]==readin) { \n                \n                temp = ntc[i][1];\n                \n                break;\n            }\n            else if  (ntc[i-1][0]==readin) { \n                \n                temp = ntc[i-1][1];\n                \n                break;\n            }\n            else if  ((ntc[i-1][0]<=readin) && (ntc[i][0]>readin)) { \n                \n                temp = ntc[i-1][1] - ((ntc[i][1] - ntc[i-1][1]) * ((readin - ntc[i-1][0]) / (ntc[i-1][0] - ntc[i][0])));\n                \n                break;\n            }\n            else if  ((ntc[i-1][0]>=readin) && (ntc[i][0]<readin)) { \n                \n                temp = ntc[i-1][1] - ((ntc[i][1] - ntc[i-1][1]) * ((readin - ntc[i-1][0]) / (ntc[i-1][0] - ntc[i][0])));\n                \n                break;\n            }\n            \n        }\n        \n        if (temp != -999) {\n            \n            msg1.payload =  temp; //parseInt(temp*100)/100; \n            \n            // if (temp <10) { msg1.payload =  parseInt(temp*100)/100; }\n            // else { msg1.payload =  parseInt(temp*10)/10; }\n            \n            if (presult[0].signalType && (presult[0].signalType.indexOf(\"NTC\")==0) && readin==60) {\n                \n                msg3.payload = \"Out of range\"\n                \n            }\n            \n            \n        } else {\n            \n            msg1 = null;\n            msg3.payload = \"Out of range\"\n        }\n    }\n    \n    if (msg1) {\n        \n        \n        var readout = parseInt(parseFloat(msg1.payload)*100)/100; \n        \n        var history = context.get(invar[0]) || [];\n        \n        // if (history.length>5 && history.indexOf(msg1.payload)<0) {  history = [];  }\n        // else if (history.length>1) {\n        //     var uniqh = uniq(history);\n        //     if ((uniqh.length<4) && (history.length<10)) {  \n        //         // slow mode\n        //         msg1=null; \n                \n        //     } else {\n        //     // else if (uniqh.length>0) {   readin = history.reduce((a, b) => a + b, 0) / history.length;  }\n        //         msg1.payload = history.reduce((a, b) => a + b, 0) / history.length; \n        //         msg1.payload =  parseInt(msg1.payload*100)/100; \n        //     }\n        //     if (history.length>9) { history=[msg1.payload]; }\n             \n        // }\n        \n        \n        //// SMOOTHING\n        \n        // if (msg1 && history.indexOf(readout)>-1) {  \n            \n        //     msg1.payload =  parseInt((history.reduce((a, b) => a + b, 0) / history.length)*100)/100; \n            \n        // } //msg1=null;\n        \n        history.push(readout);\n        if (history.length>20) { history.shift(); }\n        context.set(invar[0],history);\n        \n        \n    }    \n    \n    return [msg1, msg2, msg3];\n      \n}\n\nreturn null;",
         "outputs": 3,
@@ -864,7 +864,7 @@
     {
         "id": "0607bca7108e1f7c",
         "type": "mqtt out",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "topic": "_/set/ioCommand",
         "qos": "0",
@@ -882,7 +882,7 @@
     {
         "id": "c982e20b85d63972",
         "type": "mqtt in",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "topic": "_/set/ioCommand",
         "qos": "0",
@@ -903,7 +903,7 @@
     {
         "id": "0271392ecfb72b34",
         "type": "inject",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "ioCommand",
         "props": [
             {
@@ -932,7 +932,7 @@
     {
         "id": "1a634abb96ea0953",
         "type": "debug",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "debug 30",
         "active": true,
         "tosidebar": true,
@@ -948,7 +948,7 @@
     {
         "id": "91668c2ca5f738bb",
         "type": "link out",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "link out 1",
         "mode": "link",
         "links": [
@@ -961,7 +961,7 @@
     {
         "id": "92bff8de10c66936",
         "type": "link in",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "link in 2",
         "links": [
             "91668c2ca5f738bb",
@@ -980,7 +980,7 @@
     {
         "id": "2d6c82fdac4bf920",
         "type": "change",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "rules": [
             {
@@ -1008,7 +1008,7 @@
     {
         "id": "ffd2523f080ae774",
         "type": "inject",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "",
         "props": [
             {
@@ -1037,7 +1037,7 @@
     {
         "id": "6693dcc1e7730c30",
         "type": "function",
-        "z": "03f09d0d134d2f90",
+        "z": "0f89c0fc2bb2f034",
         "name": "new",
         "func": "if (!global.get(\"settings.ioCommand\")) { msg.payload = \"ti\"; return msg; }\nreturn null;",
         "outputs": 1,
