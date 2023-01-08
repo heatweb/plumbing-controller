@@ -1,0 +1,1670 @@
+[
+    {
+        "id": "f0a27113.452c7",
+        "type": "tab",
+        "label": "WIFI Management",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ec32ffa8.3f6f6",
+        "type": "exec",
+        "z": "f0a27113.452c7",
+        "command": "sudo iwlist wlan0 scan | grep ESSID | sed 's/ESSID://g;s/\"//g;s/^ *//;s/ *$//'",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "scan",
+        "x": 430,
+        "y": 80,
+        "wires": [
+            [
+                "e0d66c7a.647c9"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e0d66c7a.647c9",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "parseOptions",
+        "func": "var ssids = msg.payload.split('\\n').filter(s => !!s)\n\nssids = [...new Set(ssids)];\n\nmsg.options = ssids\nmsg.payload = null\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 660,
+        "y": 67,
+        "wires": [
+            [
+                "617d9746.cbcbd8"
+            ]
+        ]
+    },
+    {
+        "id": "a44c56bf.408c08",
+        "type": "inject",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 220,
+        "wires": [
+            [
+                "ec32ffa8.3f6f6",
+                "80ce12b.e5edff",
+                "9aa43ac5.df3728"
+            ]
+        ]
+    },
+    {
+        "id": "617d9746.cbcbd8",
+        "type": "ui_dropdown",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "label": "Wifi",
+        "tooltip": "",
+        "place": "Select a WIFI",
+        "group": "4d0f060d.dee7e8",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "multiple": false,
+        "options": [],
+        "payload": "",
+        "topic": "",
+        "x": 830,
+        "y": 67,
+        "wires": [
+            [
+                "fc8462e2.6bc6e"
+            ]
+        ]
+    },
+    {
+        "id": "f50dd378.27c7f",
+        "type": "ui_button",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "group": "4d0f060d.dee7e8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Scan",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "x": 230,
+        "y": 181,
+        "wires": [
+            [
+                "ec32ffa8.3f6f6"
+            ]
+        ]
+    },
+    {
+        "id": "49307dfc.36fce4",
+        "type": "ui_ui_control",
+        "z": "f0a27113.452c7",
+        "name": "onTab",
+        "events": "all",
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "ee0231ae.607de"
+            ]
+        ]
+    },
+    {
+        "id": "ee0231ae.607de",
+        "type": "switch",
+        "z": "f0a27113.452c7",
+        "name": "ifWifi",
+        "property": "name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Wifi",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 271,
+        "y": 80,
+        "wires": [
+            [
+                "ec32ffa8.3f6f6",
+                "80ce12b.e5edff",
+                "9aa43ac5.df3728"
+            ]
+        ]
+    },
+    {
+        "id": "80ce12b.e5edff",
+        "type": "exec",
+        "z": "f0a27113.452c7",
+        "command": "ifconfig wlan0",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "getInfo",
+        "x": 430,
+        "y": 181,
+        "wires": [
+            [
+                "8a86d9a3.7ccca8"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "8a86d9a3.7ccca8",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "parseInfo",
+        "func": "var ip = msg.payload.match(/inet ([0-9\\.]+)/)[1]\nvar mask = msg.payload.match(/netmask ([0-9\\.]+)/)[1]\nvar broadcast = msg.payload.match(/broadcast ([0-9\\.]+)/)[1]\n\n\nnode.send({topic: 'ip', payload: ip})\nnode.send({topic: 'mask', payload: mask})\nnode.send({topic: 'broadcast', payload: broadcast})",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 168,
+        "wires": [
+            [
+                "446ce308.eaab1c"
+            ]
+        ]
+    },
+    {
+        "id": "446ce308.eaab1c",
+        "type": "switch",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ip",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "mask",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "broadcast",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 810,
+        "y": 181,
+        "wires": [
+            [
+                "d1ea316d.10c3d"
+            ],
+            [
+                "8cadebd5.bedfe8"
+            ],
+            [
+                "3592ebde.5596b4"
+            ]
+        ]
+    },
+    {
+        "id": "d1ea316d.10c3d",
+        "type": "ui_text",
+        "z": "f0a27113.452c7",
+        "group": "a1e7431b.229d5",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "IP",
+        "format": "{{msg.payload || '---'}}",
+        "layout": "row-spread",
+        "x": 990,
+        "y": 141,
+        "wires": []
+    },
+    {
+        "id": "8cadebd5.bedfe8",
+        "type": "ui_text",
+        "z": "f0a27113.452c7",
+        "group": "a1e7431b.229d5",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Netmask",
+        "format": "{{msg.payload || '---'}}",
+        "layout": "row-spread",
+        "x": 1000,
+        "y": 181,
+        "wires": []
+    },
+    {
+        "id": "3592ebde.5596b4",
+        "type": "ui_text",
+        "z": "f0a27113.452c7",
+        "group": "a1e7431b.229d5",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Broadcast",
+        "format": "{{msg.payload || '---'}}",
+        "layout": "row-spread",
+        "x": 1000,
+        "y": 221,
+        "wires": []
+    },
+    {
+        "id": "4e417c79.0e9454",
+        "type": "ui_form",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "label": "Update",
+        "group": "4d0f060d.dee7e8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "SSID",
+                "value": "ssid",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Password",
+                "value": "password",
+                "type": "password",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "ssid": "",
+            "password": ""
+        },
+        "payload": "",
+        "submit": "UPDATE",
+        "cancel": "RESET",
+        "topic": "",
+        "x": 1120,
+        "y": 67,
+        "wires": [
+            [
+                "562a8ec7.a7e76"
+            ]
+        ]
+    },
+    {
+        "id": "fc8462e2.6bc6e",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "func": "\nmsg.payload = {ssid: msg.payload}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 970,
+        "y": 67,
+        "wires": [
+            [
+                "4e417c79.0e9454"
+            ]
+        ]
+    },
+    {
+        "id": "562a8ec7.a7e76",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "getPassphrase",
+        "func": "var data = msg.payload\n\nvar command = `wpa_passphrase \"${data.ssid}\" \"${data.password}\" | sed '/#psk=\".*\"/d'`\n \nmsg.payload = command\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1320,
+        "y": 67,
+        "wires": [
+            [
+                "50f3b384.d92f4c"
+            ]
+        ]
+    },
+    {
+        "id": "50f3b384.d92f4c",
+        "type": "exec",
+        "z": "f0a27113.452c7",
+        "command": "",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1481,
+        "y": 67,
+        "wires": [
+            [
+                "201a9fb.244ff6"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "201a9fb.244ff6",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "updateWpasupplicant",
+        "func": "var template = `sudo tee /etc/wpa_supplicant/wpa_supplicant.conf <<EOF\nctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\nupdate_config=1\ncountry=GB\n\n${msg.payload}\nEOF\\n\n`\n\nmsg.payload = template\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1680,
+        "y": 60,
+        "wires": [
+            [
+                "d288a86d.e0ba48"
+            ]
+        ]
+    },
+    {
+        "id": "d288a86d.e0ba48",
+        "type": "exec",
+        "z": "f0a27113.452c7",
+        "command": "",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "updateConf",
+        "x": 1270,
+        "y": 180,
+        "wires": [
+            [
+                "ecc743df.05dd"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ecc743df.05dd",
+        "type": "exec",
+        "z": "f0a27113.452c7",
+        "command": "sudo wpa_cli -i wlan0 reconfigure",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "reconfigure",
+        "x": 1450,
+        "y": 167,
+        "wires": [
+            [
+                "2e12d3e8.51947c"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2e12d3e8.51947c",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "showMessage",
+        "func": "\nmsg.payload = msg.payload.trim() === 'OK' ? \"Wifi configuration updated successfully\" : \"Error while updating wifi configuration\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1650,
+        "y": 154,
+        "wires": [
+            [
+                "aa9d6712.91e718"
+            ]
+        ]
+    },
+    {
+        "id": "aa9d6712.91e718",
+        "type": "ui_toast",
+        "z": "f0a27113.452c7",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 1720,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "d4e866c7.6c3958",
+        "type": "ui_button",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "group": "a1e7431b.229d5",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "label": "Refresh",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "refresh",
+        "payload": "Menu",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 220,
+        "y": 280,
+        "wires": [
+            [
+                "ec32ffa8.3f6f6",
+                "80ce12b.e5edff",
+                "9aa43ac5.df3728"
+            ]
+        ]
+    },
+    {
+        "id": "9aa43ac5.df3728",
+        "type": "exec",
+        "z": "f0a27113.452c7",
+        "command": "iwgetid",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "getCurrentSSID",
+        "x": 460,
+        "y": 260,
+        "wires": [
+            [
+                "6cff487b.f73b08"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4e1b74b8.84f51c",
+        "type": "ui_text",
+        "z": "f0a27113.452c7",
+        "group": "a1e7431b.229d5",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "SSID",
+        "format": "{{msg.payload || '---'}}",
+        "layout": "row-spread",
+        "x": 810,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "6cff487b.f73b08",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "parseInfo",
+        "func": "var ssid = msg.payload.match(/ESSID:\"([^\"]+)\"/)[1]\n\n\nnode.send({topic: 'ssid', payload: ssid})\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 247,
+        "wires": [
+            [
+                "4e1b74b8.84f51c"
+            ]
+        ]
+    },
+    {
+        "id": "3bf9d2e69a5772be",
+        "type": "ui_template",
+        "z": "f0a27113.452c7",
+        "d": true,
+        "group": "a1e7431b.229d5",
+        "name": "Virtual Keyboard",
+        "order": 6,
+        "width": "6",
+        "height": "1",
+        "format": "<script> \n    \n// the semi-colon before function invocation is a safety net against concatenated\n// scripts and/or other plugins which may not be closed properly.\n; (function ($, window, document, undefined) {\n\n    // undefined is used here as the undefined global variable in ECMAScript 3 is\n    // mutable (ie. it can be changed by someone else). undefined isn't really being\n    // passed in so we can ensure the value of it is truly undefined. In ES5, undefined\n    // can no longer be modified.\n\n    // window and document are passed through as local variable rather than global\n    // as this (slightly) quickens the resolution process and can be more efficiently\n    // minified (especially when both are regularly referenced in your plugin).\n\n    // Create the defaults once\n    var pluginName = \"jkeyboard\",\n        defaults = {\n            layout: \"english\",\n            input: $('#input'),\n            customLayouts: {\n                selectable: []\n            },\n        };\n\n\n    var function_keys = {\n        backspace: {\n            text: 'DEL',\n        },\n        return: {\n            text: 'Enter'\n        },\n        shift: {\n            text: 'Shift'\n        },\n        space: {\n            text: 'Space'\n        },\n        numeric_switch: {\n            text: '123',\n            command: function () {\n                this.createKeyboard('numeric');\n                this.events();\n            }\n        },\n        layout_switch: {\n            text: '<i class=\"fa fa-keyboard-o\" aria-hidden=\"true\"></i>',\n            command: function () {\n                var l = this.toggleLayout();\n                this.createKeyboard(l);\n                this.events();\n            }\n        },\n        character_switch: {\n            text: 'ABC',\n            command: function () {\n                this.createKeyboard(layout);\n                this.events();\n            }\n        },\n        symbol_switch: {\n            text: '#+=',\n            command: function () {\n                this.createKeyboard('symbolic');\n                this.events();\n            }\n        }\n    };\n\n\n    var layouts = {\n        selectable: ['azeri', 'english', 'russian','french', 'emoji'],\n        azeri: [\n            ['q', 'ü', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'ö', 'ğ'],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ı', 'ə'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'ç', 'ş', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        english: [\n            ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        russian: [\n            ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х'],\n            ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],\n            ['shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        french: [\n            ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l','à','ç'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm','é','è', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        emoji: [\n            ['😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆', '😉', '😊',],\n            ['😋', '😎', '😍', '😘', 'g', 'h', 'j', 'k', 'l','à','ç'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm','é','è', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],            \n        numeric: [\n            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],\n            ['-', '/', ':', ';', '(', ')', '$', '&', '@', '\"'],\n            ['symbol_switch', '.', ',', '?', '!', \"'\", 'backspace'],\n            ['character_switch', 'layout_switch', 'space', 'return'],\n        ],\n        numbers_only: [\n            ['1', '2', '3',],\n            ['4', '5', '6',],\n            ['7', '8', '9',],\n            ['0', 'backspace'],\n        ],\n        symbolic: [\n            ['[', ']', '{', '}', '#', '%', '^', '*', '+', '='],\n            ['_', '\\\\', '|', '~', '<', '>'],\n            ['numeric_switch', '.', ',', '?', '!', \"'\", 'backspace'],\n            ['character_switch', 'layout_switch', 'space', 'return'],\n\n        ]\n    }\n\n    var shift = false, capslock = false, layout = 'english', layout_id = 0;\n\n    // The actual plugin constructor\n    function Plugin(element, options) {\n        this.element = element;\n        // jQuery has an extend method which merges the contents of two or\n        // more objects, storing the result in the first object. The first object\n        // is generally empty as we don't want to alter the default options for\n        // future instances of the plugin\n        this.settings = $.extend({}, defaults, options);\n        // Extend & Merge the cusom layouts\n        layouts = $.extend(true, {}, this.settings.customLayouts, layouts);\n        if (Array.isArray(this.settings.customLayouts.selectable)) {\n            $.merge(layouts.selectable, this.settings.customLayouts.selectable);\n        }\n        this._defaults = defaults;\n        this._name = pluginName;\n        this.init();\n    }\n\n    Plugin.prototype = {\n        init: function () {\n            layout = this.settings.layout;\n            this.createKeyboard(layout);\n            this.events();\n        },\n\n        setInput: function (newInputField) {\n            this.settings.input = newInputField;\n        },\n\n        createKeyboard: function (layout) {\n            shift = false;\n            capslock = false;\n\n            var keyboard_container = $('<ul/>').addClass('jkeyboard'),\n                me = this;\n\n            layouts[layout].forEach(function (line, index) {\n                var line_container = $('<li/>').addClass('jline');\n                line_container.append(me.createLine(line));\n                keyboard_container.append(line_container);\n            });\n\n            $(this.element).html('').append(keyboard_container);\n        },\n\n        createLine: function (line) {\n            var line_container = $('<ul/>');\n\n            line.forEach(function (key, index) {\n                var key_container = $('<li/>').addClass('jkey').data('command', key);\n\n                if (function_keys[key]) {\n                    key_container.addClass(key).html(function_keys[key].text);\n                }\n                else {\n                    key_container.addClass('letter').html(key);\n                }\n\n                line_container.append(key_container);\n            })\n\n            return line_container;\n        },\n\n        events: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift'),\n                space_key = $(this.element).find('.space'),\n                backspace_key = $(this.element).find('.backspace'),\n                return_key = $(this.element).find('.return'),\n\n                me = this,\n                fkeys = Object.keys(function_keys).map(function (k) {\n                    return '.' + k;\n                }).join(',');\n\n            letters.on('click', function () {\n                me.type((shift || capslock) ? $(this).text().toUpperCase() : $(this).text());\n            });\n\n            space_key.on('click', function () {\n                me.type(' ');\n            });\n\n            return_key.on('click', function () {\n                me.type(\"\\n\");\n                me.settings.input.parents('form').submit();\n            });\n\n            backspace_key.on('click', function () {\n                me.backspace();\n            });\n\n            shift_key.on('click', function () {\n                if (capslock) {\n                    me.toggleShiftOff();\n                    capslock = false;\n                } else {\n                    me.toggleShiftOn();\n                }\n            }).on('dblclick', function () {\n                capslock = true;\n            });\n\n\n            $(fkeys).on('click', function () {\n                var command = function_keys[$(this).data('command')].command;\n                if (!command) return;\n\n                command.call(me);\n            });\n        },\n\n        type: function (key) {\n            var input = this.settings.input,\n                val = input.val(),\n                input_node = input.get(0),\n                start = input_node.selectionStart,\n                end = input_node.selectionEnd;\n\n            var max_length = $(input).attr(\"maxlength\");\n            if (start == end && end == val.length) {\n                if (!max_length || val.length < max_length) {\n                    input.val(val + key);\n                    input.change()\n                    $('#vkeyname').text(val + key)\n                }\n            } else {\n                if (input_node.type == \"text\"){\n                    var new_string = this.insertToString(start, end, val, key);\n                    input.val(new_string);\n                    start++;\n                    end = start;\n                    input_node.setSelectionRange(start, end);\n                }else{\n                    input.val(val + key);\n                }\n                input.change()\n                $('#vkeyname').text(val + key)\n                \n            }\n            input.trigger('focus');\n\n            if (shift && !capslock) {\n                this.toggleShiftOff();\n            }\n        },\n\n        backspace: function () {\n            var input = this.settings.input,\n                val = input.val();\n                input_node = input.get(0),\n                start = input_node.selectionStart,\n                end = input_node.selectionEnd;\n            if (input.type == \"text\"){\n                input.val(val.slice(0, start-1) + val.slice(start))\n                input_node.setSelectionRange(start-1, start-1);\n                console.log(val)\n                $('#vkeyname').text(val)\n            }else{\n                input.val(val.slice(0,-1))\n                $('#vkeyname').text(val.slice(0,-1))\n            }\n            input.change()\n            input.focus()\n        },\n\n        toggleShiftOn: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift');\n\n            letters.addClass('uppercase');\n            shift_key.addClass('active')\n            shift = true;\n        },\n\n        toggleShiftOff: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift');\n\n            letters.removeClass('uppercase');\n            shift_key.removeClass('active');\n            shift = false;\n        },\n\n        toggleLayout: function () {\n            layout_id = layout_id || 0;\n            var plain_layouts = layouts.selectable;\n            layout_id++;\n\n            var current_id = layout_id % plain_layouts.length;\n            var SelectedLayoutName = plain_layouts[current_id];\n            $('#vkeyname').text('V-Keyboard ' + SelectedLayoutName )\n            return plain_layouts[current_id];\n        },\n\n        insertToString: function (start, end, string, insert_string) {\n            return string.substring(0, start) + insert_string + string.substring(end, string.length);\n        }\n    };\n\n        /*\n\t\t// A really lightweight plugin wrapper around the constructor,\n\t\t// preventing against multiple instantiations\n\t\t$.fn[ pluginName ] = function ( options ) {\n\t\t\t\treturn this.each(function() {\n\t\t\t\t\t\tif ( !$.data( this, \"plugin_\" + pluginName ) ) {\n\t\t\t\t\t\t\t\t$.data( this, \"plugin_\" + pluginName, new Plugin( this, options ) );\n\t\t\t\t\t\t}\n\t\t\t\t});\n\t\t};\n        */\n        var methods = {\n            init: function(options) {\n                if (!this.data(\"plugin_\" + pluginName)) {\n                    this.data(\"plugin_\" + pluginName, new Plugin(this, options));\n                }\n            },\n\t\t\tsetInput: function(content) {\n\t\t\t\tthis.data(\"plugin_\" + pluginName).setInput($(content));\n            },\n            setLayout: function(layoutname) {\n                // change layout if it is not match current\n                object = this.data(\"plugin_\" + pluginName);\n                if (typeof(layouts[layoutname]) !== 'undefined' && object.settings.layout != layoutname) {\n                    object.settings.layout = layoutname;\n                    object.createKeyboard(layoutname);\n                    object.events();\n                };\n            },\n        };\n\n\t\t$.fn[pluginName] = function (methodOrOptions) {\n            if (methods[methodOrOptions]) {\n                return methods[methodOrOptions].apply(this.first(), Array.prototype.slice.call( arguments, 1));\n            } else if (typeof methodOrOptions === 'object' || ! methodOrOptions) {\n                // Default to \"init\"\n                return methods.init.apply(this.first(), arguments);\n            } else {\n                $.error('Method ' +  methodOrOptions + ' does not exist on jQuery.tooltip');\n            }\n        };\n\n})(jQuery, window, document);\n</script>\n<style>\n    .jkeyboard {\n  display: inline-block;\n}\n.jkeyboard, .jkeyboard .jline, .jkeyboard .jline ul {\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n.jkeyboard .jline {\n  text-align: center;\n  margin-left: -14px;\n}\n.jkeyboard .jline ul li {\n  font-family: arial, sans-serif;\n  font-size: 20px;\n  display: inline-block;\n  border: 1px solid #468db3;\n  -webkit-box-shadow: 0 0 3px #468db3;\n  -webkit-box-shadow: inset 0 0 3px #468db3;\n  margin: 5px 0 1px 6px;\n  color: #000000;\n  border-radius: 5px;\n  width: 52px;\n  height: 52px;\n  box-sizing: border-box;\n  text-align: center;\n  line-height: 52px;\n  overflow: hidden;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: -moz-none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.jkeyboard .jline ul li.uppercase {\n  text-transform: uppercase;\n}\n.jkeyboard .jline ul li:hover, .jkeyboard .jline ul li:active {\n  background-color: #185a82;\n}\n.jkeyboard .jline .return {\n  width: 80px;\n}\n.jkeyboard .jline .space {\n  width: 366px;\n}\n.jkeyboard .jline .numeric_switch {\n  width: 65px;\n}\n.jkeyboard .jline .layout_switch {\n}\n.jkeyboard .jline .shift {\n  width: 60px;\n}\n.jkeyboard .jline .backspace {\n  width: 69px;\n}\n</style>\n\n\n\n\n<style>\nbody {font-family: Arial, Helvetica, sans-serif;}\n\n.nr-dashboard-theme .nr-dashboard-template .md-button:not(:first-of-type) {\n    margin-top: 0px;\n}\n\n/* The Modal (background) */\n.modal {\n    display: none; /* Hidden by default */\n    position: fixed; /* Stay in place */\n    opacity:0.99;\n    z-index: 100; /* Sit on top */\n    left: 0;\n    top: 0;\n    width: 100%; /* Full width */\n    height: 100%; /* Full height */\n    overflow: auto; /* Enable scroll if needed */\n    background-color: rgb(0,0,0); /* Fallback color */\n    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n/* Modal Content */\n.modal-content {\n    position: fixed;\n    background-color: #fefefe;\n    margin: auto;\n    padding: 0;\n    bottom: 0%;\n    left: 50%;\n    transform: translate(-50%, 0%);\n    border: 1px solid #888;\n    width: fit-content;\n    max-width: 100%;\n    max-height: 100%;\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);\n    -webkit-animation-name: animate;\n    -webkit-animation-duration: 0.4s;\n    animation-name: animate;\n    animation-duration: 0.4s\n}\n\n/* Add Animation */\n@-webkit-keyframes animate {\n    from {bottom:100%; opacity:0} \n    to {bottom:0%; opacity:1}\n}\n\n@keyframes animate {\n    from {bottom:100%; opacity:0}\n    to {bottom:0%; opacity:1}\n}\n\n/* The Close Button */\n.close {\n    color: black;\n    float: right;\n    font-size: 28px;\n    font-weight: bold;\n}\n\n.close:hover,\n.close:focus {\n    color: #000;\n    text-decoration: none;\n    cursor: pointer;\n}\n\n.modal-header {\n    padding: 2px 16px;\n    background-color: aliceblue;\n    color: white;\n}\n\n.modal-body {padding: 2px 16px;}\n\n.modal-footer {\n    padding: 2px 16px;\n    background-color: #5cb85c;\n    color: white;\n}\n</style>\n\n<!-- The Modal -->\n<div id=\"myModal\" class=\"modal\">\n\n  <!-- Modal content -->\n  <div class=\"modal-content\">\n      <div class=\"modal-header\">\n      <span class=\"close\" onclick=\"closeModal()\">&times;</span>\n      <h2 id=\"vkeyname\" style=\"background-color: aliceblue !important; color: black !important; text-align: center; min-height: 30px;\">V-Keyboard</h2>\n    </div>\n    <div class=\"modal-body\">\n        <div id=\"keyboard\"></div>\n        <div>\n        </div>\n    </div>\n  </div>\n</div>\n\n\n<script>\n    // Get the modal\nvar modal = document.getElementById('myModal');\n\n/*\n$('input[type=text]').click(function () {\n    $('#keyboard').unbind().removeData();\n        $('#keyboard').jkeyboard({\n            layout: \"english\",\n            input: $('#'+$(this).attr('id'))\n    });\n});\n\n$('input[type=number]').click(function () {\n    $('#keyboard').unbind().removeData();\n        $('#keyboard').jkeyboard({\n            layout: \"numbers_only\",\n            input: $('#'+$(this).attr('id'))\n    });\n});\n*/\n\nvar inputTags;\nvar inputType;\n\nvar getinputs = function() {\n    inputTags = document.getElementsByTagName(\"input\");\n    console.log(inputTags)\n    for (var i = 0; i < inputTags.length; i++) {\n        inputTags[i].addEventListener('click', openModal, false)\n    }\n}\n\nsetTimeout(function(){ getinputs(); }, 1000);\n\nvar inputTarget;\n\nvar openModal = function() {\n    inputType = event.target.type\n    inputTarget = event.target\n    var layoutName;\n    if (inputType == \"number\"){\n        //inputTarget.type = \"number\" //hack because chrome doesn't allow setselection in number inputs\n        //inputTarget.value = \"\"\n        layoutName = \"numbers_only\"\n    }else{\n        layoutName = \"english\"\n    }\n    $('#vkeyname').text(event.target.value)\n    $('#keyboard').unbind().removeData();\n    modal.style.display = \"block\";\n    $('#keyboard').jkeyboard({\n        layout: layoutName,\n        input: $('#'+$(this).attr('id'))\n    });\n}\n\n\n// Get the <span> element that closes the modal\nvar span = document.getElementsByClassName(\"close\")[0];\n\n// When the user clicks on <span> (x), close the modal\n//span.onclick = function(event) {\n  //closeModal()\n//}\n\n// When the user clicks anywhere outside of the modal, close it\nwindow.onclick = function(event) {\n    var source = event.target;\n    if (source == modal || source == span) {\n        closeModal(source)\n    }\n};\n\nvar closeModal = function(source){\n    //console.log(\"closing\")\n    modal.style.display = \"none\";\n   \n    if (inputType == \"number\"){\n        inputTarget.type = \"number\" //hack because chrome doesn't allow selectionstart on number inputs\n    }\n}\n\n</script>\n<script>\n\nvar clickState = 1;\nvar btn = document.querySelector('.VK');\n\nbtn.addEventListener('click', function(){\n\n  if (clickState == 0) {\n    this.textContent = 'V-KeyBoard On';\n    modal = document.getElementById('myModal');\n    clickState = 1;\n  } else {\n    this.textContent = 'V-KeyBoard Off';\n    modal = document.getElementById('empty');\n    clickState = 0;\n  }\n\n});\n</script>\n\n<style>\n.VK{\n    position: fixed;\n    top: 60px;\n    right: 20px;\n    height: 30px;\n}\n</style>\n\n<div id=\"empty\"></div>\n<button style=\"display:none;\" class=\"VK\">V-KeyBoard On</button> ",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 480,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4bfec146cfe60f8f",
+        "type": "comment",
+        "z": "f0a27113.452c7",
+        "name": "WiFi Flow",
+        "info": "https://flows.nodered.org/flow/c3c7a393b05f6383b888bdee39aa5fa5",
+        "x": 220,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "71684eb4cd5d1dd6",
+        "type": "comment",
+        "z": "f0a27113.452c7",
+        "name": "Setup WiFi Repeater",
+        "info": "https://raspberrypi.stackexchange.com/questions/89803/access-point-as-wifi-router-repeater-optional-with-bridge/89804#89804",
+        "x": 250,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "0f32252c41e0be2b",
+        "type": "ui_button",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "group": "f405b29b0175ff69",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Scan",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "topicType": "str",
+        "x": 270,
+        "y": 660,
+        "wires": [
+            [
+                "fb378810ca61deca"
+            ]
+        ]
+    },
+    {
+        "id": "aaf7e5025b03a178",
+        "type": "arp",
+        "z": "f0a27113.452c7",
+        "name": "ARP",
+        "macs": "",
+        "x": 350,
+        "y": 820,
+        "wires": [
+            [
+                "49e19b144ab24320",
+                "0c2968c1ed40a532"
+            ]
+        ]
+    },
+    {
+        "id": "49e19b144ab24320",
+        "type": "debug",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "28eb25ef79e0a8ae",
+        "type": "inject",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "desktopjson",
+                "v": "desktop.desktop1",
+                "vt": "global"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"title\":\"JSON Editor\",\"body\":\"\"}",
+        "payloadType": "json",
+        "x": 110,
+        "y": 660,
+        "wires": [
+            [
+                "fb378810ca61deca"
+            ]
+        ]
+    },
+    {
+        "id": "ebf040adb1653134",
+        "type": "ui_table",
+        "z": "f0a27113.452c7",
+        "group": "f405b29b0175ff69",
+        "name": "",
+        "order": 1,
+        "width": "12",
+        "height": "6",
+        "columns": [
+            {
+                "field": "ip",
+                "title": "Ip Address",
+                "width": "15%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "mac",
+                "title": "MAC Address",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "hostname",
+                "title": "Hostname",
+                "width": "17%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "iface",
+                "title": "Interface",
+                "width": "10%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "software",
+                "title": "NR",
+                "width": "6%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "networkId",
+                "title": "Network",
+                "width": "15%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "node",
+                "title": "Node",
+                "width": "15%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 1,
+        "cts": true,
+        "x": 1810,
+        "y": 780,
+        "wires": [
+            [
+                "10a6ec5e13bc2098"
+            ]
+        ]
+    },
+    {
+        "id": "8cc21653dd45cb08",
+        "type": "http request",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "persist": false,
+        "authType": "",
+        "senderr": false,
+        "x": 1110,
+        "y": 860,
+        "wires": [
+            [
+                "e7fe2e3ccdf875cd"
+            ]
+        ]
+    },
+    {
+        "id": "80396b9abad16578",
+        "type": "split",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 610,
+        "y": 820,
+        "wires": [
+            [
+                "3c0a8a028e8a06b3",
+                "919297faf1ee9b2f"
+            ]
+        ]
+    },
+    {
+        "id": "3c0a8a028e8a06b3",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "func": "\n\nvar id = msg.payload.ip.replace(/\\./g,\"_\");\n\nfor (var k in msg.payload) {\n    flow.set(\"iplist.\" + id + \".\" + k, msg.payload[k]);\n}\n\nmsg.url = \"http://\" + msg.payload.ip + \":1880\";\nmsg.info = msg.payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 860,
+        "wires": [
+            [
+                "460ed44638eec8f4"
+            ]
+        ]
+    },
+    {
+        "id": "fbdf280a3bc325cb",
+        "type": "debug",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "e7fe2e3ccdf875cd",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "func": "if (msg.payload.indexOf(\"Node-RED\")>-1) {\n    \n    var id = msg.info.ip.replace(/\\./g,\"_\");\n    flow.set(\"iplist.\" + id + \".software\" , \"NR\");\n    return msg;\n}\n\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1280,
+        "y": 860,
+        "wires": [
+            [
+                "fbdf280a3bc325cb",
+                "b56ab62781dd622b",
+                "01ad601a4ebe29ba"
+            ]
+        ]
+    },
+    {
+        "id": "0c2968c1ed40a532",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "save",
+        "func": "\n\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 820,
+        "wires": [
+            [
+                "80396b9abad16578"
+            ]
+        ]
+    },
+    {
+        "id": "22b2f8870ce4412b",
+        "type": "trigger",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "0.9",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1330,
+        "y": 780,
+        "wires": [
+            [
+                "2f59f42f9fb5d2d6"
+            ]
+        ]
+    },
+    {
+        "id": "2f59f42f9fb5d2d6",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "func": "\nvar oot=[];\nvar iplist = flow.get(\"iplist\");\n\nfor (var k in iplist) {\n    oot.push(iplist[k]);\n}\nmsg.payload=oot;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1500,
+        "y": 780,
+        "wires": [
+            [
+                "e3c5023f86c0261a"
+            ]
+        ]
+    },
+    {
+        "id": "eccc347b167ddc8e",
+        "type": "inject",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 740,
+        "y": 680,
+        "wires": [
+            [
+                "a40d16850ad6923f"
+            ]
+        ]
+    },
+    {
+        "id": "a40d16850ad6923f",
+        "type": "exec",
+        "z": "f0a27113.452c7",
+        "command": "nmap -sn",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1060,
+        "y": 680,
+        "wires": [
+            [
+                "ddb55926b3937562"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1b46a984054f6acf",
+        "type": "debug",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1470,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "919297faf1ee9b2f",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "func": "\nmsg.info = msg.payload;\nmsg.payload = msg.payload.ip;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 740,
+        "wires": [
+            [
+                "1068fdc8a59eef37"
+            ]
+        ]
+    },
+    {
+        "id": "1068fdc8a59eef37",
+        "type": "delay",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 910,
+        "y": 740,
+        "wires": [
+            [
+                "a40d16850ad6923f"
+            ]
+        ]
+    },
+    {
+        "id": "ddb55926b3937562",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "func": "if (msg.payload.indexOf(\"report for \")>-1) {\n    \n    var host = msg.payload.split(\"report for \")[1].trim();\n    \n    if (host.indexOf(\" \")>-1) { host = host.substr(0,host.indexOf(\" \")); }\n    if (host.indexOf(\"\\n\")>-1) { host = host.split(\"\\n\")[0]; }\n    \n    \n    //Nmap scan report for HelenRaesiPhone (192.168.0.10)\n    \n    var id = msg.info.ip.replace(/\\./g,\"_\");\n    flow.set(\"iplist.\" + id + \".hostname\" , host);\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1220,
+        "y": 680,
+        "wires": [
+            [
+                "1b46a984054f6acf",
+                "dd295d1c6306b675"
+            ]
+        ]
+    },
+    {
+        "id": "460ed44638eec8f4",
+        "type": "delay",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 860,
+        "wires": [
+            [
+                "8cc21653dd45cb08"
+            ]
+        ]
+    },
+    {
+        "id": "78186f32b10a0120",
+        "type": "link in",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "links": [
+            "b56ab62781dd622b",
+            "dd295d1c6306b675",
+            "75e8f922fb6f5dd3",
+            "1e968a389c949351"
+        ],
+        "x": 1215,
+        "y": 780,
+        "wires": [
+            [
+                "22b2f8870ce4412b"
+            ]
+        ]
+    },
+    {
+        "id": "b56ab62781dd622b",
+        "type": "link out",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "78186f32b10a0120"
+        ],
+        "x": 1455,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "dd295d1c6306b675",
+        "type": "link out",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "78186f32b10a0120"
+        ],
+        "x": 1375,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "9ce929088a84c329",
+        "type": "http request",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "persist": false,
+        "authType": "",
+        "senderr": false,
+        "x": 1130,
+        "y": 1020,
+        "wires": [
+            [
+                "a5fe7c72aebd3a50",
+                "66f3ba1e58e05c32"
+            ]
+        ]
+    },
+    {
+        "id": "01ad601a4ebe29ba",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "func": "\n\n\nmsg.url = msg.url + \"/about\";\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 1020,
+        "wires": [
+            [
+                "9ce929088a84c329"
+            ]
+        ]
+    },
+    {
+        "id": "a5fe7c72aebd3a50",
+        "type": "function",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "func": "if (msg.payload.indexOf(\"{\")>-1) {\n    \n    var facts = JSON.parse(msg.payload);\n    var id = msg.info.ip.replace(/\\./g,\"_\");    \n        \n    for (var k in facts) {\n        flow.set(\"iplist.\" + id + \".\" + k, facts[k]);\n    }\n    \n    return msg;\n}\n\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1300,
+        "y": 1020,
+        "wires": [
+            [
+                "1e968a389c949351"
+            ]
+        ]
+    },
+    {
+        "id": "1e968a389c949351",
+        "type": "link out",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "78186f32b10a0120"
+        ],
+        "x": 1475,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "66f3ba1e58e05c32",
+        "type": "debug",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1310,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "fb378810ca61deca",
+        "type": "trigger",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "10",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 190,
+        "y": 740,
+        "wires": [
+            [
+                "06efc19aa25410af"
+            ]
+        ]
+    },
+    {
+        "id": "06efc19aa25410af",
+        "type": "trigger",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "5",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 180,
+        "y": 820,
+        "wires": [
+            [
+                "aaf7e5025b03a178"
+            ]
+        ]
+    },
+    {
+        "id": "e3c5023f86c0261a",
+        "type": "rbe",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload",
+        "topi": "topic",
+        "x": 1670,
+        "y": 780,
+        "wires": [
+            [
+                "ebf040adb1653134"
+            ]
+        ]
+    },
+    {
+        "id": "d154ae08a4044006",
+        "type": "exec",
+        "z": "f0a27113.452c7",
+        "command": "sudo dhclient -v wlan0",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 960,
+        "y": 360,
+        "wires": [
+            [
+                "f36908153d2b35bd"
+            ],
+            [
+                "f36908153d2b35bd"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "67a89ee157dec3a9",
+        "type": "inject",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "5",
+        "topic": "",
+        "payloadType": "date",
+        "x": 730,
+        "y": 360,
+        "wires": [
+            [
+                "d154ae08a4044006"
+            ]
+        ]
+    },
+    {
+        "id": "f36908153d2b35bd",
+        "type": "debug",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "44cc50913b920667",
+        "type": "exec",
+        "z": "f0a27113.452c7",
+        "command": "sudo ifconfig wlan0 down",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1710,
+        "y": 360,
+        "wires": [
+            [
+                "6814658b9bed5f44"
+            ],
+            [
+                "6814658b9bed5f44"
+            ],
+            [
+                "d8af7c2ac10d9072"
+            ]
+        ]
+    },
+    {
+        "id": "7f73bbe2c21f14b5",
+        "type": "inject",
+        "z": "f0a27113.452c7",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 06 * * *",
+        "once": false,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1480,
+        "y": 360,
+        "wires": [
+            [
+                "44cc50913b920667"
+            ]
+        ]
+    },
+    {
+        "id": "6814658b9bed5f44",
+        "type": "debug",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1950,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "c08515d3a8691a14",
+        "type": "exec",
+        "z": "f0a27113.452c7",
+        "command": "sudo ifconfig wlan0 up",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1700,
+        "y": 460,
+        "wires": [
+            [
+                "d3a2b637398e0ad6"
+            ],
+            [
+                "d3a2b637398e0ad6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5d54a793b0d8c5c9",
+        "type": "inject",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "5",
+        "topic": "",
+        "payloadType": "date",
+        "x": 1470,
+        "y": 460,
+        "wires": [
+            [
+                "c08515d3a8691a14"
+            ]
+        ]
+    },
+    {
+        "id": "d3a2b637398e0ad6",
+        "type": "debug",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1950,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "d8af7c2ac10d9072",
+        "type": "delay",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1520,
+        "y": 400,
+        "wires": [
+            [
+                "c08515d3a8691a14"
+            ]
+        ]
+    },
+    {
+        "id": "10a6ec5e13bc2098",
+        "type": "debug",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2130,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "dd1f12e346b81e3c",
+        "type": "inject",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[{\"timestamp\":1659579385007,\"value\":0.52},{\"timestamp\":1659579385036,\"value\":0.52},{\"timestamp\":1659579385065,\"value\":0.53},{\"timestamp\":1659579385094,\"value\":0.52},{\"timestamp\":1659579385123,\"value\":0.52},{\"timestamp\":1659579385152,\"value\":0.52},{\"timestamp\":1659579385182,\"value\":0.52},{\"timestamp\":1659579385211,\"value\":0.52},{\"timestamp\":1659579385240,\"value\":0.51},{\"timestamp\":1659579385268,\"value\":0.5},{\"timestamp\":1659579385298,\"value\":0.51},{\"timestamp\":1659579385327,\"value\":0.51},{\"timestamp\":1659579385356,\"value\":0.52},{\"timestamp\":1659579385385,\"value\":0.53},{\"timestamp\":1659579385414,\"value\":0.52},{\"timestamp\":1659579385443,\"value\":0.52},{\"timestamp\":1659579385472,\"value\":0.51},{\"timestamp\":1659579385501,\"value\":0.51},{\"timestamp\":1659579385531,\"value\":0.51},{\"timestamp\":1659579385559,\"value\":0.51},{\"timestamp\":1659579385589,\"value\":0.51},{\"timestamp\":1659579385622,\"value\":0.52},{\"timestamp\":1659579385661,\"value\":0.51},{\"timestamp\":1659579385700,\"value\":0.51},{\"timestamp\":1659579385730,\"value\":0.51},{\"timestamp\":1659579385808,\"value\":10.76},{\"timestamp\":1659579385838,\"value\":10.76},{\"timestamp\":1659579385867,\"value\":10.76},{\"timestamp\":1659579385896,\"value\":10.76},{\"timestamp\":1659579385925,\"value\":10.76},{\"timestamp\":1659579385955,\"value\":10.76},{\"timestamp\":1659579385986,\"value\":10.76},{\"timestamp\":1659579386013,\"value\":10.76},{\"timestamp\":1659579386042,\"value\":10.76},{\"timestamp\":1659579386071,\"value\":10.76},{\"timestamp\":1659579386100,\"value\":10.76},{\"timestamp\":1659579386333,\"value\":1.58},{\"timestamp\":1659579386362,\"value\":1.04},{\"timestamp\":1659579386392,\"value\":0.97},{\"timestamp\":1659579386426,\"value\":0.96},{\"timestamp\":1659579386464,\"value\":0.72},{\"timestamp\":1659579386503,\"value\":0.64},{\"timestamp\":1659579386535,\"value\":0.63},{\"timestamp\":1659579386565,\"value\":0.58},{\"timestamp\":1659579386595,\"value\":0.55},{\"timestamp\":1659579386624,\"value\":0.56},{\"timestamp\":1659579386654,\"value\":0.55},{\"timestamp\":1659579386683,\"value\":0.54},{\"timestamp\":1659579386713,\"value\":0.53},{\"timestamp\":1659579386742,\"value\":0.53}]",
+        "payloadType": "json",
+        "x": 1860,
+        "y": 1100,
+        "wires": [
+            [
+                "fd4d4eaadf0381c1"
+            ]
+        ]
+    },
+    {
+        "id": "fd4d4eaadf0381c1",
+        "type": "change",
+        "z": "f0a27113.452c7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "readingsHistory.local.mcnode1.dat.dp1",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "readings.local.mcnode1.dat.dp1.value",
+                "pt": "global",
+                "to": "0.53",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2080,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4d0f060d.dee7e8",
+        "type": "ui_group",
+        "name": "Update",
+        "tab": "907bbe60.b555f",
+        "order": 2,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "a1e7431b.229d5",
+        "type": "ui_group",
+        "name": "Settings",
+        "tab": "907bbe60.b555f",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f405b29b0175ff69",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "7700440dec525a5e",
+        "order": 1,
+        "disp": false,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "907bbe60.b555f",
+        "type": "ui_tab",
+        "name": "Wifi",
+        "icon": "wifi",
+        "order": 21,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "7700440dec525a5e",
+        "type": "ui_tab",
+        "name": "Network",
+        "icon": "dashboard",
+        "order": 30,
+        "disabled": false,
+        "hidden": false
+    }
+]
