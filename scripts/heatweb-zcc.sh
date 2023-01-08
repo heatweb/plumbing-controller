@@ -14,11 +14,13 @@ mainmenu() {
                 "APP" "   Select application   " \
                 "SETUP" "   Setup services and passwords   " \
                 "COMPOSER" "   Compose Application   " \
-                "DEVICES" "   Connected devices   " \
-                "SETTINGS" "   Settings   " \
                 "EXIT" "   Quit   " 3>&1 1>&2 2>&3)
 }
 
+
+#                "DEVICES" "   Connected devices   " \
+#                "SETTINGS" "   Settings   " \
+                
 while [[ $MYMENU != "exit" ]]
 do
         mainmenu
