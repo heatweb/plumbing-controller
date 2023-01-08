@@ -12,7 +12,8 @@ mainmenu() {
                 "INSTALL" "   First installation                         " \
                 "KIOSK" "   Activate Kiosk Browser   " \
                 "APP" "   Select application   " \
-                "SETUP" "   Setup application and passwords   " \
+                "SETUP" "   Setup services and passwords   " \
+                "COMPOSER" "   Compose Application   " \
                 "DEVICES" "   Connected devices   " \
                 "SETTINGS" "   Settings   " \
                 "EXIT" "   Quit   " 3>&1 1>&2 2>&3)
@@ -60,6 +61,10 @@ do
   
         if [[ $MYMENU == "APP" ]]; then
             bash /home/pi/plumbing-controller/scripts/select-application.sh
+        fi
+  
+        if [[ $MYMENU == "COMPOSER" ]]; then
+            docker exec restart noderedsetup
         fi
   
         if [[ $MYMENU == "DEVICES" ]]; then
