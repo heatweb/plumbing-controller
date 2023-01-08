@@ -28,10 +28,20 @@ MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
 fi
 
 
-if [[ $MYMENU == *"idaspass"* ]]; then
+# Create heatweb folder if doesn't exist
+[ ! -d "/boot/heatweb" ] && sudo mkdir /boot/heatweb
 
-    password="NodeID"
-    
+# Create credentials folder if doesn't exist
+[ ! -d "/boot/heatweb/credentials" ] && sudo mkdir /boot/heatweb/credentials
+
+# Create ports folder if doesn't exist
+[ ! -d "/boot/heatweb/ports" ] && sudo mkdir /boot/heatweb/ports
+
+
+if [ -d "/boot/heatweb/credentials/adminPassword.txt" ]; then
+
+        password=$(cat /boot/heatweb/credentials/adminPassword.txt)
+
 else
 
     password=$(whiptail --passwordbox "Enter admin password" 8 60 3>&1 1>&2 2>&3)
@@ -47,18 +57,15 @@ else
      exit 1
     fi
 
+
+    echo $password > /home/pi/adminPassword.txt
+    sudo mv /home/pi/adminPassword.txt /boot/heatweb/credentials/adminPassword.txt
+
 fi 
 
-# Create heatweb folder if doesn't exist
-[ ! -d "/boot/heatweb" ] && sudo mkdir /boot/heatweb
+echo "Password is currently $password."
 
-# Create credentials folder if doesn't exist
-[ ! -d "/boot/heatweb/credentials" ] && sudo mkdir /boot/heatweb/credentials
-
-echo $password > /home/pi/adminPassword.txt
-sudo mv /home/pi/adminPassword.txt /boot/heatweb/credentials/adminPassword.txt
-
-
+exit 0
 
 
 if [[ $MYMENU == *"gorenew"* ]]; then
