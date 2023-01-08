@@ -79,15 +79,15 @@ if [ $exitstatus -eq 0 ]; then
     if [ "$selection" == "" ]; then
         echo "User Pressed Esc with No File Selection"
     else
-        whiptail --title "File was selected" --msgbox " \
-
-        File Selected information
-
-        Filename : $filename
-        Directory: $filepath
-
-        \
-        " 0 0 0
+#        whiptail --title "File was selected" --msgbox " \
+#
+#        File Selected information
+#
+#        Filename : $filename
+#        Directory: $filepath
+#
+#        \
+#        " 0 0 0
         echo "Result is"
         echo "$filepath/$filename"
         
