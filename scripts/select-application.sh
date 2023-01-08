@@ -30,6 +30,7 @@ function Filebrowser()
     basedir="/home/pi/plumbing-controller/"
     secondString="> "
     curdirtxt="${curdir/"$basedir"/"$secondString"}" 
+    curdirtxt="${curdirtxt/\//\n  \+}" 
     
     if [ "$curdir" == "$startdir" ] ; then  # Check if you are at root folder
         selection=$(whiptail --title "$1" \
