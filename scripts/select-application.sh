@@ -35,12 +35,12 @@ function Filebrowser()
     
     if [ "$curdir" == "$startdir" ] ; then  # Check if you are at root folder
         selection=$(whiptail --title "$1" \
-                              --menu "\n Please select an application directory. \n\n $curdirtxt" 0 73 0 \
+                              --menu "\n Please select an application directory. \n $curdirtxt" 0 73 0 \
                               --cancel-button Cancel \
                               --ok-button Select "../                                             " BACK $dir_list 3>&1 1>&2 2>&3)
     else   # Not Root Dir so show ../ BACK Selection in Menu
         selection=$(whiptail --title "$1" \
-                              --menu "\n Please select an application composer.json file. \n\n $curdirtxt" 0 73 0 \
+                              --menu "\n Please select an application composer.json file. \n $curdirtxt" 0 73 0 \
                               --cancel-button Cancel \
                               --ok-button Select "../                                             " BACK $dir_list 3>&1 1>&2 2>&3)
     fi
