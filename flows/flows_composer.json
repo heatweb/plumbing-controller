@@ -5979,7 +5979,7 @@
         "y": 140,
         "wires": [
             [
-                "a66678b2ea23686e"
+                "ba28182b7f917b5c"
             ]
         ]
     },
@@ -6002,10 +6002,12 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 480,
+        "x": 960,
         "y": 140,
         "wires": [
-            []
+            [
+                "35cb9aa2550720ec"
+            ]
         ]
     },
     {
@@ -6064,14 +6066,14 @@
         "type": "function",
         "z": "d45724a5b9c70467",
         "name": "flows",
-        "func": "\n\nif (msg.payload.config) { \n   \n   for (var cf in msg.payload.config) {  global.set(\"config.\" + cf, msg.payload.config[cf]);     }\n   \n   node.send([null, null, msg, null]);\n\n}\nif (msg.payload.credentials) {\n\n   for (var cf in msg.payload.credentials) { global.set(\"credentials.\" + cf, msg.payload.credentials[cf]); }\n\n   node.send([null, null, null, msg]);\n\n}\n\nif (!msg.payload.action) { return [msg,null,null,null]; }\n\n\n\nvar targetPort = msg.payload.targetPort || 1880;\nvar targetHost = msg.payload.targetHost || \"localhost\";\ntargetHost = targetHost.replace(\"localhost\",\"host.docker.internal\")\nvar targ = targetHost + \":\" + targetPort;\n\nvar auth = flow.get(\"auth\") || {};\n\n\nmsg.headers = {};\nmsg.headers.Authorization = \"Bearer \" + auth[targ];\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\n\nmsg.url = \"http://\" + targ + \"/\" + (msg.payload.action||\"flow\");\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nvar credentials = global.get(\"credentials\")||{};\nvar config = global.get(\"config\") || {};\n\n//var ff = msg.payload;\nvar ff = msg.payload.data;\n\nif (msg.payload.replacements) {\n\n   var ffstr = JSON.stringify(ff);\n\n   var reps = msg.payload.replacements;\n   for (var rep in reps) {\n\n      ffstr = ffstr.replaceAll(reps[rep][0], reps[rep][1]);\n   }\n\n   ff = JSON.parse(ffstr);\n}\n\n\nfunction checkTab(nodeitem) {\n   return nodeitem.type == \"tab\";\n}\n\nfunction filterTab(nodeitem) {\n   return nodeitem.type != \"tab\";\n}\n\nfunction filterMqttBroker(nodeitem) {\n   return nodeitem.type != \"mqtt-broker\";\n}\n\nif (msg.payload.action == \"flow\") {   // individual flows can't contain tabs, and do not want to overwrite mqtt broker\n\n   var tabf = ff.filter(checkTab)[0];\n   tabf.nodes = ff.filter(filterTab).filter(filterMqttBroker);\n   ff = tabf;\n\n}\n\n\nfor (var part in ff) {\n\n   if (ff[part].type == \"heatwebConfig\") { \n      \n      ff[part].name = config.name ; \n      ff[part].description = config.description;\n      ff[part].nodeId = config.nodeId;\n      ff[part].networkId = config.networkId; \n\n   }\n   \n\n   if (credentials.localMqttPassword) {\n\n      if (ff[part].type == \"mqtt-broker\" && (ff[part].broker == \"mqtt\" || ff[part].broker == \"localhost\")) { ff[part].credentials = { \"user\": \"admin\", \"password\": credentials.localMqttPassword }; }\n    \n   }\n\n   if (credentials.adminPassword) {\n\n      if (ff[part].type == \"MySQLdatabase\" && ff[part].host == \"mysql\") { ff[part].credentials = { \"user\": \"root\", \"password\": credentials.adminPassword }; }\n\n   }\n\n   if (credentials.localInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"local\") { ff[part].credentials = { \"token\": credentials.localInfluxToken }; }\n\n   }\n   if (credentials.remoteInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"heatweb\") { ff[part].credentials = { \"token\": credentials.remoteInfluxToken }; }\n\n   }\n\n   if (credentials.emailPassword && credentials.emailUser) {\n\n      if (ff[part].type == \"e-mail\") { ff[part].credentials = { \"userid\": credentials.emailUser, \"password\": credentials.emailPassword }; }\n\n   }\n\n   \n\n\n}\n\nmsg.payload = JSON.stringify(ff);\n\nreturn [null, msg, null, null];",
-        "outputs": 4,
+        "func": "\n\nif (msg.payload.config) { \n   \n   for (var cf in msg.payload.config) {  global.set(\"config.\" + cf, msg.payload.config[cf]);     }\n   \n   node.send([null, null, msg, null]);\n\n}\nif (msg.payload.credentials) {\n\n   for (var cf in msg.payload.credentials) { global.set(\"credentials.\" + cf, msg.payload.credentials[cf]); }\n\n   node.send([null, null, null, msg]);\n\n}\n\n\n\nfunction merge(a, b, prop) {\n   var reduced = [];\n   for (var i = 0; i < a.length; i++) {\n      var aitem = a[i];\n      var found = false;\n      for (var ii = 0; ii < b.length; ii++) {\n         if (aitem[prop] === b[ii][prop]) {\n            found = true;\n            break;\n         }\n      }\n      if (!found) {\n         reduced.push(aitem);\n      }\n   }\n   return reduced.concat(b);\n}\n\nif (msg.payload.wiring && msg.payload.wiring.terminals) {\n\n   var curio = JSON.parse(global.get(\"settings.io.value\") || \"[]\");\n   \n   var newio = merge(curio, msg.payload.wiring.terminals, \"portId\");\n\n   global.set(\"settings.io.value\", JSON.stringify(newio));\n\n\n   var msg5={}\n   msg5.payload = JSON.stringify(global.get(\"settings\"));\n   msg5.filename = \"/home/pi/node-hiu/settings.json\";\n\n\n   node.send([null, null, null, null, msg5]);\n\n\n}\n\n\n\nif (!msg.payload.action) { return [msg,null,null,null]; }\n\n\n\nvar targetPort = msg.payload.targetPort || 1880;\nvar targetHost = msg.payload.targetHost || \"localhost\";\ntargetHost = targetHost.replace(\"localhost\",\"host.docker.internal\")\nvar targ = targetHost + \":\" + targetPort;\n\nvar auth = flow.get(\"auth\") || {};\n\n\nmsg.headers = {};\nmsg.headers.Authorization = \"Bearer \" + auth[targ];\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\n\nmsg.url = \"http://\" + targ + \"/\" + (msg.payload.action||\"flow\");\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nvar credentials = global.get(\"credentials\")||{};\nvar config = global.get(\"config\") || {};\n\n//var ff = msg.payload;\nvar ff = msg.payload.data;\n\nif (msg.payload.replacements) {\n\n   var ffstr = JSON.stringify(ff);\n\n   var reps = msg.payload.replacements;\n   for (var rep in reps) {\n\n      ffstr = ffstr.replaceAll(reps[rep][0], reps[rep][1]);\n   }\n\n   ff = JSON.parse(ffstr);\n}\n\n\nfunction checkTab(nodeitem) {\n   return nodeitem.type == \"tab\";\n}\n\nfunction filterTab(nodeitem) {\n   return nodeitem.type != \"tab\";\n}\n\nfunction filterMqttBroker(nodeitem) {\n   return nodeitem.type != \"mqtt-broker\";\n}\n\nif (msg.payload.action == \"flow\") {   // individual flows can't contain tabs, and do not want to overwrite mqtt broker\n\n   var tabf = ff.filter(checkTab)[0];\n   tabf.nodes = ff.filter(filterTab).filter(filterMqttBroker);\n   ff = tabf;\n\n}\n\n\nfor (var part in ff) {\n\n   if (ff[part].type == \"heatwebConfig\") { \n      \n      ff[part].name = config.name ; \n      ff[part].description = config.description;\n      ff[part].nodeId = config.nodeId;\n      ff[part].networkId = config.networkId; \n\n   }\n   \n\n   if (credentials.localMqttPassword) {\n\n      if (ff[part].type == \"mqtt-broker\" && (ff[part].broker == \"mqtt\" || ff[part].broker == \"localhost\")) { ff[part].credentials = { \"user\": \"admin\", \"password\": credentials.localMqttPassword }; }\n    \n   }\n\n   if (credentials.adminPassword) {\n\n      if (ff[part].type == \"MySQLdatabase\" && ff[part].host == \"mysql\") { ff[part].credentials = { \"user\": \"root\", \"password\": credentials.adminPassword }; }\n\n   }\n\n   if (credentials.localInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"local\") { ff[part].credentials = { \"token\": credentials.localInfluxToken }; }\n\n   }\n   if (credentials.remoteInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"heatweb\") { ff[part].credentials = { \"token\": credentials.remoteInfluxToken }; }\n\n   }\n\n   if (credentials.emailPassword && credentials.emailUser) {\n\n      if (ff[part].type == \"e-mail\") { ff[part].credentials = { \"userid\": credentials.emailUser, \"password\": credentials.emailPassword }; }\n\n   }\n\n   \n\n\n}\n\nmsg.payload = JSON.stringify(ff);\n\nreturn [null, msg, null, null];",
+        "outputs": 5,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 472,
-        "y": 806,
+        "x": 390,
+        "y": 820,
         "wires": [
             [
                 "df5cf78bb5e02533"
@@ -6084,6 +6086,9 @@
             ],
             [
                 "a05d78c74f90b1fb"
+            ],
+            [
+                "337cc03c29bca9ef"
             ]
         ]
     },
@@ -6185,7 +6190,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 670,
+        "x": 610,
         "y": 720,
         "wires": [
             [
@@ -6206,7 +6211,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 860,
+        "x": 800,
         "y": 720,
         "wires": []
     },
@@ -6238,8 +6243,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1020,
-        "y": 860,
+        "x": 1040,
+        "y": 840,
         "wires": []
     },
     {
@@ -6353,8 +6358,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 410,
-        "y": 240,
+        "x": 190,
+        "y": 200,
         "wires": [
             [
                 "5da31f3d874fcd4c"
@@ -6373,8 +6378,8 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 630,
-        "y": 240,
+        "x": 410,
+        "y": 200,
         "wires": [
             [
                 "03689db0a1229d7d"
@@ -6400,8 +6405,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1020,
-        "y": 240,
+        "x": 920,
+        "y": 200,
         "wires": [
             []
         ]
@@ -6414,8 +6419,8 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 830,
-        "y": 240,
+        "x": 730,
+        "y": 200,
         "wires": [
             [
                 "60014b30ddf0f588"
@@ -6444,7 +6449,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 210,
-        "y": 380,
+        "y": 420,
         "wires": [
             [
                 "c38ffe5bfd0dd27d",
@@ -6465,7 +6470,7 @@
         "encoding": "none",
         "allProps": false,
         "x": 490,
-        "y": 320,
+        "y": 360,
         "wires": [
             [
                 "ad93699b4f67b45e"
@@ -6492,7 +6497,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 320,
+        "y": 360,
         "wires": [
             []
         ]
@@ -6506,7 +6511,7 @@
         "action": "obj",
         "pretty": false,
         "x": 710,
-        "y": 320,
+        "y": 360,
         "wires": [
             [
                 "fe3ce37e31818309"
@@ -6529,7 +6534,7 @@
         "stat": false,
         "showWarnings": true,
         "x": 580,
-        "y": 380,
+        "y": 420,
         "wires": [
             [
                 "7d19b9387d19b985",
@@ -6550,7 +6555,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 760,
-        "y": 380,
+        "y": 420,
         "wires": []
     },
     {
@@ -6571,7 +6576,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 420,
-        "y": 380,
+        "y": 420,
         "wires": [
             [
                 "68123565cd072358"
@@ -6591,7 +6596,7 @@
         "encoding": "none",
         "allProps": false,
         "x": 960,
-        "y": 420,
+        "y": 460,
         "wires": [
             [
                 "d3a616ac9f624f5f"
@@ -6619,7 +6624,7 @@
         "to": "",
         "reg": false,
         "x": 790,
-        "y": 420,
+        "y": 460,
         "wires": [
             [
                 "f651936739ae9faf"
@@ -6638,7 +6643,7 @@
         "finalize": "",
         "libs": [],
         "x": 1130,
-        "y": 420,
+        "y": 460,
         "wires": [
             [
                 "373d7ae5fa6b6648"
@@ -6839,8 +6844,8 @@
         "links": [
             "f7b22618409dca7f"
         ],
-        "x": 585,
-        "y": 900,
+        "x": 605,
+        "y": 880,
         "wires": []
     },
     {
@@ -6852,8 +6857,8 @@
         "links": [
             "a8aa406333da0583"
         ],
-        "x": 635,
-        "y": 860,
+        "x": 575,
+        "y": 840,
         "wires": []
     },
     {
@@ -6955,7 +6960,8 @@
         "y": 800,
         "wires": [
             [
-                "f4bdd8a482d1cebf"
+                "f4bdd8a482d1cebf",
+                "a82b293e04356cde"
             ]
         ]
     },
@@ -7009,7 +7015,7 @@
         "topic": "topic",
         "outputs": 1,
         "x": 1320,
-        "y": 420,
+        "y": 460,
         "wires": [
             [
                 "da933dfab46e29b5"
@@ -7026,7 +7032,7 @@
             "f7b22618409dca7f"
         ],
         "x": 1445,
-        "y": 420,
+        "y": 460,
         "wires": []
     },
     {
@@ -7055,7 +7061,7 @@
         "z": "d45724a5b9c70467",
         "name": "Run through instructions",
         "info": "",
-        "x": 410,
+        "x": 210,
         "y": 720,
         "wires": []
     },
@@ -7065,8 +7071,8 @@
         "z": "d45724a5b9c70467",
         "name": "Store new config and credentials",
         "info": "",
-        "x": 754,
-        "y": 908,
+        "x": 770,
+        "y": 900,
         "wires": []
     },
     {
@@ -7086,7 +7092,7 @@
         "name": "Load config",
         "info": "",
         "x": 170,
-        "y": 240,
+        "y": 60,
         "wires": []
     },
     {
@@ -7096,119 +7102,63 @@
         "name": "Load credentials",
         "info": "",
         "x": 180,
-        "y": 320,
+        "y": 360,
         "wires": []
     },
     {
-        "id": "ae4e9ce4c1f63c16",
-        "type": "inject",
-        "z": "d45724a5b9c70467",
-        "name": "github raw composer url",
-        "props": [
-            {
-                "p": "url",
-                "v": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/applications/hiu_dhw_novocon/composer.json",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 230,
-        "y": 80,
-        "wires": [
-            [
-                "b3ee31482f65eef2"
-            ]
-        ]
-    },
-    {
-        "id": "b3ee31482f65eef2",
-        "type": "http request",
+        "id": "ba28182b7f917b5c",
+        "type": "file in",
         "z": "d45724a5b9c70467",
         "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "x": 490,
-        "y": 80,
+        "filename": "/boot/heatweb/composer/composer.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 460,
+        "y": 140,
         "wires": [
             [
-                "eb6ddd32a7445b2b",
-                "b7e8a2f4d8a5f0bc"
+                "0f0065e6e672c37b"
             ]
         ]
     },
     {
-        "id": "eb6ddd32a7445b2b",
-        "type": "debug",
-        "z": "d45724a5b9c70467",
-        "name": "debug 38",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 760,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "b7e8a2f4d8a5f0bc",
+        "id": "0f0065e6e672c37b",
         "type": "json",
         "z": "d45724a5b9c70467",
         "name": "",
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 750,
-        "y": 80,
+        "x": 730,
+        "y": 140,
         "wires": [
             [
-                "9e5edafc3eadba82"
+                "a66678b2ea23686e"
             ]
         ]
     },
     {
-        "id": "9e5edafc3eadba82",
-        "type": "change",
+        "id": "35cb9aa2550720ec",
+        "type": "debug",
         "z": "d45724a5b9c70467",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "composer.hiu_dhw_novocon",
-                "pt": "global",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1010,
-        "y": 80,
-        "wires": [
-            []
-        ]
+        "name": "debug 39",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1220,
+        "y": 140,
+        "wires": []
     },
     {
-        "id": "9450e89be2fa85b4",
+        "id": "cc2a6ee809334d38",
         "type": "inject",
         "z": "d45724a5b9c70467",
         "name": "",
@@ -7223,17 +7173,138 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "hiu_dhw_novocon",
-        "payloadType": "str",
-        "x": 210,
-        "y": 540,
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 260,
         "wires": [
             [
-                "72309de8a79eeadc"
+                "ccb9b967d76451f7"
             ]
+        ]
+    },
+    {
+        "id": "ccb9b967d76451f7",
+        "type": "file in",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "filename": "/home/pi/node-hiu/settings.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 430,
+        "y": 260,
+        "wires": [
+            [
+                "43f04d44ab7fee37"
+            ]
+        ]
+    },
+    {
+        "id": "43f04d44ab7fee37",
+        "type": "json",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 730,
+        "y": 260,
+        "wires": [
+            [
+                "d475f289dab79f64"
+            ]
+        ]
+    },
+    {
+        "id": "d475f289dab79f64",
+        "type": "change",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "settings",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "settings.io",
+                "pt": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "337cc03c29bca9ef",
+        "type": "file",
+        "z": "d45724a5b9c70467",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 460,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a82b293e04356cde",
+        "type": "debug",
+        "z": "d45724a5b9c70467",
+        "name": "debug 40",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "09e701e9e202bd21",
+        "type": "function",
+        "z": "d45724a5b9c70467",
+        "name": "flows",
+        "func": "\n\nif (msg.payload.config) { \n   \n   for (var cf in msg.payload.config) {  global.set(\"config.\" + cf, msg.payload.config[cf]);     }\n   \n   node.send([null, null, msg, null]);\n\n}\nif (msg.payload.credentials) {\n\n   for (var cf in msg.payload.credentials) { global.set(\"credentials.\" + cf, msg.payload.credentials[cf]); }\n\n   node.send([null, null, null, msg]);\n\n}\n\nif (msg.payload.wiring && msg.payload.wiring.terminals) {\n\n   global.set(\"settings.io.value\", JSON.stringify(msg.payload.wiring.terminals));\n\n   var msg5={}\n   msg5.payload = JSON.stringify(global.get(\"settings\"));\n   msg5.filename = \"/home/pi/node-hiu/settings.json\";\n\n   node.send([null, null, null, null, msg5]);\n\n\n}\n\n\n\nif (!msg.payload.action) { return [msg,null,null,null]; }\n\n\n\nvar targetPort = msg.payload.targetPort || 1880;\nvar targetHost = msg.payload.targetHost || \"localhost\";\ntargetHost = targetHost.replace(\"localhost\",\"host.docker.internal\")\nvar targ = targetHost + \":\" + targetPort;\n\nvar auth = flow.get(\"auth\") || {};\n\n\nmsg.headers = {};\nmsg.headers.Authorization = \"Bearer \" + auth[targ];\nmsg.headers['Content-type'] = \"application/json\";\nmsg.headers['Node-RED-Deployment-Type'] = \"full\";\n\n\nmsg.url = \"http://\" + targ + \"/\" + (msg.payload.action||\"flow\");\n\n//var cfrom = '\"broker\":\"localhost\"';\n//var cto = '\"broker\":\"localhost\", \"credentials\":{\"username\":\"nodereduser\", \"password\":\"' + global.get(\"noderedmqttpass\") + '\"}';\n\nvar credentials = global.get(\"credentials\")||{};\nvar config = global.get(\"config\") || {};\n\n//var ff = msg.payload;\nvar ff = msg.payload.data;\n\nif (msg.payload.replacements) {\n\n   var ffstr = JSON.stringify(ff);\n\n   var reps = msg.payload.replacements;\n   for (var rep in reps) {\n\n      ffstr = ffstr.replaceAll(reps[rep][0], reps[rep][1]);\n   }\n\n   ff = JSON.parse(ffstr);\n}\n\n\nfunction checkTab(nodeitem) {\n   return nodeitem.type == \"tab\";\n}\n\nfunction filterTab(nodeitem) {\n   return nodeitem.type != \"tab\";\n}\n\nfunction filterMqttBroker(nodeitem) {\n   return nodeitem.type != \"mqtt-broker\";\n}\n\nif (msg.payload.action == \"flow\") {   // individual flows can't contain tabs, and do not want to overwrite mqtt broker\n\n   var tabf = ff.filter(checkTab)[0];\n   tabf.nodes = ff.filter(filterTab).filter(filterMqttBroker);\n   ff = tabf;\n\n}\n\n\nfor (var part in ff) {\n\n   if (ff[part].type == \"heatwebConfig\") { \n      \n      ff[part].name = config.name ; \n      ff[part].description = config.description;\n      ff[part].nodeId = config.nodeId;\n      ff[part].networkId = config.networkId; \n\n   }\n   \n\n   if (credentials.localMqttPassword) {\n\n      if (ff[part].type == \"mqtt-broker\" && (ff[part].broker == \"mqtt\" || ff[part].broker == \"localhost\")) { ff[part].credentials = { \"user\": \"admin\", \"password\": credentials.localMqttPassword }; }\n    \n   }\n\n   if (credentials.adminPassword) {\n\n      if (ff[part].type == \"MySQLdatabase\" && ff[part].host == \"mysql\") { ff[part].credentials = { \"user\": \"root\", \"password\": credentials.adminPassword }; }\n\n   }\n\n   if (credentials.localInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"local\") { ff[part].credentials = { \"token\": credentials.localInfluxToken }; }\n\n   }\n   if (credentials.remoteInfluxToken) {\n\n      if (ff[part].type == \"influxdb\" && ff[part].name == \"heatweb\") { ff[part].credentials = { \"token\": credentials.remoteInfluxToken }; }\n\n   }\n\n   if (credentials.emailPassword && credentials.emailUser) {\n\n      if (ff[part].type == \"e-mail\") { ff[part].credentials = { \"userid\": credentials.emailUser, \"password\": credentials.emailPassword }; }\n\n   }\n\n   \n\n\n}\n\nmsg.payload = JSON.stringify(ff);\n\nreturn [null, msg, null, null];",
+        "outputs": 5,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 860,
+        "wires": [
+            [],
+            [],
+            [],
+            [],
+            []
         ]
     }
 ]
