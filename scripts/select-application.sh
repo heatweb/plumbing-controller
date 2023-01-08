@@ -31,12 +31,12 @@ function Filebrowser()
         selection=$(whiptail --title "$1" \
                               --menu "\n Please select an application directory. \n $curdir" 0 73 0 \
                               --cancel-button Cancel \
-                              --ok-button Select "../                         " BACK $dir_list 3>&1 1>&2 2>&3)
+                              --ok-button Select "../                                   " BACK $dir_list 3>&1 1>&2 2>&3)
     else   # Not Root Dir so show ../ BACK Selection in Menu
         selection=$(whiptail --title "$1" \
                               --menu "\n Please select an application composer.json file. \n $curdir" 0 73 0 \
                               --cancel-button Cancel \
-                              --ok-button Select "../                         " BACK $dir_list 3>&1 1>&2 2>&3)
+                              --ok-button Select "../                                   " BACK $dir_list 3>&1 1>&2 2>&3)
     fi
 
     RET=$?
@@ -45,7 +45,7 @@ function Filebrowser()
     elif [ $RET -eq 0 ]; then
        if [[ -d "$selection" ]]; then  # Check if Directory Selected
           Filebrowser "$1" "$selection"
-       elif [[ "$selection" == "../                         " ]]; then  # Check if BACK with spaces
+       elif [[ "$selection" == "../                                   " ]]; then  # Check if BACK with spaces
           if [ "$curdir" != "$startdir" ] ; then 
             Filebrowser "$1" "../"
           fi
