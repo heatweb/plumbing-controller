@@ -1,0 +1,17 @@
+{
+  "name": "flow-composer",
+  "version": "0.0.1",
+  "description": "Node-RED Flow Composer",
+  "main": "flow-composer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Node-RED"
+  ],
+  "author": "Richard Hanson-Graville",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}
