@@ -10,10 +10,10 @@ mainmenu() {
                 "UPDATE_GIT" "   Update files from GitHub                    " \
                 "UPDATE_BOARD" "   Update I/O board                    " \
                 "INSTALL" "   First installation                         " \
-                "PASSWORD" "   Set admin password                         " \
                 "KIOSK" "   Activate kiosk browser   " \
                 "APP" "   Select application   " \
-                "SETUP" "   Setup services and passwords   " \
+                "PASSWORD" "   Set admin password                         " \
+                "SETUP" "   Setup services   " \
                 "COMPOSER" "   Compose Application   " \
                 "EXIT" "   Quit   " 3>&1 1>&2 2>&3)
 }
