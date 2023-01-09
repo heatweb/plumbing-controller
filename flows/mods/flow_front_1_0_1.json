@@ -1,6 +1,6 @@
 [
     {
-        "id": "b7a4eb8c.aec2c8",
+        "id": "9a9fe8141212d6cf",
         "type": "tab",
         "label": "Front",
         "disabled": false,
@@ -9,9 +9,9 @@
     {
         "id": "6129542c.75c96c",
         "type": "function",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
-        "func": "\n\nmsg.topic = msg.topic.split(\"/\")[4] ;\n\nvar gauges = global.get(\"settings.gauges\");\n\nif (gauges[0].title) { msg.topic = gauges[0].title; }\n\n\n\nreturn msg;",
+        "func": "\n\nmsg.topic = msg.topic.split(\"/\")[4] ;\n\nvar gauges = global.get(\"settings.gauges.value\");\n\nif (gauges[0].title) { msg.topic = gauges[0].title; }\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -29,9 +29,9 @@
     {
         "id": "3eefcd4f.bd3522",
         "type": "function",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
-        "func": "\nmsg.topic = msg.topic.split(\"/\")[4];\n\nvar gauges = global.get(\"settings.gauges\");\n\nif (gauges[1].title) { msg.topic = gauges[1].title; }\n\n",
+        "func": "\nmsg.topic = msg.topic.split(\"/\")[4];\n\nvar gauges = global.get(\"settings.gauges.value\");\n\nif (gauges[1].title) { msg.topic = gauges[1].title; }\n\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -49,7 +49,7 @@
     {
         "id": "16545db5.a1289a",
         "type": "ui_gauge",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "group": "7aaf3d97.4092e4",
         "order": 1,
@@ -77,7 +77,7 @@
     {
         "id": "ffc6c523.b47708",
         "type": "ui_gauge",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "group": "7aaf3d97.4092e4",
         "order": 3,
@@ -105,7 +105,7 @@
     {
         "id": "61cbc5f5.22dbbc",
         "type": "ui_chart",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "group": "b41f6501.8d6cb8",
         "order": 2,
@@ -149,7 +149,7 @@
     {
         "id": "c24f70d0.17a83",
         "type": "ui_template",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "group": "b7224d05.8b248",
         "name": "Heatweb",
         "order": 2,
@@ -170,7 +170,7 @@
     {
         "id": "ef81efb5.e9264",
         "type": "inject",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "props": [
             {
@@ -199,7 +199,7 @@
     {
         "id": "35167232.7ce0ae",
         "type": "template",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "field": "template",
         "fieldType": "msg",
@@ -218,7 +218,7 @@
     {
         "id": "6cce1b9.af560e4",
         "type": "link in",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "screenmessage",
         "links": [
             "51e62b0a.b42434",
@@ -235,7 +235,7 @@
     {
         "id": "51e62b0a.b42434",
         "type": "link out",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "links": [
             "6cce1b9.af560e4"
@@ -247,7 +247,7 @@
     {
         "id": "5e26c129.76b25",
         "type": "ui_template",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "d": true,
         "group": "84ad1d4c.e0002",
         "name": "Virtual Keyboard",
@@ -269,7 +269,7 @@
     {
         "id": "496c2344.872eec",
         "type": "ui_text_input",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "label": "",
         "tooltip": "",
@@ -296,7 +296,7 @@
     {
         "id": "d2461055.3396d",
         "type": "trigger",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "op1": "",
         "op2": "0000",
@@ -321,7 +321,7 @@
     {
         "id": "72569eb3.4a338",
         "type": "switch",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -346,7 +346,7 @@
     {
         "id": "8aa44365.1d51e",
         "type": "function",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "settings.title",
         "func": "\nmsg.payload = \"<p><small>\" + global.get(\"networkId\") + \" / \" +  global.get(\"node\") + \"</small></p>\";\nmsg.payload += \"<p><big>\" + global.get(\"settings.title.value\") || global.get(\"nodeDescription\") + \"</big></p>\";\n\nvar state = global.get(\"readings.\"+global.get(\"localNetworkId\")+\".\"+global.get(\"node\")+\".stat.state.value\");\nif (state!==\"ok\") {\n    msg.payload += '<p><small><span style=\"color:#ff0000\">' + state + \"</span></small></p>\";\n}\n\nvar logo  = global.get(\"settings.customerLogo.value\") || \"http://heatweb.co.uk/w/images/thumb/3/3f/G12749.png/120px-G12749.png\";\nif (logo) {\n    \n    if (logo.indexOf(\"http\")<0) { \n        \n        logo = \"/files/images/\" + logo;\n        \n    }\n\n\n    msg.payload = '<table align=\"center\" width=\"94%\" height=\"100%\"><tr><td align=\"left\" valign=\"middle\" height=\"100%\"><img style=\"border-radius: 5px; max-height: 90px\" src=\"' + logo + '\"></td><td align=\"right\" valign=\"middle\" height=\"100%\">' + msg.payload + '</td></tr></table>';\n   //msg.payload = '<img src=\"' + logo + '\" height=\"40px\"> ' + msg.payload;\n} else {\n    \n    msg.payload = '<table width=\"100%\" height=\"100%\"><tr><td align=\"center\" valign=\"middle\" height=\"100%\"><big>' + msg.payload + '</big>&nbsp;&nbsp;</td></tr></table>';\n\n}\n\nreturn msg;",
         "outputs": 1,
@@ -365,7 +365,7 @@
     {
         "id": "cfd7f87bee217367",
         "type": "function",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "func": "msg.topic = \"_/user/pin\" ;\nmsg.title = \"User Keypad PIN Input\" ;\nreturn msg;",
         "outputs": 1,
@@ -385,7 +385,7 @@
     {
         "id": "f507145e54d36ba5",
         "type": "trigger",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "op1": "",
         "op2": "",
@@ -410,7 +410,7 @@
     {
         "id": "7a3c23dbc8ac810b",
         "type": "switch",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -435,7 +435,7 @@
     {
         "id": "805efecb490b4df6",
         "type": "debug",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -451,7 +451,7 @@
     {
         "id": "325cdb6c00699fdb",
         "type": "function",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "func": "\n    msg.payload = '<table width=\"100%\" height=\"100%\"><tr><td align=\"center\" valign=\"middle\" height=\"100%\"><big>' + msg.payload + '</big>&nbsp;&nbsp;</td></tr></table>';\n   //msg.payload = '<img src=\"' + logo + '\" height=\"40px\"> ' + msg.payload;\n\nreturn msg;",
         "outputs": 1,
@@ -471,7 +471,7 @@
     {
         "id": "12978bf48632b4a5",
         "type": "link out",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "mode": "link",
         "links": [
@@ -484,7 +484,7 @@
     {
         "id": "9e639d5d0411a444",
         "type": "ui_ui_control",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "events": "all",
         "x": 640,
@@ -498,7 +498,7 @@
     {
         "id": "331e45622632db48",
         "type": "trigger",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "op1": "",
         "op2": "",
@@ -523,7 +523,7 @@
     {
         "id": "2c0af4c069cbdcab",
         "type": "trigger",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "op1": "",
         "op2": "0",
@@ -548,7 +548,7 @@
     {
         "id": "2f9dba58d22dc166",
         "type": "inject",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "props": [
             {
@@ -577,9 +577,9 @@
     {
         "id": "6ce6de74ec15dcd3",
         "type": "function",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "gauges[0]",
-        "func": "\nif (global.get(\"settings.gauges\")) {\n\n    var gauges = global.get(\"settings.gauges\");\n\n    if (gauges[0].topic) {\n\n        var topic = gauges[0].topic; //global.get(\"localNetworkId\") + \"/+/DHW/dat/tCo\";\n        msg.topic = [];\n        msg.topic.push({ \"topic\": topic, \"qos\": 0 });\n        msg.action = \"subscribe\"\n        msg.payload = null;\n\n        return msg;\n    }\n   \n}\n\n\nreturn null;\n\n",
+        "func": "\nif (global.get(\"settings.gauges\")) {\n\n    var gauges = global.get(\"settings.gauges.value\");\n\n    if (gauges[0].topic) {\n\n        var topic = gauges[0].topic; //global.get(\"localNetworkId\") + \"/+/DHW/dat/tCo\";\n        msg.topic = [];\n        msg.topic.push({ \"topic\": topic, \"qos\": 0 });\n        msg.action = \"subscribe\"\n        msg.payload = null;\n\n        return msg;\n    }\n   \n}\n\n\nreturn null;\n\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -589,14 +589,15 @@
         "y": 720,
         "wires": [
             [
-                "567cfc25d683ae00"
+                "567cfc25d683ae00",
+                "263f5e9cc452b088"
             ]
         ]
     },
     {
         "id": "12cd1b8e22ad5a37",
         "type": "mqtt in",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "topic": "",
         "qos": "0",
@@ -617,7 +618,7 @@
     {
         "id": "3aa7ae8680fba7c7",
         "type": "inject",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "props": [
             {
@@ -646,9 +647,9 @@
     {
         "id": "aa2119ed755b3403",
         "type": "function",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "gauges[1]",
-        "func": "\nif (global.get(\"settings.gauges\")) {\n\n    var gauges = global.get(\"settings.gauges\");\n\n    if (gauges[0].topic) {\n\n        var topic = gauges[1].topic; //global.get(\"localNetworkId\") + \"/+/DHW/dat/tCo\";\n        msg.topic = [];\n        msg.topic.push({ \"topic\": topic, \"qos\": 0 });\n        msg.action = \"subscribe\"\n        msg.payload = null;\n\n        return msg;\n    }\n\n}\n\n\nreturn null;",
+        "func": "\nif (global.get(\"settings.gauges\")) {\n\n    var gauges = global.get(\"settings.gauges.value\");\n\n    if (gauges[1].topic) {\n\n        var topic = gauges[1].topic; //global.get(\"localNetworkId\") + \"/+/DHW/dat/tCo\";\n        msg.topic = [];\n        msg.topic.push({ \"topic\": topic, \"qos\": 0 });\n        msg.action = \"subscribe\"\n        msg.payload = null;\n\n        return msg;\n    }\n\n}\n\n\nreturn null;\n\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -665,7 +666,7 @@
     {
         "id": "2a33f13c34b9f316",
         "type": "inject",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "props": [
             {
@@ -694,7 +695,7 @@
     {
         "id": "567cfc25d683ae00",
         "type": "mqtt in",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "topic": "",
         "qos": "0",
@@ -715,7 +716,7 @@
     {
         "id": "b6cf9f0c.00abb",
         "type": "ui_template",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "group": "84ad1d4c.e0002",
         "name": "header icons",
         "order": 2,
@@ -736,7 +737,7 @@
     {
         "id": "1c4fc445b04f8379",
         "type": "mqtt in",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "topic": "html/headerIcons",
         "qos": "0",
@@ -757,7 +758,7 @@
     {
         "id": "1f6bc0a9f32c14db",
         "type": "mqtt in",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "topic": "cmd/displayMessage",
         "qos": "0",
@@ -778,7 +779,7 @@
     {
         "id": "26f29a02fae45280",
         "type": "mqtt out",
-        "z": "b7a4eb8c.aec2c8",
+        "z": "9a9fe8141212d6cf",
         "name": "",
         "topic": "user/pin",
         "qos": "0",
@@ -794,8 +795,26 @@
         "wires": []
     },
     {
+        "id": "263f5e9cc452b088",
+        "type": "debug",
+        "z": "9a9fe8141212d6cf",
+        "name": "debug 31",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 660,
+        "wires": []
+    },
+    {
         "id": "7aaf3d97.4092e4",
         "type": "ui_group",
+        "z": "9a9fe8141212d6cf",
         "name": "Dash1",
         "tab": "d81a7cb4.620e68",
         "order": 4,
@@ -807,6 +826,7 @@
     {
         "id": "b41f6501.8d6cb8",
         "type": "ui_group",
+        "z": "9a9fe8141212d6cf",
         "name": "Dash2",
         "tab": "d81a7cb4.620e68",
         "order": 3,
@@ -818,6 +838,7 @@
     {
         "id": "b7224d05.8b248",
         "type": "ui_group",
+        "z": "9a9fe8141212d6cf",
         "name": "Head2",
         "tab": "d81a7cb4.620e68",
         "order": 1,
@@ -829,6 +850,7 @@
     {
         "id": "84ad1d4c.e0002",
         "type": "ui_group",
+        "z": "9a9fe8141212d6cf",
         "name": "Head",
         "tab": "d81a7cb4.620e68",
         "order": 2,
@@ -868,6 +890,7 @@
     {
         "id": "d81a7cb4.620e68",
         "type": "ui_tab",
+        "z": "9a9fe8141212d6cf",
         "name": "Dashboard",
         "icon": "dashboard",
         "order": 2,
