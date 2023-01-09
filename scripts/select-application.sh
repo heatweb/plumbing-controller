@@ -114,6 +114,17 @@ if [ $exitstatus -eq 0 ]; then
         if [ -f "/boot/heatweb/composer/install.sh" ]; then
             bash /boot/heatweb/composer/install.sh
         fi
+        
+        if (whiptail --title "Heatweb Plumbing Controller" --yesno "Do you want to run Composer now?" 0 0 \
+                     --yes-button "Confirm" \
+                     --no-button "No"); then
+            node /home/pi/plumbing-controller/scripts/flow-composer/flow-composer.js /boot/heatweb/composer/composer.json
+            whiptail --title "Heatweb Plumbing Controller" --msgbox "Composer has been finished. \nApplication should now be running in Node-RED on port 1880." 8 78
+        
+        fi
+        
+        
+        
                 
     fi
 else
