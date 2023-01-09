@@ -1,0 +1,877 @@
+[
+    {
+        "id": "b7a4eb8c.aec2c8",
+        "type": "tab",
+        "label": "Front",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "6129542c.75c96c",
+        "type": "function",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "func": "\n\nmsg.topic = msg.topic.split(\"/\")[4] ;\n\nvar gauges = global.get(\"settings.gauges\");\n\nif (gauges[0].title) { msg.topic = gauges[0].title; }\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 720,
+        "wires": [
+            [
+                "16545db5.a1289a",
+                "61cbc5f5.22dbbc"
+            ]
+        ]
+    },
+    {
+        "id": "3eefcd4f.bd3522",
+        "type": "function",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "func": "\nmsg.topic = msg.topic.split(\"/\")[4];\n\nvar gauges = global.get(\"settings.gauges\");\n\nif (gauges[1].title) { msg.topic = gauges[1].title; }\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 800,
+        "wires": [
+            [
+                "ffc6c523.b47708",
+                "61cbc5f5.22dbbc"
+            ]
+        ]
+    },
+    {
+        "id": "16545db5.a1289a",
+        "type": "ui_gauge",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "group": "7aaf3d97.4092e4",
+        "order": 1,
+        "width": "4",
+        "height": "3",
+        "gtype": "gage",
+        "title": "{{msg.topic}}",
+        "label": "",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#0080ff",
+            "#00ff00",
+            "#ca3838"
+        ],
+        "seg1": "65",
+        "seg2": "83",
+        "diff": false,
+        "className": "",
+        "x": 990,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "ffc6c523.b47708",
+        "type": "ui_gauge",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "group": "7aaf3d97.4092e4",
+        "order": 3,
+        "width": "4",
+        "height": "3",
+        "gtype": "gage",
+        "title": "{{msg.topic}}",
+        "label": "",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#0080ff",
+            "#00ff00",
+            "#ca3838"
+        ],
+        "seg1": "45",
+        "seg2": "65",
+        "diff": false,
+        "className": "",
+        "x": 990,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "61cbc5f5.22dbbc",
+        "type": "ui_chart",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "group": "b41f6501.8d6cb8",
+        "order": 2,
+        "width": "8",
+        "height": "5",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "bezier",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#fb5050",
+            "#568cd2",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 990,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c24f70d0.17a83",
+        "type": "ui_template",
+        "z": "b7a4eb8c.aec2c8",
+        "group": "b7224d05.8b248",
+        "name": "Heatweb",
+        "order": 2,
+        "width": "8",
+        "height": "2",
+        "format": "<p align=\"center \" style=\"padding-top: 10px\">\n    <b><big>HEATWEB</big></b>\n</p>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1180,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ef81efb5.e9264",
+        "type": "inject",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "15",
+        "topic": "",
+        "payload": "nodeDescription",
+        "payloadType": "global",
+        "x": 600,
+        "y": 180,
+        "wires": [
+            [
+                "2c0af4c069cbdcab"
+            ]
+        ]
+    },
+    {
+        "id": "35167232.7ce0ae",
+        "type": "template",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "field": "template",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{{payload}}}",
+        "output": "str",
+        "x": 1020,
+        "y": 40,
+        "wires": [
+            [
+                "c24f70d0.17a83"
+            ]
+        ]
+    },
+    {
+        "id": "6cce1b9.af560e4",
+        "type": "link in",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "screenmessage",
+        "links": [
+            "51e62b0a.b42434",
+            "12978bf48632b4a5"
+        ],
+        "x": 915,
+        "y": 40,
+        "wires": [
+            [
+                "35167232.7ce0ae"
+            ]
+        ]
+    },
+    {
+        "id": "51e62b0a.b42434",
+        "type": "link out",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "links": [
+            "6cce1b9.af560e4"
+        ],
+        "x": 1155,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "5e26c129.76b25",
+        "type": "ui_template",
+        "z": "b7a4eb8c.aec2c8",
+        "d": true,
+        "group": "84ad1d4c.e0002",
+        "name": "Virtual Keyboard",
+        "order": 3,
+        "width": "1",
+        "height": "1",
+        "format": "<script> \n    \n// the semi-colon before function invocation is a safety net against concatenated\n// scripts and/or other plugins which may not be closed properly.\n; (function ($, window, document, undefined) {\n\n    // undefined is used here as the undefined global variable in ECMAScript 3 is\n    // mutable (ie. it can be changed by someone else). undefined isn't really being\n    // passed in so we can ensure the value of it is truly undefined. In ES5, undefined\n    // can no longer be modified.\n\n    // window and document are passed through as local variable rather than global\n    // as this (slightly) quickens the resolution process and can be more efficiently\n    // minified (especially when both are regularly referenced in your plugin).\n\n    // Create the defaults once\n    var pluginName = \"jkeyboard\",\n        defaults = {\n            layout: \"english\",\n            input: $('#input'),\n            customLayouts: {\n                selectable: []\n            },\n        };\n\n\n    var function_keys = {\n        backspace: {\n            text: 'DEL',\n        },\n        return: {\n            text: 'Enter'\n        },\n        shift: {\n            text: 'Shift'\n        },\n        space: {\n            text: 'Space'\n        },\n        numeric_switch: {\n            text: '123',\n            command: function () {\n                this.createKeyboard('numeric');\n                this.events();\n            }\n        },\n        layout_switch: {\n            text: '<i class=\"fa fa-keyboard-o\" aria-hidden=\"true\"></i>',\n            command: function () {\n                var l = this.toggleLayout();\n                this.createKeyboard(l);\n                this.events();\n            }\n        },\n        character_switch: {\n            text: 'ABC',\n            command: function () {\n                this.createKeyboard(layout);\n                this.events();\n            }\n        },\n        symbol_switch: {\n            text: '#+=',\n            command: function () {\n                this.createKeyboard('symbolic');\n                this.events();\n            }\n        }\n    };\n\n\n    var layouts = {\n        selectable: ['azeri', 'english', 'russian','french', 'emoji'],\n        azeri: [\n            ['q', 'ü', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'ö', 'ğ'],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ı', 'ə'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'ç', 'ş', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        english: [\n            ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        russian: [\n            ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х'],\n            ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],\n            ['shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        french: [\n            ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',],\n            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l','à','ç'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm','é','è', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],\n        emoji: [\n            ['😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆', '😉', '😊',],\n            ['😋', '😎', '😍', '😘', 'g', 'h', 'j', 'k', 'l','à','ç'],\n            ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm','é','è', 'backspace'],\n            ['numeric_switch', 'layout_switch', 'space', 'return']\n        ],            \n        numeric: [\n            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],\n            ['-', '/', ':', ';', '(', ')', '$', '&', '@', '\"'],\n            ['symbol_switch', '.', ',', '?', '!', \"'\", 'backspace'],\n            ['character_switch', 'layout_switch', 'space', 'return'],\n        ],\n        numbers_only: [\n            ['1', '2', '3',],\n            ['4', '5', '6',],\n            ['7', '8', '9',],\n            ['0', 'backspace'],\n        ],\n        symbolic: [\n            ['[', ']', '{', '}', '#', '%', '^', '*', '+', '='],\n            ['_', '\\\\', '|', '~', '<', '>'],\n            ['numeric_switch', '.', ',', '?', '!', \"'\", 'backspace'],\n            ['character_switch', 'layout_switch', 'space', 'return'],\n\n        ]\n    }\n\n    var shift = false, capslock = false, layout = 'english', layout_id = 0;\n\n    // The actual plugin constructor\n    function Plugin(element, options) {\n        this.element = element;\n        // jQuery has an extend method which merges the contents of two or\n        // more objects, storing the result in the first object. The first object\n        // is generally empty as we don't want to alter the default options for\n        // future instances of the plugin\n        this.settings = $.extend({}, defaults, options);\n        // Extend & Merge the cusom layouts\n        layouts = $.extend(true, {}, this.settings.customLayouts, layouts);\n        if (Array.isArray(this.settings.customLayouts.selectable)) {\n            $.merge(layouts.selectable, this.settings.customLayouts.selectable);\n        }\n        this._defaults = defaults;\n        this._name = pluginName;\n        this.init();\n    }\n\n    Plugin.prototype = {\n        init: function () {\n            layout = this.settings.layout;\n            this.createKeyboard(layout);\n            this.events();\n        },\n\n        setInput: function (newInputField) {\n            this.settings.input = newInputField;\n        },\n\n        createKeyboard: function (layout) {\n            shift = false;\n            capslock = false;\n\n            var keyboard_container = $('<ul/>').addClass('jkeyboard'),\n                me = this;\n\n            layouts[layout].forEach(function (line, index) {\n                var line_container = $('<li/>').addClass('jline');\n                line_container.append(me.createLine(line));\n                keyboard_container.append(line_container);\n            });\n\n            $(this.element).html('').append(keyboard_container);\n        },\n\n        createLine: function (line) {\n            var line_container = $('<ul/>');\n\n            line.forEach(function (key, index) {\n                var key_container = $('<li/>').addClass('jkey').data('command', key);\n\n                if (function_keys[key]) {\n                    key_container.addClass(key).html(function_keys[key].text);\n                }\n                else {\n                    key_container.addClass('letter').html(key);\n                }\n\n                line_container.append(key_container);\n            })\n\n            return line_container;\n        },\n\n        events: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift'),\n                space_key = $(this.element).find('.space'),\n                backspace_key = $(this.element).find('.backspace'),\n                return_key = $(this.element).find('.return'),\n\n                me = this,\n                fkeys = Object.keys(function_keys).map(function (k) {\n                    return '.' + k;\n                }).join(',');\n\n            letters.on('click', function () {\n                me.type((shift || capslock) ? $(this).text().toUpperCase() : $(this).text());\n            });\n\n            space_key.on('click', function () {\n                me.type(' ');\n            });\n\n            return_key.on('click', function () {\n                me.type(\"\\n\");\n                me.settings.input.parents('form').submit();\n            });\n\n            backspace_key.on('click', function () {\n                me.backspace();\n            });\n\n            shift_key.on('click', function () {\n                if (capslock) {\n                    me.toggleShiftOff();\n                    capslock = false;\n                } else {\n                    me.toggleShiftOn();\n                }\n            }).on('dblclick', function () {\n                capslock = true;\n            });\n\n\n            $(fkeys).on('click', function () {\n                var command = function_keys[$(this).data('command')].command;\n                if (!command) return;\n\n                command.call(me);\n            });\n        },\n\n        type: function (key) {\n            var input = this.settings.input,\n                val = input.val(),\n                input_node = input.get(0),\n                start = input_node.selectionStart,\n                end = input_node.selectionEnd;\n\n            var max_length = $(input).attr(\"maxlength\");\n            if (start == end && end == val.length) {\n                if (!max_length || val.length < max_length) {\n                    input.val(val + key);\n                    input.change()\n                    $('#vkeyname').text(val + key)\n                }\n            } else {\n                if (input_node.type == \"text\"){\n                    var new_string = this.insertToString(start, end, val, key);\n                    input.val(new_string);\n                    start++;\n                    end = start;\n                    input_node.setSelectionRange(start, end);\n                }else{\n                    input.val(val + key);\n                }\n                input.change()\n                $('#vkeyname').text(val + key)\n                \n            }\n            input.trigger('focus');\n\n            if (shift && !capslock) {\n                this.toggleShiftOff();\n            }\n        },\n\n        backspace: function () {\n            var input = this.settings.input,\n                val = input.val();\n                input_node = input.get(0),\n                start = input_node.selectionStart,\n                end = input_node.selectionEnd;\n            if (input.type == \"text\"){\n                input.val(val.slice(0, start-1) + val.slice(start))\n                input_node.setSelectionRange(start-1, start-1);\n                console.log(val)\n                $('#vkeyname').text(val)\n            }else{\n                input.val(val.slice(0,-1))\n                $('#vkeyname').text(val.slice(0,-1))\n            }\n            input.change()\n            input.focus()\n        },\n\n        toggleShiftOn: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift');\n\n            letters.addClass('uppercase');\n            shift_key.addClass('active')\n            shift = true;\n        },\n\n        toggleShiftOff: function () {\n            var letters = $(this.element).find('.letter'),\n                shift_key = $(this.element).find('.shift');\n\n            letters.removeClass('uppercase');\n            shift_key.removeClass('active');\n            shift = false;\n        },\n\n        toggleLayout: function () {\n            layout_id = layout_id || 0;\n            var plain_layouts = layouts.selectable;\n            layout_id++;\n\n            var current_id = layout_id % plain_layouts.length;\n            var SelectedLayoutName = plain_layouts[current_id];\n            $('#vkeyname').text('V-Keyboard ' + SelectedLayoutName )\n            return plain_layouts[current_id];\n        },\n\n        insertToString: function (start, end, string, insert_string) {\n            return string.substring(0, start) + insert_string + string.substring(end, string.length);\n        }\n    };\n\n        /*\n\t\t// A really lightweight plugin wrapper around the constructor,\n\t\t// preventing against multiple instantiations\n\t\t$.fn[ pluginName ] = function ( options ) {\n\t\t\t\treturn this.each(function() {\n\t\t\t\t\t\tif ( !$.data( this, \"plugin_\" + pluginName ) ) {\n\t\t\t\t\t\t\t\t$.data( this, \"plugin_\" + pluginName, new Plugin( this, options ) );\n\t\t\t\t\t\t}\n\t\t\t\t});\n\t\t};\n        */\n        var methods = {\n            init: function(options) {\n                if (!this.data(\"plugin_\" + pluginName)) {\n                    this.data(\"plugin_\" + pluginName, new Plugin(this, options));\n                }\n            },\n\t\t\tsetInput: function(content) {\n\t\t\t\tthis.data(\"plugin_\" + pluginName).setInput($(content));\n            },\n            setLayout: function(layoutname) {\n                // change layout if it is not match current\n                object = this.data(\"plugin_\" + pluginName);\n                if (typeof(layouts[layoutname]) !== 'undefined' && object.settings.layout != layoutname) {\n                    object.settings.layout = layoutname;\n                    object.createKeyboard(layoutname);\n                    object.events();\n                };\n            },\n        };\n\n\t\t$.fn[pluginName] = function (methodOrOptions) {\n            if (methods[methodOrOptions]) {\n                return methods[methodOrOptions].apply(this.first(), Array.prototype.slice.call( arguments, 1));\n            } else if (typeof methodOrOptions === 'object' || ! methodOrOptions) {\n                // Default to \"init\"\n                return methods.init.apply(this.first(), arguments);\n            } else {\n                $.error('Method ' +  methodOrOptions + ' does not exist on jQuery.tooltip');\n            }\n        };\n\n})(jQuery, window, document);\n</script>\n<style>\n    .jkeyboard {\n  display: inline-block;\n}\n.jkeyboard, .jkeyboard .jline, .jkeyboard .jline ul {\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n.jkeyboard .jline {\n  text-align: center;\n  margin-left: -14px;\n}\n.jkeyboard .jline ul li {\n  font-family: arial, sans-serif;\n  font-size: 20px;\n  display: inline-block;\n  border: 1px solid #468db3;\n  -webkit-box-shadow: 0 0 3px #468db3;\n  -webkit-box-shadow: inset 0 0 3px #468db3;\n  margin: 5px 0 1px 6px;\n  color: #000000;\n  border-radius: 5px;\n  width: 52px;\n  height: 52px;\n  box-sizing: border-box;\n  text-align: center;\n  line-height: 52px;\n  overflow: hidden;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: -moz-none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.jkeyboard .jline ul li.uppercase {\n  text-transform: uppercase;\n}\n.jkeyboard .jline ul li:hover, .jkeyboard .jline ul li:active {\n  background-color: #185a82;\n}\n.jkeyboard .jline .return {\n  width: 80px;\n}\n.jkeyboard .jline .space {\n  width: 366px;\n}\n.jkeyboard .jline .numeric_switch {\n  width: 65px;\n}\n.jkeyboard .jline .layout_switch {\n}\n.jkeyboard .jline .shift {\n  width: 60px;\n}\n.jkeyboard .jline .backspace {\n  width: 69px;\n}\n</style>\n\n\n\n\n<style>\nbody {font-family: Arial, Helvetica, sans-serif;}\n\n.nr-dashboard-theme .nr-dashboard-template .md-button:not(:first-of-type) {\n    margin-top: 0px;\n}\n\n/* The Modal (background) */\n.modal {\n    display: none; /* Hidden by default */\n    position: fixed; /* Stay in place */\n    opacity:0.99;\n    z-index: 100; /* Sit on top */\n    left: 0;\n    top: 0;\n    width: 100%; /* Full width */\n    height: 100%; /* Full height */\n    overflow: auto; /* Enable scroll if needed */\n    background-color: rgb(0,0,0); /* Fallback color */\n    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n/* Modal Content */\n.modal-content {\n    position: fixed;\n    background-color: #fefefe;\n    margin: auto;\n    padding: 0;\n    bottom: 0%;\n    left: 50%;\n    transform: translate(-50%, 0%);\n    border: 1px solid #888;\n    width: fit-content;\n    max-width: 100%;\n    max-height: 100%;\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);\n    -webkit-animation-name: animate;\n    -webkit-animation-duration: 0.4s;\n    animation-name: animate;\n    animation-duration: 0.4s\n}\n\n/* Add Animation */\n@-webkit-keyframes animate {\n    from {bottom:100%; opacity:0} \n    to {bottom:0%; opacity:1}\n}\n\n@keyframes animate {\n    from {bottom:100%; opacity:0}\n    to {bottom:0%; opacity:1}\n}\n\n/* The Close Button */\n.close {\n    color: black;\n    float: right;\n    font-size: 28px;\n    font-weight: bold;\n}\n\n.close:hover,\n.close:focus {\n    color: #000;\n    text-decoration: none;\n    cursor: pointer;\n}\n\n.modal-header {\n    padding: 2px 16px;\n    background-color: aliceblue;\n    color: white;\n}\n\n.modal-body {padding: 2px 16px;}\n\n.modal-footer {\n    padding: 2px 16px;\n    background-color: #5cb85c;\n    color: white;\n}\n</style>\n\n<!-- The Modal -->\n<div id=\"myModal\" class=\"modal\">\n\n  <!-- Modal content -->\n  <div class=\"modal-content\">\n      <div class=\"modal-header\">\n      <span class=\"close\" onclick=\"closeModal()\">&times;</span>\n      <h2 id=\"vkeyname\" style=\"background-color: aliceblue !important; color: black !important; text-align: center; min-height: 30px;\">V-Keyboard</h2>\n    </div>\n    <div class=\"modal-body\">\n        <div id=\"keyboard\"></div>\n        <div>\n        </div>\n    </div>\n  </div>\n</div>\n\n\n<script>\n    // Get the modal\nvar modal = document.getElementById('myModal');\n\n/*\n$('input[type=text]').click(function () {\n    $('#keyboard').unbind().removeData();\n        $('#keyboard').jkeyboard({\n            layout: \"english\",\n            input: $('#'+$(this).attr('id'))\n    });\n});\n\n$('input[type=number]').click(function () {\n    $('#keyboard').unbind().removeData();\n        $('#keyboard').jkeyboard({\n            layout: \"numbers_only\",\n            input: $('#'+$(this).attr('id'))\n    });\n});\n*/\n\nvar inputTags;\nvar inputType;\n\nvar getinputs = function() {\n    inputTags = document.getElementsByTagName(\"input\");\n    console.log(inputTags)\n    for (var i = 0; i < inputTags.length; i++) {\n        inputTags[i].addEventListener('click', openModal, false)\n    }\n}\n\nsetTimeout(function(){ getinputs(); }, 1000);\n\nvar inputTarget;\n\nvar openModal = function() {\n    inputType = event.target.type\n    inputTarget = event.target\n    var layoutName;\n    if (inputType == \"number\"){\n        //inputTarget.type = \"number\" //hack because chrome doesn't allow setselection in number inputs\n        //inputTarget.value = \"\"\n        layoutName = \"numbers_only\"\n    }else{\n        layoutName = \"english\"\n    }\n    $('#vkeyname').text(event.target.value)\n    $('#keyboard').unbind().removeData();\n    modal.style.display = \"block\";\n    $('#keyboard').jkeyboard({\n        layout: layoutName,\n        input: $('#'+$(this).attr('id'))\n    });\n}\n\n\n// Get the <span> element that closes the modal\nvar span = document.getElementsByClassName(\"close\")[0];\n\n// When the user clicks on <span> (x), close the modal\n//span.onclick = function(event) {\n  //closeModal()\n//}\n\n// When the user clicks anywhere outside of the modal, close it\nwindow.onclick = function(event) {\n    var source = event.target;\n    if (source == modal || source == span) {\n        closeModal(source)\n    }\n};\n\nvar closeModal = function(source){\n    //console.log(\"closing\")\n    modal.style.display = \"none\";\n   \n    if (inputType == \"number\"){\n        inputTarget.type = \"number\" //hack because chrome doesn't allow selectionstart on number inputs\n    }\n}\n\n</script>\n<script>\n\nvar clickState = 1;\nvar btn = document.querySelector('.VK');\n\nbtn.addEventListener('click', function(){\n\n  if (clickState == 0) {\n    this.textContent = 'V-KeyBoard On';\n    modal = document.getElementById('myModal');\n    clickState = 1;\n  } else {\n    this.textContent = 'V-KeyBoard Off';\n    modal = document.getElementById('empty');\n    clickState = 0;\n  }\n\n});\n</script>\n\n<style>\n.VK{\n    position: fixed;\n    top: 60px;\n    right: 20px;\n    height: 30px;\n}\n</style>\n\n<div id=\"empty\"></div>\n<button style=\"display:none;\" class=\"VK\">V-KeyBoard On</button> ",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 200,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "496c2344.872eec",
+        "type": "ui_text_input",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "group": "84ad1d4c.e0002",
+        "order": 4,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "mode": "number",
+        "delay": "1000",
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 630,
+        "y": 420,
+        "wires": [
+            [
+                "72569eb3.4a338",
+                "7a3c23dbc8ac810b"
+            ]
+        ]
+    },
+    {
+        "id": "d2461055.3396d",
+        "type": "trigger",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "op1": "",
+        "op2": "0000",
+        "op1type": "nul",
+        "op2type": "num",
+        "duration": "10",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 530,
+        "y": 540,
+        "wires": [
+            [
+                "496c2344.872eec"
+            ]
+        ]
+    },
+    {
+        "id": "72569eb3.4a338",
+        "type": "switch",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 540,
+        "wires": [
+            [
+                "d2461055.3396d"
+            ]
+        ]
+    },
+    {
+        "id": "8aa44365.1d51e",
+        "type": "function",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "settings.title",
+        "func": "\nmsg.payload = \"<p><small>\" + global.get(\"networkId\") + \" / \" +  global.get(\"node\") + \"</small></p>\";\nmsg.payload += \"<p><big>\" + global.get(\"settings.title.value\") || global.get(\"nodeDescription\") + \"</big></p>\";\n\nvar state = global.get(\"readings.\"+global.get(\"localNetworkId\")+\".\"+global.get(\"node\")+\".stat.state.value\");\nif (state!==\"ok\") {\n    msg.payload += '<p><small><span style=\"color:#ff0000\">' + state + \"</span></small></p>\";\n}\n\nvar logo  = global.get(\"settings.customerLogo.value\") || \"http://heatweb.co.uk/w/images/thumb/3/3f/G12749.png/120px-G12749.png\";\nif (logo) {\n    \n    if (logo.indexOf(\"http\")<0) { \n        \n        logo = \"/files/images/\" + logo;\n        \n    }\n\n\n    msg.payload = '<table align=\"center\" width=\"94%\" height=\"100%\"><tr><td align=\"left\" valign=\"middle\" height=\"100%\"><img style=\"border-radius: 5px; max-height: 90px\" src=\"' + logo + '\"></td><td align=\"right\" valign=\"middle\" height=\"100%\">' + msg.payload + '</td></tr></table>';\n   //msg.payload = '<img src=\"' + logo + '\" height=\"40px\"> ' + msg.payload;\n} else {\n    \n    msg.payload = '<table width=\"100%\" height=\"100%\"><tr><td align=\"center\" valign=\"middle\" height=\"100%\"><big>' + msg.payload + '</big>&nbsp;&nbsp;</td></tr></table>';\n\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 180,
+        "wires": [
+            [
+                "51e62b0a.b42434"
+            ]
+        ]
+    },
+    {
+        "id": "cfd7f87bee217367",
+        "type": "function",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "func": "msg.topic = \"_/user/pin\" ;\nmsg.title = \"User Keypad PIN Input\" ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 540,
+        "wires": [
+            [
+                "805efecb490b4df6",
+                "26f29a02fae45280"
+            ]
+        ]
+    },
+    {
+        "id": "f507145e54d36ba5",
+        "type": "trigger",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "5",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 900,
+        "y": 540,
+        "wires": [
+            [
+                "cfd7f87bee217367"
+            ]
+        ]
+    },
+    {
+        "id": "7a3c23dbc8ac810b",
+        "type": "switch",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 750,
+        "y": 540,
+        "wires": [
+            [
+                "f507145e54d36ba5"
+            ]
+        ]
+    },
+    {
+        "id": "805efecb490b4df6",
+        "type": "debug",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "325cdb6c00699fdb",
+        "type": "function",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "func": "\n    msg.payload = '<table width=\"100%\" height=\"100%\"><tr><td align=\"center\" valign=\"middle\" height=\"100%\"><big>' + msg.payload + '</big>&nbsp;&nbsp;</td></tr></table>';\n   //msg.payload = '<img src=\"' + logo + '\" height=\"40px\"> ' + msg.payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 60,
+        "wires": [
+            [
+                "12978bf48632b4a5",
+                "331e45622632db48"
+            ]
+        ]
+    },
+    {
+        "id": "12978bf48632b4a5",
+        "type": "link out",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "6cce1b9.af560e4"
+        ],
+        "x": 575,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "9e639d5d0411a444",
+        "type": "ui_ui_control",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "events": "all",
+        "x": 640,
+        "y": 240,
+        "wires": [
+            [
+                "2c0af4c069cbdcab"
+            ]
+        ]
+    },
+    {
+        "id": "331e45622632db48",
+        "type": "trigger",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "30",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 610,
+        "y": 120,
+        "wires": [
+            [
+                "2c0af4c069cbdcab"
+            ]
+        ]
+    },
+    {
+        "id": "2c0af4c069cbdcab",
+        "type": "trigger",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "pay",
+        "op2type": "str",
+        "duration": "-15",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": " ",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 830,
+        "y": 180,
+        "wires": [
+            [
+                "8aa44365.1d51e"
+            ]
+        ]
+    },
+    {
+        "id": "2f9dba58d22dc166",
+        "type": "inject",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 720,
+        "wires": [
+            [
+                "6ce6de74ec15dcd3"
+            ]
+        ]
+    },
+    {
+        "id": "6ce6de74ec15dcd3",
+        "type": "function",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "gauges[0]",
+        "func": "\nif (global.get(\"settings.gauges\")) {\n\n    var gauges = global.get(\"settings.gauges\");\n\n    if (gauges[0].topic) {\n\n        var topic = gauges[0].topic; //global.get(\"localNetworkId\") + \"/+/DHW/dat/tCo\";\n        msg.topic = [];\n        msg.topic.push({ \"topic\": topic, \"qos\": 0 });\n        msg.action = \"subscribe\"\n        msg.payload = null;\n\n        return msg;\n    }\n   \n}\n\n\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 720,
+        "wires": [
+            [
+                "567cfc25d683ae00"
+            ]
+        ]
+    },
+    {
+        "id": "12cd1b8e22ad5a37",
+        "type": "mqtt in",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "7ad2997b.42a908",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 1,
+        "x": 430,
+        "y": 800,
+        "wires": [
+            [
+                "3eefcd4f.bd3522"
+            ]
+        ]
+    },
+    {
+        "id": "3aa7ae8680fba7c7",
+        "type": "inject",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 800,
+        "wires": [
+            [
+                "aa2119ed755b3403"
+            ]
+        ]
+    },
+    {
+        "id": "aa2119ed755b3403",
+        "type": "function",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "gauges[1]",
+        "func": "\nif (global.get(\"settings.gauges\")) {\n\n    var gauges = global.get(\"settings.gauges\");\n\n    if (gauges[0].topic) {\n\n        var topic = gauges[1].topic; //global.get(\"localNetworkId\") + \"/+/DHW/dat/tCo\";\n        msg.topic = [];\n        msg.topic.push({ \"topic\": topic, \"qos\": 0 });\n        msg.action = \"subscribe\"\n        msg.payload = null;\n\n        return msg;\n    }\n\n}\n\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 800,
+        "wires": [
+            [
+                "12cd1b8e22ad5a37"
+            ]
+        ]
+    },
+    {
+        "id": "2a33f13c34b9f316",
+        "type": "inject",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[]",
+        "payloadType": "json",
+        "x": 810,
+        "y": 900,
+        "wires": [
+            [
+                "61cbc5f5.22dbbc"
+            ]
+        ]
+    },
+    {
+        "id": "567cfc25d683ae00",
+        "type": "mqtt in",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "7ad2997b.42a908",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 1,
+        "x": 430,
+        "y": 720,
+        "wires": [
+            [
+                "6129542c.75c96c"
+            ]
+        ]
+    },
+    {
+        "id": "b6cf9f0c.00abb",
+        "type": "ui_template",
+        "z": "b7a4eb8c.aec2c8",
+        "group": "84ad1d4c.e0002",
+        "name": "header icons",
+        "order": 2,
+        "width": "1",
+        "height": "1",
+        "format": "<script>\n    (function(scope) {\n        //console.log('Position 1');\n        //console.dir(scope);\n        //console.log(scope.msg);\n        scope.$watch('msg.payload', function(data) {\n            //console.log('Position 2');\n            //console.dir(data);\n            //alert(data);\n            instr = data;\n        });\n    })(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 430,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1c4fc445b04f8379",
+        "type": "mqtt in",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "topic": "html/headerIcons",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "7ad2997b.42a908",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 280,
+        "wires": [
+            [
+                "b6cf9f0c.00abb"
+            ]
+        ]
+    },
+    {
+        "id": "1f6bc0a9f32c14db",
+        "type": "mqtt in",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "topic": "cmd/displayMessage",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "7ad2997b.42a908",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 60,
+        "wires": [
+            [
+                "325cdb6c00699fdb"
+            ]
+        ]
+    },
+    {
+        "id": "26f29a02fae45280",
+        "type": "mqtt out",
+        "z": "b7a4eb8c.aec2c8",
+        "name": "",
+        "topic": "user/pin",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7ad2997b.42a908",
+        "x": 1260,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "7aaf3d97.4092e4",
+        "type": "ui_group",
+        "name": "Dash1",
+        "tab": "d81a7cb4.620e68",
+        "order": 4,
+        "disp": false,
+        "width": "4",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b41f6501.8d6cb8",
+        "type": "ui_group",
+        "name": "Dash2",
+        "tab": "d81a7cb4.620e68",
+        "order": 3,
+        "disp": false,
+        "width": "8",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b7224d05.8b248",
+        "type": "ui_group",
+        "name": "Head2",
+        "tab": "d81a7cb4.620e68",
+        "order": 1,
+        "disp": false,
+        "width": "8",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "84ad1d4c.e0002",
+        "type": "ui_group",
+        "name": "Head",
+        "tab": "d81a7cb4.620e68",
+        "order": 2,
+        "disp": false,
+        "width": "4",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "7ad2997b.42a908",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "d81a7cb4.620e68",
+        "type": "ui_tab",
+        "name": "Dashboard",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]
