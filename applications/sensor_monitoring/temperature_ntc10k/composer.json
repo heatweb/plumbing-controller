@@ -1,6 +1,6 @@
 [
     {
-        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/flows_beta_plumbing_controller.json",
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/flows_standard_plumbing_controller.json",
         "targetHost": "localhost",
         "targetPort": 1880,
         "action": "flows",
@@ -16,7 +16,13 @@
         "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_front_1_0_1.json",
         "targetHost": "localhost",
         "targetPort": 1880,
-        "action": "flow"
+        "action": "flow",
+	"settings": {
+            "gauges": [
+		    {"topic":"local/+/t1/dat/temperature","title": "Temperature t1 [°C]"},
+		    {"topic":"local/+/t2/dat/temperature","title": "Temperature t2 [°C]"}
+	    ]
+        }
     },
     {
         "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_heatweb_io.json",
