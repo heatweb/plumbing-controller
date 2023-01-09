@@ -71,9 +71,10 @@ do
         fi
   
         if [[ $MYMENU == "COMPOSER" ]]; then
-            sudo docker restart noderedsetup
-            whiptail --title "Heatweb Plumbing Controller" --msgbox "Composer has been started. Please wait 1 minute for application to update." 8 78
-            
+            #sudo docker restart noderedsetup
+            #whiptail --title "Heatweb Plumbing Controller" --msgbox "Composer has been started. Please wait 1 minute for application to update." 8 78
+            node /home/pi/plumbing-controller/scripts/flow-composer/flow-composer.js /boot/heatweb/composer/composer.json
+            whiptail --title "Heatweb Plumbing Controller" --msgbox "Composer has been finished. \nApplication should now be running in Node-RED on port 1880." 8 78
         fi
   
         if [[ $MYMENU == "DEVICES" ]]; then
