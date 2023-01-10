@@ -234,6 +234,8 @@ function compose() {
               var newio = merge(curio, msg.payload.wiring.terminals, "portId");
 
               //XXXXX
+                
+              if (!settings.io) { settings.io = { "Terminal assignment" }; }
               settings.io.value = JSON.stringify(newio);
 
 
