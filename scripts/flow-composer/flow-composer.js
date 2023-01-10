@@ -5,6 +5,7 @@ const myArgs = process.argv.slice(2);
 
 const fs = require('fs');
 const fetch = require('node-fetch');
+const { exec } = require('child_process');
 
 //const querystring = require("querystring");
 //const { Curl } = require("node-libcurl");
@@ -416,11 +417,38 @@ function compose() {
         if (err) {
           console.error(err);
         }
-        // file written successfully
+        // file written successfully           
       });  
+  
+  
+  var gowriteflow = true;  
+  if (gowriteflow) {
+      
+     fs.writeFile("/home/pi/.node-red/flows_ihiu.json", msggo.payload, err => {
+        if (err) {
+          console.error(err);
+        }
+        // file written successfully     
+         
+         
+            exec('node-red-restart', (err, stdout, stderr) => {
+              if (err) {
+                //some err occurred
+                console.error(err)
+              } else {
+               // the *entire* stdout and stderr (buffered)
+               //console.log(`stdout: ${stdout}`);
+               //console.log(`stderr: ${stderr}`);
+               postnodered(msggo);   
+              }
+            });
+      });  
+      
+  } else {
     
-  postnodered(msggo);
-    
+    postnodered(msggo);
+      
+  }  
   console.log("Finished.");
     
 }
