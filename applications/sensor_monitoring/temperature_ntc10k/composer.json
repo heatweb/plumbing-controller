@@ -18,6 +18,10 @@
         "targetPort": 1880,
         "action": "flow",
 	"settings": {
+		"ioCommand": {
+		    "title": "IO Board Command",
+		    "value": "ti"
+		},
 		"gauges": {
 		    "title": "Front panel gauges",
 		    "value": [
