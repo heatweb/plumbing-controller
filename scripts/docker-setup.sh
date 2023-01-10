@@ -18,6 +18,7 @@ MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
         "goinflux" "Install InfluxDB database   " ON \
         "gomysql" "Install MySQL database   " OFF \
         "goprom" "Install Prometheus " OFF \
+        "gocomposer" "Run Composer when complete   " ON \
         "gorenew" "Remove all existing containers   " OFF 3>&1 1>&2 2>&3)
         
  if [[ $MYMENU == "" ]]; then
@@ -212,25 +213,12 @@ fi
 
 if [[ $MYMENU == *"gocomposer"* ]]; then
   
-  if [ ! "$(docker ps -a -q -f name=noderedsetup)" ]; then
-            #if [ "$(docker ps -aq -f status=exited -f name=noderedsetup)" ]; then
-            #    # cleanup
-            #    docker rm <name>
-            #fi
-            
-            sudo docker run -d -it -p 5099:1880 --net mqtt -v /boot/heatweb/:/boot/heatweb/ -v /home/pi/:/home/pi/ --add-host=host.docker.internal:host-gateway --privileged --name noderedsetup heatweb/nodered-composer-init:latest
-            sleep 3s
-            sudo docker exec noderedsetup node /home/pi/plumbing-controller/scripts/updateNodeRedPassword.js $bcryptadminpass /data/
-  else
-            sudo docker restart noderedsetup
-  fi
-    
-  echo "Node-RED Composer has been started on port 5099."
-  echo "Node-RED Composer can be found at http://localhost:5099/ui"
+  node /home/pi/plumbing-controller/scripts/flow-composer/flow-composer.js /boot/heatweb/composer/composer.json
+  whiptail --title "Heatweb Plumbing Controller" --msgbox "Composer has been finished. \nApplication should be running in Node-RED on port 1880." 8 78
   
 fi
 
 
-
 echo "Finished."
 
+    
