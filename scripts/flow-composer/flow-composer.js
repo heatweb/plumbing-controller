@@ -235,7 +235,7 @@ function compose() {
 
               //XXXXX
                 
-              if (!settings.io) { settings.io = { "title:"Terminal assignment" }; }
+              if (!settings.io) { settings.io = { "title":"Terminal assignment" }; }
               settings.io.value = JSON.stringify(newio);
 
 
