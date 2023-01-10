@@ -391,6 +391,14 @@ function compose() {
 
   msggo.url = "http://" + ftarget + "/flows";
   msggo.payload = JSON.stringify(fullflow)
+
+      fs.writeFile("/home/pi/node-hiu/flows_last_composer.json", msggo.payload, err => {
+        if (err) {
+          console.error(err);
+        }
+        // file written successfully
+      });  
+    
   postnodered(msggo);
 
 }
