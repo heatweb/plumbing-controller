@@ -227,7 +227,9 @@ function compose() {
 
             if (msg.payload.wiring && msg.payload.wiring.terminals) {
 
-              var curio = JSON.parse(settings.io.value || "[]");
+              var curio = [];
+                
+              if (settings.io) { curio = JSON.parse(settings.io.value || "[]"); }
               
               var newio = merge(curio, msg.payload.wiring.terminals, "portId");
 
