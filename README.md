@@ -8,7 +8,11 @@ See https://hwwiki.ddns.net/
 
     bash <(curl -sL https://raw.githubusercontent.com/heatweb/plumbing-controller/main/scripts/start.sh)
     
-Followed by:
+After the first run, the setup menu can be started with the foolowing command:
 
     heatweb
 
+
+## Setup Menu
+
+![Main Menu](/media/heatweb-pc-mainmenu.PNG)
