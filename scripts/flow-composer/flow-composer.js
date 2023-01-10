@@ -345,12 +345,14 @@ function compose() {
 
               if (credentials.localMqttPassword) {
 
-                  if (ff[part].type == "mqtt-broker" && (ff[part].broker == "mqtt" || ff[part].broker == "localhost")) { ff[part].credentials = { "user": "admin", "password": credentials.localMqttPassword }; }
+                  //if (ff[part].type == "mqtt-broker" && (ff[part].broker == "mqtt" || ff[part].broker == "localhost")) { ff[part].credentials = { "user": "admin", "password": credentials.localMqttPassword }; }
                 
               }
 
               if (credentials.adminPassword) {
 
+                  if (ff[part].type == "mqtt-broker" && (ff[part].broker == "mqtt" || ff[part].broker == "localhost")) { ff[part].credentials = { "user": "admin", "password": credentials.adminPassword }; }
+                
                   if (ff[part].type == "MySQLdatabase" && ff[part].host == "mysql") { ff[part].credentials = { "user": "root", "password": credentials.adminPassword }; }
 
               }
