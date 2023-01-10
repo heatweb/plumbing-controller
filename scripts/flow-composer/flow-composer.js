@@ -396,8 +396,14 @@ function compose() {
 
   }
 
+  fs.writeFile("/home/pi/node-hiu/settings.json", JSON.stringify(settings), err => {
+        if (err) {
+          console.error(err);
+        }
+        // file written successfully
+        console.log("Settings saved");
+      });  
 
-  console.log("Finished.");
   //console.log(fullflow);
 
 
@@ -412,7 +418,9 @@ function compose() {
       });  
     
   postnodered(msggo);
-
+    
+  console.log("Finished.");
+    
 }
 
 
