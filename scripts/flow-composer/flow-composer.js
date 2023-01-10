@@ -421,8 +421,8 @@ function compose() {
       });  
   
   
-  var gowriteflow = true;  
-  if (gowriteflow) {
+  //var gowriteflow = true;  
+  if (settings.composer_writeFile && settings.composer_writeFile.value) {
       
      fs.writeFile("/home/pi/.node-red/flows_ihiu.json", msggo.payload, err => {
         if (err) {
