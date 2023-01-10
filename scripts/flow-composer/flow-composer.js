@@ -100,7 +100,7 @@ async function fetchtoken(ttarg, url, tdata) {
             });
 
     const json = await res.json();    
-    console.log(ttarg, json.access_token.substr(0,90));
+    if (json.access_token) { console.log(ttarg, json.access_token.substr(0,90)); }
 
     auth[ttarg] = json.access_token || "";
 
