@@ -45,6 +45,17 @@ if (fs.existsSync("/boot/heatweb/credentials.json")) {
     
   //console.log(credentials);         
 } 
+// NEED TO ADD SECTION TO RECOMPILE CREDENTIALS FROM .txt FILES.  OR DITCH credentials.json AND JUST USE .txt FILES 
+
+if (fs.existsSync("/boot/heatweb/credentials/adminPassword.txt")) {
+    
+  console.log("loading admin password"); 
+  try { credentials.adminPassword = fs.readFileSync("/boot/heatweb/credentials/adminPassword.txt", {encoding:'utf8', flag:'r'});  } 
+  catch { console.log("Invalid credentials data.");  process.exit(1); } 
+         
+} 
+
+
 
 var config = {};
 if (fs.existsSync("/boot/heatweb/config.json")) {
@@ -57,6 +68,7 @@ if (fs.existsSync("/boot/heatweb/config.json")) {
 } 
 
 var settings = {};
+var changed_settings = false;
 if (fs.existsSync("/home/pi/node-hiu/settings.json")) {
     
   console.log("loading settings.json"); 
