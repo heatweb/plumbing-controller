@@ -15,6 +15,7 @@ MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
         "\n   Make selections (UP, DOWN, SPACE) then TAB to OK/Cancel " 19 73 10 \
         "gopipass" "Update pi user password                         " ON \
         "gonrpass" "Update Node-RED admin password   " ON \
+        "goportpass" "Renew Portainer password   " ON \
         "goinflux" "Install InfluxDB database   " ON \
         "gomysql" "Install MySQL database   " OFF \
         "goprom" "Install Prometheus " OFF \
@@ -142,18 +143,22 @@ if [[ $MYMENU == *"goinflux"* ]]; then
 
 fi
 
-docker stop portainer
-docker pull portainer/helper-reset-password
-#docker run --rm -v portainer_data:/data portainer/helper-reset-password > /home/pi/portainerPassword.txt
-docker run --rm -v portainer_data:/data portainer/helper-reset-password 2>&1 | tee -a /home/pi/portainerLog.txt
-sudo grep login /home/pi/portainerLog.txt | sed 's/.*login:\s//g' > /home/pi/portainerPassword.txt
-echo "A new password has been given to Portainer:"
-cat /home/pi/portainerPassword.txt
-sudo cp /home/pi/portainerPassword.txt /boot/heatweb/credentials/portainerPassword.txt
-sudo rm /home/pi/portainerLog.txt
-sudo rm /home/pi/portainerPassword.txt
-docker start portainer
-echo "Portainer has been started on port 9000."
+if [[ $MYMENU == *"goportpass"* ]]; then
+
+        docker stop portainer
+        docker pull portainer/helper-reset-password
+        #docker run --rm -v portainer_data:/data portainer/helper-reset-password > /home/pi/portainerPassword.txt
+        docker run --rm -v portainer_data:/data portainer/helper-reset-password 2>&1 | tee -a /home/pi/portainerLog.txt
+        sudo grep login /home/pi/portainerLog.txt | sed 's/.*login:\s//g' > /home/pi/portainerPassword.txt
+        echo "A new password has been given to Portainer:"
+        cat /home/pi/portainerPassword.txt
+        sudo cp /home/pi/portainerPassword.txt /boot/heatweb/credentials/portainerPassword.txt
+        sudo rm /home/pi/portainerLog.txt
+        sudo rm /home/pi/portainerPassword.txt
+        docker start portainer
+        echo "Portainer has been started on port 9000."
+
+fi
 
 echo "Please wait 1 minute to complete..."
 sleep 1m
