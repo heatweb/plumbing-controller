@@ -1,5 +1,5 @@
 const myArgs = process.argv.slice(2);
-if (!myArgs[0]) { console.log("require a setting id.");  process.exit(1); }
+if (!myArgs[0]) { console.log("useage: change-settings.js key value [title] [units]");  process.exit(1); }
 if (!myArgs[1]) { console.log("require a setting value.");  process.exit(1); }
 
 var SETTINGS = "/home/pi/node-hiu/settings.json"; 
