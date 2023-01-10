@@ -14,7 +14,7 @@ mainmenu() {
                 "APP" "   Select application   " \
                 "PASSWORD" "   Set admin password                         " \
                 "SETUP" "   Setup services   " \
-                "COMPOSER" "   Compose application   " \
+                "COMPOSER" "   Compose & Run application   " \
                 "EXIT" "   Quit   " 3>&1 1>&2 2>&3)
 }
 
