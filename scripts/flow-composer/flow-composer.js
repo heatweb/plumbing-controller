@@ -443,7 +443,7 @@ function compose() {
         if (err) {
           console.error(err);
         }
-        // file written successfully     
+        console.log("flows_ihiu.json written successfully")     
          
          
             exec('node-red-restart', (err, stdout, stderr) => {
@@ -454,7 +454,8 @@ function compose() {
                // the *entire* stdout and stderr (buffered)
                //console.log(`stdout: ${stdout}`);
                //console.log(`stderr: ${stderr}`);
-               postnodered(msggo);   
+                  
+               //postnodered(msggo);   
               }
             });
       });  
