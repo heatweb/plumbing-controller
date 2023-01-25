@@ -11,9 +11,9 @@ mainmenu() {
                 "UPDATE_BOARD" "   Update I/O board                    " \
                 "INSTALL" "   First installation                         " \
                 "KIOSK" "   Activate kiosk browser   " \
-                "APP" "   Select application   " \
                 "PASSWORD" "   Set admin password                         " \
                 "SETUP" "   Setup services   " \
+                "APP" "   Select application   " \
                 "COMPOSER" "   Compose & Run application   " \
                 "EXIT" "   Quit   " 3>&1 1>&2 2>&3)
 }
