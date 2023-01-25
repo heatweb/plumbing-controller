@@ -422,7 +422,7 @@ function compose() {
   
   
   var gowriteflow = true;  
-  if (settings.composer_writeFile && settings.composer_writeFile.value) {
+  if (gowriteflow ||(settings.composer_writeFile && settings.composer_writeFile.value)) {
       
      fs.writeFile("/home/pi/.node-red/flows_ihiu.json", msggo.payload, err => {
         if (err) {
