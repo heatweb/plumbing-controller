@@ -137,8 +137,9 @@ async function fetchdata(item, url) {
     composition[item].data = json;
     fetched++;
     console.log("fetched", fetched, "of", composition.length, JSON.stringify(json).substr(0,100));
-    if (fetched == composition.length && auth[ftarget]!=="waiting") { 
-        
+    
+    //if (fetched == composition.length && auth[ftarget]!=="waiting") { 
+    if (fetched == composition.length) {     
         console.log(auth);
         compose(); 
     }   
@@ -162,7 +163,8 @@ for (var item in composition) {
     var targ = targetHost + ":" + targetPort;
     if (ftarget=="") { ftarget = targetHost + ":" + targetPort; }
 
-    if (!auth[targ]) {         
+    if (xxxxx) {    
+    //if (!auth[targ]) {      
 
         auth[targ]="waiting";
         //flow.set("auth",auth);
