@@ -88,6 +88,8 @@ var urldata={};
 
 async function postnodered(msg) {
 
+    console.log("fetching...", msg.url);
+    
     const res = await fetch(msg.url, {
                 method: 'POST',
                 body: msg.payload,
@@ -106,6 +108,8 @@ async function postnodered(msg) {
 
 async function fetchtoken(ttarg, url, tdata) {
 
+    console.log("fetching...", url);
+    
     const res = await fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(tdata),
@@ -122,6 +126,8 @@ async function fetchtoken(ttarg, url, tdata) {
 
 async function fetchdata(item, url) {
 
+    console.log("fetching...", url);
+    
     const res = await fetch(url);  
     
     const json = await res.json();    
