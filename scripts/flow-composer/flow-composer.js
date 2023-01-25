@@ -120,7 +120,8 @@ async function fetchtoken(ttarg, url, tdata) {
     if (json.access_token) { console.log(ttarg, json.access_token.substr(0,90)); }
 
     auth[ttarg] = json.access_token || "";
-
+    
+    if (fetched == composition.length && auth[ftarget]) { compose(); } 
     
 }
 
@@ -134,7 +135,7 @@ async function fetchdata(item, url) {
     composition[item].data = json;
     fetched++;
     console.log("fetched", fetched, "of", composition.length, JSON.stringify(json).substr(0,100));
-    if (fetched == composition.length) { compose(); }   
+    if (fetched == composition.length && auth[ftarget]) { compose(); }   
 
 }
 
