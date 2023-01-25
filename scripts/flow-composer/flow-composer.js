@@ -137,7 +137,7 @@ async function fetchdata(item, url) {
     console.log("fetched", fetched, "of", composition.length, JSON.stringify(json).substr(0,100));
     if (fetched == composition.length && auth[ftarget]!=="waiting") { 
         
-        consol.log(auth);
+        console.log(auth);
         compose(); 
     }   
 
