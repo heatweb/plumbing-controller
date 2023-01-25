@@ -163,25 +163,25 @@ for (var item in composition) {
     var targ = targetHost + ":" + targetPort;
     if (ftarget=="") { ftarget = targetHost + ":" + targetPort; }
 
-    if (xxxxx) {    
-    //if (!auth[targ]) {      
-
-        auth[targ]="waiting";
-        //flow.set("auth",auth);
-
-        msg2 = {}
-        msg2.targ = targ;
-        msg2.payload = {};
-        msg2.payload['client_id'] = "node-red-admin";
-        msg2.payload['grant_type'] = "password";
-        msg2.payload['scope'] = "*";
-        msg2.payload['username'] = "admin";
-        msg2.payload['password'] = credentials.adminPassword || "admin";
-        msg2.url = "http://" + targ + "/auth/token";
+    
         
-        fetchtoken(targ, msg2.url, msg2.payload);
+//     if (!auth[targ]) {      
 
-    }
+//         auth[targ]="waiting";
+
+//         msg2 = {}
+//         msg2.targ = targ;
+//         msg2.payload = {};
+//         msg2.payload['client_id'] = "node-red-admin";
+//         msg2.payload['grant_type'] = "password";
+//         msg2.payload['scope'] = "*";
+//         msg2.payload['username'] = "admin";
+//         msg2.payload['password'] = credentials.adminPassword || "admin";
+//         msg2.url = "http://" + targ + "/auth/token";
+        
+//         fetchtoken(targ, msg2.url, msg2.payload);
+
+//     }
 
 
     if (msg1.url) {
