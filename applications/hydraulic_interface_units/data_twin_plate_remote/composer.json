@@ -1,0 +1,29 @@
+[
+    {
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/flows_beta_plumbing_controller_1880.json",
+        "targetHost": "localhost",
+        "targetPort": 1880,
+        "action": "flows",
+        "config": {
+            "description": "HIU Monitoring - DATA Twin Plate"
+        }
+    },
+    {
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_hiu_data1.json",
+        "targetHost": "localhost",
+        "targetPort": 1880,
+        "action": "flow"
+    },
+    {
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/4b6cd4a366e082fe15963598baf85b3893d58d19/flows/mods/flow_m_bus.json",
+        "targetHost": "localhost",
+        "targetPort": 1880,
+        "action": "flow"
+    },
+    {
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_modem.json",
+        "targetHost": "localhost",
+        "targetPort": 1880,
+        "action": "flow"
+    }
+]
