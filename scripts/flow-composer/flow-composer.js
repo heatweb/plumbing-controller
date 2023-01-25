@@ -121,7 +121,7 @@ async function fetchtoken(ttarg, url, tdata) {
 
     auth[ttarg] = json.access_token || "";
     
-    if (fetched == composition.length && auth[ftarget]]!=="waiting") { compose(); } 
+    if (fetched == composition.length && auth[ftarget]!=="waiting") { compose(); } 
     
 }
 
