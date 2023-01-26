@@ -1,0 +1,668 @@
+[
+    {
+        "id": "ca03066f6a7451f4",
+        "type": "tab",
+        "label": "Sequent BA Temp",
+        "disabled": false,
+        "info": "Flow for reading NTC10K sensors on 3 BA Hats.",
+        "env": []
+    },
+    {
+        "id": "5ecd5bf0795bd642",
+        "type": "inject",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 680,
+        "wires": [
+            [
+                "f80e2139d14010f2"
+            ]
+        ]
+    },
+    {
+        "id": "3fdcb94d47bf9bff",
+        "type": "link in",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "links": [
+            "c52dea4958c2f7ea",
+            "26f1ad336f82aeeb"
+        ],
+        "x": 835,
+        "y": 100,
+        "wires": [
+            [
+                "a9c8363a03750511",
+                "49608d86828c05de"
+            ]
+        ]
+    },
+    {
+        "id": "f80e2139d14010f2",
+        "type": "exec",
+        "z": "ca03066f6a7451f4",
+        "command": "bash /home/pi/node-hiu/sq.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "sq.sh",
+        "x": 390,
+        "y": 680,
+        "wires": [
+            [
+                "92d71bc19a90ebb7"
+            ],
+            [],
+            [
+                "5225132d4929334b",
+                "119c833c97aaa8ef"
+            ]
+        ]
+    },
+    {
+        "id": "a9c8363a03750511",
+        "type": "debug",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "11c03d3cbc04923d",
+        "type": "file",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "filename": "/home/pi/node-hiu/sq.sh",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 690,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "99f19987a9d79c31",
+        "type": "function",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "func": "\n\nfunction uniq(a) {\n    var seen = {};\n    return a.filter(function(item) {\n        return seen.hasOwnProperty(item) ? false : (seen[item] = true);\n    });\n}\n\nif (msg.payload.indexOf(\",\")<1) { return null; }\n\nvar invar = msg.payload.split(\",\");\nvar device = (invar[0].trim());\nvar terminal = (invar[1].trim());\nvar readin = parseFloat(invar[2].trim());\nvar title = (invar[3].trim());\n    \nvar msg1={};    \nmsg1.topic = device + \"/dat/\" + terminal;\nmsg1.payload = readin;\nmsg1.points = 1000;\nmsg1.units = \"\";\nmsg1.title = title;\n\nvar msg2 = {};\nmsg2.topic = device + \"/raw/\" + terminal,\nmsg2.payload = readin;\nmsg2.title = \"RAW \" + title;\nmsg2.units = \"ohms\";  \n    \nvar msg3 = { \"payload\":\"ok\"};  // alarm\nmsg3.topic = device + \"/alarm/terminal_\" + terminal;\n    \n//var ntc = JSON.parse(presult[0][\"map\"]);\nvar ntc = [[42.739, -10], [27.396, 0], [17.999, 10], [12.099, 20], [10, 25], [8.308, 30], [5.819, 40], [4.151, 50], [3.012, 60], [2.221, 70], [1.663, 80], [1.262, 90], [0.97, 100], [0.755, 110]];\n\n    \n    if (readin==60) {  // sensor not connected\n\n        msg1 = null;\n        msg3.payload = \"Sensor Disconnected\"\n\n    }\n\n    else if (readin == 30) {  // sensor not connected\n\n        msg1 = null;\n        msg3.payload = \"Sensor Short-circuit\"\n\n    }\n\n\n    else if(ntc) {\n     \n        msg1.units = \"°C\";   \n        msg1.payload = \"\";\n        \n        \n        var temp = -999;\n        for (var i = 1; i < ntc.length; i++) { \n            \n            if  (ntc[i][0]==readin) { \n                \n                temp = ntc[i][1];\n                \n                break;\n            }\n            else if  (ntc[i-1][0]==readin) { \n                \n                temp = ntc[i-1][1];\n                \n                break;\n            }\n            else if  ((ntc[i-1][0]<=readin) && (ntc[i][0]>readin)) { \n                \n                temp = ntc[i-1][1] - ((ntc[i][1] - ntc[i-1][1]) * ((readin - ntc[i-1][0]) / (ntc[i-1][0] - ntc[i][0])));\n                \n                break;\n            }\n            else if  ((ntc[i-1][0]>=readin) && (ntc[i][0]<readin)) { \n                \n                temp = ntc[i-1][1] - ((ntc[i][1] - ntc[i-1][1]) * ((readin - ntc[i-1][0]) / (ntc[i-1][0] - ntc[i][0])));\n                \n                break;\n            }\n            \n        }\n         \n\n        if (temp != -999) {\n            \n            msg1.payload =  temp;            \n            \n            \n        } else {\n            \n            msg1 = null;\n            msg3.payload = \"Out of range\"\n        }\n    }\n    \n    \n    \n    if (msg1) { msg1.payload = parseInt(msg1.payload * 100) / 100;  }\n    \n    return [msg1, msg2, msg3];\n      \n\n\nreturn null;",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 660,
+        "wires": [
+            [
+                "2e988386940749d8",
+                "da443342a3ee7581"
+            ],
+            [
+                "497a42acf94e3206",
+                "e38c98b2bbcdae42"
+            ],
+            [
+                "40855875df672fcf"
+            ]
+        ]
+    },
+    {
+        "id": "92d71bc19a90ebb7",
+        "type": "split",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 590,
+        "y": 660,
+        "wires": [
+            [
+                "99f19987a9d79c31",
+                "c77d99f6194079d7"
+            ]
+        ]
+    },
+    {
+        "id": "26f1ad336f82aeeb",
+        "type": "link out",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "3fdcb94d47bf9bff"
+        ],
+        "x": 1205,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "0b9b33794e321921",
+        "type": "template",
+        "z": "ca03066f6a7451f4",
+        "name": "BOARD SETUP",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "megabas 1 wdtpwr 60\nmegabas 2 wdtpwr 60\nmegabas 3 wdtpwr 60",
+        "output": "str",
+        "x": 400,
+        "y": 400,
+        "wires": [
+            [
+                "5fb83c77f77d7cdb"
+            ]
+        ]
+    },
+    {
+        "id": "5fb83c77f77d7cdb",
+        "type": "file",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "filename": "/home/pi/node-hiu/sqsetup.sh",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 650,
+        "y": 400,
+        "wires": [
+            [
+                "d76edb39ad2c4601"
+            ]
+        ]
+    },
+    {
+        "id": "62339bb059d4a43b",
+        "type": "exec",
+        "z": "ca03066f6a7451f4",
+        "command": "bash /home/pi/node-hiu/sqsetup.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1080,
+        "y": 400,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d76edb39ad2c4601",
+        "type": "trigger",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "op1": "",
+        "op2": "1",
+        "op1type": "nul",
+        "op2type": "num",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 840,
+        "y": 400,
+        "wires": [
+            [
+                "62339bb059d4a43b"
+            ]
+        ]
+    },
+    {
+        "id": "5225132d4929334b",
+        "type": "link out",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "0632f1bc7ce231b2",
+            "38851676a0d913c9"
+        ],
+        "x": 555,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "2e988386940749d8",
+        "type": "debug",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "da443342a3ee7581",
+        "type": "rbe",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "func": "deadbandEq",
+        "gap": "0.1",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 960,
+        "y": 680,
+        "wires": [
+            [
+                "11ef8c40cb8707eb"
+            ]
+        ]
+    },
+    {
+        "id": "95e237adbbb4b523",
+        "type": "inject",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "props": [
+            {
+                "p": "reset",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 1020,
+        "y": 620,
+        "wires": [
+            [
+                "da443342a3ee7581",
+                "e38c98b2bbcdae42"
+            ]
+        ]
+    },
+    {
+        "id": "11ef8c40cb8707eb",
+        "type": "switch",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "property": "reset",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1110,
+        "y": 680,
+        "wires": [
+            [
+                "26f1ad336f82aeeb"
+            ]
+        ]
+    },
+    {
+        "id": "4dc151ca46e90967",
+        "type": "comment",
+        "z": "ca03066f6a7451f4",
+        "name": "Building Automation Hat Commands",
+        "info": "     -v              Display the megabas command version number\n        -h              Display the list of command options or one command option details\n        -warranty       Display the warranty\n        -list:          List all megabas boards connected\n                        return the # of boards and stack level for every board\n        board           Display the board status and firmware version number\n        trwr:           Set triacs (AC switch) On/Off\n        trrd:           Read triacs (AC switch) status\n        trtest:         Turn ON and OFF the triacs until press a key\n        contactrd:      Read dry contact status\n                        Warning: For this measurements to be valid place the jumper in position \"1K\"\n        countrd:        Read dry contact transitions count\n                        Warning: For this measurements to be valid place the jumper in position \"1K\"\n        countrst:       Reset dry contact transitions count\n        edgerd:         Read dry contact transitions type, ret 0 - disable, 1 - rising, 2 - falling, 3 -both\n        edgewr:         Write dry contact transitions type: 0 - disable, 1 - rising, 2 - falling, 3 - bot                                  h\n        dacrd:          Read DAC voltage value (0 - 10V)\n        dacwr:          Write DAC output voltage value (0..10V)\n        adcrd:          Read ADC input voltage value (0 - 10V)\n                        Warning: For this measurements to be valid place the jumper in position \"0-10V\"\n        r1krd:          Read resistor input  value (1k) in kiloOhms, Warning: You must palce the jumper in position \"1K\".\n                        Return 30kOhm for resistor out of range\n        r10krd:         Read resistor input  value (10k) in kiloOhms, Warning: You must palce the jumper in position \"10K\".\n                        Return 30kOhm for resistor out of range\n        adccal:         Calibrate one ADC channel, the calibration must be done in 2 points at min 5V apart\n        adccalrst:      Reset the calibration for one ADC channel\n        daccal:         Calibrate one DAC channel, the calibration must be done in 2 points at min 5V apart\n        daccalrst:      Reset calibration for one DAC channel\n        wdtr:           Reload the watchdog timer and enable the watchdog if is disabled\n        wdtpwr:         Set the watchdog period in seconds,\n                        reload command must be issue in this interval to prevent Raspberry Pi power off\n        wdtprd:         Get the watchdog period in seconds,\n                        reload command must be issue in this interval to prevent Raspberry Pi power off\n        wdtipwr:        Set the watchdog initial period in seconds,\n                        This period is loaded after power cycle, giving Raspberry time to boot\n        wdtiprd:        Get the watchdog initial period in seconds.\n                        This period is loaded after power cycle, giving Raspberry time to boot\n        wdtopwr:        Set the watchdog off period in seconds (max 48 days).\n                        This is the time that watchdog mantain Raspberry turned off\n        wdtoprd:        Get the watchdog off period in seconds (max 48 days)\n                        This is the time that watchdog mantain Raspberry turned off\n        rs485rd:        Read the RS485 communication settings\n        rs485wr:        Write the RS485 communication settings\n        rtcrd:          Get the internal RTC  date and time(mm/dd/yy hh:mm:ss)\n        rtcwr:          Set the internal RTC  date and time(mm/dd/yy hh:mm:ss)\n",
+        "x": 220,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "8920b47930855b75",
+        "type": "comment",
+        "z": "ca03066f6a7451f4",
+        "name": "Building Automation Hat ",
+        "info": "https://sequentmicrosystems.com/collections/industrial-automation/products/raspberry-pi-building-automation",
+        "x": 500,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "c77d99f6194079d7",
+        "type": "debug",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "05f98b9c86ec5f69",
+        "type": "template",
+        "z": "ca03066f6a7451f4",
+        "name": "SENSORS",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "# device, varkey, command, title\necho \"sensors\", \"tB1IN1\", $(megabas 1 r10krd 1), \"Temp Board 1 Sensor 1\"\necho \"sensors\", \"tB1IN2\", $(megabas 1 r10krd 2), \"Temp Board 1 Sensor 2\"\necho \"sensors\", \"tB1IN3\", $(megabas 1 r10krd 3), \"Temp Board 1 Sensor 3\"\necho \"sensors\", \"tB1IN4\", $(megabas 1 r10krd 4), \"Temp Board 1 Sensor 4\"\necho \"sensors\", \"tB1IN5\", $(megabas 1 r10krd 5), \"Temp Board 1 Sensor 5\"\necho \"sensors\", \"tB1IN6\", $(megabas 1 r10krd 6), \"Temp Board 1 Sensor 6\"\necho \"sensors\", \"tB1IN7\", $(megabas 1 r10krd 7), \"Temp Board 1 Sensor 7\"\necho \"sensors\", \"tB1IN8\", $(megabas 1 r10krd 8), \"Temp Board 1 Sensor 8\"\necho \"sensors\", \"tB2IN1\", $(megabas 2 r10krd 1), \"Temp Board 2 Sensor 1\"\necho \"sensors\", \"tB2IN2\", $(megabas 2 r10krd 2), \"Temp Board 2 Sensor 2\"\necho \"sensors\", \"tB2IN3\", $(megabas 2 r10krd 3), \"Temp Board 2 Sensor 3\"\necho \"sensors\", \"tB2IN4\", $(megabas 2 r10krd 4), \"Temp Board 2 Sensor 4\"\necho \"sensors\", \"tB2IN5\", $(megabas 2 r10krd 5), \"Temp Board 2 Sensor 5\"\necho \"sensors\", \"tB2IN6\", $(megabas 2 r10krd 6), \"Temp Board 2 Sensor 6\"\necho \"sensors\", \"tB2IN7\", $(megabas 2 r10krd 7), \"Temp Board 2 Sensor 7\"\necho \"sensors\", \"tB2IN8\", $(megabas 2 r10krd 8), \"Temp Board 2 Sensor 8\"\necho \"sensors\", \"tB3IN1\", $(megabas 3 r10krd 1), \"Temp Board 3 Sensor 1\"\necho \"sensors\", \"tB3IN2\", $(megabas 3 r10krd 2), \"Temp Board 3 Sensor 2\"\necho \"sensors\", \"tB3IN3\", $(megabas 3 r10krd 3), \"Temp Board 3 Sensor 3\"\necho \"sensors\", \"tB3IN4\", $(megabas 3 r10krd 4), \"Temp Board 3 Sensor 4\"\necho \"sensors\", \"tB3IN5\", $(megabas 3 r10krd 5), \"Temp Board 3 Sensor 5\"\necho \"sensors\", \"tB3IN6\", $(megabas 3 r10krd 6), \"Temp Board 3 Sensor 6\"\necho \"sensors\", \"tB3IN7\", $(megabas 3 r10krd 7), \"Temp Board 3 Sensor 7\"\necho \"sensors\", \"tB3IN8\", $(megabas 3 r10krd 8), \"Temp Board 3 Sensor 8\"",
+        "output": "str",
+        "x": 390,
+        "y": 240,
+        "wires": [
+            [
+                "11c03d3cbc04923d"
+            ]
+        ]
+    },
+    {
+        "id": "301ee1a1ec6f3074",
+        "type": "template",
+        "z": "ca03066f6a7451f4",
+        "name": "WATCHDOGS",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "megabas 1 wdtr\nmegabas 2 wdtr\nmegabas 3 wdtr",
+        "output": "str",
+        "x": 400,
+        "y": 320,
+        "wires": [
+            [
+                "69e19411dbc48dd4"
+            ]
+        ]
+    },
+    {
+        "id": "69e19411dbc48dd4",
+        "type": "file",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "filename": "/home/pi/node-hiu/sq2.sh",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 690,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "73eb8679965c1672",
+        "type": "trigger",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "nul",
+        "duration": "10",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 230,
+        "y": 820,
+        "wires": [
+            [
+                "b5726b628ee3e61b"
+            ]
+        ]
+    },
+    {
+        "id": "b5726b628ee3e61b",
+        "type": "exec",
+        "z": "ca03066f6a7451f4",
+        "command": "bash /home/pi/node-hiu/sq2.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "sq2.sh",
+        "x": 390,
+        "y": 820,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "119c833c97aaa8ef",
+        "type": "delay",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 230,
+        "y": 760,
+        "wires": [
+            [
+                "73eb8679965c1672"
+            ]
+        ]
+    },
+    {
+        "id": "c0239bb42b5616f9",
+        "type": "inject",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 320,
+        "wires": [
+            [
+                "301ee1a1ec6f3074",
+                "0b9b33794e321921",
+                "05f98b9c86ec5f69"
+            ]
+        ]
+    },
+    {
+        "id": "497a42acf94e3206",
+        "type": "debug",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "40855875df672fcf",
+        "type": "debug",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "e38c98b2bbcdae42",
+        "type": "rbe",
+        "z": "ca03066f6a7451f4",
+        "d": true,
+        "name": "",
+        "func": "deadbandEq",
+        "gap": "10",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 960,
+        "y": 720,
+        "wires": [
+            [
+                "11ef8c40cb8707eb"
+            ]
+        ]
+    },
+    {
+        "id": "10ffa87d11be0bce",
+        "type": "mqtt out",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7ad2997b.42a908",
+        "x": 1090,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "49608d86828c05de",
+        "type": "function",
+        "z": "ca03066f6a7451f4",
+        "name": "_/",
+        "func": "msg.topic = \"_/\" + msg.topic;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 180,
+        "wires": [
+            [
+                "10ffa87d11be0bce"
+            ]
+        ]
+    },
+    {
+        "id": "7ad2997b.42a908",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
