@@ -1,0 +1,732 @@
+[
+    {
+        "id": "789aa767.91c36",
+        "type": "tab",
+        "label": "M-Bus U1000",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "7ef41dc1.ed2e0c",
+        "type": "mbus-out",
+        "z": "789aa767.91c36",
+        "name": "",
+        "client": "618faf057d845369",
+        "x": 471,
+        "y": 242,
+        "wires": [
+            [
+                "cfe1fe5a.4377f",
+                "7bc687f8b2f5e7e1"
+            ]
+        ]
+    },
+    {
+        "id": "cfe1fe5a.4377f",
+        "type": "debug",
+        "z": "789aa767.91c36",
+        "name": "",
+        "active": false,
+        "console": false,
+        "complete": "false",
+        "x": 710,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b09b5389.e16f18",
+        "type": "mbus-controller",
+        "z": "789aa767.91c36",
+        "name": "",
+        "client": "618faf057d845369",
+        "x": 511,
+        "y": 303,
+        "wires": [
+            [
+                "950250cd.ba0db8",
+                "ec1a5b76.fe6a68"
+            ]
+        ]
+    },
+    {
+        "id": "ce0c2ab.6ef14d8",
+        "type": "inject",
+        "z": "789aa767.91c36",
+        "name": "scan",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "scan",
+        "payload": "",
+        "payloadType": "str",
+        "x": 122,
+        "y": 72,
+        "wires": [
+            [
+                "b09b5389.e16f18"
+            ]
+        ]
+    },
+    {
+        "id": "950250cd.ba0db8",
+        "type": "debug",
+        "z": "789aa767.91c36",
+        "name": "",
+        "active": true,
+        "console": false,
+        "complete": "false",
+        "x": 762,
+        "y": 361,
+        "wires": []
+    },
+    {
+        "id": "4415ab35.a140dc",
+        "type": "inject",
+        "z": "789aa767.91c36",
+        "name": "Read ID 1",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "getDevice",
+        "payload": "{\"address\": 1}",
+        "payloadType": "json",
+        "x": 129,
+        "y": 146,
+        "wires": [
+            [
+                "b09b5389.e16f18"
+            ]
+        ]
+    },
+    {
+        "id": "46f5ca76.564844",
+        "type": "inject",
+        "z": "789aa767.91c36",
+        "name": "Get Devices",
+        "props": [
+            {
+                "p": "payload",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "v": "getDevices",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "topic": "getDevices",
+        "payload": "",
+        "payloadType": "str",
+        "x": 145,
+        "y": 220,
+        "wires": [
+            [
+                "b09b5389.e16f18"
+            ]
+        ]
+    },
+    {
+        "id": "ec1a5b76.fe6a68",
+        "type": "ui_template",
+        "z": "789aa767.91c36",
+        "group": "cbd3bd44.834398",
+        "name": "mbus-table",
+        "order": 0,
+        "width": "14",
+        "height": "10",
+        "format": "<table>\n  <tr>\n    <th>ID</th>\n    <th>Primary ID</th>\n    <th>Info</th>\n    <th>Data</th>\n    <th>Last Update</th>\n    <th>Status</th>\n  </tr>\n  <tr style=\"cursor:pointer;\" ng-click=\"showData(device)\" ng-repeat=\"(id, device) in devices\">\n    <td>{{ device.secondaryID }}</td>\n    <td>{{ device.primaryID }}</td>\n    <td ng-bind-html=\"getInfo(device)\"></td>\n    <td>{{ device.DataRecord.length }}</td>\n    <td>{{ device.lastUpdate }}</td>\n    <td>\n        <div class=\"online\" ng-style=\"{background: !device.error ? '#4CAF50' : '#f44336'}\">\n            <md-tooltip md-direction=\"bottom\">{{ device.error ? device.error : 'OK' }}</md-tooltip>\n        </div>\n    </td>\n  </tr>\n</table>\n\n<style>\ntable {\n    border-collapse: collapse;\n    width: 100%;\n}\n\nth, td{\n    text-align: left;\n    padding: 8px;\n    background-color: #f2f2f2;\n    color: black;\n}\n\nth {\n    background-color: #4CAF50;\n    color: white;\n}\n\n.online {\n\tbackground:#ff3333;\n\twidth:20px;\n\theight:20px;\n\tmargin:0 auto;\n\t-webkit-border-radius:50%;\n\t-moz-border-radius:50%;\n\tborder-radius:50%;\n}\n</style>\n\n<script>\n\n\n(function(scope) {\n    \n    scope.send({topic: 'getDevices'});\n    scope.devices = [];\n    \n    scope.showData = function(device){\n        scope.send({topic: 'deviceData', payload: device});\n    }\n    \n    scope.getInfo = function(device){\n        var text = '';\n        var info = device.SlaveInformation;\n        \n        for(key in info){\n            text += `<p><b>${key}</b>: ${info[key]}</p>`;\n        }\n        \n        return text;\n    }\n\n    scope.$watch('msg', function(data) {\n        if(data && data.topic){\n            switch(data.topic){\n                case \"getDevices\":\n                    if(data.payload && data.payload.devices)\n                        scope.devices = data.payload.devices;\n                break;\n            }\n        }\n    });\n    \n})(scope);\n\n</script>\n",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 790,
+        "y": 320,
+        "wires": [
+            [
+                "c4e77f76.60f13"
+            ]
+        ]
+    },
+    {
+        "id": "e4f8a44c.9991a",
+        "type": "inject",
+        "z": "789aa767.91c36",
+        "name": "restart",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "restart",
+        "payload": "",
+        "payloadType": "num",
+        "x": 119,
+        "y": 108,
+        "wires": [
+            [
+                "b09b5389.e16f18"
+            ]
+        ]
+    },
+    {
+        "id": "c4e77f76.60f13",
+        "type": "ui_template",
+        "z": "789aa767.91c36",
+        "group": "fb0048e.a5eec38",
+        "name": "data-table",
+        "order": 0,
+        "width": "14",
+        "height": "10",
+        "format": "<p><b>Device ID:</b> {{ID}} </p>\n\n<br>\n<br>\n\n<table>\n  <tr>\n    <th>ID</th>\n    <th>Function</th>\n    <th>Unit</th>\n    <th>Value</th>\n    <th>Timestamp</th>\n  </tr>\n  <tr ng-repeat=\"(key, data) in deviceData\">\n    <td>{{ data.id }}</td>\n    <td>{{ data.Function }}</td>\n    <td>{{ data.Unit }}</td>\n    <td>{{ data.Value }}</td>\n    <td>{{ data.Timestamp }}</td>\n  </tr>\n</table>\n\n<style>\ntable {\n    border-collapse: collapse;\n    width: 100%;\n}\n\nth, td{\n    text-align: left;\n    padding: 8px;\n    background-color: #f2f2f2;\n    color: black;\n}\n\nth {\n    background-color: #4CAF50;\n    color: white;\n}\n\n.online {\n\tbackground:#ff3333;\n\twidth:20px;\n\theight:20px;\n\tmargin:0 auto;\n\t-webkit-border-radius:50%;\n\t-moz-border-radius:50%;\n\tborder-radius:50%;\n}\n</style>\n\n<script>\n\n\n(function(scope) {\n    \n    scope.deviceData = [];\n    scope.ID = '';\n\n    scope.$watch('msg', function(data) {\n        if(data && data.topic){\n            switch(data.topic){\n                case \"deviceData\":\n                    if(data.payload){\n                        scope.deviceData = data.payload.DataRecord;\n                        scope.ID = data.payload.SlaveInformation.Id;\n                    }\n                break;\n            }\n        }\n    });\n    \n})(scope);\n\n</script>\n",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 954,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "41ec05d7.924b04",
+        "type": "inject",
+        "z": "789aa767.91c36",
+        "name": "Read ID 2",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "getDevice",
+        "payload": "{\"address\": 2}",
+        "payloadType": "json",
+        "x": 130,
+        "y": 184,
+        "wires": [
+            [
+                "b09b5389.e16f18"
+            ]
+        ]
+    },
+    {
+        "id": "48d0b9e5.236fb8",
+        "type": "ui_button",
+        "z": "789aa767.91c36",
+        "name": "Scan",
+        "group": "de125633.ed6c5",
+        "order": 3,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Scan",
+        "color": "",
+        "bgcolor": "",
+        "icon": "location_searching",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "scan",
+        "x": 97,
+        "y": 306,
+        "wires": [
+            [
+                "b09b5389.e16f18"
+            ]
+        ]
+    },
+    {
+        "id": "1b07dce9.8a093b",
+        "type": "ui_button",
+        "z": "789aa767.91c36",
+        "name": "Restart",
+        "group": "de125633.ed6c5",
+        "order": 4,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Restart",
+        "color": "",
+        "bgcolor": "",
+        "icon": "refresh",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "restart",
+        "x": 107,
+        "y": 343,
+        "wires": [
+            [
+                "b09b5389.e16f18"
+            ]
+        ]
+    },
+    {
+        "id": "cb5b5d1b.3e8b98",
+        "type": "ui_button",
+        "z": "789aa767.91c36",
+        "name": "GetDevices",
+        "group": "de125633.ed6c5",
+        "order": 5,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Update Devices",
+        "color": "",
+        "bgcolor": "",
+        "icon": "refresh",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "getDevices",
+        "x": 115,
+        "y": 380,
+        "wires": [
+            [
+                "b09b5389.e16f18"
+            ]
+        ]
+    },
+    {
+        "id": "4646c610.c0a18",
+        "type": "ui_button",
+        "z": "789aa767.91c36",
+        "name": "readAddress",
+        "group": "de125633.ed6c5",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Read Device",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "deviceID",
+        "payloadType": "flow",
+        "topic": "getDevice",
+        "x": 112,
+        "y": 419,
+        "wires": [
+            [
+                "437a749f.6ab504"
+            ]
+        ]
+    },
+    {
+        "id": "6e5d9013.091c38",
+        "type": "ui_text_input",
+        "z": "789aa767.91c36",
+        "name": "Device_ID",
+        "label": "ID: ",
+        "group": "de125633.ed6c5",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 570,
+        "y": 560,
+        "wires": [
+            [
+                "3e4c4281.63d6b6"
+            ]
+        ]
+    },
+    {
+        "id": "3e4c4281.63d6b6",
+        "type": "function",
+        "z": "789aa767.91c36",
+        "name": "storeID",
+        "func": "\nflow.set('deviceID', msg.payload);\n\nreturn msg;",
+        "outputs": 0,
+        "noerr": 0,
+        "x": 746,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "437a749f.6ab504",
+        "type": "function",
+        "z": "789aa767.91c36",
+        "name": "readAddr",
+        "func": "var data = {address: msg.payload}\n\nmsg.payload = data;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 270,
+        "y": 419,
+        "wires": [
+            [
+                "b09b5389.e16f18"
+            ]
+        ]
+    },
+    {
+        "id": "4417fa63.93883c",
+        "type": "status",
+        "z": "789aa767.91c36",
+        "name": "controller_status",
+        "scope": [
+            "b09b5389.e16f18"
+        ],
+        "x": 480,
+        "y": 60,
+        "wires": [
+            [
+                "5a88af3c.5d0258"
+            ]
+        ]
+    },
+    {
+        "id": "2d994365.6f212c",
+        "type": "status",
+        "z": "789aa767.91c36",
+        "name": "mbus_status",
+        "scope": [
+            "7ef41dc1.ed2e0c"
+        ],
+        "x": 473,
+        "y": 105,
+        "wires": [
+            [
+                "b886eaf0.44a528"
+            ]
+        ]
+    },
+    {
+        "id": "5a88af3c.5d0258",
+        "type": "ui_text",
+        "z": "789aa767.91c36",
+        "group": "88aaec54.303928",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "controller_status",
+        "label": "Controller",
+        "format": "{{msg.status.text}}",
+        "layout": "row-spread",
+        "x": 692,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "b886eaf0.44a528",
+        "type": "ui_text",
+        "z": "789aa767.91c36",
+        "group": "88aaec54.303928",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "mbus_status",
+        "label": "M-Bus",
+        "format": "{{msg.status.text}}",
+        "layout": "row-spread",
+        "x": 682,
+        "y": 105,
+        "wires": []
+    },
+    {
+        "id": "3d78c691.9bd322",
+        "type": "inject",
+        "z": "789aa767.91c36",
+        "name": "setPrimary",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "setPrimary",
+        "payload": "{\"newAddr\":3,\"oldAddr\":2}",
+        "payloadType": "json",
+        "x": 121,
+        "y": 35,
+        "wires": [
+            [
+                "b09b5389.e16f18"
+            ]
+        ]
+    },
+    {
+        "id": "d31c87e.42a2af8",
+        "type": "ui_text_input",
+        "z": "789aa767.91c36",
+        "name": "Old_ID",
+        "label": "Old ID",
+        "group": "de125633.ed6c5",
+        "order": 6,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 577,
+        "y": 600,
+        "wires": [
+            [
+                "852edb36.359ee8"
+            ]
+        ]
+    },
+    {
+        "id": "852edb36.359ee8",
+        "type": "function",
+        "z": "789aa767.91c36",
+        "name": "storeID",
+        "func": "\nflow.set('oldID', msg.payload);\n\nreturn msg;",
+        "outputs": 0,
+        "noerr": 0,
+        "x": 744,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "35f10be8.81eff4",
+        "type": "ui_text_input",
+        "z": "789aa767.91c36",
+        "name": "New_ID",
+        "label": "New ID",
+        "group": "de125633.ed6c5",
+        "order": 7,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 574,
+        "y": 640,
+        "wires": [
+            [
+                "21cfe6a.569359a"
+            ]
+        ]
+    },
+    {
+        "id": "21cfe6a.569359a",
+        "type": "function",
+        "z": "789aa767.91c36",
+        "name": "storeID",
+        "func": "\nflow.set('newID', msg.payload);\n\nreturn msg;",
+        "outputs": 0,
+        "noerr": 0,
+        "x": 742,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "bd997a73.d5cb18",
+        "type": "ui_button",
+        "z": "789aa767.91c36",
+        "name": "SetPrimary",
+        "group": "de125633.ed6c5",
+        "order": 8,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Set Primary ID",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "setPrimary",
+        "x": 111,
+        "y": 460,
+        "wires": [
+            [
+                "87d95a5a.46573"
+            ]
+        ]
+    },
+    {
+        "id": "87d95a5a.46573",
+        "type": "function",
+        "z": "789aa767.91c36",
+        "name": "setPrimary",
+        "func": "var data = {\n    oldAddr: flow.get('oldID'), \n    newAddr:flow.get('newID')\n    }\n\nmsg.payload = data;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 280,
+        "y": 460,
+        "wires": [
+            [
+                "b09b5389.e16f18"
+            ]
+        ]
+    },
+    {
+        "id": "357e7aec.dcce3e",
+        "type": "inject",
+        "z": "789aa767.91c36",
+        "name": "setDevices",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "setDevices",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 260,
+        "wires": [
+            [
+                "9bd33402.9e6558"
+            ]
+        ]
+    },
+    {
+        "id": "9bd33402.9e6558",
+        "type": "function",
+        "z": "789aa767.91c36",
+        "name": "devices",
+        "func": "var devices = [\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\",\"15\",\"16\",\"17\",\"18\",\"19\",\"20\",\"21\",\"22\",\"23\",\"24\",\"25\",\"26\",\"27\",\"28\",\"29\",\"30\",\"31\",\"32\",\"33\",\"34\",\"35\",\"36\",\"37\",\"38\",\"39\",\"40\",\"41\",\"42\",\"43\",\"44\",\"45\",\"46\",\"47\",\"48\",\"49\",\"50\",\"51\",\"52\",\"53\",\"54\",\"55\",\"56\",\"57\",\"58\",\"59\",\"60\",\"61\",\"62\",\"63\",\"64\",\"65\",\"66\",\"67\",\"68\",\"69\",\"70\",\"71\",\"72\",\"73\",\"74\",\"75\",\"76\"];\n\nmsg.payload = devices;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 258,
+        "y": 260,
+        "wires": [
+            [
+                "b09b5389.e16f18"
+            ]
+        ]
+    },
+    {
+        "id": "e4d3eaec.811fd8",
+        "type": "split",
+        "z": "789aa767.91c36",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 960,
+        "y": 240,
+        "wires": [
+            [
+                "7c7cca54.a35e54"
+            ]
+        ]
+    },
+    {
+        "id": "7c7cca54.a35e54",
+        "type": "function",
+        "z": "789aa767.91c36",
+        "name": "",
+        "func": "msg=msg.payload;\n\nvar msg2={};\nmsg2.topic = msg.meter + \"/\" + msg.topic.replace(\"meter/\",\"dat/\");\n\nmsg2.payload = msg.payload;\n\nreturn [msg,msg2];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 240,
+        "wires": [
+            [
+                "2f7dea9a.341f4e",
+                "e162d709.82b3"
+            ],
+            [
+                "e162d709.82b3",
+                "2f7dea9a.341f4e"
+            ]
+        ]
+    },
+    {
+        "id": "2f7dea9a.341f4e",
+        "type": "debug",
+        "z": "789aa767.91c36",
+        "name": "",
+        "active": false,
+        "console": false,
+        "complete": "false",
+        "x": 1290,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "e162d709.82b3",
+        "type": "link out",
+        "z": "789aa767.91c36",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 1235,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "7bc687f8b2f5e7e1",
+        "type": "function",
+        "z": "789aa767.91c36",
+        "name": "Micronics U1000 ",
+        "func": "\n\nvar oot = [];\n\n//Unit: \"Flow temperature (1e-2 deg C)\"\n\n//for (var meter in msg.payload.devices) {\n    \n   // if (msg.payload.devices[meter].DataRecord[9].Unit.indexOf(\"temperature\")>0) {\n    \nvar meter = msg.payload.secondaryID\nvar meterid = msg.payload.SlaveInformation.Manufacturer + meter;\n        \n        oot.push({\n            \"payload\": msg.payload.SlaveInformation.Manufacturer,\n            \"topic\": \"meter/manufacturer\", \"meter\": meterid });\n            \n        \n            \n        oot.push({\n            \"payload\": msg.payload.SlaveInformation.Id,\n            \"topic\": \"meter/id\", \"meter\": meterid }\n            );\n        \n        \n        oot.push({\n            \"payload\": msg.payload.DataRecord[6].Value,\n            \"topic\": \"meter/kwh\",\n            \"title\": \"Heat meter energy\",\n            \"units\": \"kWh\", \"meter\": meterid \n            });\n         \n        \n        oot.push({\n            \"payload\": msg.payload.DataRecord[4].Value ,\n            \"topic\": \"meter/tF\",\n            \"title\": \"Heat meter flow temperature\",\n            \"units\": \"°C\" , \"meter\": meterid\n            });\n         \n        oot.push({\n            \"payload\": msg.payload.DataRecord[3].Value,\n            \"topic\": \"meter/tR\",\n            \"title\": \"Heat meter return temperature\",\n            \"units\": \"°C\" , \"meter\": meterid \n            });\n         \n        \n        oot.push({\n            \"payload\": parseInt(1000 * (msg.payload.DataRecord[4].Value - msg.payload.DataRecord[3].Value))/1000,\n            \"topic\": \"meter/tDiff\",\n            \"title\": \"Heat meter temperature drop\",\n            \"units\": \"°C\"  , \"meter\": meterid\n            });     \n        \n        \n        oot.push({\n            \"payload\": msg.payload.DataRecord[7].Value,\n            \"topic\": \"meter/kw\",\n            \"title\": \"Heat meter power\",\n            \"units\": \"kW\" , \"meter\": meterid \n            });     \n\n\n        oot.push({\n            \"payload\": msg.payload.DataRecord[5].Value,\n            \"topic\": \"meter/mps\",\n            \"title\": \"Heat meter water velocity\",\n            \"units\": \"m/s\", \"meter\": meterid\n        });     \n\n            \n //   }\n        \n//}   \nmsg.payload = oot;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 240,
+        "wires": [
+            [
+                "e4d3eaec.811fd8"
+            ]
+        ]
+    },
+    {
+        "id": "618faf057d845369",
+        "type": "mbus-client",
+        "name": "M_BUS",
+        "clienttype": "serial",
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "10001",
+        "tcpTimeout": "4000",
+        "serialPort": "/dev/serial0",
+        "serialBaudrate": "2400",
+        "reconnectTimeout": "10000",
+        "autoScan": true,
+        "storeDevices": false,
+        "disableLogs": true
+    },
+    {
+        "id": "cbd3bd44.834398",
+        "type": "ui_group",
+        "name": "M-Bus Devices",
+        "tab": "16de0243.87ddfe",
+        "order": 3,
+        "disp": true,
+        "width": "14"
+    },
+    {
+        "id": "fb0048e.a5eec38",
+        "type": "ui_group",
+        "name": "Data",
+        "tab": "16de0243.87ddfe",
+        "order": 4,
+        "disp": true,
+        "width": "14"
+    },
+    {
+        "id": "de125633.ed6c5",
+        "type": "ui_group",
+        "name": "Commands",
+        "tab": "16de0243.87ddfe",
+        "order": 2,
+        "disp": true,
+        "width": "14"
+    },
+    {
+        "id": "88aaec54.303928",
+        "type": "ui_group",
+        "name": "Status",
+        "tab": "16de0243.87ddfe",
+        "order": 1,
+        "disp": true,
+        "width": "14"
+    },
+    {
+        "id": "16de0243.87ddfe",
+        "type": "ui_tab",
+        "name": "M-Bus",
+        "icon": "plug",
+        "order": 3
+    }
+]
