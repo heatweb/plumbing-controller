@@ -15,11 +15,11 @@ MYMENU=$(whiptail --title "Heatweb Plumbing Controller Setup" --checklist \
         "\n   Make selections (UP, DOWN, SPACE) then TAB to OK/Cancel " 19 73 10 \
         "gopipass" "Update pi user password                         " ON \
         "gonrpass" "Update Node-RED admin password   " ON \
-        "goportpass" "Renew Portainer password   " ON \
-        "goinflux" "Install InfluxDB database   " ON \
+        "goportpass" "Renew Portainer password   " OFF \
+        "goinflux" "Install InfluxDB database   " OFF \
         "gomysql" "Install MySQL database   " OFF \
         "goprom" "Install Prometheus " OFF \
-        "gocomposer" "Run Composer when complete   " ON \
+        "gocomposer" "Run Composer when complete   " OFF \
         "gorenew" "Remove all existing containers   " OFF 3>&1 1>&2 2>&3)
         
  if [[ $MYMENU == "" ]]; then
