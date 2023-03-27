@@ -48,6 +48,12 @@
         "targetHost": "localhost",
         "targetPort": 1880,
         "action": "flow"
+    },
+    {
+        "dataSource": "https://raw.githubusercontent.com/heatweb/plumbing-controller/main/flows/mods/flow_heatweb_influx.json",
+        "targetHost": "localhost",
+        "targetPort": 1880,
+        "action": "flow"
     }
 
 ]
