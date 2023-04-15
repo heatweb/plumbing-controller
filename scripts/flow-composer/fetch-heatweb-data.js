@@ -34,6 +34,21 @@ async function fetchdata(url) {
     console.log("Network ID: " + json.data.config.networkId);
     console.log("Node ID: " + json.data.config.nodeId);
   
+    fs.writeFile("/home/pi/node-hiu/config.json", JSON.stringify(json.data.config), err => {
+        if (err) {
+          console.error(err);
+        } else {
+         
+          exec('sudo mv /home/pi/node-hiu/config.json /boot/heatweb/config.json', (err, stdout, stderr) => {
+              if (err) {
+                //some err occurred
+                console.error(err)
+              } 
+            
+            });
+          
+        }
+  
 }
 
 var ftarget = "";
