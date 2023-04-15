@@ -35,21 +35,29 @@ async function fetchdata(url) {
     console.log("Node ID: " + json.data.config.nodeId);
   
     fs.writeFile("/home/pi/node-hiu/config.json", JSON.stringify(json.data.config), err => {
-        if (err) {
-          console.error(err);
-        } else {
+      if (err) { console.error(err); } 
+      else {
          
           exec('sudo mv /home/pi/node-hiu/config.json /boot/heatweb/config.json', (err, stdout, stderr) => {
-              if (err) {
-                //some err occurred
-                console.error(err)
-              } 
-            
-            });
-          
-        }
+              if (err) { console.error(err)  }             
+          });          
+      }  
+    });
   
-      });
+    if (json.data.jfrog) {
+  
+        var jfrogstr = 'sudo wget -O - "https://connect.jfrog.io/v2/install_connect" | sudo sh -s ' + json.data.jfrog.token ' ' + json.data.jfrog.project ' -n=' + json.data.jfrog.name ' -g=' + json.data.jfrog.group;
+      
+        exec('sudo rm /etc/connect/service/settings.json', (err, stdout, stderr) => {
+            if (err) { console.error(err)  }             
+        }); 
+
+        exec(jfrogstr, (err, stdout, stderr) => {
+            if (err) { console.error(err)  }             
+        }); 
+  
+    }
+  
 }
 
 var ftarget = "";
