@@ -56,6 +56,9 @@ async function fetchdata(url) {
         var appfilename = "composer.json";
         var apppath = "/home/pi/plumbing-controller/applications/" + appfile.replace("/"+appfilename,"");
 
+        console.log("Composer path: " + apppath);
+        console.log("Composer file: " + appfilename);
+    
         exec('node /home/pi/plumbing-controller/scripts/change-setting.js appFile "' + appfilename + '" "Application Composer JSON file"', (err, stdout, stderr) => {
            if (err) { console.error(err)  }             
         }); 
