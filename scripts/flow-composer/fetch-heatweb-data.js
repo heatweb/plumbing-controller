@@ -29,7 +29,7 @@ async function fetchdata(url) {
     //fetched++;
     console.log("fetched", JSON.stringify(json).substr(0,100));
     
-    if (!json.data.config.nodeId) { console.log("Invalid code.");  process.exit(1); }
+    if (!json.data.config) { console.log("Invalid code.");  process.exit(1); }
   
     console.log("Network ID: " + json.data.config.networkId);
     console.log("Node ID: " + json.data.config.nodeId);
