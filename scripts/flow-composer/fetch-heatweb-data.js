@@ -49,6 +49,8 @@ async function fetchdata(url) {
   var composition;
   
   if (json.data.application) {
+   
+     // ------
   
         var appfile = json.data.application;
         if (appfile.indexOf("/applications/")>-1) { appfile = appfile.split("/applications/")[1] };
@@ -60,75 +62,75 @@ async function fetchdata(url) {
         console.log("Composer file: " + appfilename);
     
         exec('node /home/pi/plumbing-controller/scripts/change-setting.js appFile "' + appfilename + '" "Application Composer JSON file"', (err, stdout, stderr) => {
-           if (err) { console.error(err)  }             
-        }); 
+            if (err) { console.error(err);  process.exit(1); }             
+        
 
-        exec('node /home/pi/plumbing-controller/scripts/change-setting.js appPath "' + apppath + '" "Application Composer JSON file"', (err, stdout, stderr) => {
-           if (err) { console.error(err)  }             
-        }); 
-
-        exec('sudo rm -r /boot/heatweb/composer', (err, stdout, stderr) => {
-           if (err) { console.error(err)  }             
-        }); 
-
-        exec('sudo mkdir /boot/heatweb/composer', (err, stdout, stderr) => {
-           if (err) { console.error(err)  }             
-        }); 
-
-         exec('sudo cp -r ' + apppath + '/* /boot/heatweb/composer', (err, stdout, stderr) => {
-           
-           if (err) { console.error(err)  }      
-           
-           else {
-             
-             console.log("Application files copied.");
-             
-             if (json.data.importFlows[0]) {
+            exec('node /home/pi/plumbing-controller/scripts/change-setting.js appPath "' + apppath + '" "Application Composer JSON file"', (err, stdout, stderr) => {
+              if (err) { console.error(err);  process.exit(1);   }             
           
-                     console.log("Importing additional flows. ");
 
-                     var sdata = fs.readFileSync("/boot/heatweb/composer/composer.json", {encoding:'utf8', flag:'r'}); 
-                     try { composition = JSON.parse(sdata); } catch { console.log("Invalid JSON data.");  process.exit(1); } 
-               
-                     for (var xf in json.data.importFlows) {
+            exec('sudo rm -r /boot/heatweb/composer', (err, stdout, stderr) => {
+               if (err) { console.error(err);  process.exit(1);   }             
 
 
-                          
+                exec('sudo mkdir /boot/heatweb/composer', (err, stdout, stderr) => {
+                   if (err) { console.error(err);  process.exit(1);   }             
 
-                          var newflow = {
-                              "dataSource": json.data.importFlows[xf],
-                              "targetHost": "localhost",
-                              "targetPort": 1880,
-                              "action": "flow"
-                          }
-                          
-                          composition.push(newflow);
+
+                   exec('sudo cp -r ' + apppath + '/* /boot/heatweb/composer', (err, stdout, stderr) => {
+
+                     if (err) { console.error(err);  process.exit(1);   }      
+
+                     else {
+
+                       console.log("Application files copied.");
+
+                       if (json.data.importFlows[0]) {
+
+                               console.log("Importing additional flows. ");
+
+                               var sdata = fs.readFileSync("/boot/heatweb/composer/composer.json", {encoding:'utf8', flag:'r'}); 
+                               try { composition = JSON.parse(sdata); } catch { console.log("Invalid JSON data.");  process.exit(1); } 
+
+                               for (var xf in json.data.importFlows) {
+
+
+
+
+                                    var newflow = {
+                                        "dataSource": json.data.importFlows[xf],
+                                        "targetHost": "localhost",
+                                        "targetPort": 1880,
+                                        "action": "flow"
+                                    }
+
+                                    composition.push(newflow);
+
+                               }
+
+
+                               fs.writeFile("/home/pi/node-hiu/composer.json", JSON.stringify(composition), err => {
+                                  if (err) { console.error(err); } 
+                                  else {
+
+                                      exec('sudo mv /home/pi/node-hiu/composer.json /boot/heatweb/composer/composer.json', (err, stdout, stderr) => {
+                                          if (err) { console.error(err)  }             
+                                      });          
+                                  }  
+                                });
+                            }
+
+                            if (fs.existsSync("/boot/heatweb/composer/install.sh")) {  
+                                exec('bash /boot/heatweb/composer/install.sh', (err, stdout, stderr) => {
+                                   if (err) { console.error(err)  }             
+                                }); 
+                            }       
 
                      }
-
-
-                     fs.writeFile("/home/pi/node-hiu/composer.json", JSON.stringify(composition), err => {
-                        if (err) { console.error(err); } 
-                        else {
-
-                            exec('sudo mv /home/pi/node-hiu/composer.json /boot/heatweb/composer/composer.json', (err, stdout, stderr) => {
-                                if (err) { console.error(err)  }             
-                            });          
-                        }  
-                      });
-                  }
-
-                  if (fs.existsSync("/boot/heatweb/composer/install.sh")) {  
-                      exec('bash /boot/heatweb/composer/install.sh', (err, stdout, stderr) => {
-                         if (err) { console.error(err)  }             
-                      }); 
-                  }       
-             
-           }
            
-        }); 
+        }); }); }); }); }); 
     
-        
+       // ------
   }
    
 
