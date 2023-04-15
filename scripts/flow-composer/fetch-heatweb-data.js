@@ -145,8 +145,8 @@ async function fetchdata(url) {
   
     }
   
-    console.log("Done.");
-    process.exit(0);
+    //console.log("Done.");
+    //process.exit(0);
   
 }
 
