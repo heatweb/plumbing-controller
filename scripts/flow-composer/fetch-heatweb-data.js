@@ -70,11 +70,11 @@ async function fetchdata(url) {
           
 
             exec('sudo rm -r /boot/heatweb/composer', (err, stdout, stderr) => {
-               if (err) { console.error(err);  process.exit(1);   }             
+               if (err) {   }             
 
 
                 exec('sudo mkdir /boot/heatweb/composer', (err, stdout, stderr) => {
-                   if (err) { console.error(err);  process.exit(1);   }             
+                   if (err) {   }             
 
 
                    exec('sudo cp -r ' + apppath + '/* /boot/heatweb/composer', (err, stdout, stderr) => {
