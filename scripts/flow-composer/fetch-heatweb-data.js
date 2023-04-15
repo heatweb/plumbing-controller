@@ -49,6 +49,7 @@ async function fetchdata(url) {
           
         }
   
+      });
 }
 
 var ftarget = "";
