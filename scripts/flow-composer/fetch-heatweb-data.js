@@ -46,7 +46,7 @@ async function fetchdata(url) {
   
     if (json.data.jfrog) {
   
-        var jfrogstr = 'sudo wget -O - "https://connect.jfrog.io/v2/install_connect" | sudo sh -s ' + json.data.jfrog.token ' ' + json.data.jfrog.project ' -n=' + json.data.jfrog.name ' -g=' + json.data.jfrog.group;
+        var jfrogstr = 'sudo wget -O - "https://connect.jfrog.io/v2/install_connect" | sudo sh -s ' + json.data.jfrog.token + ' ' + json.data.jfrog.project + ' -n=' + json.data.jfrog.name + ' -g=' + json.data.jfrog.group;
       
         exec('sudo rm /etc/connect/service/settings.json', (err, stdout, stderr) => {
             if (err) { console.error(err)  }             
