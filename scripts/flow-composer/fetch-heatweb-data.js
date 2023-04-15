@@ -76,44 +76,55 @@ async function fetchdata(url) {
         }); 
 
          exec('sudo cp -r ' + apppath + '/* /boot/heatweb/composer', (err, stdout, stderr) => {
-           if (err) { console.error(err)  }             
+           
+           if (err) { console.error(err)  }      
+           
+           else {
+             
+             
+             if (json.data.importFlows) {
+          
+                     console.log("Importing additional flows. ");
+
+                     var sdata = fs.readFileSync("/boot/heatweb/composer/composer.json", {encoding:'utf8', flag:'r'}); 
+
+                     for (var xf in json.data.importFlows) {
+
+
+                          try { composition = JSON.parse(sdata); } catch { console.log("Invalid JSON data.");  process.exit(1); } 
+
+                          var newflow = {
+                              "dataSource": json.data.importFlows[xf],
+                              "targetHost": "localhost",
+                              "targetPort": 1880,
+                              "action": "flow"
+                          }
+
+                     }
+
+
+                     fs.writeFile("/home/pi/node-hiu/composer.json", JSON.stringify(json.data.config), err => {
+                        if (err) { console.error(err); } 
+                        else {
+
+                            exec('sudo mv /home/pi/node-hiu/composer.json /boot/heatweb/composer/composer.json', (err, stdout, stderr) => {
+                                if (err) { console.error(err)  }             
+                            });          
+                        }  
+                      });
+                  }
+
+                  if (fs.existsSync("/boot/heatweb/composer/install.sh")) {  
+                      exec('bash /boot/heatweb/composer/install.sh', (err, stdout, stderr) => {
+                         if (err) { console.error(err)  }             
+                      }); 
+                  }       
+             
+           }
+           
         }); 
     
-        if (json.data.importFlows) {
-          
-           var sdata = fs.readFileSync("/boot/heatweb/composer/composer.json", {encoding:'utf8', flag:'r'}); 
-          
-           for (var xf in json.data.importFlows) {
-                
-
-                try { composition = JSON.parse(sdata); } catch { console.log("Invalid JSON data.");  process.exit(1); } 
-
-                var newflow = {
-                    "dataSource": json.data.importFlows[xf],
-                    "targetHost": "localhost",
-                    "targetPort": 1880,
-                    "action": "flow"
-                }
-                
-           }
-          
-          
-           fs.writeFile("/home/pi/node-hiu/composer.json", JSON.stringify(json.data.config), err => {
-              if (err) { console.error(err); } 
-              else {
-
-                  exec('sudo mv /home/pi/node-hiu/composer.json /boot/heatweb/composer/composer.json', (err, stdout, stderr) => {
-                      if (err) { console.error(err)  }             
-                  });          
-              }  
-            });
-        }
-
-        if (fs.existsSync("/boot/heatweb/composer/install.sh")) {  
-            exec('bash /boot/heatweb/composer/install.sh', (err, stdout, stderr) => {
-               if (err) { console.error(err)  }             
-            }); 
-        }
+        
   }
    
 
