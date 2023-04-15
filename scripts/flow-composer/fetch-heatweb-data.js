@@ -81,6 +81,7 @@ async function fetchdata(url) {
            
            else {
              
+             console.log("Application files copied.");
              
              if (json.data.importFlows[0]) {
           
