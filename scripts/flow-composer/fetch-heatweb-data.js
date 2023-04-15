@@ -88,11 +88,12 @@ async function fetchdata(url) {
                      console.log("Importing additional flows. ");
 
                      var sdata = fs.readFileSync("/boot/heatweb/composer/composer.json", {encoding:'utf8', flag:'r'}); 
-
+                     try { composition = JSON.parse(sdata); } catch { console.log("Invalid JSON data.");  process.exit(1); } 
+               
                      for (var xf in json.data.importFlows) {
 
 
-                          try { composition = JSON.parse(sdata); } catch { console.log("Invalid JSON data.");  process.exit(1); } 
+                          
 
                           var newflow = {
                               "dataSource": json.data.importFlows[xf],
@@ -100,11 +101,13 @@ async function fetchdata(url) {
                               "targetPort": 1880,
                               "action": "flow"
                           }
+                          
+                          composition.push(newflow);
 
                      }
 
 
-                     fs.writeFile("/home/pi/node-hiu/composer.json", JSON.stringify(sdata), err => {
+                     fs.writeFile("/home/pi/node-hiu/composer.json", JSON.stringify(composition), err => {
                         if (err) { console.error(err); } 
                         else {
 
