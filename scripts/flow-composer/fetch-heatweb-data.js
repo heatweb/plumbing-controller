@@ -10,7 +10,7 @@ const { exec } = require('child_process');
 var sdata = "{}";
 
 
-  if (!myArgs[0]) { console.log("require an installation code.");  process.exit(1); }
+  if (!myArgs[0]) { console.log("Require an installation code.");  process.exit(1); }
   console.log("loading " + myArgs[0]);  
 
  var url = "https://heatweb-api.flowforge.cloud/register-device?code=" + myArgs[0];
@@ -29,7 +29,11 @@ async function fetchdata(url) {
     //fetched++;
     console.log("fetched", JSON.stringify(json).substr(0,100));
     
-
+    if (!json.data.config.nodeId) { console.log("Invalid code.");  process.exit(1); }
+  
+    console.log("Network ID: " + json.data.config.networkId);
+    console.log("Node ID: " + json.data.config.nodeId);
+  
 }
 
 var ftarget = "";
