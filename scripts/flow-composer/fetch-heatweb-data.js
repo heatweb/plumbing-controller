@@ -104,7 +104,7 @@ async function fetchdata(url) {
                      }
 
 
-                     fs.writeFile("/home/pi/node-hiu/composer.json", JSON.stringify(json.data.config), err => {
+                     fs.writeFile("/home/pi/node-hiu/composer.json", JSON.stringify(sdata), err => {
                         if (err) { console.error(err); } 
                         else {
 
