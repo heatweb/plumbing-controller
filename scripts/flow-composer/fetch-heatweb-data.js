@@ -82,7 +82,7 @@ async function fetchdata(url) {
            else {
              
              
-             if (json.data.importFlows) {
+             if (json.data.importFlows[0]) {
           
                      console.log("Importing additional flows. ");
 
