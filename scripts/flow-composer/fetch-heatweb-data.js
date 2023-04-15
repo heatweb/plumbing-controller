@@ -44,7 +44,48 @@ async function fetchdata(url) {
       }  
     });
   
-    if (json.data.jfrog) {
+    
+  // 	"https://raw.githubusercontent.com/heatweb/plumbing-controller/main/applications/hydraulic_interface_units/hiu_dhw_novocon/composer.json"
+  
+  if (json.data.application) {
+  
+        var appfile = json.data.application;
+        if (appfile.indexOf("/applications/")>-1) { appfile = appfile.split("/applications/")[1] };
+
+        var appfilename = "composer.json";
+        var apppath = "/home/pi/plumbing-controller/applications/" + appfile.replace("/"+appfilename,"");
+
+        exec('node /home/pi/plumbing-controller/scripts/change-setting.js appFile "' + appfilename + '" "Application Composer JSON file"', (err, stdout, stderr) => {
+           if (err) { console.error(err)  }             
+        }); 
+
+        exec('node /home/pi/plumbing-controller/scripts/change-setting.js appPath "' + apppath + '" "Application Composer JSON file"', (err, stdout, stderr) => {
+           if (err) { console.error(err)  }             
+        }); 
+
+        exec('sudo rm -r /boot/heatweb/composer', (err, stdout, stderr) => {
+           if (err) { console.error(err)  }             
+        }); 
+
+        exec('sudo mkdir /boot/heatweb/composer', (err, stdout, stderr) => {
+           if (err) { console.error(err)  }             
+        }); 
+
+         exec('sudo cp -r ' + apppath + '/* /boot/heatweb/composer', (err, stdout, stderr) => {
+           if (err) { console.error(err)  }             
+        }); 
+
+        if (fs.existsSync("/boot/heatweb/composer/install.sh")) {  
+            exec('bash /boot/heatweb/composer/install.sh', (err, stdout, stderr) => {
+               if (err) { console.error(err)  }             
+            }); 
+        }
+  }
+   
+
+        
+  
+    if (json.data.jfrogxxx) {
   
         var jfrogstr = 'sudo wget -O - "https://connect.jfrog.io/v2/install_connect" | sudo sh -s ' + json.data.jfrog.token + ' ' + json.data.jfrog.project + ' -n=' + json.data.jfrog.name + ' -g=' + json.data.jfrog.group;
       
@@ -57,6 +98,9 @@ async function fetchdata(url) {
         }); 
   
     }
+  
+    console.log("Done.");
+    process.exit(0);
   
 }
 
