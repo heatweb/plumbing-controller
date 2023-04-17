@@ -201,8 +201,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 510,
-        "y": 500,
+        "x": 550,
+        "y": 480,
         "wires": []
     },
     {
@@ -227,7 +227,7 @@
         "payload": "AT",
         "payloadType": "str",
         "x": 270,
-        "y": 560,
+        "y": 540,
         "wires": [
             [
                 "ac4ff2763c6da88e"
@@ -246,7 +246,7 @@
         "finalize": "",
         "libs": [],
         "x": 420,
-        "y": 560,
+        "y": 540,
         "wires": [
             [
                 "188d6e8d1db59bdd"
@@ -485,7 +485,7 @@
         "type": "debug",
         "z": "f7fb808af6ec3dfd",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -553,7 +553,7 @@
         "type": "function",
         "z": "f7fb808af6ec3dfd",
         "name": "",
-        "func": "\nflow.set(\"lastUSBin\", new Date().getTime());\n\nvar oot = [];\n\nif (msg.payload.indexOf(\"AT+CIMI\")>-1) {\n    \n    //msg.topic = \"modem/simIMSI\";\n    //msg.payload = msg.payload.split(\"AT+CIMI\")[1].split(\"\\n\")[1].trim();\n    oot.push({\"topic\":\"modem/simIMSI\", \"payload\":msg.payload.split(\"AT+CIMI\")[1].split(\"\\n\")[1].trim()});\n}\n\nelse if (msg.payload.indexOf(\"+CPSI:\")>-1) {\n    \n    //<System Mode>,<Operation Mode>,<MCC>-<MNC>,<TAC>,\n    //<SCellID>,<PCellID>,<Frequency Band>,<earfcn>,<dlbw>,\n    //<ulbw>,<RSRQ>,<RSRP>,<RSSI>,<RSSNR>\n    \n    if (msg.payload.indexOf(\"LTE\")>-1) {\n        \n        flow.set(\"online\",\"1\");\n        \n        var flds = msg.payload.split(\"CPSI:\")[1].trim().split(\",\");\n        \n        oot.push({\"topic\":\"modem/sysMode\", \"payload\":flds[0]});\n        oot.push({\"topic\":\"modem/opMode\", \"payload\":flds[1]});\n        oot.push({\"topic\":\"modem/MCC-MNC\", \"payload\":flds[2]});\n        oot.push({\"topic\":\"modem/TAC\", \"payload\":flds[3]});\n        oot.push({\"topic\":\"modem/SCellID\", \"payload\":flds[4]});\n        oot.push({\"topic\":\"modem/PCellID\", \"payload\":flds[5]});\n        oot.push({\"topic\":\"modem/frqBand\", \"payload\":flds[6]});\n        oot.push({\"topic\":\"modem/earfcn\", \"payload\":flds[7]});\n        oot.push({\"topic\":\"modem/dlbw\", \"payload\":flds[8]});\n        oot.push({\"topic\":\"modem/ulbw\", \"payload\":flds[9]});\n        oot.push({\"topic\":\"modem/RSRQ\", \"payload\":flds[10]});\n        oot.push({\"topic\":\"modem/RSRP\", \"payload\":parseInt(flds[11])/10});\n        oot.push({\"topic\":\"modem/RSSI\", \"payload\":flds[12]});\n        oot.push({\"topic\":\"modem/RSSNR\", \"payload\":flds[13].split(\"\\r\")[0]});\n        \n        var xpSignal = parseInt(140 + (parseInt(flds[11])/10));\n        \n        oot.push({\"topic\":\"system/signalGSM\", \"payload\":xpSignal});\n        \n        \n    }\n    else { flow.set(\"online\",\"0\"); }\n}\n\nif (oot.length<1) { return null; }\n\nmsg.payload = oot;\n\nreturn msg;",
+        "func": "\nflow.set(\"lastUSBin\", new Date().getTime());\n\nvar oot = [];\n\nif (msg.payload.indexOf(\"AT+CIMI\")>-1) {\n    \n    //msg.topic = \"modem/simIMSI\";\n    //msg.payload = msg.payload.split(\"AT+CIMI\")[1].split(\"\\n\")[1].trim();\n    oot.push({\"topic\":\"modem/simIMSI\", \"payload\":msg.payload.split(\"AT+CIMI\")[1].split(\"\\n\")[1].trim()});\n}\n\nelse if (msg.payload.indexOf(\"AT+CICCID\") > -1) {\n\n    //msg.topic = \"modem/simIMSI\";\n    //msg.payload = msg.payload.split(\"AT+CIMI\")[1].split(\"\\n\")[1].trim();\n    oot.push({ \"topic\": \"modem/simICCID\", \"payload\": msg.payload.split(\"ICCID:\")[1].split(\"\\n\")[0].trim() });\n}\n\nelse if (msg.payload.indexOf(\"+CPSI:\")>-1) {\n    \n    //<System Mode>,<Operation Mode>,<MCC>-<MNC>,<TAC>,\n    //<SCellID>,<PCellID>,<Frequency Band>,<earfcn>,<dlbw>,\n    //<ulbw>,<RSRQ>,<RSRP>,<RSSI>,<RSSNR>\n    \n    if (msg.payload.indexOf(\"LTE\")>-1) {\n        \n        flow.set(\"online\",\"1\");\n        \n        var flds = msg.payload.split(\"CPSI:\")[1].trim().split(\",\");\n        \n        oot.push({\"topic\":\"modem/sysMode\", \"payload\":flds[0]});\n        oot.push({\"topic\":\"modem/opMode\", \"payload\":flds[1]});\n        oot.push({\"topic\":\"modem/MCC-MNC\", \"payload\":flds[2]});\n        oot.push({\"topic\":\"modem/TAC\", \"payload\":flds[3]});\n        oot.push({\"topic\":\"modem/SCellID\", \"payload\":flds[4]});\n        oot.push({\"topic\":\"modem/PCellID\", \"payload\":flds[5]});\n        oot.push({\"topic\":\"modem/frqBand\", \"payload\":flds[6]});\n        oot.push({\"topic\":\"modem/earfcn\", \"payload\":flds[7]});\n        oot.push({\"topic\":\"modem/dlbw\", \"payload\":flds[8]});\n        oot.push({\"topic\":\"modem/ulbw\", \"payload\":flds[9]});\n        oot.push({\"topic\":\"modem/RSRQ\", \"payload\":flds[10]});\n        oot.push({\"topic\":\"modem/RSRP\", \"payload\":parseInt(flds[11])/10});\n        oot.push({\"topic\":\"modem/RSSI\", \"payload\":flds[12]});\n        oot.push({\"topic\":\"modem/RSSNR\", \"payload\":flds[13].split(\"\\r\")[0]});\n        \n        var xpSignal = parseInt(140 + (parseInt(flds[11])/10));\n        \n        oot.push({\"topic\":\"system/signalGSM\", \"payload\":xpSignal});\n        \n        \n    }\n    else { flow.set(\"online\",\"0\"); }\n}\n\nif (oot.length<1) { return null; }\n\nmsg.payload = oot;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -601,12 +601,12 @@
         "repeat": "",
         "crontab": "",
         "once": true,
-        "onceDelay": "23",
+        "onceDelay": "45",
         "topic": "",
         "payload": "AT",
         "payloadType": "str",
         "x": 270,
-        "y": 620,
+        "y": 580,
         "wires": [
             [
                 "8af54b7140236bc2"
@@ -625,7 +625,7 @@
         "finalize": "",
         "libs": [],
         "x": 420,
-        "y": 620,
+        "y": 580,
         "wires": [
             [
                 "188d6e8d1db59bdd"
@@ -2080,6 +2080,54 @@
         "wires": [
             [
                 "18afff5e549373d7"
+            ]
+        ]
+    },
+    {
+        "id": "498ed461a5e41af1",
+        "type": "inject",
+        "z": "f7fb808af6ec3dfd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "55",
+        "topic": "",
+        "payload": "AT",
+        "payloadType": "str",
+        "x": 270,
+        "y": 620,
+        "wires": [
+            [
+                "03d1fb64b720a30f"
+            ]
+        ]
+    },
+    {
+        "id": "03d1fb64b720a30f",
+        "type": "function",
+        "z": "f7fb808af6ec3dfd",
+        "name": "AT+CICCID",
+        "func": "msg.payload = \"AT+CICCID\\r\\n\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 620,
+        "wires": [
+            [
+                "188d6e8d1db59bdd"
             ]
         ]
     },
