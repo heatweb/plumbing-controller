@@ -1,0 +1,129 @@
+[
+    {
+        "id": "eb8ad1a65ac4bf10",
+        "type": "tab",
+        "label": "USB",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f7bb35fbe3cb429c",
+        "type": "inject",
+        "z": "eb8ad1a65ac4bf10",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 200,
+        "wires": [
+            [
+                "da4145c828aa0477"
+            ]
+        ]
+    },
+    {
+        "id": "da4145c828aa0477",
+        "type": "template",
+        "z": "eb8ad1a65ac4bf10",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "SUBSYSTEM==\"tty\", ATTRS{idProduct}==\"9011\", ATTRS{idVendor}==\"1e0e\", SYMLINK+=\"ttyUSB_MODEM\"\nSUBSYSTEM==\"tty\", ATTRS{idProduct}==\"6001\", ATTRS{idVendor}==\"0403\", SYMLINK+=\"ttyUSB_FTDI\"\n",
+        "output": "str",
+        "x": 340,
+        "y": 200,
+        "wires": [
+            [
+                "ed538c32fecf4d11"
+            ]
+        ]
+    },
+    {
+        "id": "ed538c32fecf4d11",
+        "type": "file",
+        "z": "eb8ad1a65ac4bf10",
+        "name": "",
+        "filename": "/home/pi/node-hiu/usbrules",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 580,
+        "y": 200,
+        "wires": [
+            [
+                "717dec5055010bab"
+            ]
+        ]
+    },
+    {
+        "id": "d4e7b4a6fc47d718",
+        "type": "exec",
+        "z": "eb8ad1a65ac4bf10",
+        "command": "sudo udevadm trigger",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 320,
+        "y": 380,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "717dec5055010bab",
+        "type": "exec",
+        "z": "eb8ad1a65ac4bf10",
+        "command": "sudo mv /home/pi/node-hiu/usbrules /etc/udev/rules.d/10-usb-serial.rules",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 480,
+        "y": 300,
+        "wires": [
+            [
+                "d4e7b4a6fc47d718"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "28320d40650cc9ae",
+        "type": "comment",
+        "z": "eb8ad1a65ac4bf10",
+        "name": "https://www.freva.com/assign-fixed-usb-port-names-to-your-raspberry-pi/",
+        "info": "",
+        "x": 350,
+        "y": 140,
+        "wires": []
+    }
+]
