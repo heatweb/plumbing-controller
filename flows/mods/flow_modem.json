@@ -10,14 +10,15 @@
         "id": "18afff5e549373d7",
         "type": "exec",
         "z": "f7fb808af6ec3dfd",
-        "command": "sudo dhclient -v usb0",
-        "addpay": "",
+        "command": "sudo dhclient -v",
+        "addpay": "payload",
         "append": "",
         "useSpawn": "false",
         "timer": "",
+        "winHide": false,
         "oldrc": false,
         "name": "",
-        "x": 420,
+        "x": 700,
         "y": 160,
         "wires": [
             [
@@ -46,14 +47,15 @@
         "repeat": "300",
         "crontab": "",
         "once": true,
-        "onceDelay": "5",
+        "onceDelay": "15",
         "topic": "",
+        "payload": "",
         "payloadType": "date",
-        "x": 200,
+        "x": 230,
         "y": 160,
         "wires": [
             [
-                "18afff5e549373d7"
+                "299402c70198ee44"
             ]
         ]
     },
@@ -69,7 +71,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 670,
+        "x": 970,
         "y": 160,
         "wires": []
     },
@@ -89,8 +91,8 @@
         ],
         "repeat": "60",
         "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
+        "once": true,
+        "onceDelay": "10",
         "topic": "",
         "payload": "",
         "payloadType": "date",
@@ -130,7 +132,7 @@
         "type": "debug",
         "z": "f7fb808af6ec3dfd",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -167,7 +169,7 @@
         "z": "f7fb808af6ec3dfd",
         "name": "",
         "serial": "07c35ea8fb94a2fc",
-        "x": 290,
+        "x": 320,
         "y": 440,
         "wires": [
             [
@@ -183,7 +185,7 @@
         "z": "f7fb808af6ec3dfd",
         "name": "",
         "serial": "07c35ea8fb94a2fc",
-        "x": 1070,
+        "x": 1100,
         "y": 620,
         "wires": []
     },
@@ -464,7 +466,7 @@
         "type": "function",
         "z": "f7fb808af6ec3dfd",
         "name": "",
-        "func": "\nvar iface = msg.payload.split(\":\")[0]\n\nif (iface !== \"usb0\") { return null; }\n\nvar lines = msg.payload.split(\"\\n\");\n\nvar direc,ltype;\n\nvar oot = [];\n\nvar megabytesTotal = 0\n\n\n\nfor (var l in lines) {\n    \n    direct=\"\";\n    ltype=\"\";\n    var ootl = {};\n     \n    lines[l]=lines[l].trim(); \n     \n    if (lines[l].indexOf(\"RX\")>-1) { direc = \"RX\"; }\n    else if (lines[l].indexOf(\"TX\")>-1) { direc = \"TX\"; }\n    \n    if (direc==\"\") { continue; }\n    \n    if (lines[l].indexOf(\"bytes\")>-1) { \n        \n        ltype = \"megabytes\"; \n        ootl.payload = parseFloat(lines[l].split(\"bytes \")[1].split(\" \")[0]) / 1000000;\n        megabytesTotal = megabytesTotal + ootl.payload;\n        \n    }\n    else if (lines[l].indexOf(\"errors\")>-1) { \n        \n        ltype = \"errors\"; \n        ootl.payload = parseFloat(lines[l].split(\"errors \")[1].split(\" \")[0]);\n    }\n    \n    if (ltype==\"\") { continue; }\n    \n   \n    ootl.topic = \"modem/\" + ltype + direc;\n    oot.push(ootl);\n    \n    \n}\n\noot.push({\"topic\":\"modem/megabytesTotal\", \"payload\":megabytesTotal});\n\nvar megabytesPM = parseInt(1000000 * (megabytesTotal - (flow.get(\"mblast\") || megabytesTotal))) / 1000000;\nflow.set(\"mblast\",megabytesTotal);\noot.push({\"topic\":\"modem/megabytesPM\", \"payload\":megabytesPM});\noot.push({\"topic\":\"modem/kbps\", \"payload\":parseInt(1000000 * megabytesPM / 60)/1000});\n\nmsg.payload = oot;\n\nreturn msg;",
+        "func": "\nvar iface = msg.payload.split(\":\")[0]\n\nif (iface.indexOf(\"usb\") !== 0 ) { return null; }\nflow.set(\"iface\",iface.substring(0,4));\n\n\nvar lines = msg.payload.split(\"\\n\");\n\nvar direc,ltype;\n\nvar oot = [];\n\nvar megabytesTotal = 0\n\n\n\nfor (var l in lines) {\n    \n    direc=\"\";\n    ltype=\"\";\n    var ootl = {};\n     \n    lines[l]=lines[l].trim(); \n     \n    if (lines[l].indexOf(\"RX\")>-1) { direc = \"RX\"; }\n    else if (lines[l].indexOf(\"TX\")>-1) { direc = \"TX\"; }\n    \n    if (direc==\"\") { continue; }\n    \n    if (lines[l].indexOf(\"bytes\")>-1) { \n        \n        ltype = \"megabytes\"; \n        ootl.payload = parseFloat(lines[l].split(\"bytes \")[1].split(\" \")[0]) / 1000000;\n        megabytesTotal = megabytesTotal + ootl.payload;\n        \n    }\n    else if (lines[l].indexOf(\"errors\")>-1) { \n        \n        ltype = \"errors\"; \n        ootl.payload = parseFloat(lines[l].split(\"errors \")[1].split(\" \")[0]);\n    }\n    \n    if (ltype==\"\") { continue; }\n    \n   \n    ootl.topic = \"modem/\" + ltype + direc;\n    oot.push(ootl);\n    \n    \n}\n\noot.push({\"topic\":\"modem/megabytesTotal\", \"payload\":megabytesTotal});\n\nvar megabytesPM = parseInt(1000000 * (megabytesTotal - (flow.get(\"mblast\") || megabytesTotal))) / 1000000;\nflow.set(\"mblast\",megabytesTotal);\noot.push({\"topic\":\"modem/megabytesPM\", \"payload\":megabytesPM});\noot.push({\"topic\":\"modem/kbps\", \"payload\":parseInt(1000000 * megabytesPM / 60)/1000});\n\nmsg.payload = oot;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -634,10 +636,8 @@
         "id": "81310b0590f43aba",
         "type": "link in",
         "z": "f7fb808af6ec3dfd",
-        "name": "",
+        "name": "resetmodem",
         "links": [
-            "af6ed0a2.3108e",
-            "57951fb3.4ee4",
             "9abe6fd2.97b23"
         ],
         "x": 315,
@@ -763,8 +763,8 @@
         "checkall": "false",
         "repair": false,
         "outputs": 2,
-        "x": 1070,
-        "y": 180,
+        "x": 1230,
+        "y": 220,
         "wires": [
             [
                 "1a74481e0e8eb2ec",
@@ -784,8 +784,8 @@
             "9189a361.6d051",
             "26b0c09f.0e9e2"
         ],
-        "x": 1215,
-        "y": 160,
+        "x": 1375,
+        "y": 200,
         "wires": []
     },
     {
@@ -826,8 +826,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 1230,
-        "y": 220,
+        "x": 1390,
+        "y": 260,
         "wires": [
             []
         ]
@@ -950,14 +950,14 @@
         "id": "580fb085d472796e",
         "type": "function",
         "z": "f7fb808af6ec3dfd",
-        "name": "AT+CGDCONT=1,\"IPV4V6\",\"wlapn.com\"",
-        "func": "flow.set(\"pleasewait\",\"1\");\nmsg.payload = 'AT+CGDCONT=1,\"IPV4V6\",\"wlapn.com\"\\r\\n'\nreturn msg;",
+        "name": "AT+CGDCONT=1,\"IPV4V6\",\"wsim\"",
+        "func": "flow.set(\"pleasewait\",\"1\");\nmsg.payload = 'AT+CGDCONT=1,\"IPV4V6\",\"wsim\"\\r\\n'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
+        "x": 760,
         "y": 1200,
         "wires": [
             [
@@ -969,14 +969,14 @@
         "id": "e9d99b70e6bb5698",
         "type": "function",
         "z": "f7fb808af6ec3dfd",
-        "name": "AT+CGDCONT=6,\"IPV4V6\",\"wlapn.com\"",
-        "func": "msg.payload = 'AT+CGDCONT=6,\"IPV4V6\",\"wlapn.com\"\\r\\n'\nreturn msg;",
+        "name": "AT+CGDCONT=6,\"IPV4V6\",\"wsim\"",
+        "func": "msg.payload = 'AT+CGDCONT=6,\"IPV4V6\",\"wsim\"\\r\\n'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
+        "x": 760,
         "y": 1240,
         "wires": [
             [
@@ -1428,7 +1428,7 @@
         "y": 100,
         "wires": [
             [
-                "18afff5e549373d7"
+                "299402c70198ee44"
             ]
         ]
     },
@@ -1666,8 +1666,9 @@
         "repeat": "60",
         "crontab": "",
         "once": true,
-        "onceDelay": "60",
+        "onceDelay": "180",
         "topic": "",
+        "payload": "",
         "payloadType": "date",
         "x": 950,
         "y": 500,
@@ -1701,8 +1702,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1430,
-        "y": 420,
+        "x": 1370,
+        "y": 460,
         "wires": []
     },
     {
@@ -1727,10 +1728,7 @@
                 "db32607d56940241",
                 "bee89ed3410ddd1f"
             ],
-            [
-                "bee89ed3410ddd1f",
-                "1bda836d9f35d5d1"
-            ]
+            []
         ]
     },
     {
@@ -1784,51 +1782,6 @@
         "y": 560,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "9e0bfe87aedfa861",
-        "type": "exec",
-        "z": "f7fb808af6ec3dfd",
-        "command": "sudo shutdown now",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 1520,
-        "y": 560,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "1bda836d9f35d5d1",
-        "type": "delay",
-        "z": "f7fb808af6ec3dfd",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "15",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1340,
-        "y": 560,
-        "wires": [
-            [
-                "9e0bfe87aedfa861"
-            ]
         ]
     },
     {
@@ -1916,9 +1869,224 @@
         ]
     },
     {
+        "id": "e8a7f64a8ec6a1b8",
+        "type": "template",
+        "z": "f7fb808af6ec3dfd",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "SUBSYSTEM==\"tty\", ATTRS{idProduct}==\"9011\", ATTRS{idVendor}==\"1e0e\", SYMLINK+=\"ttyUSB_MODEM\"\nSUBSYSTEM==\"tty\", ATTRS{idProduct}==\"6001\", ATTRS{idVendor}==\"0403\", SYMLINK+=\"ttyUSB_FTDI\"\n",
+        "output": "str",
+        "x": 380,
+        "y": 1820,
+        "wires": [
+            [
+                "4fff5708695eb1a7"
+            ]
+        ]
+    },
+    {
+        "id": "4fff5708695eb1a7",
+        "type": "file",
+        "z": "f7fb808af6ec3dfd",
+        "name": "",
+        "filename": "/home/pi/node-hiu/usbrules",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 620,
+        "y": 1820,
+        "wires": [
+            [
+                "ae7f560ec768412b"
+            ]
+        ]
+    },
+    {
+        "id": "016b624817d6a2bc",
+        "type": "exec",
+        "z": "f7fb808af6ec3dfd",
+        "command": "sudo udevadm trigger",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 420,
+        "y": 2000,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ae7f560ec768412b",
+        "type": "exec",
+        "z": "f7fb808af6ec3dfd",
+        "command": "sudo cp /home/pi/node-hiu/usbrules /etc/udev/rules.d/10-usb-serial.rules",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 580,
+        "y": 1920,
+        "wires": [
+            [],
+            [],
+            [
+                "016b624817d6a2bc"
+            ]
+        ]
+    },
+    {
+        "id": "4025b6698108f70f",
+        "type": "comment",
+        "z": "f7fb808af6ec3dfd",
+        "name": "https://www.freva.com/assign-fixed-usb-port-names-to-your-raspberry-pi/",
+        "info": "",
+        "x": 390,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "43b14214c04d265f",
+        "type": "exec",
+        "z": "f7fb808af6ec3dfd",
+        "command": "ls /home/pi/node-hiu/usbrules",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 440,
+        "y": 1720,
+        "wires": [
+            [],
+            [
+                "07e5b1d61af19912",
+                "e8a7f64a8ec6a1b8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b8ba7747c531dc24",
+        "type": "inject",
+        "z": "f7fb808af6ec3dfd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 1720,
+        "wires": [
+            [
+                "43b14214c04d265f"
+            ]
+        ]
+    },
+    {
+        "id": "07e5b1d61af19912",
+        "type": "debug",
+        "z": "f7fb808af6ec3dfd",
+        "name": "debug 34",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 1720,
+        "wires": []
+    },
+    {
+        "id": "5f4dabdf50d46955",
+        "type": "inject",
+        "z": "f7fb808af6ec3dfd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 2000,
+        "wires": [
+            [
+                "016b624817d6a2bc"
+            ]
+        ]
+    },
+    {
+        "id": "299402c70198ee44",
+        "type": "change",
+        "z": "f7fb808af6ec3dfd",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "iface",
+                "tot": "flow",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 160,
+        "wires": [
+            [
+                "18afff5e549373d7"
+            ]
+        ]
+    },
+    {
         "id": "07c35ea8fb94a2fc",
         "type": "serial-port",
-        "serialport": "/dev/ttyUSB2",
+        "serialport": "/dev/ttyUSB_MODEM",
         "serialbaud": "115200",
         "databits": "8",
         "parity": "none",
