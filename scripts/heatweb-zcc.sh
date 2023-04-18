@@ -9,6 +9,7 @@ mainmenu() {
                 "\n   Move to selection (UP, DOWN) then press ENTER  " 19 73 10 \
                 "UPDATE_GIT" "   Update files from GitHub                    " \
                 "UPDATE_BOARD" "   Update I/O board                    " \
+                "ICODE" "   Setup using am Install Code                  " \
                 "INSTALL" "   First installation                         " \
                 "KIOSK" "   Activate kiosk browser   " \
                 "PASSWORD" "   Set admin password                         " \
@@ -32,6 +33,19 @@ do
         if [[ $MYMENU == "EXIT" ]]; then
             # whiptail --title "Heatweb Plumbing Controller" --msgbox "Happy Days." 8 78
             exit
+        fi
+        
+        
+         if [[ $MYMENU == "ICODE" ]]; then
+            
+              ICODE=$(whiptail --inputbox "Enter installation code" 8 60 3>&1 1>&2 2>&3)
+            
+              if [[ -z "${ICODE// }" ]]; then
+                  printf "No code given - aborting\r\n"; 
+              else    
+                  node /home/pi/plumbing-controller/scripts/flow-composer/fetch-heatweb-data.js $ICODE
+              fi   
+            
         fi
         
         if [[ $MYMENU == "UPDATE_GIT" ]]; then
