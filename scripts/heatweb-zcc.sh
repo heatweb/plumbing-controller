@@ -9,7 +9,7 @@ mainmenu() {
                 "\n   Move to selection (UP, DOWN) then press ENTER  " 19 73 10 \
                 "UPDATE_GIT" "   Update files from GitHub                    " \
                 "UPDATE_BOARD" "   Update I/O board                    " \
-                "ICODE" "   Setup using am Install Code                  " \
+                "ICODE" "   Setup using Install Code                  " \
                 "INSTALL" "   First installation                         " \
                 "KIOSK" "   Activate kiosk browser   " \
                 "PASSWORD" "   Set admin password                         " \
