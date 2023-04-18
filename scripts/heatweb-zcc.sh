@@ -41,7 +41,7 @@ do
               ICODE=$(whiptail --inputbox "Enter installation code" 8 60 3>&1 1>&2 2>&3)
             
               if [[ -z "${ICODE// }" ]]; then
-                  printf "No code given - aborting\r\n"; 
+                  whiptail --title "Install Code" --msgbox "No code given - aborting." 8 78
               else    
                   node /home/pi/plumbing-controller/scripts/flow-composer/fetch-heatweb-data.js $ICODE
               fi   
