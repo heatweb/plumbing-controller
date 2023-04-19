@@ -160,7 +160,7 @@ async function fetchdata(url) {
   
        for (var cred in json.data.credentials) {
          
-         fs.writeFile("/home/pi/node-hiu/"+cred+".txt", json.data.credentials[cred], err => {
+         fs.writeFile("/home/pi/node-hiu/credentials/"+cred+".txt", json.data.credentials[cred], err => {
             if (err) { console.error(err); } 
             else {
 
