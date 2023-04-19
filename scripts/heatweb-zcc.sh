@@ -48,6 +48,9 @@ do
               node /home/pi/plumbing-controller/scripts/flow-composer/fetch-heatweb-data.js $ICODE
               
               node /home/pi/plumbing-controller/scripts/flow-composer/flow-composer.js /boot/heatweb/composer/composer.json
+              
+              sudo rm /home/pi/node-hiu/credentials/* 
+              
               whiptail --title "Heatweb Plumbing Controller" --msgbox "Setup has been finished. \nApplication should now be running in Node-RED on port 1880." 8 78
             
         fi
