@@ -160,13 +160,18 @@ async function fetchdata(url) {
 
                // exec('sudo rm /boot/heatweb/credentials/'+cred+'.txt', (err, stdout, stderr) => {
                     //if (err) { console.error(err); }                     
-
-                    exec('sudo cp /home/pi/node-hiu/'+cred+'.tmp /boot/heatweb/credentials/'+cred+'.txt', (err, stdout, stderr) => {
+                    
+                    var f1 = "/home/pi/node-hiu/"+cred+".tmp";
+                    var f2 = "/boot/heatweb/credentials/"+cred+".txt";
+                    exec('sudo cp '+f1+' '+f2, (err, stdout, stderr) => {
+                      
+                        console.log("copying ",f1,f2);
                         if (err) { console.error(err)  }           
                       
-                        exec('sudo rm /home/pi/node-hiu/'+cred+'.tmp', (err, stdout, stderr) => {
-                        if (err) { console.error(err)  }      
-                         });  
+                        exec('sudo rm '+f1, (err, stdout, stderr) => {
+                              console.log("removing ",f1);
+                              if (err) { console.error(err)  }      
+                        });  
                       
                     });          
                             
