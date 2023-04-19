@@ -15,6 +15,12 @@ var sdata = "{}";
 
  var url = "https://heatweb-api.flowforge.cloud/register-device?code=" + myArgs[0];
 
+
+if (!fs.existsSync("/home/pi/node-hiu/credentials")){
+    fs.mkdirSync("/home/pi/node-hiu/credentials");
+}
+
+
  fetchdata(url);
 
 
@@ -154,24 +160,24 @@ async function fetchdata(url) {
   
        for (var cred in json.data.credentials) {
          
-         fs.writeFile("/home/pi/node-hiu/"+cred+".tmp", json.data.credentials[cred], err => {
+         fs.writeFile("/home/pi/node-hiu/"+cred+".txt", json.data.credentials[cred], err => {
             if (err) { console.error(err); } 
             else {
 
                // exec('sudo rm /boot/heatweb/credentials/'+cred+'.txt', (err, stdout, stderr) => {
                     //if (err) { console.error(err); }                     
                     
-                    var f1 = "/home/pi/node-hiu/"+cred+".tmp";
-                    var f2 = "/boot/heatweb/credentials/"+cred+".txt";
-                    exec('sudo cp '+f1+' '+f2, (err, stdout, stderr) => {
+                   // var f1 = "/home/pi/node-hiu/"+cred+".txt";
+                   // var f2 = "/boot/heatweb/credentials/"+cred+".txt";
+                    exec('sudo cp /home/pi/node-hiu/* /boot/heatweb/credentials/', (err, stdout, stderr) => {
                       
-                        console.log("copying ",f1,f2);
-                        if (err) { console.error(err)  }           
+                        //console.log("copying ",f1,f2);
+                        //if (err) { console.error(err)  }           
                       
-                        exec('sudo rm '+f1, (err, stdout, stderr) => {
-                              console.log("removing ",f1);
-                              if (err) { console.error(err)  }      
-                        });  
+                        //exec('sudo rm '+f1, (err, stdout, stderr) => {
+                        //      console.log("removing ",f1);
+                        //      if (err) { console.error(err)  }      
+                        //});  
                       
                     });          
                             
