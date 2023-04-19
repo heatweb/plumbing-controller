@@ -48,14 +48,25 @@ if (fs.existsSync("/boot/heatweb/credentials.json")) {
 } 
 // NEED TO ADD SECTION TO RECOMPILE CREDENTIALS FROM .txt FILES.  OR DITCH credentials.json AND JUST USE .txt FILES 
 
-if (fs.existsSync("/boot/heatweb/credentials/adminPassword.txt")) {
-    
+if (fs.existsSync("/boot/heatweb/credentials/adminPassword.txt")) {   
   console.log("loading admin password"); 
   try { credentials.adminPassword = fs.readFileSync("/boot/heatweb/credentials/adminPassword.txt", {encoding:'utf8', flag:'r'});  } 
-  catch { console.log("Invalid credentials data.");  process.exit(1); } 
-         
+  catch { console.log("Invalid credentials data.");  process.exit(1); }         
 } 
 
+
+if (fs.existsSync("/boot/heatweb/credentials/remoteInfluxToken.txt")) {   
+  console.log("loading Influx Token"); 
+  try { credentials.remoteInfluxToken = fs.readFileSync("/boot/heatweb/credentials/remoteInfluxToken.txt", {encoding:'utf8', flag:'r'});  } 
+  catch { console.log("Invalid credentials data.");  process.exit(1); }         
+} 
+
+
+if (fs.existsSync("/boot/heatweb/credentials/remoteInfluxBucket.txt")) {   
+  console.log("loading Influx Bucket"); 
+  try { credentials.remoteInfluxBucket = fs.readFileSync("/boot/heatweb/credentials/remoteInfluxBucket.txt", {encoding:'utf8', flag:'r'});  } 
+  catch { console.log("Invalid credentials data.");  process.exit(1); }         
+} 
 
 
 var config = {};
@@ -381,6 +392,11 @@ function compose() {
               if (credentials.remoteInfluxToken) {
 
                   if (ff[part].type == "influxdb" && ff[part].name == "heatweb") { ff[part].credentials = { "token": credentials.remoteInfluxToken }; }
+
+              }
+              if (credentials.remoteInfluxBucket) {
+
+                  if (ff[part].type == "influxdb out") { ff[part].bucket = credentials.remoteInfluxBucket; }
 
               }
 
