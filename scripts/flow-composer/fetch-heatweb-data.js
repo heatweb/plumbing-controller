@@ -150,7 +150,26 @@ async function fetchdata(url) {
   
     }
   
-    //console.log("Done.");
+    if (json.data.credentials) {
+  
+       for (var cred in json.data.credentials) {
+         
+         fs.writeFile("/home/pi/node-hiu/"+cred+".tmp", json.data.credentials[cred], err => {
+            if (err) { console.error(err); } 
+            else {
+
+                exec('sudo mv /home/pi/node-hiu/'+cred+'.tmp' /boot/heatweb/credentials/'+cred+'.txt', (err, stdout, stderr) => {
+                    if (err) { console.error(err)  }             
+                });          
+            }  
+          });
+         
+       
+       }
+  
+    }
+  
+    //console.log("Done.");  // NO MUST FINISH async operations
     //process.exit(0);
   
 }
