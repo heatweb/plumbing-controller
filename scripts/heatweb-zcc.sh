@@ -42,9 +42,10 @@ do
             
               if [[ -z "${ICODE// }" ]]; then
                   whiptail --title "Install Code" --msgbox "No code given - aborting." 8 78
-              else
-                  node /home/pi/plumbing-controller/scripts/flow-composer/fetch-heatweb-data.js $ICODE
+                  exit
               fi
+              
+              node /home/pi/plumbing-controller/scripts/flow-composer/fetch-heatweb-data.js $ICODE
             
         fi
         
