@@ -169,7 +169,7 @@ async function fetchdata(url) {
                     
                    // var f1 = "/home/pi/node-hiu/"+cred+".txt";
                    // var f2 = "/boot/heatweb/credentials/"+cred+".txt";
-                    exec('sudo cp /home/pi/node-hiu/* /boot/heatweb/credentials/', (err, stdout, stderr) => {
+                    exec('sudo cp /home/pi/node-hiu/credentials/* /boot/heatweb/credentials/', (err, stdout, stderr) => {
                       
                         //console.log("copying ",f1,f2);
                         //if (err) { console.error(err)  }           
