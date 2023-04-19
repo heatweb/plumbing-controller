@@ -158,8 +158,13 @@ async function fetchdata(url) {
             if (err) { console.error(err); } 
             else {
 
-                exec('sudo mv /home/pi/node-hiu/'+cred+'.tmp /boot/heatweb/credentials/'+cred+'.txt', (err, stdout, stderr) => {
-                    if (err) { console.error(err)  }             
+                exec('sudo rm /boot/heatweb/credentials/'+cred+'.txt', (err, stdout, stderr) => {
+                    if (err) { console.error(err); }                     
+
+                    exec('sudo mv /home/pi/node-hiu/'+cred+'.tmp /boot/heatweb/credentials/'+cred+'.txt', (err, stdout, stderr) => {
+                        if (err) { console.error(err)  }             
+                    });          
+                            
                 });          
             }  
           });
