@@ -158,7 +158,7 @@ async function fetchdata(url) {
             if (err) { console.error(err); } 
             else {
 
-                exec('sudo rm /boot/heatweb/credentials/'+cred+'.txt', (err, stdout, stderr) => {
+               // exec('sudo rm /boot/heatweb/credentials/'+cred+'.txt', (err, stdout, stderr) => {
                     //if (err) { console.error(err); }                     
 
                     exec('sudo cp /home/pi/node-hiu/'+cred+'.tmp /boot/heatweb/credentials/'+cred+'.txt', (err, stdout, stderr) => {
@@ -170,7 +170,7 @@ async function fetchdata(url) {
                       
                     });          
                             
-                });          
+               // });          
             }  
           });
          
