@@ -142,7 +142,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "#If you want to use two cameras and DSI0, please execute\ncd /home/pi/node-hiu/CM4_dt_blob_Source/\nsudo rm -rf /boot/dt-blob.bin\nsudo  dtc -I dts -O dtb -o /boot/dt-blob.bin dt-blob-disp0-double_cam.dts",
+        "template": "cd /home/pi/node-hiu/CM4_dt_blob_Source/\nsudo rm -rf /boot/dt-blob.bin\nsudo  dtc -I dts -O dtb -o /boot/dt-blob.bin dt-blob-disp0-double_cam.dts",
         "output": "str",
         "x": 500,
         "y": 360,
@@ -161,7 +161,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "#If you want to use two cameras and DSI1, please execute\ncd /home/pi/node-hiu/CM4_dt_blob_Source/\nsudo rm -rf /boot/dt-blob.bin\nsudo  dtc -I dts -O dtb -o /boot/dt-blob.bin dt-blob-disp1-double_cam.dts",
+        "template": "cd /home/pi/node-hiu/CM4_dt_blob_Source/\nsudo rm -rf /boot/dt-blob.bin\nsudo  dtc -I dts -O dtb -o /boot/dt-blob.bin dt-blob-disp1-double_cam.dts",
         "output": "str",
         "x": 490,
         "y": 480,
@@ -455,6 +455,55 @@
             [
                 "5e0f2c7bbf09f9ae"
             ]
+        ]
+    },
+    {
+        "id": "46742c10cec76511",
+        "type": "inject",
+        "z": "b927acc1b874b6c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 700,
+        "wires": [
+            [
+                "79eea67ea22eb89f"
+            ]
+        ]
+    },
+    {
+        "id": "79eea67ea22eb89f",
+        "type": "exec",
+        "z": "b927acc1b874b6c2",
+        "command": "rm /home/pi/node-hiu/wavesharesetup.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 400,
+        "y": 700,
+        "wires": [
+            [],
+            [],
+            []
         ]
     }
 ]
