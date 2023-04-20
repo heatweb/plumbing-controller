@@ -503,6 +503,50 @@
         "wires": [
             [],
             [],
+            [
+                "e3f4c156c9cc5347"
+            ]
+        ]
+    },
+    {
+        "id": "e3f4c156c9cc5347",
+        "type": "exec",
+        "z": "b927acc1b874b6c2",
+        "command": "rm /home/pi/node-hiu/CM4_dt_blob_Source.zip",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 420,
+        "y": 760,
+        "wires": [
+            [],
+            [],
+            [
+                "b6f3fc6c01277102"
+            ]
+        ]
+    },
+    {
+        "id": "b6f3fc6c01277102",
+        "type": "exec",
+        "z": "b927acc1b874b6c2",
+        "command": "sudo rm -r /home/pi/node-hiu/CM4_dt_blob_Source",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 430,
+        "y": 820,
+        "wires": [
+            [],
+            [],
             []
         ]
     }
