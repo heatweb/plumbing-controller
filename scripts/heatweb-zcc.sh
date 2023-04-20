@@ -51,7 +51,7 @@ do
               
               sudo rm /home/pi/node-hiu/credentials/* 
               
-              whiptail --title "Heatweb Plumbing Controller" --msgbox "Setup has been finished. \nApplication should now be running in Node-RED on port 1880." 8 78
+              whiptail --title "Heatweb Plumbing Controller" --msgbox "Setup has been finished. \nApplication should now be running in Node-RED on port 1880.\n\n PLEASE DEPLOY FLOW FROM WITHIN NODE-RED FOR CREDENTIALS TO WORK !!!" 8 78
             
         fi
         
