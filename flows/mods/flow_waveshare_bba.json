@@ -18,36 +18,6 @@
         "wires": []
     },
     {
-        "id": "bb960e0e39b82f06",
-        "type": "inject",
-        "z": "b927acc1b874b6c2",
-        "d": true,
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 120,
-        "y": 280,
-        "wires": [
-            [
-                "3f04fba177be312c"
-            ]
-        ]
-    },
-    {
         "id": "3f04fba177be312c",
         "type": "template",
         "z": "b927acc1b874b6c2",
@@ -58,8 +28,8 @@
         "syntax": "mustache",
         "template": "cd /home/pi/node-hiu\nwget https://www.waveshare.com/w/upload/7/75/CM4_dt_blob_Source.zip\nunzip -o  CM4_dt_blob_Source.zip -d ./CM4_dt_blob_Source\nsudo chmod 777 -R CM4_dt_blob_Source",
         "output": "str",
-        "x": 490,
-        "y": 280,
+        "x": 770,
+        "y": 180,
         "wires": [
             [
                 "ae97fd64caabccdb"
@@ -70,7 +40,7 @@
         "id": "5e0f2c7bbf09f9ae",
         "type": "exec",
         "z": "b927acc1b874b6c2",
-        "command": "sudo bash /home/pi/node-hiu/wavesharesetup.sh",
+        "command": "sudo bash /home/pi/node-hiu/wavesharesetup1.sh",
         "addpay": false,
         "append": "",
         "useSpawn": "false",
@@ -78,8 +48,8 @@
         "winHide": false,
         "oldrc": false,
         "name": "",
-        "x": 890,
-        "y": 440,
+        "x": 930,
+        "y": 340,
         "wires": [
             [
                 "ed011c731af0e8a6"
@@ -95,13 +65,13 @@
         "type": "file",
         "z": "b927acc1b874b6c2",
         "name": "",
-        "filename": "/home/pi/node-hiu/wavesharesetup.sh",
+        "filename": "/home/pi/node-hiu/wavesharesetup1.sh",
         "filenameType": "str",
         "appendNewline": true,
         "createDir": false,
         "overwriteFile": "true",
-        "x": 850,
-        "y": 360,
+        "x": 900,
+        "y": 260,
         "wires": [
             [
                 "9c621bce3566fda1"
@@ -125,8 +95,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 760,
-        "y": 280,
+        "x": 1040,
+        "y": 180,
         "wires": [
             [
                 "561e120430c4c5a3"
@@ -148,7 +118,7 @@
         "y": 360,
         "wires": [
             [
-                "ae97fd64caabccdb"
+                "36e9ac98615d7517"
             ]
         ]
     },
@@ -167,7 +137,7 @@
         "y": 480,
         "wires": [
             [
-                "ae97fd64caabccdb"
+                "36e9ac98615d7517"
             ]
         ]
     },
@@ -225,8 +195,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1140,
-        "y": 540,
+        "x": 1240,
+        "y": 340,
         "wires": []
     },
     {
@@ -449,8 +419,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1080,
-        "y": 360,
+        "x": 1160,
+        "y": 260,
         "wires": [
             [
                 "5e0f2c7bbf09f9ae"
@@ -503,9 +473,7 @@
         "wires": [
             [],
             [],
-            [
-                "e3f4c156c9cc5347"
-            ]
+            []
         ]
     },
     {
@@ -548,6 +516,143 @@
             [],
             [],
             []
+        ]
+    },
+    {
+        "id": "1485145a812f3838",
+        "type": "inject",
+        "z": "b927acc1b874b6c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 760,
+        "wires": [
+            [
+                "e3f4c156c9cc5347"
+            ]
+        ]
+    },
+    {
+        "id": "192fffa4030197e0",
+        "type": "exec",
+        "z": "b927acc1b874b6c2",
+        "command": "sudo bash /home/pi/node-hiu/wavesharesetup.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 930,
+        "y": 640,
+        "wires": [
+            [
+                "cbe3bdb795dd4ca9"
+            ],
+            [
+                "cbe3bdb795dd4ca9"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c9acdda5e96f75a8",
+        "type": "file",
+        "z": "b927acc1b874b6c2",
+        "name": "",
+        "filename": "/home/pi/node-hiu/wavesharesetup.sh",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "x": 890,
+        "y": 560,
+        "wires": [
+            [
+                "38bc5f1680746242"
+            ]
+        ]
+    },
+    {
+        "id": "36e9ac98615d7517",
+        "type": "delay",
+        "z": "b927acc1b874b6c2",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 800,
+        "y": 480,
+        "wires": [
+            [
+                "c9acdda5e96f75a8"
+            ]
+        ]
+    },
+    {
+        "id": "cbe3bdb795dd4ca9",
+        "type": "debug",
+        "z": "b927acc1b874b6c2",
+        "name": "debug 36",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1240,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "38bc5f1680746242",
+        "type": "delay",
+        "z": "b927acc1b874b6c2",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1120,
+        "y": 560,
+        "wires": [
+            [
+                "192fffa4030197e0"
+            ]
         ]
     }
 ]
