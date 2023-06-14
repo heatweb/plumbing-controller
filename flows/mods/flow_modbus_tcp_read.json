@@ -1,0 +1,224 @@
+[
+    {
+        "id": "2f6b80b0432d3773",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cdf406310826ae51",
+        "type": "comment",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "info": "192.168.1.60\nport 502\nunitid: 206\n\nSchneider pm5000 \n3203 = energy\n3059 = kW\n\nhttps://ckm-content.se.com/ckmContent/sfc/servlet.shepherd/document/download/0691H00000EFRz4QAH\n\nhttps://nodejs.org/api/buffer.html\n\nhttps://github.com/BiancoRoyal/node-red-contrib-modbus/wiki/Buffer-8Bit,-16Bit,-32Bit,-64Bit,-128Bit-...-reading-with-SDM630-power-meter\n\n\n",
+        "x": 300,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "7b2aae515aa00dd9",
+        "type": "modbus-read",
+        "z": "2f6b80b0432d3773",
+        "name": "Energy",
+        "topic": "",
+        "showStatusActivities": true,
+        "logIOActivities": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "unitid": "206",
+        "dataType": "HoldingRegister",
+        "adr": "3203",
+        "quantity": "4",
+        "rate": "1",
+        "rateUnit": "m",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "d71e6162d7e087b2",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 270,
+        "y": 420,
+        "wires": [
+            [],
+            [
+                "623058ec96cced69",
+                "a87209da70a92820"
+            ]
+        ]
+    },
+    {
+        "id": "623058ec96cced69",
+        "type": "modbus-response",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "registerShowMax": 20,
+        "x": 415,
+        "y": 400,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "9884e48ab8c26a43",
+        "type": "modbus-read",
+        "z": "2f6b80b0432d3773",
+        "name": "Power",
+        "topic": "",
+        "showStatusActivities": true,
+        "logIOActivities": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "unitid": "206",
+        "dataType": "HoldingRegister",
+        "adr": "3059",
+        "quantity": "2",
+        "rate": "1",
+        "rateUnit": "m",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "d71e6162d7e087b2",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 270,
+        "y": 600,
+        "wires": [
+            [],
+            [
+                "4f58f95d324b8b61",
+                "d54ad933a888a8fe"
+            ]
+        ]
+    },
+    {
+        "id": "4f58f95d324b8b61",
+        "type": "modbus-response",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "registerShowMax": 20,
+        "x": 425,
+        "y": 680,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "d54ad933a888a8fe",
+        "type": "function",
+        "z": "2f6b80b0432d3773",
+        "name": "function 5",
+        "func": "//msg.payload = (msg.payload[0] * 256) + msg.payload[1];\n\nmsg.payload = msg.payload.buffer.readFloatBE(0);\nmsg.topic = \"heatpump/dat/kwIn\";\nmsg.units = \"kW\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 600,
+        "wires": [
+            [
+                "2b2a5e7866cedf31",
+                "e8af654e5c6cc86f"
+            ]
+        ]
+    },
+    {
+        "id": "2b2a5e7866cedf31",
+        "type": "debug",
+        "z": "2f6b80b0432d3773",
+        "name": "debug 76",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 700,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "a87209da70a92820",
+        "type": "function",
+        "z": "2f6b80b0432d3773",
+        "name": "function 6",
+        "func": "//msg.payload = (msg.payload[0] * 256) + msg.payload[1];\n\nmsg.topic = \"heatpump/dat/kwhIn\";\nmsg.units = \"kWh\";\nmsg.payload = parseFloat(msg.payload.buffer.readBigInt64BE(0))/1000;\n\n// Wh\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 480,
+        "wires": [
+            [
+                "44070cb392cbe7ca",
+                "e8af654e5c6cc86f"
+            ]
+        ]
+    },
+    {
+        "id": "44070cb392cbe7ca",
+        "type": "debug",
+        "z": "2f6b80b0432d3773",
+        "name": "debug 77",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 700,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "e8af654e5c6cc86f",
+        "type": "link out",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "72fc070f.39dd8"
+        ],
+        "x": 585,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "d71e6162d7e087b2",
+        "type": "modbus-client",
+        "name": "Meters",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "192.168.1.60",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 206,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": true,
+        "showWarnings": true,
+        "showLogs": true
+    }
+]
