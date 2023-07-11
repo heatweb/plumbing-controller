@@ -45,11 +45,8 @@ if [ ! -f /home/pi/node-hiu/install.txt ]; then
       echo "System will reboot. Please run Heatweb First Install (again) once reboot has completed." > /node-hiu/install.txt
       sudo reboot
       
-    else    
-      # For 32-bit OS use:
-      
     fi
-    
+
 fi
 
 
