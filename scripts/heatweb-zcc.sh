@@ -11,7 +11,7 @@ mainmenu() {
                 "UPDATE_BOARD" "   Update I/O board                    " \
                 "ICODE" "   Setup using Install Code                  " \
                 "INSTALL" "   First installation                         " \
-                "KIOSK" "   Activate kiosk browser   " \
+                "KIOSK" "   Install kiosk browser   " \
                 "PASSWORD" "   Set admin password                         " \
                 "SETUP" "   Setup services   " \
                 "APP" "   Select application   " \
