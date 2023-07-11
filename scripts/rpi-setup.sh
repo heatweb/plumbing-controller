@@ -74,7 +74,7 @@ sudo systemctl enable nodered.service
 cd /home/pi/.node-red/
 sudo npm install bcryptjs
 
-# sudo apt-get -y install mosquitto
+sudo apt-get -y install mosquitto
 sudo apt-get -y install pwgen
 sudo apt-get -y install wget
 sudo apt-get -y install zip
