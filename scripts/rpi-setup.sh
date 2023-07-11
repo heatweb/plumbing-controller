@@ -134,12 +134,13 @@ fi
 
 
 
-CFILE=/boot/heatweb/config.json
 
-if [ -f "$CFILE" ]; then
+if [ -f "/boot/heatweb/config.json" ]; then
     echo "heatweb configuration file detected"
+    
 else
 
+    cd /home/pi
     sudo mkdir /boot/heatweb
     
     echo '{' > config.json
