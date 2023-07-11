@@ -42,7 +42,8 @@ if [ ! -f /home/pi/node-hiu/install.txt ]; then
       sudo mv /boot/config.txt /boot/x_config.txt
       sudo cp /home/pi/plumbing-controller/scripts/boot/config.txt /boot/config.txt
 
-      echo "System will reboot. Please run Heatweb First Install (again) once reboot has completed." > /node-hiu/install.txt
+      echo "System will reboot. Please run Heatweb First Install (again) once reboot has completed."
+      echo "First reboot with new config.txt" >> /node-hiu/install.txt
       sudo reboot
       
     fi
