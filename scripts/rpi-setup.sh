@@ -97,13 +97,21 @@ ti wdtpwr 3600
 
 node-red-stop
 
-cd /home/pi/ti-rpi/update/
-if [[ $CHECK64 == *"aarch64"* ]]; then
-  # For 64-bit OS use:
-  ./update64
-else    
-  # For 32-bit OS use:
-  ./update
+CHECKBRD=$(ti board)
+if [[ $CHECKBRD == *"not detected"* ]]; then
+    echo "TI BOARD NOT DETECTED"
+else
+    
+    echo "TI BOARD DETECTED"
+    echo $CHECKBRD
+    cd /home/pi/ti-rpi/update/
+    if [[ $CHECK64 == *"aarch64"* ]]; then
+      # For 64-bit OS use:
+      ./update64
+    else    
+      # For 32-bit OS use:
+      ./update
+    fi
 fi
 
 
