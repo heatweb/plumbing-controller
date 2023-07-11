@@ -24,6 +24,35 @@ else
     git clone https://github.com/heatweb/plumbing-controller.git
 fi
 
+
+if [ ! -f /home/pi/node-hiu/install.txt ]; then
+    echo "Very first run."
+        
+    cd /home/pi
+    mkdir /home/pi/node-hiu
+    mkdir /home/pi/node-hiu/logs
+    mkdir /home/pi/node-hiu/flows
+    mkdir /home/pi/node-hiu/vpn
+    sudo chmod -R 775 /home/pi/node-hiu
+
+    echo "Installation Started" > /home/pi/node-hiu/install.txt
+    
+    if [[ $CHECK64 == *"aarch64"* ]]; then
+      # For 64-bit OS use:
+      sudo mv /boot/config.txt /boot/x_config.txt
+      sudo cp /home/pi/plumbing-controller/scripts/boot/config.txt /boot/config.txt
+
+      echo "System will reboot. Please run Heatweb First Install (again) once reboot has completed." > /node-hiu/install.txt
+      sudo reboot
+      
+    else    
+      # For 32-bit OS use:
+      
+    fi    
+fi
+
+
+
 sudo apt-get -y update
 sudo apt-get -y upgrade
 
@@ -102,13 +131,6 @@ fi
 
 
 
-
-cd /home/pi
-mkdir /home/pi/node-hiu
-mkdir /home/pi/node-hiu/logs
-mkdir /home/pi/node-hiu/flows
-mkdir /home/pi/node-hiu/vpn
-sudo chmod -R 775 /home/pi/node-hiu
 
 
 CFILE=/boot/heatweb/config.json
