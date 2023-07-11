@@ -67,7 +67,7 @@ sudo apt-get -y install build-essential cmake
 sudo apt-get -y install jq
 
 
-if [ "/home/pi/ti-rpi" ]; then
+if [ -d "/home/pi/ti-rpi" ]; then
     echo "ti-rpi installed. Updating."
     cd /home/pi/ti-rpi
     git pull
@@ -79,7 +79,7 @@ else
     sudo make install
 fi
 
-if [ "/home/pi/megabas-rpi" ]; then
+if [ -d "/home/pi/megabas-rpi" ]; then
     echo "megabas-rpi installed. Updating."
     cd /home/pi/megabas-rpi
     git pull
