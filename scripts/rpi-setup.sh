@@ -56,6 +56,17 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 
 
+sudo apt-get -y install mosquitto
+sudo apt-get -y install pwgen
+sudo apt-get -y install wget
+sudo apt-get -y install zip
+sudo apt-get -y install git
+sudo apt-get -y install whiptail
+sudo apt-get -y install xdotool
+sudo apt-get -y install build-essential cmake
+sudo apt-get -y install jq
+
+
 if [ "/home/pi/ti-rpi" ]; then
     echo "ti-rpi installed. Updating."
     cd /home/pi/ti-rpi
@@ -102,15 +113,6 @@ sudo systemctl enable nodered.service
 cd /home/pi/.node-red/
 sudo npm install bcryptjs
 
-sudo apt-get -y install mosquitto
-sudo apt-get -y install pwgen
-sudo apt-get -y install wget
-sudo apt-get -y install zip
-sudo apt-get -y install git
-sudo apt-get -y install whiptail
-sudo apt-get -y install xdotool
-sudo apt-get -y install build-essential cmake
-sudo apt-get -y install jq
 
 if ! command -v mbus-serial-scan &> /dev/null
 then
