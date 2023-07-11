@@ -15,14 +15,27 @@ CHECK64=$(uname -m)
 #      printf "No password given - aborting\r\n"; exit
 #  fi
 
-if [ "/home/pi/plumbing-controller" ]; then
-    echo "plumbing-controller installed. Updating."
-    cd /home/pi/plumbing-controller
-    git pull
-else
-    cd /home/pi
-    git clone https://github.com/heatweb/plumbing-controller.git
-fi
+# if [ "/home/pi/plumbing-controller" ]; then
+#     echo "plumbing-controller installed. Updating."
+#     cd /home/pi/plumbing-controller
+#     git pull
+# else
+#     cd /home/pi
+#     git clone https://github.com/heatweb/plumbing-controller.git
+# fi
+
+sudo apt-get -y update
+sudo apt-get -y upgrade
+
+sudo apt-get -y install mosquitto
+sudo apt-get -y install pwgen
+sudo apt-get -y install wget
+sudo apt-get -y install zip
+sudo apt-get -y install git
+sudo apt-get -y install whiptail
+sudo apt-get -y install xdotool
+sudo apt-get -y install build-essential cmake
+sudo apt-get -y install jq
 
 
 if [ ! -f /home/pi/node-hiu/install.txt ]; then
@@ -49,22 +62,6 @@ if [ ! -f /home/pi/node-hiu/install.txt ]; then
     fi
 
 fi
-
-
-
-sudo apt-get -y update
-sudo apt-get -y upgrade
-
-
-sudo apt-get -y install mosquitto
-sudo apt-get -y install pwgen
-sudo apt-get -y install wget
-sudo apt-get -y install zip
-sudo apt-get -y install git
-sudo apt-get -y install whiptail
-sudo apt-get -y install xdotool
-sudo apt-get -y install build-essential cmake
-sudo apt-get -y install jq
 
 
 if [ -d "/home/pi/ti-rpi" ]; then
@@ -145,9 +142,7 @@ fi
 
 if [ -f "/boot/heatweb/config.json" ]; then
     echo "heatweb configuration file detected"
-    
 else
-
     cd /home/pi
     sudo mkdir /boot/heatweb
     
@@ -159,6 +154,11 @@ else
     echo '}' >> config.json
     
     sudo mv config.json /boot/heatweb/config.json
+fi
+
+if [ -f "/home/pi/.node-red/flows_ihiu.json" ]; then
+    echo "Node-RED flows file detected. No action." 
+else    
     
     cd /home/pi/.node-red
     node-red-stop
