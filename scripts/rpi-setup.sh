@@ -122,7 +122,7 @@ then
     cd libmbus
     sudo sh clean.sh
     sudo sh build.sh
-    make
+    sudo make
     sudo make install
     sudo ln -s /usr/local/lib/libmbus.so.0 /usr/lib/libmbus.so.0
 
