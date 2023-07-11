@@ -158,7 +158,8 @@ else
     cp /home/pi/plumbing-controller/node-red/flows_ihiu.json /home/pi/.node-red/
 
     sudo npm install --unsafe-perm --build-from-source node-red-dashboard
- #  sudo npm install --unsafe-perm --build-from-source node-red-contrib-arp
+    sudo npm install --unsafe-perm --build-from-source node-red-contrib-arp
+    sudo npm install --unsafe-perm --build-from-source node-red-contrib-influxdb
     sudo npm install --unsafe-perm --build-from-source node-red-contrib-crypt
     sudo npm install --unsafe-perm --build-from-source node-red-contrib-drawsvg
     sudo npm install --unsafe-perm --build-from-source node-red-contrib-heatweb
