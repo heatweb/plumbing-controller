@@ -9,11 +9,11 @@ mainmenu() {
                 "\n   Move to selection (UP, DOWN) then press ENTER  " 19 73 10 \
                 "UPDATE_GIT" "   Update files from GitHub                    " \
                 "UPDATE_BOARD" "   Update I/O board                    " \
-                "ICODE" "   Setup using Install Code                  " \
                 "INSTALL" "   First installation                         " \
-                "KIOSK" "   Install kiosk browser   " \
                 "PASSWORD" "   Set admin password                         " \
-                "SETUP" "   Setup services   " \
+                "KIOSK" "   Install kiosk browser   " \
+                "SETUP" "   Setup Docker services   " \
+                "ICODE" "   Setup using Install Code                  " \
                 "APP" "   Select application   " \
                 "COMPOSER" "   Compose & Run application   " \
                 "EXIT" "   Quit   " 3>&1 1>&2 2>&3)
