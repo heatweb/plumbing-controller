@@ -94,6 +94,24 @@ ti wdtpwr 3600
 
 node-red-stop
 
+
+if [ -f "/boot/heatweb/config.json" ]; then
+    echo "heatweb configuration file detected"
+else
+    cd /home/pi
+    sudo mkdir /boot/heatweb
+    
+    echo '{' > config.json
+    echo '  "nodeId":"newnode",' >> config.json
+    echo '  "networkId":"newnode",' >> config.json
+    echo '  "name": "Zero Carbon Controller newnode",' >> config.json
+    echo '  "description": "Heatweb Zero Carbon Controller Controller"' >> config.json
+    echo '}' >> config.json
+    
+    sudo mv config.json /boot/heatweb/config.json
+fi
+
+
 CHECKBRD=$(ti board)
 if [[ $CHECKBRD == *"not detected"* ]]; then
     echo "TI BOARD NOT DETECTED"
@@ -111,12 +129,6 @@ else
     fi
 fi
 
-
-bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
-sudo systemctl enable nodered.service
-
-cd /home/pi/.node-red/
-sudo npm install bcryptjs
 
 
 if ! command -v mbus-serial-scan &> /dev/null
@@ -139,22 +151,13 @@ fi
 
 
 
+bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
+sudo systemctl enable nodered.service
 
-if [ -f "/boot/heatweb/config.json" ]; then
-    echo "heatweb configuration file detected"
-else
-    cd /home/pi
-    sudo mkdir /boot/heatweb
-    
-    echo '{' > config.json
-    echo '  "nodeId":"newnode",' >> config.json
-    echo '  "networkId":"newnode",' >> config.json
-    echo '  "name": "Zero Carbon Controller newnode",' >> config.json
-    echo '  "description": "Heatweb Zero Carbon Controller Controller"' >> config.json
-    echo '}' >> config.json
-    
-    sudo mv config.json /boot/heatweb/config.json
-fi
+cd /home/pi/.node-red/
+sudo npm install bcryptjs
+
+
 
 if [ -f "/home/pi/.node-red/flows_ihiu.json" ]; then
     echo "Node-RED flows file detected. No action." 
