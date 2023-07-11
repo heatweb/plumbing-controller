@@ -48,7 +48,8 @@ if [ ! -f /home/pi/node-hiu/install.txt ]; then
     else    
       # For 32-bit OS use:
       
-    fi    
+    fi
+    
 fi
 
 
