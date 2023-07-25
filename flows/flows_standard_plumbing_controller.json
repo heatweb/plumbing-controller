@@ -14,14 +14,6 @@
         "info": ""
     },
     {
-        "id": "38651eb07e123bba",
-        "type": "tab",
-        "label": "Docker",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "c376bc72122fb9a2",
         "type": "tab",
         "label": "Connectivity",
@@ -437,11 +429,18 @@
         "name": "Zero Carbon Controller zccpha3pah9",
         "description": "Temperature Monitoring",
         "url": "https://hw3.ddns.net",
-        "nodeId": "zccpha3pah9",
-        "networkId": "rAndD",
+        "nodeId": "newnode",
+        "networkId": "newnode",
         "localNetworkId": "local",
         "localDirectory": "/home/pi/node-hiu",
-        "deviceType": ""
+        "htmlDirectory": "",
+        "httpPort": "",
+        "httpsKey": "",
+        "httpsCert": "",
+        "deviceType": "",
+        "adminPassword": "",
+        "guestPassword": "",
+        "loadBoot": true
     },
     {
         "id": "888f4ceb.4b158",
@@ -1135,6 +1134,7 @@
         "defaultGroup": "dat",
         "defaultPoints": "10",
         "deadband": "",
+        "storeHistoricEx": false,
         "x": 370,
         "y": 180,
         "wires": [
@@ -4579,72 +4579,6 @@
         "x": 1190,
         "y": 300,
         "wires": []
-    },
-    {
-        "id": "f745256011e0247a",
-        "type": "mqtt in",
-        "z": "38651eb07e123bba",
-        "name": "",
-        "topic": "cmd/restart5001",
-        "qos": "0",
-        "datatype": "auto-detect",
-        "broker": "7ad2997b.42a908",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 240,
-        "y": 100,
-        "wires": [
-            [
-                "ba39249e5eadbc26"
-            ]
-        ]
-    },
-    {
-        "id": "8379c3e79edb861b",
-        "type": "exec",
-        "z": "38651eb07e123bba",
-        "command": "sudo docker restart mynodered1",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 790,
-        "y": 100,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "ba39249e5eadbc26",
-        "type": "trigger",
-        "z": "38651eb07e123bba",
-        "name": "",
-        "op1": "1",
-        "op2": "",
-        "op1type": "str",
-        "op2type": "nul",
-        "duration": "1",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 490,
-        "y": 100,
-        "wires": [
-            [
-                "8379c3e79edb861b"
-            ]
-        ]
     },
     {
         "id": "3e283cd4.ba17d4",
