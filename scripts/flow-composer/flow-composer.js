@@ -134,7 +134,7 @@ async function fetchtoken(ttarg, url, tdata) {
     else { console.log("no auth token"); }
     // auth[ttarg] = json.access_token || "";
     
-    console.log("fetched auth token", json.access_token.substr(0,90));
+    // console.log("fetched auth token", json.access_token.substr(0,90));
     
     // if (fetched == composition.length && auth[ftarget]!=="waiting") { compose(); } 
     
