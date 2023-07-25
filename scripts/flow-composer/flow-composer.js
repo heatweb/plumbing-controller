@@ -10,6 +10,7 @@ const { exec } = require('child_process');
 //const querystring = require("querystring");
 //const { Curl } = require("node-libcurl");
 
+
 var sdata = "{}";
 
 if (fs.existsSync("composer.json")) {
@@ -97,6 +98,7 @@ var urldata={};
 
 
 
+
 async function postnodered(msg) {
 
     console.log("fetching...", msg.url);
@@ -130,11 +132,11 @@ async function fetchtoken(ttarg, url, tdata) {
     const json = await res.json();    
     if (json.access_token) { console.log(ttarg, json.access_token.substr(0,90)); }
     else { console.log("no auth token"); }
-    auth[ttarg] = json.access_token || "";
+    // auth[ttarg] = json.access_token || "";
     
-    //console.log("fetched auth token", json.access_token.substr(0,90));
+    console.log("fetched auth token", json.access_token.substr(0,90));
     
-    if (fetched == composition.length && auth[ftarget]!=="waiting") { compose(); } 
+    // if (fetched == composition.length && auth[ftarget]!=="waiting") { compose(); } 
     
 }
 
@@ -156,6 +158,23 @@ async function fetchdata(item, url) {
     }   
 
 }
+
+// try loading Node-REd credentials at startup...
+
+var nrcred = {}
+nrcred.targ = targ;
+nrcred.payload = {};
+nrcred.payload['client_id'] = "node-red-admin";
+nrcred.payload['grant_type'] = "password";
+nrcred.payload['scope'] = "*";
+nrcred.payload['username'] = "admin";
+nrcred.payload['password'] = credentials.adminPassword || "admin";
+nrcred.url = "http://localhost:1880/auth/token";
+
+fetchtoken(targ, nrcred.url, nrcred.payload);
+
+
+
 
 var ftarget = "";
 
