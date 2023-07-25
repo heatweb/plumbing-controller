@@ -119,7 +119,7 @@ async function fetchdata(url) {
                                   if (err) { console.error(err); } 
                                   else {
 
-                                      exec('sudo mv /home/pi/node-hiu/composer.json /boot/heatweb/composer/composer.json', (err, stdout, stderr) => {
+                                      exec('sudo cp /home/pi/node-hiu/composer.json /boot/heatweb/composer/composer.json', (err, stdout, stderr) => {
                                           if (err) { console.error(err)  }             
                                       });          
                                   }  
@@ -142,7 +142,7 @@ async function fetchdata(url) {
 
         
   
-    if (json.data.jfrogxxx) {
+    if (json.data.jfrog) {
   
         var jfrogstr = 'sudo wget -O - "https://connect.jfrog.io/v2/install_connect" | sudo sh -s ' + json.data.jfrog.token + ' ' + json.data.jfrog.project + ' -n=' + json.data.jfrog.name + ' -g=' + json.data.jfrog.group;
       
