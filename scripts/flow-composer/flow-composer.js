@@ -453,7 +453,16 @@ function compose() {
   
   
   var gowriteflow = true; 
+ 
+  var gopostflow = myArgs[1] || false; 
 
+  if (""+gopostflow == "1") {
+
+    gowriteflow = false;
+    postnodered(msggo);
+      
+  }  
+    
   if (gowriteflow ||(settings.composer_writeFile && settings.composer_writeFile.value)) {
       
      fs.writeFile("/home/pi/.node-red/flows_ihiu.json", msggo.payload, err => {
@@ -479,14 +488,7 @@ function compose() {
       
   }
 
-    
-  var gopostflow = myArgs[1] || false; 
-
-  if (""+gopostflow == "1") {
-    
-    postnodered(msggo);
-      
-  }  
+   
   console.log("Finished.");
     
 }
