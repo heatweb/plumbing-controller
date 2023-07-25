@@ -452,7 +452,8 @@ function compose() {
       });  
   
   
-  var gowriteflow = true;  
+  var gowriteflow = true; 
+
   if (gowriteflow ||(settings.composer_writeFile && settings.composer_writeFile.value)) {
       
      fs.writeFile("/home/pi/.node-red/flows_ihiu.json", msggo.payload, err => {
@@ -476,7 +477,12 @@ function compose() {
             });
       });  
       
-  } else {
+  }
+
+    
+  var gopostflow = myArgs[1] || false; 
+
+  if (""+gopostflow == "1") {
     
     postnodered(msggo);
       
