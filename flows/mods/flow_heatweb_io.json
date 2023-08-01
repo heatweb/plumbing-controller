@@ -282,7 +282,7 @@
         "type": "function",
         "z": "ca03066f6a7451f4",
         "name": "",
-        "func": "//[{\"portId\":\"TH8\",\"block\":\"TH8\",\"channel\":\"8\",\"name\":\"TH8 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr23\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"DHW\",\"topicKey\":\"tCo\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},\n//{\"portId\":\"D1\",\"block\":\"\",\"channel\":\"1\",\"name\":\"Digital Input D1\",\"figure\":\"Input\",\"portColor\":\"#00ffff\",\"wiredTo\":\"FS\",\"wiredToPort\":\"pulse\",\"signalType\":\"PULSE\",\"topicDevice\":\"FS\",\"topicKey\":\"pulse\",\"mapUnits\":\"pulse/s to ltr/min\",\"map\":\"[[0,0],[265,30]]\"},{\"portId\":\"P1\",\"block\":\"\",\"channel\":\"1\",\"name\":\"PWM Input P1\",\"figure\":\"Input\",\"portColor\":\"#40aceb\",\"wiredTo\":\"pump\",\"wiredToPort\":\"speed\",\"signalType\":\"PWM\",\"topicDevice\":\"pump\",\"topicKey\":\"speed\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"P2\",\"block\":\"\",\"channel\":\"2\",\"name\":\"PWM Input P2\",\"figure\":\"Input\",\"portColor\":\"#40aceb\",\"wiredTo\":\"valve4\",\"wiredToPort\":\"position\",\"signalType\":\"PWM\",\"topicDevice\":\"valve4\",\"topicKey\":\"position\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"OD2\",\"block\":\"OD2\",\"channel\":\"2\",\"name\":\"PWM Output OD2\",\"figure\":\"Output\",\"portColor\":\"#40aceb\",\"wiredTo\":\"valve4\",\"wiredToPort\":\"setpoint\",\"signalType\":\"PWM\",\"topicDevice\":\"valve4\",\"topicKey\":\"setpoint\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"OD1\",\"block\":\"OD1\",\"channel\":\"1\",\"name\":\"PWM Output OD1\",\"figure\":\"Output\",\"portColor\":\"#40aceb\",\"wiredTo\":\"pump\",\"wiredToPort\":\"setpoint\",\"signalType\":\"PWM\",\"topicDevice\":\"pump\",\"topicKey\":\"setpoint\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"}]\n\n\n// echo \"rthrd1\",$(ti rthrd 1)\n// echo \"countrd1\",$(ti countrd 1)\n// echo \"pwmrd1\",$(ti pwmrd 1)\n// echo \"pwmrd2\",$(ti pwmrd 2)\n\n\nvar oot=\"\";\nvar pL = msg.payload;\nvar cmdprefix = flow.get(\"cmdprefix\") || \"ti\";\n\nfor (var p in pL) {\n    \n    \n    if (pL[p].portId.substr(0, 2) == \"TH\" && pL[p].signalType.substr(0, 6) == \"NTC10K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',rthrd' + pL[p].channel + '\",$('+cmdprefix+' rthrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].signalType.substr(0,5)==\"PULSE\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',countrd' + pL[p].channel + '\",$('+cmdprefix+' countrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"D\" && pL[p].signalType.substr(0,3)==\"DRY\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',contactrd' + pL[p].channel + '\",$('+cmdprefix+' contactrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"P\" && pL[p].signalType.substr(0,3)==\"PWM\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',pwmrd' + pL[p].channel + '\",$('+cmdprefix+' pwmrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,5)==\"NTC1K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',r1krd' + pL[p].channel + '\",$('+cmdprefix+' r1krd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,6)==\"NTC10K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',r10krd' + pL[p].channel + '\",$('+cmdprefix+' r10krd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,5)==\"0-10V\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',adcrd' + pL[p].channel + '\",$('+cmdprefix+' adcrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,3)==\"DRY\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',contactrd' + pL[p].channel + '\",$('+cmdprefix+' contactrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"IN\" && pL[p].signalType.substr(0,5)==\"PULSE\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',countrd' + pL[p].channel + '\",$('+cmdprefix+' countrd ' + pL[p].channel + ')\\n';\n        \n    }\n    \n    \n    \n}\n\n\nmsg.payload=oot;\n\n\nreturn msg;",
+        "func": "//[{\"portId\":\"TH8\",\"block\":\"TH8\",\"channel\":\"8\",\"name\":\"TH8 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr23\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"DHW\",\"topicKey\":\"tCo\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},\n//{\"portId\":\"D1\",\"block\":\"\",\"channel\":\"1\",\"name\":\"Digital Input D1\",\"figure\":\"Input\",\"portColor\":\"#00ffff\",\"wiredTo\":\"FS\",\"wiredToPort\":\"pulse\",\"signalType\":\"PULSE\",\"topicDevice\":\"FS\",\"topicKey\":\"pulse\",\"mapUnits\":\"pulse/s to ltr/min\",\"map\":\"[[0,0],[265,30]]\"},{\"portId\":\"P1\",\"block\":\"\",\"channel\":\"1\",\"name\":\"PWM Input P1\",\"figure\":\"Input\",\"portColor\":\"#40aceb\",\"wiredTo\":\"pump\",\"wiredToPort\":\"speed\",\"signalType\":\"PWM\",\"topicDevice\":\"pump\",\"topicKey\":\"speed\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"P2\",\"block\":\"\",\"channel\":\"2\",\"name\":\"PWM Input P2\",\"figure\":\"Input\",\"portColor\":\"#40aceb\",\"wiredTo\":\"valve4\",\"wiredToPort\":\"position\",\"signalType\":\"PWM\",\"topicDevice\":\"valve4\",\"topicKey\":\"position\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"OD2\",\"block\":\"OD2\",\"channel\":\"2\",\"name\":\"PWM Output OD2\",\"figure\":\"Output\",\"portColor\":\"#40aceb\",\"wiredTo\":\"valve4\",\"wiredToPort\":\"setpoint\",\"signalType\":\"PWM\",\"topicDevice\":\"valve4\",\"topicKey\":\"setpoint\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"},{\"portId\":\"OD1\",\"block\":\"OD1\",\"channel\":\"1\",\"name\":\"PWM Output OD1\",\"figure\":\"Output\",\"portColor\":\"#40aceb\",\"wiredTo\":\"pump\",\"wiredToPort\":\"setpoint\",\"signalType\":\"PWM\",\"topicDevice\":\"pump\",\"topicKey\":\"setpoint\",\"mapUnits\":\"% to %\",\"map\":\"[[0,0],[100,100]]\"}]\n\n\n// echo \"rthrd1\",$(ti rthrd 1)\n// echo \"countrd1\",$(ti countrd 1)\n// echo \"pwmrd1\",$(ti pwmrd 1)\n// echo \"pwmrd2\",$(ti pwmrd 2)\n\n\nvar oot=\"\";\nvar pL = msg.payload;\nvar cmdprefix = flow.get(\"cmdprefix\") || \"ti\";\n\nvar ntc10kcmd = \"rthrd\"\nif (flow.get(\"cmdprefix\").indexOf(\"megabas\") > -1) {  ntc10kcmd = \"r10krd\"; }\n\nfor (var p in pL) {\n    \n    \n    if (pL[p].portId.substr(0, 2) == \"TH\" && pL[p].signalType.substr(0, 6) == \"NTC10K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',rthrd' + pL[p].channel + '\",$('+cmdprefix+' ' + ntc10kcmd + ' ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].signalType.substr(0,5)==\"PULSE\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',countrd' + pL[p].channel + '\",$('+cmdprefix+' countrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"D\" && pL[p].signalType.substr(0,3)==\"DRY\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',contactrd' + pL[p].channel + '\",$('+cmdprefix+' contactrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"P\" && pL[p].signalType.substr(0,3)==\"PWM\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',pwmrd' + pL[p].channel + '\",$('+cmdprefix+' pwmrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,5)==\"NTC1K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',r1krd' + pL[p].channel + '\",$('+cmdprefix+' r1krd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,6)==\"NTC10K\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',r10krd' + pL[p].channel + '\",$('+cmdprefix+' r10krd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,5)==\"0-10V\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',adcrd' + pL[p].channel + '\",$('+cmdprefix+' adcrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,2)==\"IN\" && pL[p].signalType.substr(0,3)==\"DRY\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',contactrd' + pL[p].channel + '\",$('+cmdprefix+' contactrd ' + pL[p].channel + ')\\n';\n        \n    } else if (pL[p].portId.substr(0,1)==\"IN\" && pL[p].signalType.substr(0,5)==\"PULSE\") {\n        \n        oot += 'echo \"' + pL[p].portId + ',countrd' + pL[p].channel + '\",$('+cmdprefix+' countrd ' + pL[p].channel + ')\\n';\n        \n    }\n    \n    \n    \n}\n\n\nmsg.payload=oot;\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -499,7 +499,7 @@
         "type": "debug",
         "z": "ca03066f6a7451f4",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1043,6 +1043,120 @@
                 "f7757b4ca8561b28"
             ]
         ]
+    },
+    {
+        "id": "2f6dd0bd4dd67e75",
+        "type": "inject",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 1000,
+        "wires": [
+            [
+                "ddf2d88e7dcc39e6"
+            ]
+        ]
+    },
+    {
+        "id": "ddf2d88e7dcc39e6",
+        "type": "exec",
+        "z": "ca03066f6a7451f4",
+        "command": "megabas -list",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 410,
+        "y": 1000,
+        "wires": [
+            [
+                "db777088ab279c4a"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "db777088ab279c4a",
+        "type": "debug",
+        "z": "ca03066f6a7451f4",
+        "name": "debug 37",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "a55b3d90774ccb65",
+        "type": "inject",
+        "z": "ca03066f6a7451f4",
+        "name": "2 x NTC10K",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0",
+        "topic": "",
+        "payload": "[{\"portId\":\"TH2\",\"block\":\"TH2\",\"channel\":\"2\",\"name\":\"TH2 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr2\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"boiler\",\"topicKey\":\"tF\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},{\"portId\":\"TH1\",\"block\":\"TH1\",\"channel\":\"1\",\"name\":\"TH1 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"boiler\",\"topicKey\":\"tR\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"}]",
+        "payloadType": "json",
+        "x": 850,
+        "y": 200,
+        "wires": [
+            [
+                "9e32e9f95dea8be8"
+            ]
+        ]
+    },
+    {
+        "id": "9e32e9f95dea8be8",
+        "type": "mqtt out",
+        "z": "ca03066f6a7451f4",
+        "name": "",
+        "topic": "_/set/io",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7ad2997b.42a908",
+        "x": 1040,
+        "y": 200,
+        "wires": []
     },
     {
         "id": "7ad2997b.42a908",
