@@ -1,0 +1,170 @@
+[
+    {
+        "id": "19a563c8811cce07",
+        "type": "tab",
+        "label": "setup_io",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "110d9974f1e3da5b",
+        "type": "mqtt out",
+        "z": "19a563c8811cce07",
+        "name": "",
+        "topic": "_/set/io",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7ad2997b.42a908",
+        "x": 340,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b299b3acfd80922d",
+        "type": "inject",
+        "z": "19a563c8811cce07",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0",
+        "topic": "",
+        "payload": "[{\"topic\":\"local/+/heating/dat/tPriFlow\",\"title\":\"Flow Temperature [°C]\"},{\"topic\":\"local/+/heating/dat/tPriRtn\",\"title\":\"Return Temperature [°C]\"}]",
+        "payloadType": "json",
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "b270b5a1a122e0f7"
+            ]
+        ]
+    },
+    {
+        "id": "b270b5a1a122e0f7",
+        "type": "mqtt out",
+        "z": "19a563c8811cce07",
+        "name": "",
+        "topic": "_/set/gauges",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7ad2997b.42a908",
+        "x": 350,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "9bef15981ef7af02",
+        "type": "mqtt in",
+        "z": "19a563c8811cce07",
+        "d": true,
+        "name": "",
+        "topic": "+/+/+/+/tR",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "7ad2997b.42a908",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 380,
+        "wires": [
+            [
+                "d04510951ee49196"
+            ]
+        ]
+    },
+    {
+        "id": "d04510951ee49196",
+        "type": "debug",
+        "z": "19a563c8811cce07",
+        "name": "debug 38",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "d3f8e9c09faa41c5",
+        "type": "inject",
+        "z": "19a563c8811cce07",
+        "name": "Library",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0",
+        "topic": "",
+        "payload": "[{\"portId\":\"TH8\",\"block\":\"TH8\",\"channel\":\"8\",\"name\":\"TH8 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr8\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"dhw\",\"topicKey\":\"tSecOut\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},{\"portId\":\"TH7\",\"block\":\"TH7\",\"channel\":\"7\",\"name\":\"TH7 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr7\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"dhw\",\"topicKey\":\"tSecIn\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},{\"portId\":\"TH6\",\"block\":\"TH6\",\"channel\":\"6\",\"name\":\"TH6 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr6\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"dhw\",\"topicKey\":\"tPriRtn\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},{\"portId\":\"TH5\",\"block\":\"TH5\",\"channel\":\"5\",\"name\":\"TH5 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr5\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"dhw\",\"topicKey\":\"tPriFlow\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},{\"portId\":\"TH4\",\"block\":\"TH4\",\"channel\":\"4\",\"name\":\"TH4 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr4\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"heating\",\"topicKey\":\"tSecOut\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},{\"portId\":\"TH3\",\"block\":\"TH3\",\"channel\":\"3\",\"name\":\"TH3 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr3\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"heating\",\"topicKey\":\"tSecIn\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},{\"portId\":\"TH2\",\"block\":\"TH2\",\"channel\":\"2\",\"name\":\"TH2 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr2\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"heating\",\"topicKey\":\"tPriRtn\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"},{\"portId\":\"TH1\",\"block\":\"TH1\",\"channel\":\"1\",\"name\":\"TH1 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"heating\",\"topicKey\":\"tPriFlow\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[97.006,-20],[72.911,-15],[72.911,-10],[42.317,-5],[32.651,0],[25.395,5],[19.903,10],[15.714,15],[12.493,20],[10,25],[8.056,30],[6.53,35],[5.325,40],[4.367,45],[3.601,50],[2.985,55],[2.467,60],[2.082,65],[1.752,70],[1.256,80],[0.916,90],[0.678,100],[0.51,110],[0.388,120]]\"}]",
+        "payloadType": "json",
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "110d9974f1e3da5b"
+            ]
+        ]
+    },
+    {
+        "id": "7ad2997b.42a908",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
