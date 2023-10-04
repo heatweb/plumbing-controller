@@ -16,3 +16,11 @@ After the first run, the setup menu can be started with the following command:
 ## Setup Menu
 
 ![Main Menu](/media/heatweb-pc-mainmenu.PNG)
+
+## Serialk Ports
+
+485_1 -> /dev/ttyAMA1
+
+485_2 -> /dev/ttyAMA4
+
+M-Bus -> /dev/serial0 or /dev/ttyS0
