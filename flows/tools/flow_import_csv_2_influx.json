@@ -1,0 +1,807 @@
+[
+    {
+        "id": "19ad2b6f.f11b85",
+        "type": "subflow",
+        "name": "FIle Upload",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 1080,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "58884f095b3ff92e",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "UPLOAD_DIR",
+                "type": "str",
+                "value": "."
+            },
+            {
+                "name": "EXTENSIONS",
+                "type": "json",
+                "value": "[]"
+            }
+        ],
+        "outputLabels": [
+            "fileWritten"
+        ]
+    },
+    {
+        "id": "954c0325.f4f63",
+        "type": "http in",
+        "z": "19ad2b6f.f11b85",
+        "name": "",
+        "url": "/fileupload",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 440,
+        "wires": [
+            [
+                "7433a631.a7f58",
+                "faf9ee8.6642a1"
+            ]
+        ]
+    },
+    {
+        "id": "964d2a30.34e938",
+        "type": "http response",
+        "z": "19ad2b6f.f11b85",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 850,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "1617f361.5dac2d",
+        "type": "ui_template",
+        "z": "19ad2b6f.f11b85",
+        "group": "4178bf61.05d97",
+        "name": "Upload",
+        "order": 1,
+        "width": "6",
+        "height": "3",
+        "format": "<form id=\"upload_form\" enctype=\"multipart/form-data\" method=\"post\">\n    <input type=\"file\" name=\"file1\" id=\"file1\"><br>\n    <input type=\"button\" value=\"Upload File\" onclick=\"uploadFile()\">\n    <progress id=\"progressBar\" value=\"0\" max=\"100\" style=\"width:300px;\"></progress>\n    <p id=\"status\"></p>\n    <p id=\"loaded_n_total\"></p>\n</form>\n\n<script>\n    function _(el){\n    return document.getElementById(el);\n}\nfunction uploadFile(){\n    var file = _(\"file1\").files[0];\n    // alert(file.name+\" | \"+file.size+\" | \"+file.type);\n    var formdata = new FormData();\n    formdata.append(\"file1\", file);\n    var ajax = new XMLHttpRequest();\n    ajax.upload.addEventListener(\"progress\", progressHandler, false);\n    ajax.addEventListener(\"load\", completeHandler, false);\n    ajax.addEventListener(\"error\", errorHandler, false);\n    ajax.addEventListener(\"abort\", abortHandler, false);\n    ajax.open(\"POST\", \"/fileupload\");\n    ajax.send(formdata);\n}\nfunction progressHandler(event){\n    _(\"loaded_n_total\").innerHTML = \"Uploaded \"+event.loaded+\" bytes of \"+event.total;\n    var percent = (event.loaded / event.total) * 100;\n    _(\"progressBar\").value = Math.round(percent);\n    _(\"status\").innerHTML = Math.round(percent)+\"% uploaded... please wait\";\n}\nfunction completeHandler(event){\n    _(\"status\").innerHTML = event.target.responseText;\n    _(\"progressBar\").value = 0;\n}\nfunction errorHandler(event){\n    _(\"status\").innerHTML = \"Upload Failed\";\n}\nfunction abortHandler(event){\n    _(\"status\").innerHTML = \"Upload Aborted\";\n}\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 120,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7433a631.a7f58",
+        "type": "change",
+        "z": "19ad2b6f.f11b85",
+        "name": "getFile",
+        "rules": [
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "req.files[0].originalname",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "req.files[0].buffer",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 360,
+        "wires": [
+            [
+                "63e6ebc1.1cc124"
+            ]
+        ]
+    },
+    {
+        "id": "b54a9427.62f75",
+        "type": "catch",
+        "z": "19ad2b6f.f11b85",
+        "name": "",
+        "scope": null,
+        "x": 120,
+        "y": 500,
+        "wires": [
+            [
+                "1a19fda8.e72fd2"
+            ]
+        ]
+    },
+    {
+        "id": "563135cc.7b97e4",
+        "type": "ui_toast",
+        "z": "19ad2b6f.f11b85",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 530,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "1a19fda8.e72fd2",
+        "type": "change",
+        "z": "19ad2b6f.f11b85",
+        "name": "getError",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "error.message",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 500,
+        "wires": [
+            [
+                "563135cc.7b97e4"
+            ]
+        ]
+    },
+    {
+        "id": "faf9ee8.6642a1",
+        "type": "change",
+        "z": "19ad2b6f.f11b85",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "'File ' & req.files[0].originalname & ' uploaded.'",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 440,
+        "wires": [
+            [
+                "964d2a30.34e938"
+            ]
+        ]
+    },
+    {
+        "id": "63e6ebc1.1cc124",
+        "type": "switch",
+        "z": "19ad2b6f.f11b85",
+        "name": "extensionAllowed ?",
+        "property": "$env('EXTENSIONS')",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "$split(filename, '.')[-1]",
+                "vt": "jsonata"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 610,
+        "y": 360,
+        "wires": [
+            [
+                "58884f095b3ff92e"
+            ],
+            [
+                "e34d7e40.c64b5"
+            ]
+        ]
+    },
+    {
+        "id": "e34d7e40.c64b5",
+        "type": "function",
+        "z": "19ad2b6f.f11b85",
+        "name": "Error",
+        "func": "node.error(`Error: only ${env.get('EXTENSIONS')} files are allowed.`, msg)\n",
+        "outputs": 0,
+        "noerr": 0,
+        "x": 830,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "3b083d35ba8af435",
+        "type": "change",
+        "z": "19ad2b6f.f11b85",
+        "name": "getFile",
+        "rules": [
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "$env('UPLOAD_DIR')  & '/' & req.files[0].originalname",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "req.files[0].buffer",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "58884f095b3ff92e",
+        "type": "function",
+        "z": "19ad2b6f.f11b85",
+        "name": "",
+        "func": "msg.payload = msg.payload.toString();\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4178bf61.05d97",
+        "type": "ui_group",
+        "name": "File upload",
+        "tab": "f1b5a1b6.543fd8",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f1b5a1b6.543fd8",
+        "type": "ui_tab",
+        "name": "File Upload",
+        "icon": "dashboard",
+        "order": 4
+    },
+    {
+        "id": "e84f410d9275f557",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3696af61.5b451",
+        "type": "subflow:19ad2b6f.f11b85",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "env": [
+            {
+                "name": "EXTENSIONS",
+                "value": "[\"csv\"]",
+                "type": "json"
+            }
+        ],
+        "x": 290,
+        "y": 260,
+        "wires": [
+            [
+                "718bcc21ed2be88b",
+                "b26bde7e2d867c10"
+            ]
+        ]
+    },
+    {
+        "id": "718bcc21ed2be88b",
+        "type": "debug",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "54cfca0e639fbd6a",
+        "type": "debug",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "b26bde7e2d867c10",
+        "type": "function",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "func": "\nvar lines = msg.payload.split(\"\\n\")\n\nmsg.payload = [];\n\nvar lc=0;\nvar cols, cc, c, vtime;\nvar series = [];\nvar sseries = [];\n\nfor (var v in lines){\n    \n    lc++\n    if (lc==1) { \n        \n        cols = lines[v].split(\",\");\n        cc=0;\n        for (c in cols){\n            cc++;\n            if (cc==1) { continue; }\n            series.push({ \"title\":cols[c], \"id\": cc, \"values\":[] });\n            sseries.push({ \"title\":cols[c], \"id\": cc,  });\n        }\n        \n    }\n    else if (lc==2) { continue; }\n    else {\n        \n        cols = lines[v].split(\",\");\n        cc=0;\n        for (c in cols){\n            cc++;\n            if (cc==1) { vtime=cols[c]; }\n            else if (cols[c]!==\"\") {\n                \n                series[cc-2].values.push({\"time\":vtime, \"value\": parseFloat(cols[c])});\n            }\n        }\n        \n        \n        \n    }\n}\n\nmsg.payload=sseries;\n\nflow.set(\"series\",series);\nflow.set(\"sseries\",sseries);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 320,
+        "wires": [
+            [
+                "54cfca0e639fbd6a",
+                "1b570865781c4e97"
+            ]
+        ]
+    },
+    {
+        "id": "3bce5d4f9a5d0255",
+        "type": "function",
+        "z": "e84f410d9275f557",
+        "name": "InfluxDB",
+        "func": "\n\nvar tags = {};\n\n\n\n\n\nif (!msg.payload.network) { return null; }\nif (!msg.payload.device) { return null; }\nif (!msg.payload.varkey) { return null; }\n\ntags.node = \"importer\";\ntags.device = msg.payload.device;\ntags.network = msg.payload.network;\ntags.vargroup = \"dat\";\ntags.varkey = msg.payload.varkey;\n\n//tags.title = flow.get(\"title.\" + tops[2]) || tops[2];\n\nvar msg1={};\nmsg1.topic = \"\"+msg.topic;\nmsg1.measurement = tags.network + '_' + tags.node + '_' + tags.device;\nmsg1.payload = [];\n\nfor (var inline in msg.payload.values) {\n    \n    var oot = {};\n    var vvoot;\n    try {\n    \n        var vv =  msg.payload.values[inline].value;\n    \n        if (isNaN(vv)) { vvoot = '' + vv  }\n        else { vvoot = parseFloat(vv); }\n        \n    \n        oot[tags.vargroup + '_' + tags.varkey] = vvoot;\n    \n    \n        var ftime = msg.payload.values[inline].time;\n        \n        var ystr = ftime.split(\" \")[0];\n        ftime = ystr.split(\"/\")[2] + \"-\" + ystr.split(\"/\")[1] + \"-\" + ystr.split(\"/\")[0] + \" \" + ftime.split(\" \")[1];\n        \n        oot.time = new Date(ftime).getTime();\n       // oot.time =  new Date(parseInt(ftime.split(\" \")[0].split[\"/\"][2]), parseInt(ftime.split(\" \")[0].split[\"/\"][0]), parseInt(ftime.split(\" \")[0].split[\"/\"][1]), parseInt(ftime.split(\" \")[1].split[\":\"][0]), parseInt(ftime.split(\" \")[1].split[\":\"][1]), parseInt(ftime.split(\" \")[1].split[\":\"][2])).getTime();\n    \n        \n        msg1.payload.push ( [oot, tags] );\n    \n        \n    \n    \n    \n    \n    } catch { return null; }\n\n}\n\nreturn msg1;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 520,
+        "wires": [
+            [
+                "166229efbce80321",
+                "10c8216fd94c4862"
+            ]
+        ]
+    },
+    {
+        "id": "10c8216fd94c4862",
+        "type": "influxdb out",
+        "z": "e84f410d9275f557",
+        "influxdb": "c3e7a4ce9fb5e289",
+        "name": "",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "heatweb",
+        "bucket": "equans-imports",
+        "x": 1140,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "1b570865781c4e97",
+        "type": "ui_etable",
+        "z": "e84f410d9275f557",
+        "payload": "[{\"title\":\"Title\",\"field\":\"title\",\"editor\":\"input\"},{\"title\":\"Network\",\"field\":\"network\",\"editor\":\"input\"},{\"title\":\"Device\",\"field\":\"device\",\"editor\":\"input\"},{\"title\":\"Key\",\"field\":\"varkey\",\"editor\":\"input\"},{\"title\":\"Import\",\"field\":\"import\",\"width\":90,\"align\":\"center\",\"formatter\":\"tickCross\",\"sorter\":\"boolean\",\"editor\":true}]",
+        "payloadType": "json",
+        "options": "{\"movableColumns\":true,\"resizableColumns\":true,\"selectable\":0,\"responsiveLayout\":\"collapse\",\"autoResize\":true,\"layout\":\"fitColumns\",\"pagination\":\"local\",\"height\":\"800px\",\"groupBy\":\"system\",\"groupStartOpen\":true}",
+        "group": "42147475f6318819",
+        "name": "",
+        "order": 1,
+        "width": "18",
+        "height": "8",
+        "columns": [],
+        "outputs": 1,
+        "cts": false,
+        "x": 670,
+        "y": 380,
+        "wires": [
+            [
+                "c523253b85fe72f9",
+                "e48ca3a9c3432059"
+            ]
+        ]
+    },
+    {
+        "id": "d47cfe4ab41bd00f",
+        "type": "inject",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[{\"name\":\"My Name\",\"progress\":22,\"gender\":\"male\"},{\"name\":\"My Name\",\"progress\":77,\"gender\":\"male\"}]",
+        "payloadType": "json",
+        "x": 330,
+        "y": 580,
+        "wires": [
+            [
+                "97f2f536136d633b"
+            ]
+        ]
+    },
+    {
+        "id": "97f2f536136d633b",
+        "type": "function",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "func": "msg.config = { \"options\": [{\"title\":\"Name\",\"field\":\"name\",\"editor\":\"input\",\"width\":300},{\"title\":\"Task Progress\",\"field\":\"progress\",\"align\":\"left\",\"formatter\":\"progress\",\"editor\":true},{\"title\":\"Gender\",\"field\":\"gender\",\"width\":95,\"editor\":\"select\",\"editorParams\":{\"values\":[\"male\",\"female\"]}},{\"title\":\"Rating\",\"field\":\"rating\",\"formatter\":\"star\",\"align\":\"center\",\"width\":100,\"editor\":true},{\"title\":\"Color\",\"field\":\"col\",\"width\":130,\"editor\":\"input\"},{\"title\":\"Date Of Birth\",\"field\":\"dob\",\"width\":130,\"sorter\":\"date\",\"align\":\"center\"},{\"title\":\"Driver\",\"field\":\"car\",\"width\":90,\"align\":\"center\",\"formatter\":\"tickCross\",\"sorter\":\"boolean\",\"editor\":true}] };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1e8b99f5dced92e6",
+        "type": "ui_etable",
+        "z": "e84f410d9275f557",
+        "d": true,
+        "payload": "[{\"title\":\"Name\",\"field\":\"name\",\"editor\":\"input\"},{\"title\":\"Task Progress\",\"field\":\"progress\",\"align\":\"left\",\"formatter\":\"progress\",\"editor\":true},{\"title\":\"Gender\",\"field\":\"gender\",\"width\":95,\"editor\":\"select\",\"editorParams\":{\"values\":[\"male\",\"female\"]}},{\"title\":\"Rating\",\"field\":\"rating\",\"formatter\":\"star\",\"align\":\"center\",\"width\":100,\"editor\":true},{\"title\":\"Color\",\"field\":\"col\",\"width\":130,\"editor\":\"input\"},{\"title\":\"Date Of Birth\",\"field\":\"dob\",\"width\":130,\"sorter\":\"date\",\"align\":\"center\"},{\"title\":\"Driver\",\"field\":\"car\",\"width\":90,\"align\":\"center\",\"formatter\":\"tickCross\",\"sorter\":\"boolean\",\"editor\":true}]",
+        "payloadType": "json",
+        "options": "{\"movableColumns\":true,\"resizableColumns\":true,\"selectable\":5,\"responsiveLayout\":\"collapse\",\"autoResize\":true,\"layout\":\"fitColumns\",\"pagination\":\"local\",\"height\":\"800px\",\"groupBy\":\"system\",\"groupStartOpen\":true}",
+        "group": "42147475f6318819",
+        "name": "",
+        "order": 2,
+        "width": "12",
+        "height": "8",
+        "columns": [],
+        "outputs": 1,
+        "cts": false,
+        "x": 654,
+        "y": 668,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c523253b85fe72f9",
+        "type": "debug",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "ba09822c3270a518",
+        "type": "function",
+        "z": "e84f410d9275f557",
+        "d": true,
+        "name": "InfluxDB",
+        "func": "\nvar oot = {};\nvar tags = {};\nvar tops = msg.topic.split(\"/\");\n\n\n\n\nif (!tops[4]) { return null; }\n\nvar net = global.get(\"networkId\") || \"local\";\nnet = (tops[0] == \"local\" ? net : tops[0])\n\ntags.node = tops[1];\ntags.device = tops[2];\ntags.network = net;\ntags.vargroup = tops[3];\ntags.varkey = tops[4];\n\n//tags.title = flow.get(\"title.\" + tops[2]) || tops[2];\n\nvar msg1={};\nmsg1.topic = \"\"+msg.topic;\n\ntry {\n\n    \n\n    if (isNaN(msg.payload)) { msg1.payload = '' + msg.payload  }\n    else { msg1.payload = parseFloat(msg.payload); }\n    \n\n    oot[tops[3] + '_' + tops[4]] = msg1.payload;\n\n    msg1.measurement = net + '_' + tops[1] + '_' + tops[2];\n    msg1.payload = [oot, tags];\n\n    return msg1;\n\n\n\n\n} catch { return null; }\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 817,
+        "y": 672,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e48ca3a9c3432059",
+        "type": "function",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "func": "\nflow.set(\"sseries\", msg.options.data);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ca6a2ea152f4766f",
+        "type": "inject",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "sseries",
+        "payloadType": "flow",
+        "x": 170,
+        "y": 360,
+        "wires": [
+            [
+                "65a714a0e10146be"
+            ]
+        ]
+    },
+    {
+        "id": "c7dac9533e7fff0b",
+        "type": "split",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 330,
+        "y": 480,
+        "wires": [
+            [
+                "46bd40373cb31467"
+            ]
+        ]
+    },
+    {
+        "id": "46bd40373cb31467",
+        "type": "switch",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "property": "payload.import",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 470,
+        "y": 480,
+        "wires": [
+            [
+                "9d2c762be472a52c"
+            ]
+        ]
+    },
+    {
+        "id": "a60874d3c6984df0",
+        "type": "debug",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "fc26fca49e37d5ef",
+        "type": "function",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "func": "\nvar series = flow.get(\"series\");\n\nmsg.payload.values = series[msg.payload.id -2 ].values;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 480,
+        "wires": [
+            [
+                "a60874d3c6984df0",
+                "3bce5d4f9a5d0255"
+            ]
+        ]
+    },
+    {
+        "id": "166229efbce80321",
+        "type": "debug",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "65a714a0e10146be",
+        "type": "change",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "sseries",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 180,
+        "y": 480,
+        "wires": [
+            [
+                "c7dac9533e7fff0b"
+            ]
+        ]
+    },
+    {
+        "id": "30228d43d7dbefc9",
+        "type": "ui_button",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "group": "42147475f6318819",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Process Selected",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 360,
+        "y": 420,
+        "wires": [
+            [
+                "65a714a0e10146be"
+            ]
+        ]
+    },
+    {
+        "id": "9d2c762be472a52c",
+        "type": "delay",
+        "z": "e84f410d9275f557",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "2",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 630,
+        "y": 480,
+        "wires": [
+            [
+                "fc26fca49e37d5ef"
+            ]
+        ]
+    },
+    {
+        "id": "c3e7a4ce9fb5e289",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "heatweb",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "https://eu-central-1-1.aws.cloud2.influxdata.com",
+        "rejectUnauthorized": true,
+        "info": "eL1lEr527yibtl-9hvaNQNWB6JLuOq_ZuQqfFfZw7F1jg3oZLz022IwRur9qQhw_FeeyE9i7aw8tcPwlUJz-3g=="
+    },
+    {
+        "id": "42147475f6318819",
+        "type": "ui_group",
+        "name": "Data",
+        "tab": "f1b5a1b6.543fd8",
+        "order": 2,
+        "disp": true,
+        "width": "18",
+        "collapse": false,
+        "className": ""
+    }
+]
