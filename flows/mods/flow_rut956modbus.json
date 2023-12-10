@@ -99,7 +99,7 @@
     {
         "id": "2f6b80b0432d3773",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "RUT956",
         "disabled": false,
         "info": "",
         "env": []
@@ -121,65 +121,16 @@
         "keepMsgProperties": false,
         "delayOnStart": true,
         "startDelayTime": "1",
-        "x": 580,
+        "x": 540,
         "y": 360,
         "wires": [
             [
-                "c304d9fdb6a7b03c",
-                "9ec845723cdd3a71"
+                "38c67d984687e317"
             ],
             [
-                "7d2c78246e4a83bf",
-                "9b6c16bbf9aad756",
                 "e3326be88794e6fb"
             ]
         ]
-    },
-    {
-        "id": "7d2c78246e4a83bf",
-        "type": "debug",
-        "z": "2f6b80b0432d3773",
-        "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "true",
-        "x": 810,
-        "y": 400,
-        "wires": []
-    },
-    {
-        "id": "9b6c16bbf9aad756",
-        "type": "modbus-response",
-        "z": "2f6b80b0432d3773",
-        "name": "",
-        "registerShowMax": 20,
-        "x": 850,
-        "y": 440,
-        "wires": []
-    },
-    {
-        "id": "9ec845723cdd3a71",
-        "type": "debug",
-        "z": "2f6b80b0432d3773",
-        "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "true",
-        "x": 810,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "c304d9fdb6a7b03c",
-        "type": "debug",
-        "z": "2f6b80b0432d3773",
-        "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "responseBuffer",
-        "x": 860,
-        "y": 300,
-        "wires": []
     },
     {
         "id": "15ae65abc383b7e9",
@@ -221,13 +172,14 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 210,
+        "x": 155,
         "y": 200,
         "wires": [
             [
                 "3d7c1255e83ce43b"
             ]
-        ]
+        ],
+        "l": false
     },
     {
         "id": "3d7c1255e83ce43b",
@@ -240,7 +192,7 @@
         "syntax": "mustache",
         "template": "\"title\",\"rAddress\",\"rAddress2\",\"rLength\",\"dType\",\"topic\"\n\"System uptime\",1,2,2,\"32 bit unsigned integer\",\"upTime\"\n\"Mobile signal strength (RSSI in dBm)\",3,4,2,\"32 bit integer\",\"signalStrength\"\n\"System temperature (in 0.1 °C)\",5,6,2,\"32 bit integer\",\"systemTemperature\"\n\"System hostname\",7,8,16,\"Text\",\"systemHostname\"\n\"GSM operator name\",23,24,16,\"Text\",\"gsmOperator\"\n\"Router serial number\",39,40,16,\"Text\",\"serialNumber\"\n\"LAN MAC address\",55,56,16,\"Text\",\"macLAN\"\n\"Router name\",71,72,16,\"Text\",\"routerName\"\n\"Currently active SIM card slot\",87,88,16,\"Text\",\"activeSIM\"\n\"Network registration info\",103,104,16,\"Text\",\"networkRegistration\"\n\"Network type\",119,120,16,\"Text\",\"networkType\"\n\"Digital input (DIN1) state\",135,136,2,\"32 bit integer\",\"digIn1\"\n\"Digital galvanically isolated input (DIN2) state\",137,138,2,\"32 bit integer\",\"digIn2\"\n\"Current WAN IP address\",139,140,2,\"8 bit unsigned integer\",\"ipWAN\"\n\"Analog input (PIN 9) value\",141,142,2,\"32 bit unsigned integer\",\"anaIn1\"\n\"GPS latitude coordinate\",143,144,2,\"32 bit float\",\"latitude\"\n\"GPS longitude coordinate\",145,146,2,\"32 bit float\",\"longitude\"\n\"GPS fix time\",147,148,16,\"Text\" (Unix timestamp×1000),\"gpsFixTime\"\n\"GPS date and time\",163,164,16,\"Text\" (DDMMYYhhmmss),\"gpsDateTime\"\n\"GPS speed\",179,180,2,\"32 bit float\",\"gpsSpeed\"\n\"GPS satellite count\",181,182,2,\"32 bit unsigned integer\",\"gpsSatCount\"\n\"GPS accuracy\",183,184,2,\"32 bit float\",\"gpsAccuracy\"\n\"Mobile data received today (SIM1)\",185,186,2,\"32 bit unsigned integer\",\"dataInToday\"\n\"Mobile data sent today (SIM1)\",187,188,2,\"32 bit unsigned integer\",\"dataOutToday\"\n\"Mobile data received this week (SIM1)\",189,190,2,\"32 bit unsigned integer\",\"dataInWeek\"\n\"Mobile data sent this week (SIM1)\",191,192,2,\"32 bit unsigned integer\",\"dataOutWeek\"\n\"Mobile data received this month (SIM1)\",193,194,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent this month (SIM1)\",195,196,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received last 24h (SIM1)\",197,198,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent last 24h (SIM1)\",199,200,2,\"32 bit unsigned integer\",\"none\"\n\"Galvanically isolated open collector output status\",201,202,1,\"16 bit unsigned integer\",\"none\"\n\"Relay output status\",202,203,1,\"16 bit unsigned integer\",\"relayStatus\"\n\"Active SIM card\",205,206,1,\"16 bit unsigned integer\",\"activeSIM\"\n\"Mobile data received last week (SIM1)\",292,293,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent last week (SIM1)\",294,295,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received last month (SIM1)\",296,297,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent last month (SIM1)\",298,299,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received today (SIM2)\",300,301,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent today (SIM2)\",302,303,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received this week (SIM2)\",304,305,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent this week (SIM2)\",306,307,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received this month (SIM2)\",308,309,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent this month (SIM2)\",310,311,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received last 24h (SIM2)\",312,313,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent last 24h (SIM2)\",314,315,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received last week (SIM2)\",316,317,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent last week (SIM2)\",318,319,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received last month(SIM2)\",320,321,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent last month (SIM2)\",322,323,2,\"32 bit unsigned integer\",\"none\"\n\"Digital non-isolated input\",324,325,1,\"16 bit unsigned integer\",\"none\"\n\"Digital open collector output\",325,326,1,\"16 bit unsigned integer\",\"none\"\n\"Modem ID\",328,329,8,\"Text\",\"modemId\"\n\"ACL activity\",345,346,1,\"16 bit unsigned integer\",\"aclActivity\"\n\"ACL status\",346,347,2,\"32 bit float\",\"aclStatus\"\n\"IMSI\",348,349,16,\"Text\",\"imsi\"\n\"Unix timestamp\",364,365,2,\"32 bit unsigned integer\",\"unixTimestamp\"\n\"Local ISO time\",366,367,12,\"Text\",\"localIsoTime\"\n\"UTC time\",378,389,12,\"Text\",\"utcTime\"\n\"LAN IP\",394,395,2,\"8 bit unsigned integer\",\"ipLAN\"\n\"Add SMS\",397,398,90,\"Text\",\"addSMS\"",
         "output": "str",
-        "x": 360,
+        "x": 300,
         "y": 200,
         "wires": [
             [
@@ -263,14 +215,15 @@
         "strings": true,
         "include_empty_strings": true,
         "include_null_values": true,
-        "x": 510,
+        "x": 475,
         "y": 200,
         "wires": [
             [
                 "39a60ac353f1ebff",
                 "15ae65abc383b7e9"
             ]
-        ]
+        ],
+        "l": false
     },
     {
         "id": "39a60ac353f1ebff",
@@ -305,14 +258,15 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 360,
+        "x": 335,
         "y": 360,
         "wires": [
             [
                 "43523aac8a8a0817",
                 "18017dfa5dec2038"
             ]
-        ]
+        ],
+        "l": false
     },
     {
         "id": "aa4a64447f8a8790",
@@ -322,8 +276,8 @@
         "active": true,
         "console": "false",
         "complete": "payload",
-        "x": 690,
-        "y": 600,
+        "x": 850,
+        "y": 380,
         "wires": []
     },
     {
@@ -337,8 +291,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
-        "y": 600,
+        "x": 660,
+        "y": 440,
         "wires": [
             [
                 "aa4a64447f8a8790",
@@ -358,7 +312,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 540,
+        "x": 500,
         "y": 300,
         "wires": []
     },
@@ -395,8 +349,8 @@
         "name": "link out 2",
         "mode": "link",
         "links": [],
-        "x": 695,
-        "y": 680,
+        "x": 955,
+        "y": 440,
         "wires": []
     },
     {
@@ -404,13 +358,25 @@
         "type": "subflow:3bcc1796d56e0e4a",
         "z": "2f6b80b0432d3773",
         "name": "",
-        "x": 580,
-        "y": 680,
+        "x": 840,
+        "y": 440,
         "wires": [
             [
                 "8e9d9944abf87a8d"
             ]
         ]
+    },
+    {
+        "id": "38c67d984687e317",
+        "type": "debug",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 790,
+        "y": 300,
+        "wires": []
     },
     {
         "id": "d71e6162d7e087b2",
