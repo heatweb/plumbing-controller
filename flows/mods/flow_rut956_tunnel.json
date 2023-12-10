@@ -285,7 +285,7 @@
         "type": "function",
         "z": "2f6b80b0432d3773",
         "name": "function 8",
-        "func": "//msg.payload = (msg.payload[0] * 256) + msg.payload[1];\n\nif (!msg.modbusRequest) { return null; }\n\nvar rinfo = flow.get(\"registers.r\" + msg.modbusRequest.address);\n\nif (!rinfo.topic || rinfo.topic == \"none\") { return null; }\nmsg.topic = \"modem/dat/\" + rinfo.topic;\n//msg.units = \"s\";\n\nif (rinfo.dType == \"32 bit unsigned integer\") {\n    msg.payload = parseFloat(msg.payload.buffer.readUIntBE(0,4));\n}\nelse if (rinfo.dType == \"16 bit unsigned integer\") {\n    msg.payload = parseFloat(msg.payload.buffer.readUIntBE(0, 2));\n}\nelse if (rinfo.dType == \"8 bit unsigned integer\") {\n    msg.payload = parseFloat(msg.payload.buffer.readUIntBE(0, 1));\n}\nelse if (rinfo.dType == \"32 bit integer\") {\n    msg.payload = parseFloat(msg.payload.buffer.readIntBE(0, 4));\n}\n\nelse if (rinfo.dType == \"Text\") {\n    msg.payload = msg.payload.buffer.toString('utf8');\n}\nelse { return null; }\n\n\nif (rinfo.topic == \"systemTemperature \") {\n    msg.payload = msg.payload/10;\n}\n\n\nreturn msg;",
+        "func": "//msg.payload = (msg.payload[0] * 256) + msg.payload[1];\n\nif (!msg.modbusRequest) { return null; }\n\nvar rinfo = flow.get(\"registers.r\" + msg.modbusRequest.address);\n\nif (!rinfo.topic || rinfo.topic == \"none\") { return null; }\nmsg.topic = \"modem/system/\" + rinfo.topic;\n//msg.units = \"s\";\n\nif (rinfo.dType == \"32 bit unsigned integer\") {\n    msg.payload = parseFloat(msg.payload.buffer.readUIntBE(0,4));\n}\nelse if (rinfo.dType == \"16 bit unsigned integer\") {\n    msg.payload = parseFloat(msg.payload.buffer.readUIntBE(0, 2));\n}\nelse if (rinfo.dType == \"8 bit unsigned integer\") {\n    msg.payload = parseFloat(msg.payload.buffer.readUIntBE(0, 1));\n}\nelse if (rinfo.dType == \"32 bit integer\") {\n    msg.payload = parseFloat(msg.payload.buffer.readIntBE(0, 4));\n}\n\nelse if (rinfo.dType == \"Text\") {\n    msg.payload = msg.payload.buffer.toString('utf8');\n}\nelse { return null; }\n\n\nif (rinfo.topic == \"systemTemperature \") {\n    msg.payload = msg.payload/10;\n}\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -576,14 +576,14 @@
                 "vt": "str"
             }
         ],
-        "repeat": "",
+        "repeat": "3600",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 420,
+        "x": 430,
         "y": 600,
         "wires": [
             [
@@ -610,7 +610,7 @@
         "y": 600,
         "wires": [
             [
-                "81ca339b38808529"
+                "7ccba87a7251334c"
             ]
         ]
     },
@@ -626,7 +626,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 770,
+        "x": 910,
         "y": 600,
         "wires": []
     },
@@ -696,7 +696,7 @@
         "type": "function",
         "z": "2f6b80b0432d3773",
         "name": "url",
-        "func": "if (msg.payload.indexOf(\"url is\")>0) {\n    msg.payload = msg.payload.split(\"is: \")[1];\n    flow.set(\"url\",msg.payload);\n}\nreturn msg;",
+        "func": "if (msg.payload.indexOf(\"url is\")>0) {\n    msg.payload = msg.payload.split(\"is: \")[1];\n    flow.set(\"url\",msg.payload);\n\n    msg.topic = \"modem/system/urlModem\";\n    \n} else {\n    return null;\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -706,7 +706,8 @@
         "y": 720,
         "wires": [
             [
-                "c05a136f0eb3cedd"
+                "c05a136f0eb3cedd",
+                "3f9bc91a511e7a04"
             ]
         ]
     },
@@ -828,7 +829,7 @@
         "type": "function",
         "z": "2f6b80b0432d3773",
         "name": "url",
-        "func": "if (msg.payload.indexOf(\"url is\")>0) {\n    msg.payload = msg.payload.split(\"is: \")[1];\n    flow.set(\"url\",msg.payload);\n}\nreturn msg;",
+        "func": "if (msg.payload.indexOf(\"url is\") > 0) {\n    msg.payload = msg.payload.split(\"is: \")[1];\n    flow.set(\"url\", msg.payload);\n\n    msg.topic = \"modem/system/urlNodered\";\n\n} else {\n    return null;\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -838,7 +839,85 @@
         "y": 1060,
         "wires": [
             [
-                "bbe8880ed1ed3830"
+                "bbe8880ed1ed3830",
+                "2a146bb745db242b"
+            ]
+        ]
+    },
+    {
+        "id": "3f9bc91a511e7a04",
+        "type": "link out",
+        "z": "2f6b80b0432d3773",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "ae2cd5d19f9609f9"
+        ],
+        "x": 855,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "ae2cd5d19f9609f9",
+        "type": "link in",
+        "z": "2f6b80b0432d3773",
+        "name": "link in 4",
+        "links": [
+            "3f9bc91a511e7a04",
+            "2a146bb745db242b",
+            "72bfb375dd564002"
+        ],
+        "x": 705,
+        "y": 500,
+        "wires": [
+            [
+                "75cf64b33fe25a16"
+            ]
+        ]
+    },
+    {
+        "id": "2a146bb745db242b",
+        "type": "link out",
+        "z": "2f6b80b0432d3773",
+        "name": "link out 4",
+        "mode": "link",
+        "links": [
+            "ae2cd5d19f9609f9"
+        ],
+        "x": 815,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "72bfb375dd564002",
+        "type": "link out",
+        "z": "2f6b80b0432d3773",
+        "name": "link out 5",
+        "mode": "link",
+        "links": [
+            "ae2cd5d19f9609f9"
+        ],
+        "x": 855,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "7ccba87a7251334c",
+        "type": "function",
+        "z": "2f6b80b0432d3773",
+        "name": "ip",
+        "func": "msg.topic = \"modem/system/ipPing\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 600,
+        "wires": [
+            [
+                "72bfb375dd564002",
+                "81ca339b38808529"
             ]
         ]
     },
