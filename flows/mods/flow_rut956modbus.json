@@ -1,0 +1,444 @@
+[
+    {
+        "id": "3bcc1796d56e0e4a",
+        "type": "subflow",
+        "name": "rbe 24h",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "ed3595ba7ad0e4b1"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 420,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "6fdbb2068778d3c9",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "ed3595ba7ad0e4b1",
+        "type": "rbe",
+        "z": "3bcc1796d56e0e4a",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "6fdbb2068778d3c9"
+            ]
+        ]
+    },
+    {
+        "id": "ac6886f7de81d7ca",
+        "type": "inject",
+        "z": "3bcc1796d56e0e4a",
+        "name": "",
+        "props": [
+            {
+                "p": "reset",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "repeat": "86400",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 190,
+        "y": 60,
+        "wires": [
+            [
+                "ed3595ba7ad0e4b1"
+            ]
+        ]
+    },
+    {
+        "id": "6fdbb2068778d3c9",
+        "type": "switch",
+        "z": "3bcc1796d56e0e4a",
+        "name": "",
+        "property": "reset",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f6b80b0432d3773",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "43523aac8a8a0817",
+        "type": "modbus-flex-getter",
+        "z": "2f6b80b0432d3773",
+        "name": "Modbus Flexible Read",
+        "showStatusActivities": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "server": "d71e6162d7e087b2",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": true,
+        "keepMsgProperties": false,
+        "delayOnStart": true,
+        "startDelayTime": "1",
+        "x": 580,
+        "y": 360,
+        "wires": [
+            [
+                "c304d9fdb6a7b03c",
+                "9ec845723cdd3a71"
+            ],
+            [
+                "7d2c78246e4a83bf",
+                "9b6c16bbf9aad756",
+                "e3326be88794e6fb"
+            ]
+        ]
+    },
+    {
+        "id": "7d2c78246e4a83bf",
+        "type": "debug",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 810,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "9b6c16bbf9aad756",
+        "type": "modbus-response",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "registerShowMax": 20,
+        "x": 850,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "9ec845723cdd3a71",
+        "type": "debug",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 810,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "c304d9fdb6a7b03c",
+        "type": "debug",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "responseBuffer",
+        "x": 860,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "15ae65abc383b7e9",
+        "type": "function",
+        "z": "2f6b80b0432d3773",
+        "name": "FC4",
+        "func": "\nif (!msg.payload.topic || msg.payload.topic == \"none\") { return null; }\n\nflow.set(\"registers.r\" + msg.payload.rAddress, msg.payload);\n\nmsg.payload = { 'fc': 3, 'unitid': 1, 'address': msg.payload.rAddress, 'quantity': msg.payload.rLength }\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 360,
+        "wires": [
+            [
+                "905b1b2556973fe5"
+            ]
+        ]
+    },
+    {
+        "id": "4d09dec93cb29778",
+        "type": "inject",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "60",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 200,
+        "wires": [
+            [
+                "3d7c1255e83ce43b"
+            ]
+        ]
+    },
+    {
+        "id": "3d7c1255e83ce43b",
+        "type": "template",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "\"title\",\"rAddress\",\"rAddress2\",\"rLength\",\"dType\",\"topic\"\n\"System uptime\",1,2,2,\"32 bit unsigned integer\",\"upTime\"\n\"Mobile signal strength (RSSI in dBm)\",3,4,2,\"32 bit integer\",\"signalStrength\"\n\"System temperature (in 0.1 °C)\",5,6,2,\"32 bit integer\",\"systemTemperature\"\n\"System hostname\",7,8,16,\"Text\",\"systemHostname\"\n\"GSM operator name\",23,24,16,\"Text\",\"gsmOperator\"\n\"Router serial number\",39,40,16,\"Text\",\"serialNumber\"\n\"LAN MAC address\",55,56,16,\"Text\",\"macLAN\"\n\"Router name\",71,72,16,\"Text\",\"routerName\"\n\"Currently active SIM card slot\",87,88,16,\"Text\",\"activeSIM\"\n\"Network registration info\",103,104,16,\"Text\",\"networkRegistration\"\n\"Network type\",119,120,16,\"Text\",\"networkType\"\n\"Digital input (DIN1) state\",135,136,2,\"32 bit integer\",\"digIn1\"\n\"Digital galvanically isolated input (DIN2) state\",137,138,2,\"32 bit integer\",\"digIn2\"\n\"Current WAN IP address\",139,140,2,\"8 bit unsigned integer\",\"ipWAN\"\n\"Analog input (PIN 9) value\",141,142,2,\"32 bit unsigned integer\",\"anaIn1\"\n\"GPS latitude coordinate\",143,144,2,\"32 bit float\",\"latitude\"\n\"GPS longitude coordinate\",145,146,2,\"32 bit float\",\"longitude\"\n\"GPS fix time\",147,148,16,\"Text\" (Unix timestamp×1000),\"gpsFixTime\"\n\"GPS date and time\",163,164,16,\"Text\" (DDMMYYhhmmss),\"gpsDateTime\"\n\"GPS speed\",179,180,2,\"32 bit float\",\"gpsSpeed\"\n\"GPS satellite count\",181,182,2,\"32 bit unsigned integer\",\"gpsSatCount\"\n\"GPS accuracy\",183,184,2,\"32 bit float\",\"gpsAccuracy\"\n\"Mobile data received today (SIM1)\",185,186,2,\"32 bit unsigned integer\",\"dataInToday\"\n\"Mobile data sent today (SIM1)\",187,188,2,\"32 bit unsigned integer\",\"dataOutToday\"\n\"Mobile data received this week (SIM1)\",189,190,2,\"32 bit unsigned integer\",\"dataInWeek\"\n\"Mobile data sent this week (SIM1)\",191,192,2,\"32 bit unsigned integer\",\"dataOutWeek\"\n\"Mobile data received this month (SIM1)\",193,194,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent this month (SIM1)\",195,196,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received last 24h (SIM1)\",197,198,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent last 24h (SIM1)\",199,200,2,\"32 bit unsigned integer\",\"none\"\n\"Galvanically isolated open collector output status\",201,202,1,\"16 bit unsigned integer\",\"none\"\n\"Relay output status\",202,203,1,\"16 bit unsigned integer\",\"relayStatus\"\n\"Active SIM card\",205,206,1,\"16 bit unsigned integer\",\"activeSIM\"\n\"Mobile data received last week (SIM1)\",292,293,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent last week (SIM1)\",294,295,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received last month (SIM1)\",296,297,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent last month (SIM1)\",298,299,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received today (SIM2)\",300,301,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent today (SIM2)\",302,303,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received this week (SIM2)\",304,305,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent this week (SIM2)\",306,307,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received this month (SIM2)\",308,309,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent this month (SIM2)\",310,311,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received last 24h (SIM2)\",312,313,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent last 24h (SIM2)\",314,315,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received last week (SIM2)\",316,317,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent last week (SIM2)\",318,319,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data received last month(SIM2)\",320,321,2,\"32 bit unsigned integer\",\"none\"\n\"Mobile data sent last month (SIM2)\",322,323,2,\"32 bit unsigned integer\",\"none\"\n\"Digital non-isolated input\",324,325,1,\"16 bit unsigned integer\",\"none\"\n\"Digital open collector output\",325,326,1,\"16 bit unsigned integer\",\"none\"\n\"Modem ID\",328,329,8,\"Text\",\"modemId\"\n\"ACL activity\",345,346,1,\"16 bit unsigned integer\",\"aclActivity\"\n\"ACL status\",346,347,2,\"32 bit float\",\"aclStatus\"\n\"IMSI\",348,349,16,\"Text\",\"imsi\"\n\"Unix timestamp\",364,365,2,\"32 bit unsigned integer\",\"unixTimestamp\"\n\"Local ISO time\",366,367,12,\"Text\",\"localIsoTime\"\n\"UTC time\",378,389,12,\"Text\",\"utcTime\"\n\"LAN IP\",394,395,2,\"8 bit unsigned integer\",\"ipLAN\"\n\"Add SMS\",397,398,90,\"Text\",\"addSMS\"",
+        "output": "str",
+        "x": 360,
+        "y": 200,
+        "wires": [
+            [
+                "d46f200cd6e5e852"
+            ]
+        ]
+    },
+    {
+        "id": "d46f200cd6e5e852",
+        "type": "csv",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": true,
+        "include_null_values": true,
+        "x": 510,
+        "y": 200,
+        "wires": [
+            [
+                "39a60ac353f1ebff",
+                "15ae65abc383b7e9"
+            ]
+        ]
+    },
+    {
+        "id": "39a60ac353f1ebff",
+        "type": "debug",
+        "z": "2f6b80b0432d3773",
+        "name": "debug 38",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "905b1b2556973fe5",
+        "type": "delay",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "4",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 360,
+        "y": 360,
+        "wires": [
+            [
+                "43523aac8a8a0817",
+                "18017dfa5dec2038"
+            ]
+        ]
+    },
+    {
+        "id": "aa4a64447f8a8790",
+        "type": "debug",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 690,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "e3326be88794e6fb",
+        "type": "function",
+        "z": "2f6b80b0432d3773",
+        "name": "function 8",
+        "func": "//msg.payload = (msg.payload[0] * 256) + msg.payload[1];\n\nif (!msg.modbusRequest) { return null; }\n\nvar rinfo = flow.get(\"registers.r\" + msg.modbusRequest.address);\n\nif (!rinfo.topic || rinfo.topic == \"none\") { return null; }\nmsg.topic = \"modem/dat/\" + rinfo.topic;\n//msg.units = \"s\";\n\nif (rinfo.dType == \"32 bit unsigned integer\") {\n    msg.payload = parseFloat(msg.payload.buffer.readUIntBE(0,4));\n}\nelse if (rinfo.dType == \"16 bit unsigned integer\") {\n    msg.payload = parseFloat(msg.payload.buffer.readUIntBE(0, 2));\n}\nelse if (rinfo.dType == \"8 bit unsigned integer\") {\n    msg.payload = parseFloat(msg.payload.buffer.readUIntBE(0, 1));\n}\nelse if (rinfo.dType == \"32 bit integer\") {\n    msg.payload = parseFloat(msg.payload.buffer.readIntBE(0, 4));\n}\n\nelse if (rinfo.dType == \"Text\") {\n    msg.payload = msg.payload.buffer.toString('utf8');\n}\nelse { return null; }\n\n\nif (rinfo.topic == \"systemTemperature \") {\n    msg.payload = msg.payload/10;\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 600,
+        "wires": [
+            [
+                "aa4a64447f8a8790",
+                "75cf64b33fe25a16"
+            ]
+        ]
+    },
+    {
+        "id": "18017dfa5dec2038",
+        "type": "debug",
+        "z": "2f6b80b0432d3773",
+        "name": "debug 39",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "cdf406310826ae51",
+        "type": "comment",
+        "z": "2f6b80b0432d3773",
+        "name": "https://wiki.teltonika-networks.com/view/RUT955_Modbus",
+        "info": "",
+        "x": 330,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "92b83f20f3c9c4b0",
+        "type": "catch",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "scope": [
+            "43523aac8a8a0817",
+            "9b6c16bbf9aad756"
+        ],
+        "uncaught": false,
+        "x": 310,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e9d9944abf87a8d",
+        "type": "link out",
+        "z": "2f6b80b0432d3773",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [],
+        "x": 695,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "75cf64b33fe25a16",
+        "type": "subflow:3bcc1796d56e0e4a",
+        "z": "2f6b80b0432d3773",
+        "name": "",
+        "x": 580,
+        "y": 680,
+        "wires": [
+            [
+                "8e9d9944abf87a8d"
+            ]
+        ]
+    },
+    {
+        "id": "d71e6162d7e087b2",
+        "type": "modbus-client",
+        "name": "RUT956",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "192.168.1.1",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 3000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": true,
+        "showWarnings": true,
+        "showLogs": true
+    }
+]
