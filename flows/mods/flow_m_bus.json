@@ -16,7 +16,8 @@
         "y": 242,
         "wires": [
             [
-                "cfe1fe5a.4377f"
+                "cfe1fe5a.4377f",
+                "0ffde9328bdc43d2"
             ]
         ]
     },
@@ -28,8 +29,8 @@
         "active": false,
         "console": false,
         "complete": "false",
-        "x": 690,
-        "y": 242,
+        "x": 630,
+        "y": 180,
         "wires": []
     },
     {
@@ -554,13 +555,25 @@
         "type": "inject",
         "z": "789aa767.91c36",
         "name": "setDevices",
+        "props": [
+            {
+                "p": "payload",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "topic",
+                "v": "setDevices",
+                "vt": "str"
+            }
+        ],
         "repeat": "",
         "crontab": "",
         "once": false,
         "topic": "setDevices",
         "payload": "",
         "payloadType": "date",
-        "x": 120,
+        "x": 100,
         "y": 260,
         "wires": [
             [
@@ -598,9 +611,7 @@
         "x": 740,
         "y": 440,
         "wires": [
-            [
-                "e4d3eaec.811fd8"
-            ]
+            []
         ]
     },
     {
@@ -614,8 +625,8 @@
         "arraySpltType": "len",
         "stream": false,
         "addname": "",
-        "x": 940,
-        "y": 440,
+        "x": 1050,
+        "y": 280,
         "wires": [
             [
                 "7c7cca54.a35e54"
@@ -633,30 +644,16 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1080,
-        "y": 440,
+        "x": 1190,
+        "y": 280,
         "wires": [
             [
-                "2f7dea9a.341f4e",
-                "e162d709.82b3"
+                "78acc2faab027526"
             ],
             [
-                "e162d709.82b3",
-                "2f7dea9a.341f4e"
+                "26de6b3f.6399fc"
             ]
         ]
-    },
-    {
-        "id": "2f7dea9a.341f4e",
-        "type": "debug",
-        "z": "789aa767.91c36",
-        "name": "",
-        "active": false,
-        "console": false,
-        "complete": "false",
-        "x": 1270,
-        "y": 460,
-        "wires": []
     },
     {
         "id": "e162d709.82b3",
@@ -667,8 +664,132 @@
         "links": [
             "72fc070f.39dd8"
         ],
-        "x": 1215,
-        "y": 420,
+        "x": 1515,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f6968840de96bbe4",
+        "type": "function",
+        "z": "789aa767.91c36",
+        "name": "Micronics U1000 ",
+        "func": "\n\nvar oot = [];\n\n//Unit: \"Flow temperature (1e-2 deg C)\"\n\n//for (var meter in msg.payload.devices) {\n    \n   // if (msg.payload.devices[meter].DataRecord[9].Unit.indexOf(\"temperature\")>0) {\n    \nvar meter = msg.payload.secondaryID\nvar meterid = msg.payload.SlaveInformation.Manufacturer + meter;\n        \n        oot.push({\n            \"payload\": msg.payload.SlaveInformation.Manufacturer,\n            \"topic\": \"meter/manufacturer\", \"meter\": meterid });\n            \n        \n            \n        oot.push({\n            \"payload\": msg.payload.SlaveInformation.Id,\n            \"topic\": \"meter/id\", \"meter\": meterid }\n            );\n        \n        \n        oot.push({\n            \"payload\": msg.payload.DataRecord[6].Value,\n            \"topic\": \"meter/kwh\",\n            \"title\": \"Heat meter energy\",\n            \"units\": \"kWh\", \"meter\": meterid \n            });\n         \n        \n        oot.push({\n            \"payload\": msg.payload.DataRecord[4].Value ,\n            \"topic\": \"meter/tF\",\n            \"title\": \"Heat meter flow temperature\",\n            \"units\": \"°C\" , \"meter\": meterid\n            });\n         \n        oot.push({\n            \"payload\": msg.payload.DataRecord[3].Value,\n            \"topic\": \"meter/tR\",\n            \"title\": \"Heat meter return temperature\",\n            \"units\": \"°C\" , \"meter\": meterid \n            });\n         \n        \n        oot.push({\n            \"payload\": parseInt(1000 * (msg.payload.DataRecord[4].Value - msg.payload.DataRecord[3].Value))/1000,\n            \"topic\": \"meter/tDiff\",\n            \"title\": \"Heat meter temperature drop\",\n            \"units\": \"°C\"  , \"meter\": meterid\n            });     \n        \n        \n        oot.push({\n            \"payload\": msg.payload.DataRecord[7].Value,\n            \"topic\": \"meter/kw\",\n            \"title\": \"Heat meter power\",\n            \"units\": \"kW\" , \"meter\": meterid \n            });     \n\n\n        oot.push({\n            \"payload\": msg.payload.DataRecord[5].Value,\n            \"topic\": \"meter/mps\",\n            \"title\": \"Heat meter water velocity\",\n            \"units\": \"m/s\", \"meter\": meterid\n        });     \n\n            \n //   }\n        \n//}   \nmsg.payload = oot;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0ffde9328bdc43d2",
+        "type": "function",
+        "z": "789aa767.91c36",
+        "name": "Meter Data Selection",
+        "func": "\n\nvar oot = [];\n\n//Unit: \"Flow temperature (1e-2 deg C)\"\n\n//for (var meter in msg.payload.devices) {\n\n// if (msg.payload.devices[meter].DataRecord[9].Unit.indexOf(\"temperature\")>0) {\n\nvar meter = msg.payload.secondaryID\nvar meterid = msg.payload.SlaveInformation.Manufacturer + meter;\n\n    \nif (msg.payload.SlaveInformation.Manufacturer == \"ZRI\" && msg.payload.DataRecord[9].Unit.indexOf(\"temperature\")>0) {\n    \n        var meterid = msg.payload.SlaveInformation.Manufacturer + meter;\n        \n        oot.push({\n            \"payload\": msg.payload.SlaveInformation.Manufacturer,\n            \"topic\": \"meter/manufacturer\", \"meter\": meterid });\n            \n        \n            \n        oot.push({\n            \"payload\": msg.payload.SlaveInformation.Id,\n            \"topic\": \"meter/id\", \"meter\": meterid }\n            );\n        \n        \n        oot.push({\n            \"payload\": msg.payload.DataRecord[1].Value,\n            \"topic\": \"meter/kwh\",\n            \"title\": \"Heat meter energy\",\n            \"units\": \"kWh\", \"meter\": meterid \n            });\n         \n        \n        oot.push({\n            \"payload\": msg.payload.DataRecord[9].Value / 100,\n            \"topic\": \"meter/tF\",\n            \"title\": \"Heat meter flow temperature\",\n            \"units\": \"°C\" , \"meter\": meterid\n            });\n         \n        oot.push({\n            \"payload\": msg.payload.DataRecord[10].Value / 100,\n            \"topic\": \"meter/tR\",\n            \"title\": \"Heat meter return temperature\",\n            \"units\": \"°C\" , \"meter\": meterid \n            });\n         \n        \n        oot.push({\n            \"payload\": msg.payload.DataRecord[11].Value / 100,\n            \"topic\": \"meter/tDiff\",\n            \"title\": \"Heat meter temperature drop\",\n            \"units\": \"°C\"  , \"meter\": meterid\n            });     \n        \n        \n        oot.push({\n            \"payload\": msg.payload.DataRecord[12].Value / 10,\n            \"topic\": \"meter/kw\",\n            \"title\": \"Heat meter power\",\n            \"units\": \"kW\" , \"meter\": meterid \n            });     \n\n\n\n    oot.push({\n        \"payload\": msg.payload.DataRecord[13].Value / 1000,\n        \"topic\": \"meter/m3h\",\n        \"title\": \"Heat meter flow rate\",\n        \"units\": \"m3/h\", \"meter\": meterid\n    });     \n\n    oot.push({\n        \"payload\": msg.payload.DataRecord[13].Value / (60),\n        \"topic\": \"meter/fH\",\n        \"title\": \"Heat meter flow rate\",\n        \"units\": \"ltr/min\", \"meter\": meterid\n    });  \n            \n}\n\n\nelse if (msg.payload.SlaveInformation.Manufacturer == \"AXI\") {\n\n        var meterid = msg.payload.SlaveInformation.Manufacturer + meter;\n\n        oot.push({\n            \"payload\": msg.payload.SlaveInformation.Manufacturer,\n            \"topic\": \"meter/manufacturer\", \"meter\": meterid\n        });\n\n\n\n        oot.push({\n            \"payload\": msg.payload.SlaveInformation.Id,\n            \"topic\": \"meter/id\", \"meter\": meterid\n        }\n        );\n\n\n        oot.push({\n            \"payload\": msg.payload.DataRecord[5].Value / 10,\n            \"topic\": \"meter/kwh\",\n            \"title\": \"Heat meter energy\",\n            \"units\": \"kWh\", \"meter\": meterid\n        });\n\n\n        oot.push({\n            \"payload\": msg.payload.DataRecord[12].Value / 100,\n            \"topic\": \"meter/tF\",\n            \"title\": \"Heat meter flow temperature\",\n            \"units\": \"°C\", \"meter\": meterid\n        });\n\n        oot.push({\n            \"payload\": msg.payload.DataRecord[13].Value / 100,\n            \"topic\": \"meter/tR\",\n            \"title\": \"Heat meter return temperature\",\n            \"units\": \"°C\", \"meter\": meterid\n        });\n\n\n        oot.push({\n            \"payload\": msg.payload.DataRecord[14].Value / 100,\n            \"topic\": \"meter/tDiff\",\n            \"title\": \"Heat meter temperature drop\",\n            \"units\": \"°C\", \"meter\": meterid\n        });\n\n\n        oot.push({\n            \"payload\": msg.payload.DataRecord[10].Value / 1000,\n            \"topic\": \"meter/kw\",\n            \"title\": \"Heat meter power\",\n            \"units\": \"kW\", \"meter\": meterid\n        });\n\n\n\n        oot.push({\n            \"payload\": msg.payload.DataRecord[11].Value / 1000,\n            \"topic\": \"meter/m3h\",\n            \"title\": \"Heat meter flow rate\",\n            \"units\": \"m3/h\", \"meter\": meterid\n        });\n\n        oot.push({\n            \"payload\": msg.payload.DataRecord[11].Value / (60),\n            \"topic\": \"meter/fH\",\n            \"title\": \"Heat meter flow rate\",\n            \"units\": \"ltr/min\", \"meter\": meterid\n        });\n\n    }\n\n  \nmsg.payload = oot;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 240,
+        "wires": [
+            [
+                "20b39f02ffda1ed4",
+                "e4d3eaec.811fd8"
+            ]
+        ]
+    },
+    {
+        "id": "20b39f02ffda1ed4",
+        "type": "debug",
+        "z": "789aa767.91c36",
+        "name": "debug 34",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "78acc2faab027526",
+        "type": "debug",
+        "z": "789aa767.91c36",
+        "name": "",
+        "active": false,
+        "console": false,
+        "complete": "false",
+        "x": 1370,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "9a45da0e.16d9a",
+        "type": "inject",
+        "z": "789aa767.91c36",
+        "name": "Standard Calculations",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0",
+        "topic": "calculations",
+        "payload": "[{\"topic\":\"stat/vwatR24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"weightedAverage\",\"save\":\"daily\",\"wipe\":\"daily\",\"parameters\":[\"dat/tR\",\"dat/fH\"],\"title\":\"Volume weighted average return temp for today\",\"units\":\"°C\",\"points\":365,\"deadband\":0.1},{\"topic\":\"stat/vwatF24\",\"filter\":\"+/+/+/dat/#\",\"function\":\"weightedAverage\",\"save\":\"daily\",\"wipe\":\"daily\",\"parameters\":[\"dat/tF\",\"dat/fH\"],\"title\":\"Volume weighted average flow temp for today\",\"units\":\"°C\",\"points\":365,\"deadband\":0.1}]",
+        "payloadType": "json",
+        "x": 1160,
+        "y": 360,
+        "wires": [
+            [
+                "26de6b3f.6399fc"
+            ]
+        ]
+    },
+    {
+        "id": "26de6b3f.6399fc",
+        "type": "heatwebCalc",
+        "z": "789aa767.91c36",
+        "name": "",
+        "x": 1370,
+        "y": 300,
+        "wires": [
+            [
+                "d30ef22e4bb021fd",
+                "e162d709.82b3"
+            ]
+        ]
+    },
+    {
+        "id": "d30ef22e4bb021fd",
+        "type": "debug",
+        "z": "789aa767.91c36",
+        "name": "debug 41",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1560,
+        "y": 360,
         "wires": []
     },
     {
