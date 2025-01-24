@@ -1,0 +1,77 @@
+[
+    {
+        "id": "653cd07879642ad8",
+        "type": "mqtt out",
+        "z": "f744bae72297d232",
+        "name": "",
+        "topic": "_/set/io",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7ad2997b.42a908",
+        "x": 340,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "6a176fc76af95303",
+        "type": "inject",
+        "z": "f744bae72297d232",
+        "name": "Council House",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0",
+        "topic": "",
+        "payload": "[{\"portId\":\"TH7\",\"block\":\"TH7\",\"channel\":\"7\",\"name\":\"TH7 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr7\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"hiu\",\"topicKey\":\"tHTGOut\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[32.65,0],[25.39,5],[19.9,10],[15.71,15],[12.49,20],[10,25],[8.057,30],[6.531,35],[5.327,40],[4.369,45],[3.603,50],[2.986,55],[2.488,60],[2.083,65],[1.752,70],[1.481,75],[1.258,80],[1.072,85],[0.918,90],[0.789,95],[0.68,100]]\"},{\"portId\":\"TH6\",\"block\":\"TH6\",\"channel\":\"6\",\"name\":\"TH6 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr6\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"hiu\",\"topicKey\":\"tHTGIn\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[32.65,0],[25.39,5],[19.9,10],[15.71,15],[12.49,20],[10,25],[8.057,30],[6.531,35],[5.327,40],[4.369,45],[3.603,50],[2.986,55],[2.488,60],[2.083,65],[1.752,70],[1.481,75],[1.258,80],[1.072,85],[0.918,90],[0.789,95],[0.68,100]]\"},{\"portId\":\"TH5\",\"block\":\"TH5\",\"channel\":\"5\",\"name\":\"TH5 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr5\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"hiu\",\"topicKey\":\"tDHW\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[32.65,0],[25.39,5],[19.9,10],[15.71,15],[12.49,20],[10,25],[8.057,30],[6.531,35],[5.327,40],[4.369,45],[3.603,50],[2.986,55],[2.488,60],[2.083,65],[1.752,70],[1.481,75],[1.258,80],[1.072,85],[0.918,90],[0.789,95],[0.68,100]]\"},{\"portId\":\"TH4\",\"block\":\"TH4\",\"channel\":\"4\",\"name\":\"TH4 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr4\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"hiu\",\"topicKey\":\"tPriRtnHTG\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[32.65,0],[25.39,5],[19.9,10],[15.71,15],[12.49,20],[10,25],[8.057,30],[6.531,35],[5.327,40],[4.369,45],[3.603,50],[2.986,55],[2.488,60],[2.083,65],[1.752,70],[1.481,75],[1.258,80],[1.072,85],[0.918,90],[0.789,95],[0.68,100]]\"},{\"portId\":\"TH3\",\"block\":\"TH3\",\"channel\":\"3\",\"name\":\"TH3 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr3\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"hiu\",\"topicKey\":\"tRoom\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[32.65,0],[25.39,5],[19.9,10],[15.71,15],[12.49,20],[10,25],[8.057,30],[6.531,35],[5.327,40],[4.369,45],[3.603,50],[2.986,55],[2.488,60],[2.083,65],[1.752,70],[1.481,75],[1.258,80],[1.072,85],[0.918,90],[0.789,95],[0.68,100]]\"},{\"portId\":\"TH2\",\"block\":\"TH2\",\"channel\":\"2\",\"name\":\"TH2 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr2\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"hiu\",\"topicKey\":\"tPriRtn\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[32.65,0],[25.39,5],[19.9,10],[15.71,15],[12.49,20],[10,25],[8.057,30],[6.531,35],[5.327,40],[4.369,45],[3.603,50],[2.986,55],[2.488,60],[2.083,65],[1.752,70],[1.481,75],[1.258,80],[1.072,85],[0.918,90],[0.789,95],[0.68,100]]\"},{\"portId\":\"TH1\",\"block\":\"TH1\",\"channel\":\"1\",\"name\":\"TH1 Signal\",\"figure\":\"Input\",\"portColor\":\"#00ff00\",\"wiredTo\":\"ntcr\",\"wiredToPort\":\"temperature\",\"signalType\":\"NTC10K\",\"topicDevice\":\"hiu\",\"topicKey\":\"tPriFlow\",\"mapUnits\":\"kΩ to °C\",\"map\":\"[[32.65,0],[25.39,5],[19.9,10],[15.71,15],[12.49,20],[10,25],[8.057,30],[6.531,35],[5.327,40],[4.369,45],[3.603,50],[2.986,55],[2.488,60],[2.083,65],[1.752,70],[1.481,75],[1.258,80],[1.072,85],[0.918,90],[0.789,95],[0.68,100]]\"}]",
+        "payloadType": "json",
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "653cd07879642ad8"
+            ]
+        ]
+    },
+    {
+        "id": "7ad2997b.42a908",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
